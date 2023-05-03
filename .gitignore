@@ -1,12 +1,8 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
 
 .DS_Store
 Thumbs.db
 /bower_components
-.env
+
 .env.backup
 /.idea
 /.vscode
@@ -31,10 +27,7 @@ package-lock.json
 yarn.lock
 /.sass-cache
 
-public/mix-manifest.json
 
-public/themes
-public/docs
 resources/docs
 
 .phpunit.result.cache

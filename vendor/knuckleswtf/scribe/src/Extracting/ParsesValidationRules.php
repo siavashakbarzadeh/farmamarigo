@@ -31,7 +31,10 @@ trait ParsesValidationRules
         $dependentRules = [];
         foreach ($validationRules as $parameter => $ruleset) {
             try {
-                if (count($customParameterData) && !isset($customParameterData[$parameter])) {
+                $parameterPlusDot = $parameter . '.';
+                if (count($customParameterData) && !isset($customParameterData[$parameter])
+                    && ! Arr::first(array_keys($customParameterData), fn ($key) => str_starts_with($key, $parameterPlusDot))
+                ) {
                     c::debug($this->getMissingCustomDataMessage($parameter));
                 }
                 $userSpecifiedParameterInfo = $customParameterData[$parameter] ?? [];
@@ -88,8 +91,8 @@ trait ParsesValidationRules
                 }
 
                 // Make sure the user-specified example overwrites others.
-                if (isset($userSpecifiedParameterInfo['example'])) {
-                    if ($this->shouldCastUserExample()) {
+                if (array_key_exists('example', $userSpecifiedParameterInfo)) {
+                    if ($userSpecifiedParameterInfo['example'] != null && $this->shouldCastUserExample()) {
                         // Examples in comments are strings, we need to cast them properly
                         $parameterData['example'] = $this->castToType($userSpecifiedParameterInfo['example'], $parameterData['type'] ?? 'string');
                     } else {
