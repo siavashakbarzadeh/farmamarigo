@@ -1,10 +1,13 @@
 /node_modules
-
+/public/hot
+/public/storage
+/storage/*.key
 /vendor
 .DS_Store
 Thumbs.db
 /bower_components
 .env
+/.env
 .env.backup
 /.idea
 /.vscode
@@ -22,13 +25,17 @@ __MACOSX
 /.phpintel
 /.php_cs.cache
 
-
+public/vendor/core
 
 _ide_helper.php
 package-lock.json
 yarn.lock
 /.sass-cache
 
+public/mix-manifest.json
+
+public/themes
+public/docs
 resources/docs
 
 .phpunit.result.cache
