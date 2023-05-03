@@ -12,6 +12,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Removed
 
+# 4.17.0 (19 March 2023)
+## Added
+- Proper support for invokable rules and Laravel 10 validation rules changes ([ea3418](https://github.com/knuckleswtf/scribe/commit/ea341869b4062c9303507cae06fe1da1e12d7ccc))
+
+## Modified
+- Experimental: don't URL-encode Postman query parameters (closes #442) ([df4d86fa1](https://github.com/knuckleswtf/scribe/commit/df4d86fa1df06e9d2a2a294d39ee258ac94f02de))
+
+# 4.16.1 (19 March 2023)
+## Fixed
+- Fix sorting of responses by status code ([#623](https://github.com/knuckleswtf/scribe/pull/623))
+- Skip upgrade check if user hasn't published config yet ([#628](https://github.com/knuckleswtf/scribe/pull/628))
+- Upgrade: Ignore `examples.models_source` ([#631](https://github.com/knuckleswtf/scribe/pull/631))
+- More robust replacement of `:attribute` in validation rule descriptions (closes #633)
+- Remove invalid JS file request (closes #634)
+
+# 4.16.0 (16 February 2023)
+## Added
+- Support for Laravel enum validation rule in inline validators ([#616](https://github.com/knuckleswtf/scribe/pull/616))
+
+
+# 4.15.0 (14 February 2023)
+## Added
+- Support for Laravel enum validation rule ([#614](https://github.com/knuckleswtf/scribe/pull/614))
+
+
 # 4.14.0 (07 February 2023)
 ## Added
 - Support for Laravel 10 ([#610](https://github.com/knuckleswtf/scribe/pull/610))
