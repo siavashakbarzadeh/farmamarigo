@@ -155,14 +155,11 @@
                             </div>
                             <div class="header-action-right">
                                 <div class="header-action-2">
-                                    @if (EcommerceHelper::isCompareEnabled())
-                                        <div class="header-action-icon-2">
-                                            <a href="{{ route('public.compare') }}" class="compare-count">
-                                                <img class="svgInject" alt="{{ __('Compare') }}" src="{{ Theme::asset()->url('images/icons/icon-compare.svg') }}">
-                                                <span class="pro-count blue"><span>{{ Cart::instance('compare')->count() }}</span></span>
-                                            </a>
-                                        </div>
-                                    @endif
+                                    <div class="header-action-icon-2">
+                                        <a href="{{ route('customer.login') }}">
+                                            <img alt="{{ __('Sign In') }}" src="{{ Theme::asset()->url('images/icons/icon-user.svg') }}">
+                                        </a>
+                                    </div>
                                     @if (EcommerceHelper::isWishlistEnabled())
                                         <div class="header-action-icon-2">
                                             <a href="{{ route('public.wishlist') }}" class="wishlist-count">
@@ -180,11 +177,17 @@
                                             {!! Theme::partial('cart-panel') !!}
                                         </div>
                                     </div>
-                                    <div class="header-action-icon-2">
-                                        <a href="{{ route('customer.login') }}">
-                                            <img alt="{{ __('Sign In') }}" src="{{ Theme::asset()->url('images/icons/icon-user.svg') }}">
-                                        </a>
-                                    </div>
+                                    @if (EcommerceHelper::isCompareEnabled())
+                                        <div class="header-action-icon-2">
+                                            <a href="{{ route('public.compare') }}" class="compare-count">
+                                                <img class="svgInject" alt="{{ __('Compare') }}" src="{{ Theme::asset()->url('images/icons/icon-compare.svg') }}">
+                                                <span class="pro-count blue"><span>{{ Cart::instance('compare')->count() }}</span></span>
+                                            </a>
+                                        </div>
+                                    @endif
+
+
+
                                 </div>
                             </div>
                         @endif
