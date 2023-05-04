@@ -28,6 +28,69 @@ app()->booted(function () {
         return Theme::partial('shortcodes.site-features-admin-config', compact('attributes'));
     });
 
+    add_shortcode('leftadsproduct', __('leftads product'), __('leftads product'), function ($shortcode) {
+        $category = app(ProductCategoryInterface::class)->getFirstBy([
+            'status' => BaseStatusEnum::PUBLISHED,
+            'id' => (int)$shortcode->category_id,
+        ], ['*'], [
+            'activeChildren' => function ($query) {
+                $query->limit(3);
+            },
+        ]);
+
+        if (! $category) {
+            return null;
+        }
+
+        return Theme::partial('shortcodes.leftadsproduct', compact('category' , 'shortcode'));
+    }
+
+    );
+
+    shortcode()->setAdminConfig('leftadsproduct', function ($attributes) {
+        $categories = app(ProductCategoryInterface::class)->pluck(
+            'name',
+            'id',
+            ['status' => BaseStatusEnum::PUBLISHED]
+        );
+
+        return Theme::partial(
+            'shortcodes.leftadsproduct-admin-config',
+            compact('categories', 'attributes')
+        );
+    });
+    add_shortcode('rightadsproduct', __('rightads product'), __('rightads product'), function ($shortcode) {
+        $category = app(ProductCategoryInterface::class)->getFirstBy([
+            'status' => BaseStatusEnum::PUBLISHED,
+            'id' => (int)$shortcode->category_id,
+        ], ['*'], [
+            'activeChildren' => function ($query) {
+                $query->limit(3);
+            },
+        ]);
+
+        if (! $category) {
+            return null;
+        }
+
+        return Theme::partial('shortcodes.rightadsproduct', compact('category' , 'shortcode'));
+    }
+
+    );
+
+    shortcode()->setAdminConfig('rightadsproduct', function ($attributes) {
+        $categories = app(ProductCategoryInterface::class)->pluck(
+            'name',
+            'id',
+            ['status' => BaseStatusEnum::PUBLISHED]
+        );
+
+        return Theme::partial(
+            'shortcodes.rightadsproduct-admin-config',
+            compact('categories', 'attributes')
+        );
+    });
+
     if (is_plugin_active('ecommerce')) {
         add_shortcode(
             'featured-product-categories',
@@ -103,6 +166,27 @@ app()->booted(function () {
 
         shortcode()->setAdminConfig('product-collections', function ($attributes) {
             return Theme::partial('shortcodes.product-collections-admin-config', compact('attributes'));
+        });
+        add_shortcode(
+            'last-products',
+            __('last products'),
+            __('last products'),
+            function ($shortcode) {
+                $productCollections = get_product_collections(
+                    ['status' => BaseStatusEnum::PUBLISHED],
+                    [],
+                    ['id', 'name', 'slug']
+                );
+
+                return Theme::partial('shortcodes.last-products', [
+                    'title' => $shortcode->title,
+                    'productCollections' => ProductCollectionResource::collection($productCollections),
+                ]);
+            }
+        );
+
+        shortcode()->setAdminConfig('last-products', function ($attributes) {
+            return Theme::partial('shortcodes.last-products-admin-config', compact('attributes'));
         });
 
         add_shortcode(
