@@ -36,6 +36,7 @@
                 </li>
             @endif
 
+            @dd(App::getLocale())
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle dropdown-header-name" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-inline d-sm-none"><i class="fas fa-palette"></i></span>
