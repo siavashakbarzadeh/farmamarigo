@@ -39,7 +39,7 @@
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle dropdown-header-name" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-inline d-sm-none"><i class="fas fa-palette"></i></span>
-                        <span class="d-none d-sm-inline">{{ strtoupper(app()->getLocale()) }}</span>
+                        <span class="d-none d-sm-inline">{{ strtoupper(App::getLocale()) }}</span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right icons-right">
