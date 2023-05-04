@@ -21,6 +21,7 @@ class LanguageManager
         if (Session::has('applocale') && array_key_exists(Session::get('applocale'),Config::get('core.base.admin_languages'))){
             App::setLocale(Session::get('applocale'));
         }
+        dd(App::getLocale());
         return $next($request);
     }
 }
