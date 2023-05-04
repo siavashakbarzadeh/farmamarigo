@@ -53,7 +53,7 @@ class PublicController extends Controller
     public function getIndex()
     {
         //todo remove this comment
-        /*if (defined('PAGE_MODULE_SCREEN_NAME')) {
+        if (defined('PAGE_MODULE_SCREEN_NAME')) {
             $homepageId = BaseHelper::getHomepageId();
             if ($homepageId) {
                 $slug = SlugHelper::getSlug(null, SlugHelper::getPrefix(Page::class), Page::class, $homepageId);
@@ -66,7 +66,7 @@ class PublicController extends Controller
                     return Theme::scope($data['view'], $data['data'], $data['default_view'])->render();
                 }
             }
-        }*/
+        }
 
 
         SeoHelper::setTitle(theme_option('site_title'));
