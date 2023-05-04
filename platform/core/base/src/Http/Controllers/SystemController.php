@@ -143,6 +143,7 @@ class SystemController extends Controller
     public function adminswitchLang($lang)
     {
         if (array_key_exists($lang, Config::get('core.base.admin_languages'))) {
+            dd("ok");
             App::setLocale($lang);
             Session::put('applocale', $lang);
         }
