@@ -59,9 +59,9 @@
         </div>
         <div class="shopping-cart-button">
             <a href="{{ route('public.cart') }}">{{ __('View cart') }}</a>
-            @if (session('tracked_start_checkout'))
-                <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}">{{ __('Checkout') }}</a>
-            @endif
+{{--            @if (session('tracked_start_checkout'))--}}
+{{--                <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}">{{ __('Checkout') }}</a>--}}
+{{--            @endif--}}
         </div>
     </div>
 @else
