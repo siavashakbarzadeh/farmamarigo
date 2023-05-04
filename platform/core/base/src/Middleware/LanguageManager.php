@@ -18,6 +18,7 @@ class LanguageManager
      */
     public function handle(Request $request, Closure $next)
     {
+        Session::flush();
         if (Session::has('applocale') && array_key_exists(Session::get('applocale'),Config::get('core.base.admin_languages'))){
             App::setLocale(Session::get('applocale'));
         }
