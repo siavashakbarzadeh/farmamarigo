@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="056867f3-64bc-4cfb-83f5-bc18326a9b9b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/farmamarigo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/farmamarigo.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerConfigs">
+    <option name="configs">
+      <option value="$PROJECT_DIR$/platform/packages/menu/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/paystack/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/seo-helper/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/captcha/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/get-started/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/analytics/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/theme/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/shippo/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/plugin-management/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/optimize/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/social-login/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/paypal/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/translation/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/newsletter/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/widget/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/shortcode/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/installer/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/simple-slider/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/slug/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/payment/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/razorpay/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/stripe/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/sitemap/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/ecommerce/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/revision/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/page/composer.json" />
+      <option value="$PROJECT_DIR$/platform/core/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/api/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/mollie/composer.json" />
+    </option>
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
@@ -19,7 +57,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
       <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
@@ -241,16 +279,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Utente/Documents/GitHub/farmamarigo&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Operatore/Documents/GitHub/farmamarigo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
@@ -268,6 +310,9 @@
       <workItem from="1683135557497" duration="597000" />
       <workItem from="1683139184115" duration="1205000" />
       <workItem from="1683183474382" duration="10327000" />
+      <workItem from="1683536176376" duration="93000" />
+      <workItem from="1683536272971" duration="3000" />
+      <workItem from="1683536294260" duration="1030000" />
     </task>
     <servers />
   </component>
