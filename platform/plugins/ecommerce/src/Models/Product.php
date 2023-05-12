@@ -56,6 +56,23 @@ class Product extends BaseModel
         'stock_status',
         'barcode',
         'cost_per_item',
+        //CUSTOM VARIABLES//
+        //ALSO NEED TO UPDATE DATABASE//
+        'unita_di_misura',
+        'linea_id',
+        'confezione',
+        'famiglia_id',
+        'impegno_id1',
+        'impegno_id2',
+        'impegno_id3',
+        'impegno_id4',
+        'impegno_id5',
+        'impegno_id6',
+        'impegno_id7',
+        'impegno_id8',
+        'refrig',
+        'volume',
+        'refrig_20'
     ];
 
     protected $appends = [
@@ -224,6 +241,10 @@ class Product extends BaseModel
         return $this->hasMany(ProductVariation::class, 'configurable_product_id');
     }
 
+    public function line(): BelongsTo
+    {
+        return $this->belongsTo(Line::class,'linea_id','id')->withDefault();
+    }
     public function parentProduct(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'ec_product_variations', 'product_id', 'configurable_product_id');
