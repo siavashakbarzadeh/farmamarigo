@@ -3,8 +3,9 @@
 
     // UPDATE BRANDS
 
-    $brands=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6');
-    dump($brands);
+    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
+    @dd($products);
+
     // foreach ($brands as $brand) {
     //     dump(DB::connection('mysql')->table('ec_brands')->updateOrInsert(
     //         [

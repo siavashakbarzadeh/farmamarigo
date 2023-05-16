@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="056867f3-64bc-4cfb-83f5-bc18326a9b9b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/import.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/import.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,7 +283,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/laravellllllllllllllllllllllllllllllll/soovash.com",
+    "last_opened_file_path": "C:/Users/Utente/Documents/GitHub/farmamarigo",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -316,6 +317,9 @@
       <workItem from="1683800555263" duration="6549000" />
       <workItem from="1683884552962" duration="1788000" />
       <workItem from="1684059975189" duration="166000" />
+      <workItem from="1684090647193" duration="1099000" />
+      <workItem from="1684224907859" duration="1537000" />
+      <workItem from="1684249249890" duration="625000" />
     </task>
     <servers />
   </component>
