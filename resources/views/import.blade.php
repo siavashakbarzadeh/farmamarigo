@@ -7,7 +7,7 @@
     $products=DB::connection('mysql2')->table("art_articolo")->where('categoria',6)->where('fk_linea_id',439)->get();
     foreach ($products as $product) {
         \Botble\Ecommerce\Models\Product::updateOrCreate([
-                        'name' => 'name'
+                        'name' => $product->nome
 ],[
             'description' => 'Description',
 
