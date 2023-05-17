@@ -3,7 +3,8 @@
 
     // UPDATE BRANDS
 
-    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
+//    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
+    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 AND fk_linea_id=439');
     @dd($products);
 
     // foreach ($brands as $brand) {
