@@ -6,7 +6,12 @@
 //    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
     $products=DB::connection('mysql2')->table("art_articolo")->where('categoria',6)->where('fk_linea_id',439)->get();
     foreach ($products as $product) {
-        dd(\Botble\Ecommerce\Models\Product::all());
+        \Botble\Ecommerce\Models\Product::updateOrCreate([
+                        'name' => 'name'
+],[
+            'description' => 'Description',
+
+]);
     }
     @dd($products);
 
