@@ -11,6 +11,8 @@
                         'name' => $product->nome
 ],[
             'description' => 'Description',
+            'price' => $product->prezzo
+
 
 ]);
         $productItem->categories()->sync([439]);
