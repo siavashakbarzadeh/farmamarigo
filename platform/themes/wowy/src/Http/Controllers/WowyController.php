@@ -108,17 +108,26 @@ class WowyController extends PublicController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public static function ajaxGetFeaturedBrands(Request $request, BaseHttpResponse $response)
+//    public static function ajaxGetFeaturedBrands(Request $request, BaseHttpResponse $response)
+//    {
+//        if (! $request->ajax() || ! $request->wantsJson()) {
+//            return $response->setNextUrl(route('public.index'));
+//        }
+//
+//        $brands = get_featured_brands();
+//
+//        return $response->setData(BrandResource::collection($brands));
+//    }
+    public static function ajaxGetFeaturedBrands()
     {
-        if (! $request->ajax() || ! $request->wantsJson()) {
-            return $response->setNextUrl(route('public.index'));
-        }
+        // if (! $request->ajax() || ! $request->wantsJson()) {
+        //     return $response->setNextUrl(route('public.index'));
+        // }
 
         $brands = get_featured_brands();
 
-        return $response->setData(BrandResource::collection($brands));
+        return $brands;
     }
-
     /**
      * @param int $id
      * @param Request $request
