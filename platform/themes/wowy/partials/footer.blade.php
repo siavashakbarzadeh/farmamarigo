@@ -59,6 +59,33 @@
             "No reviews!": "{{ __('No reviews!') }}"
         };
     </script>
+
+
+    {!! Theme::place('footer') !!}
+
+    @if (session()->has('success_msg') || session()->has('error_msg') || (isset($errors) && $errors->count() > 0) || isset($error_msg))
+            <script type="text/javascript">
+                window.onload = function () {
+                    @if (session()->has('success_msg'))
+                    window.showAlert('alert-success', '{{ session('success_msg') }}');
+                    @endif
+
+                    @if (session()->has('error_msg'))
+                    window.showAlert('alert-danger', '{{ session('error_msg') }}');
+                    @endif
+
+                    @if (isset($error_msg))
+                    window.showAlert('alert-danger', '{{ $error_msg }}');
+                    @endif
+
+                    @if (isset($errors))
+                    @foreach ($errors->all() as $error)
+                    window.showAlert('alert-danger', '{!! BaseHelper::clean($error) !!}');
+                    @endforeach
+                    @endif
+                };
+            </script>
+        @endif
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
         $('.featured-brands-carousel').owlCarousel({
@@ -91,32 +118,6 @@
             }
         })
     </script>
-
-    {!! Theme::place('footer') !!}
-
-    @if (session()->has('success_msg') || session()->has('error_msg') || (isset($errors) && $errors->count() > 0) || isset($error_msg))
-            <script type="text/javascript">
-                window.onload = function () {
-                    @if (session()->has('success_msg'))
-                    window.showAlert('alert-success', '{{ session('success_msg') }}');
-                    @endif
-
-                    @if (session()->has('error_msg'))
-                    window.showAlert('alert-danger', '{{ session('error_msg') }}');
-                    @endif
-
-                    @if (isset($error_msg))
-                    window.showAlert('alert-danger', '{{ $error_msg }}');
-                    @endif
-
-                    @if (isset($errors))
-                    @foreach ($errors->all() as $error)
-                    window.showAlert('alert-danger', '{!! BaseHelper::clean($error) !!}');
-                    @endforeach
-                    @endif
-                };
-            </script>
-        @endif
 
         <div id="scrollUp"><i class="fal fa-long-arrow-up"></i></div>
     </body>
