@@ -100,44 +100,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
 
-    $("#owl-demo").owlCarousel({
-
-        autoPlay: 3000, //Set AutoPlay to 3 seconds
-
-        items : 4,
-        itemsDesktop : [1199,3],
-        itemsDesktopSmall : [979,3]
-
-    });
-    // $('.featured-brands-carousel').owlCarousel({
-    //     autoplay:true,
-    //     autoplayTimeout:2000,
-    //     autoplayHoverPause:true,
-    //     stagePadding: 50,/*the little visible images at the end of the carousel*/
-    //     loop:true,
-    //     rtl: false,
-    //     lazyLoad:true,
-    //     autoHeight:true,
-    //     margin:-50,
-    //     nav:false,
-    //     responsive:{
-    //         0:{
-    //             items:1
-    //         },
-    //         600:{
-    //             items:2
-    //         },
-    //         800:{
-    //             items: 3
-    //         },
-    //         1000:{
-    //             items:4
-    //         },
-    //         1200:{
-    //             items: 4
-    //         }
-    //     }
-    // })
+    // $("#owl-demo").owlCarousel({
+    //
+    //     autoPlay: 3000, //Set AutoPlay to 3 seconds
+    //
+    //     items : 4,
+    //     itemsDesktop : [1199,3],
+    //     itemsDesktopSmall : [979,3]
+    //
+    // });
+    $('.featured-brands-carousel').owlCarousel({
+        autoplay:true,
+        autoplayTimeout:2000,
+        autoplayHoverPause:true,
+        stagePadding: 50,/*the little visible images at the end of the carousel*/
+        loop:true,
+        rtl: false,
+        lazyLoad:true,
+        autoHeight:true,
+        margin:-50,
+        nav:false,
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:2
+            },
+            800:{
+                items: 3
+            },
+            1000:{
+                items:4
+            },
+            1200:{
+                items: 4
+            }
+        }
+    })
 
 
 </script>

@@ -4,8 +4,8 @@
 <section class="section-padding-60">
     <div class="container">
         <h3 class="section-title style-1 mb-30 wow fadeIn animated">{!! BaseHelper::clean($title) !!}</h3>
-        <div id="owl-demo" class="owl-carousel owl-theme">
-{{--        <div class=" owl-carousel owl-theme featured-brands-carousel ">--}}
+{{--        <div id="owl-demo" class="owl-carousel owl-theme">--}}
+        <div class=" owl-carousel owl-theme featured-brands-carousel ">
 
             @foreach ($brands as $brand)
                 <div class="col-3">
