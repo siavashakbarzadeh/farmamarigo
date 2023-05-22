@@ -9,11 +9,11 @@
         <div class=" owl-carousel owl-theme brands-carousel ">
 
             @foreach ($brands as $brand)
-                <div class="col-3">
+
                     <a class="displayManufacturer" href="{{ $brand->website }}">
                         <img class="displayManufacturerImg" src="{{ RvMedia::getImageUrl($brand->logo ) }}">
                     </a>
-                </div>
+
             @endforeach
         </div>
         {{-- <featured-brands-component url="{{ route('public.ajax.featured-brands') }}"></featured-brands-component> --}}
