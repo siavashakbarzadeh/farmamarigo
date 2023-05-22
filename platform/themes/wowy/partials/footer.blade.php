@@ -109,6 +109,22 @@
     //     itemsDesktopSmall : [979,3]
     //
     // });
+    $('.brands-carousel').owlCarousel({
+        loop:true,
+        margin:10,
+        nav:true,
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:3
+            },
+            1000:{
+                items:5
+            }
+        }
+    })
     $('.featured-brands-carousel').owlCarousel({
         autoplay:true,
         autoplayTimeout:2000,
