@@ -101,7 +101,7 @@
 <script>
     $(document).ready(function() {
 
-        $('.featured-brands-carousel').owlCarousel({
+        $("#featured-brands-carousel").owlCarousel({
             autoplay:true,
             autoplayTimeout:2000,
             autoplayHoverPause:true,
