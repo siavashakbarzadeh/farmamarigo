@@ -9,14 +9,14 @@
             <div class="faded-bg animated"></div>
             <div class="hidden-xs col-sm-7 col-md-8">
                 <div class="clearfix">
-                    <div class="col-sm-12 col-md-10 col-md-offset-2">
-                        <div class="logo-title-container">
-                            <div class="copy animated fadeIn">
-                                <h1>{{ setting('admin_title', config('core.base.general.base_name')) }}</h1>
-                                <p>{!! BaseHelper::clean(trans('core/base::layouts.copyright', ['year' => Carbon\Carbon::now()->format('Y'), 'company' => setting('admin_title', config('core.base.general.base_name')), 'version' => get_cms_version()])) !!}</p>
-                            </div>
-                        </div> <!-- .logo-title-container -->
-                    </div>
+{{--                    <div class="col-sm-12 col-md-10 col-md-offset-2">--}}
+{{--                        <div class="logo-title-container">--}}
+{{--                            <div class="copy animated fadeIn">--}}
+{{--                                <h1>{{ setting('admin_title', config('core.base.general.base_name')) }}</h1>--}}
+{{--                                <p>{!! BaseHelper::clean(trans('core/base::layouts.copyright', ['year' => Carbon\Carbon::now()->format('Y'), 'company' => setting('admin_title', config('core.base.general.base_name')), 'version' => get_cms_version()])) !!}</p>--}}
+{{--                            </div>--}}
+{{--                        </div> <!-- .logo-title-container -->--}}
+{{--                    </div>--}}
                 </div>
             </div>
 
