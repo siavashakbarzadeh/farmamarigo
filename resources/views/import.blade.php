@@ -8,7 +8,8 @@
     foreach ($products as $product) {
 
         $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
-                        'name' => $product->nome
+                        'name' => $product->nome,
+                        'name' => $product->url,
 ],[
             'description' => 'Description',
             'price' => $product->prezzo
