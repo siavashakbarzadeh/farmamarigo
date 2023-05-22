@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="056867f3-64bc-4cfb-83f5-bc18326a9b9b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platform/themes/wowy/partials/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/themes/wowy/partials/footer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platform/themes/wowy/partials/shortcodes/featured-brands.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/themes/wowy/partials/shortcodes/featured-brands.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -323,7 +325,7 @@
       <workItem from="1684308398451" duration="7585000" />
       <workItem from="1684394412396" duration="1896000" />
       <workItem from="1684407957048" duration="595000" />
-      <workItem from="1684745135361" duration="4314000" />
+      <workItem from="1684745135361" duration="10086000" />
     </task>
     <servers />
   </component>
