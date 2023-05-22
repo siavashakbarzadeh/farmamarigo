@@ -226,29 +226,30 @@ class SettingController extends BaseController
 
     public function getVerifyLicense(Core $coreApi, BaseHttpResponse $response)
     {
-        if (! File::exists(storage_path('.license'))) {
-            return $response->setError()->setMessage('Your license is invalid. Please activate your license!');
-        }
+        // if (! File::exists(storage_path('.license'))) {
+        //     return $response->setError()->setMessage('');
+        // }
 
-        try {
-            $result = $coreApi->verifyLicense(true);
+        // try {
+        //     $result = $coreApi->verifyLicense(true);
 
-            if (! $result['status']) {
-                return $response->setError()->setMessage($result['message']);
-            }
+        //     if (! $result['status']) {
+        //         return $response->setError()->setMessage($result['message']);
+        //     }
 
-            $activatedAt = Carbon::createFromTimestamp(filectime($coreApi->getLicenseFilePath()));
-        } catch (Throwable $exception) {
-            $activatedAt = Carbon::now();
-            $result = ['message' => $exception->getMessage()];
-        }
+        //     $activatedAt = Carbon::createFromTimestamp(filectime($coreApi->getLicenseFilePath()));
+        // } catch (Throwable $exception) {
+        //     $activatedAt = Carbon::now();
+        //     $result = ['message' => $exception->getMessage()];
+        // }
 
-        $data = [
-            'activated_at' => $activatedAt->format('M d Y'),
-            'licensed_to' => setting('licensed_to'),
-        ];
+        // $data = [
+        //     'activated_at' => $activatedAt->format('M d Y'),
+        //     'licensed_to' => setting('licensed_to'),
+        // ];
 
-        return $response->setMessage($result['message'])->setData($data);
+        // return $response->setMessage($result['message'])->setData($data);
+        return true;
     }
 
     public function activateLicense(LicenseSettingRequest $request, BaseHttpResponse $response, Core $coreApi)
