@@ -100,7 +100,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
 
+    $("#owl-demo").owlCarousel({
 
+        autoPlay: 3000, //Set AutoPlay to 3 seconds
+
+        items : 4,
+        itemsDesktop : [1199,3],
+        itemsDesktopSmall : [979,3]
+
+    });
     $('.featured-brands-carousel').owlCarousel({
         autoplay:true,
         autoplayTimeout:2000,
