@@ -100,34 +100,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
 
-    $('.blog-carousel').owlCarousel({
-        autoplay:true,
-        autoplayTimeout:2000,
-        autoplayHoverPause:true,
-        stagePadding: 50,/*the little visible images at the end of the carousel*/
-        loop:true,
-        rtl: false,
-        lazyLoad:true,
-        margin:10,
-        nav:false,
-        responsive:{
-            0:{
-                items:1
-            },
-            600:{
-                items:1
-            },
-            800:{
-                items: 3
-            },
-            1000:{
-                items:3
-            },
-            1200:{
-                items: 3
-            }
-        }
-    })
+
     $('.featured-brands-carousel').owlCarousel({
         autoplay:true,
         autoplayTimeout:2000,
@@ -157,103 +130,10 @@
             }
         }
     })
-    $('.discounted-carousel').owlCarousel({
-        autoplay:true,
-        autoplayTimeout:2000,
-        autoplayHoverPause:true,
-        stagePadding: 50,/*the little visible images at the end of the carousel*/
-        loop:true,
-        rtl: false,
-        lazyLoad:true,
-        autoHeight:true,
-        margin:10,
-        nav:false,
-        responsive:{
-            0:{
-                items:1
-            },
-            600:{
-                items:1
-            },
-            800:{
-                items: 1
-            },
-            1000:{
-                items:2
-            },
-            1200:{
-                items: 3
-            }
-        }
-    })
+    
 
 </script>
 
-<script>
-
-    $("#condizioni-generali").click(function(){
-        Swal.fire({
-            title: '<strong>CONDIZIONI GENERALI DI VENDITA</strong>',
-            icon: 'info',
-            html:
-                `<div style="height:300px;overflow-x:scroll; text-align:left">
-    <h4>ORDINI</h4>
-    <p>Gli ordini vanno trasmessi direttamente a Marigo Italia attraverso: WEB Log In - Marigo Lab EMAIL ordini@marigoitalia.it TELEFONO (+39) 081 534 46 11 FAX (+39) 081 878 75 84</p>
-    <br>
-    <p>L’impegno della fornitura si intende sempre nei limiti della disponibilità della merce. Marigo Italia s.r.l. si riserva il diritto, in tutto o in parte, di annullare o differire ordini a seguito di sopravvenute impossibilità di fornitura dovute a causa di forza maggiore che dovessero verificarsi nei nostri magazzini o in quelli dei nostri fornitori. Su ciascun ordine deve essere specificato:</p>
-    <p>• Indirizzo cui la merce deve essere inviata</p>
-    <p>• Codice cliente che viene riportato in offerta o in fattura</p>
-    <p>• Partita I.V.A. / Codice fiscale</p>
-    <p>• Numero e data dell’ordine</p>
-    <br>
-    <p>Per ciascun prodotto ordinato deve essere specificato:</p>
-    <p>• Codice</p>
-    <p>• La quantità ordinata</p>
-    </div>`,
-            showCloseButton: true,
-            showCancelButton: true,
-            focusConfirm: false,
-            confirmButtonText:
-                '<i class="fa fa-thumbs-up"></i> Perfetto!',
-            confirmButtonAriaLabel: 'Thumbs up, great!',
-            cancelButtonText:
-                '<i class="fa fa-thumbs-down"></i>',
-            cancelButtonAriaLabel: 'Thumbs down'
-        })
-    })
-
-    $("#wishlistAction a").click(function(){
-        if($(this).find(".fa-heart").hasClass('fas')){
-            $(this).find(".fa-heart").removeClass('fas');
-            $(this).find(".fa-heart").addClass('far');
-            $(this).find(".fa-heart").css("color","#005BA1");
-        }else{
-            $(this).find(".fa-heart").removeClass('far');
-            $(this).find(".fa-heart").addClass('fas');
-            $(this).find(".fa-heart").css("color","red");
-        }
-
-    })
-</script>
-<script>
-
-    $(".form-check-input").click(async function(){
-        await $(this).closest('#products-filter-ajax').submit();
-        setTimeout( function(){
-            location.reload();
-        },500);
-    })
-
-    $("#search-consumabili").keyup(function(){
-        $(this).closest('form').submit();
-    });
-
-    $('#wishlist').click(function(){
-
-        $('#queryonsearch').submit();
-
-    });
-</script>
 
 <div id="scrollUp"><i class="fal fa-long-arrow-up"></i></div>
 </body>
