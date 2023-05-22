@@ -9,7 +9,7 @@
 
         $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
                         'name' => $product->nome,
-                        'name' => $product->url,
+//                        'name' => $product->url,
 ],[
             'description' => 'Description',
             'price' => $product->prezzo
