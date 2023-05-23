@@ -12,7 +12,8 @@
 //                        'name' => $product->url,
 ],[
             'description' => 'Description',
-            'price' => $product->prezzo
+            'price' => $product->prezzo,
+            'images' => $product->codice,
 
 
 ]);
