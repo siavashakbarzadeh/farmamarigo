@@ -14,6 +14,8 @@
             'description' => 'Description',
             'price' => $product->prezzo,
             'images' => $product->codice.'.jpg',
+            'images' => ($product->codice.'.jpg', []);
+//            $request->input('images', []);
 
 
 ]);
