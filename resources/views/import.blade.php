@@ -20,7 +20,7 @@
 
 
 ]);
-        $productItem->categories()->sync([443,124,439]);
+        $productItem->categories()->sync([$product->fk_linea_id]);
     }
     @dd($products);
 
