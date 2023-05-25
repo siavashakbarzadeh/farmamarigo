@@ -13,7 +13,7 @@
 ],[
             'description' => 'Description',
             'price' => $product->prezzo,
-            'images' => collect([$product->codice.'.jpg'])->toJson(),
+            'images' => collect([strtolower($product->codice).'.jpg'])->toJson(),
 
 
 //            $request->input($product->codice.'.jpg', []);
