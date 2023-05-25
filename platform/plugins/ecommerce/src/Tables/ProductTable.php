@@ -125,8 +125,7 @@ class ProductTable extends TableAbstract
                 'with_storehouse_management',
                 'stock_status',
                 'product_type',
-            ])
-            ->where('is_variation', 0);
+            ]);
 
         return $this->applyScopes($query);
     }
