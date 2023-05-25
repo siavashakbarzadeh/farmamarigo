@@ -4,7 +4,7 @@
     // UPDATE BRANDS
 
 //    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
-    $products=DB::connection('mysql2')->table("art_articolo")->where('categoria',6)->where('fk_linea_id',443)->get();
+    $products=DB::connection('mysql2')->table("art_articolo")->where('categoria',6)->whereIn('fk_linea_id',[443,124,439])->get();
     foreach ($products as $product) {
 
         $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
@@ -20,7 +20,7 @@
 
 
 ]);
-        $productItem->categories()->sync([443]);
+        $productItem->categories()->sync([443,124,439]);
     }
     @dd($products);
 
