@@ -8,9 +8,9 @@
     $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
 
     foreach ($products as $product) {
-        if (!\Botble\Ecommerce\Models\Product::query()->where('name',$product->nome)->exists()){
+        if (!\Botble\Ecommerce\Models\Product::query()->where('name',trim($product->nome))->exists()){
             \Botble\Ecommerce\Models\Product::query()->create([
-                'name' => $product->nome,
+                'name' => trim($product->nome),
                 'description' => 'Description',
                 'price' => $product->prezzo,
                 'images' => collect([strtolower($product->codice).'.jpg'])->toJson(),
