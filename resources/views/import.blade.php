@@ -25,7 +25,7 @@
 
 
 ]);
-        $productItem->categories()->sync([$product->fk_linea_id]);
+//        $productItem->categories()->sync([$product->fk_linea_id]);
     }
     @dd($products);
 
