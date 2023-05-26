@@ -11,6 +11,8 @@
             return (array)$item;
         })->unique(function ($item) {
             return $item['nome'];
+        })->filter(function ($item) {
+            return !\Botble\Ecommerce\Models\Product::query()->where('name',trim($item['nome']))->count();
         });
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
             foreach ($products as $product) {
