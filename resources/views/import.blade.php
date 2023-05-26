@@ -30,7 +30,7 @@
                         'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
                     ]);
                 }
-                $productItem->categories()->sync([$product->fk_linea_id]);
+                $productItem->categories()->sync([$product['fk_linea_id']]);
             }
         });
     }catch (Throwable $e){
