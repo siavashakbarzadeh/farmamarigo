@@ -10,17 +10,15 @@
     try {
         $products = $products->map(function ($item){
             return (array)$item;
-        })->unique(function ($item) {
-            return $item['nome'];
         })->filter(function ($item) use($items) {
             return !in_array($item['nome'],$items);
         });
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
             foreach ($products as $product) {
                     \Botble\Ecommerce\Models\Product::query()->updateOrCreate([
-                        'name' => \Illuminate\Support\Str::replace('&','and',trim($product['nome'])),
+                        'name' => str_replace('&','and',trim($product['nome'])),
                     ],[
-                        'name' => \Illuminate\Support\Str::replace('&','and',trim($product['nome'])),
+                        'name' => str_replace('&','and',trim($product['nome'])),
                         'description' => 'Description',
                         'price' => $product['prezzo'],
                         'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
