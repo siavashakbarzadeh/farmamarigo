@@ -15,12 +15,12 @@
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
             foreach ($products as $product) {
                     \Botble\Ecommerce\Models\Product::query()->updateOrCreate([
-                        'name' => trim($product->nome),
+                        'name' => trim($product['nome']),
                     ],[
-                        'name' => trim($product->nome),
+                        'name' => trim($product['nome']),
                         'description' => 'Description',
-                        'price' => $product->prezzo,
-                        'images' => collect([strtolower($product->codice).'.jpg'])->toJson(),
+                        'price' => $product['prezzo'],
+                        'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
                     ]);
         //        $productItem->categories()->sync([$product->fk_linea_id]);
             }
