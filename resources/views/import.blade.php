@@ -15,15 +15,24 @@
             return !in_array(str_replace('&','and',trim($item['nome'])),$items);
         });
     try {
-        \Illuminate\Support\Facades\DB::transaction(function ()use($products){
+        \Illuminate\Support\Facades\DB::transaction(function ()use($products,$items){
             foreach ($products as $product) {
-                    \Botble\Ecommerce\Models\Product::query()->create([
+                if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
+                    $productItem = \Botble\Ecommerce\Models\Product::query()->where('name',str_replace('&','and',trim($product['nome'])))->first();
+                    $productItem->update([
+                        'description' => 'Description',
+                        'price' => $product['prezzo'],
+                        'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
+                    ]);
+                }else{
+                    $productItem = \Botble\Ecommerce\Models\Product::query()->create([
                         'name' => str_replace('&','and',trim($product['nome'])),
                         'description' => 'Description',
                         'price' => $product['prezzo'],
                         'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
                     ]);
-        //        $productItem->categories()->sync([$product->fk_linea_id]);
+                }
+                $productItem->categories()->sync([$product->fk_linea_id]);
             }
         });
     }catch (Throwable $e){
