@@ -9,16 +9,15 @@
     $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
     $products = $products->map(function ($item){
             return (array)$item;
+        })->unique(function ($item) use($items) {
+            return trim($item['nome']);
         })->filter(function ($item) use($items) {
             return !in_array($item['nome'],$items);
         });
-    dd($items->count(),$products);
     try {
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
             foreach ($products as $product) {
-                    \Botble\Ecommerce\Models\Product::query()->updateOrCreate([
-                        'name' => str_replace('&','and',trim($product['nome'])),
-                    ],[
+                    \Botble\Ecommerce\Models\Product::query()->create([
                         'name' => str_replace('&','and',trim($product['nome'])),
                         'description' => 'Description',
                         'price' => $product['prezzo'],
