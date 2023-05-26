@@ -9,7 +9,7 @@
     foreach ($products as $product) {
 //$row=DB::connection('mysql')->table('ec_brands')->
 //        $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
-        $productItem=DB::connection('mysql')->table('ec_brands')->updateOrInsert([
+        $productItem=DB::connection('mysql')->table('ec_products')->updateOrInsert([
 
                         'id' => $product->pk_articolo_id,
                         'name' => $product->nome,
