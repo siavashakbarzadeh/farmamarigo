@@ -4,12 +4,13 @@
     // UPDATE BRANDS
 
 //    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
+
     $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
 
     foreach ($products as $product) {
-//$row=DB::connection('mysql')->table('ec_brands')->
-//        $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
-        $productItem=DB::connection('mysql')->table('ec_products')->updateOrInsert([
+
+        $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
+//        $productItem=DB::connection('mysql')->table('ec_products')->updateOrInsert([
 
                         'id' => $product->pk_articolo_id,
                         'name' => $product->nome,
