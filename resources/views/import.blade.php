@@ -8,6 +8,8 @@
     $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
     dd($products->map(function ($item){
         return (array)$item;
+    })->unique(function ($item) {
+        return $item['nome'];
     }));
     try {
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
