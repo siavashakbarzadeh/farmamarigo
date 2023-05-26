@@ -7,12 +7,13 @@
 
     $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
     $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
-    try {
-        $products = $products->map(function ($item){
+    $products = $products->map(function ($item){
             return (array)$item;
         })->filter(function ($item) use($items) {
             return !in_array($item['nome'],$items);
         });
+    dd($items->count(),$products);
+    try {
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
             foreach ($products as $product) {
                     \Botble\Ecommerce\Models\Product::query()->updateOrCreate([
