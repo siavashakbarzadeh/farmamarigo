@@ -12,7 +12,7 @@
         })->unique(function ($item) use($items) {
             return trim($item['nome']);
         })->filter(function ($item) use($items) {
-            return !in_array($item['nome'],$items);
+            return !in_array(str_replace('&','and',trim($item['nome'])),$items);
         });
     try {
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
