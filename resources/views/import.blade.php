@@ -11,11 +11,10 @@
         $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
 //        $productItem=DB::connection('mysql')->table('ec_products')->updateOrInsert([
 
-                        'id' => $product->pk_articolo_id,
                         'name' => $product->nome,
 //                        'name' => $product->url,
 ],[
-    'id' => $product->pk_articolo_id,
+            'name' => $product->nome,
             'description' => 'Description',
             'price' => $product->prezzo,
             'images' => collect([strtolower($product->codice).'.jpg'])->toJson(),

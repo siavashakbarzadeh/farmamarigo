@@ -28,9 +28,6 @@ class Product extends BaseModel
 {
     protected $table = 'ec_products';
 
-    protected $primaryKey = 'id';
-    public $incrementing = false;
-
     protected $fillable = [
         'name',
         'description',
