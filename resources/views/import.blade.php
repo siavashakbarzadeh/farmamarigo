@@ -29,7 +29,7 @@
     }catch (Throwable $e){
         dd($e);
     }
-dd(count($products));
+dd($products,count($products));
     @dd($products);
 
     // foreach ($brands as $brand) {
