@@ -7,8 +7,9 @@
     $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
 
     foreach ($products as $product) {
-
-        $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
+//$row=DB::connection('mysql')->table('ec_brands')->
+//        $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
+        $productItem=DB::connection('mysql')->table('ec_brands')->updateOrInsert([
 
                         'id' => $product->pk_articolo_id,
                         'name' => $product->nome,
