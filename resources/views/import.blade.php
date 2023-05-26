@@ -11,7 +11,9 @@
     try {
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
             foreach ($products as $product) {
-                    \Botble\Ecommerce\Models\Product::query()->create([
+                    \Botble\Ecommerce\Models\Product::query()->updateOrCreate([
+                        'name' => trim($product->nome),
+                    ],[
                         'name' => trim($product->nome),
                         'description' => 'Description',
                         'price' => $product->prezzo,
