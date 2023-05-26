@@ -8,22 +8,14 @@
     $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
 
     foreach ($products as $product) {
-        $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
-//        $productItem=DB::connection('mysql')->table('ec_products')->updateOrInsert([
-
-                        'name' => $product->nome,
-//                        'name' => $product->url,
-],[
-            'name' => $product->nome,
-            'description' => 'Description',
-            'price' => $product->prezzo,
-            'images' => collect([strtolower($product->codice).'.jpg'])->toJson(),
-
-
-//            $request->input($product->codice.'.jpg', []);
-
-
-]);
+        if (!\Botble\Ecommerce\Models\Product::query()->where('name',$product->nome)->exists()){
+            \Botble\Ecommerce\Models\Product::query()->create([
+                'name' => $product->nome,
+                'description' => 'Description',
+                'price' => $product->prezzo,
+                'images' => collect([strtolower($product->codice).'.jpg'])->toJson(),
+            ]);
+        }
 //        $productItem->categories()->sync([$product->fk_linea_id]);
     }
     @dd($products);
