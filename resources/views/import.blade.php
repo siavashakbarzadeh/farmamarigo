@@ -9,6 +9,8 @@
     foreach ($products as $product) {
 
         $productItem = \Botble\Ecommerce\Models\Product::updateOrCreate([
+
+                        'id' => $product->pk_articolo_id,
                         'name' => $product->nome,
 //                        'name' => $product->url,
 ],[
