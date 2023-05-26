@@ -9,7 +9,9 @@
 
     dd(count($products),$products->map(function ($item){
         return (array) $item;
-    })->unique('name'));
+    })->unique(function ($item) {
+        return $item['name'];
+    }));
     try {
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
             foreach ($products as $product) {
