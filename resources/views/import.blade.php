@@ -11,14 +11,12 @@
     try {
         \Illuminate\Support\Facades\DB::transaction(function ()use($products){
             foreach ($products as $product) {
-                if (!\Botble\Ecommerce\Models\Product::query()->where('name',trim($product->nome))->exists()){
                     \Botble\Ecommerce\Models\Product::query()->create([
                         'name' => trim($product->nome),
                         'description' => 'Description',
                         'price' => $product->prezzo,
                         'images' => collect([strtolower($product->codice).'.jpg'])->toJson(),
                     ]);
-                }
         //        $productItem->categories()->sync([$product->fk_linea_id]);
             }
         });
