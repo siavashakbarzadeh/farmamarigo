@@ -541,7 +541,6 @@ class PublicCheckoutController
 
         return $response->setData($sessionData);
     }
-
     public function postCheckout(
         string $token,
         CheckoutRequest $request,

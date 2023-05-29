@@ -191,15 +191,17 @@ class PublicCartController extends Controller
 
     public function postUpdate(UpdateCartRequest $request, BaseHttpResponse $response)
     {
+
         if (! EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
-
+        Session::put('note',$request->note);
+        Session::put('shippingAmount',$request->shippingAmount);
         if ($request->has('checkout')) {
             $token = OrderHelper::getOrderSessionToken();
-
             return $response->setNextUrl(route('public.checkout.information', $token));
         }
+
         $data = $request->input('items', []);
 
         $outOfQuantity = false;

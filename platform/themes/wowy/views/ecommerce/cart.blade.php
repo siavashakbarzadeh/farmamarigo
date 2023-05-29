@@ -126,6 +126,46 @@
                                                         <td class="cart_total_amount"><span class="font-lg fw-900 text-brand">{{ format_price($promotionDiscountAmount) }}</span></td>
                                                     </tr>
                                                 @endif
+
+                                                @php
+                                                    session()->forget('shippingAmount');
+                                                        $address=Botble\Ecommerce\Models\Address::where('customer_id', auth('customer')->user()->id)->first();
+                                                        $weight=0.00;
+                                                        $IVAPERCENTAGE=1.22;
+
+                                                        foreach (Cart::instance('cart')->content() as $key => $cartItem) {
+                                                            $product = $products->find($cartItem->id);
+                                                            $weight=$weight+($product->weight * $cartItem->qty);
+                                                        }
+                                                        $shippingAmount=0;//shippingAmount needs to be calculated by products weights and prices
+
+
+                                                        if(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 350.00){
+                                                            if($weight>50000.00){
+                                                                $extraWeight=intval($weight/50000.00);
+                                                                $shippingAmount=(29.00+5*($extraWeight )) *$IVAPERCENTAGE;
+                                                            }else{
+                                                                $shippingAmount=29.00*$IVAPERCENTAGE;
+                                                            }
+                                                        }elseif(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount > 350.00 && Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 600.00 ) {
+                                                            if($weight>50000.00){
+                                                                $extraWeight=intval($weight/50000.00);
+                                                                $shippingAmount=(12.90+5*($extraWeight )) *$IVAPERCENTAGE;
+                                                            }else{
+                                                                $shippingAmount=12.90*$IVAPERCENTAGE;
+                                                            }
+                                                        }else{
+                                                            if($weight>50000.00){
+                                                                $extraWeight=intval($weight/50000.00);
+                                                                $shippingAmount=(7.90+5*($extraWeight )) *$IVAPERCENTAGE;
+                                                            }else{
+                                                                $shippingAmount=7.90*$IVAPERCENTAGE;
+                                                            }
+                                                        }
+
+                                                @endphp
+                                                <input type="hidden" name="shippingAmount" value="{{ $shippingAmount }}">
+
                                                 <tr>
                                                     <td class="cart_total_label">{{ __('Total') }} <small>({{ __('Shipping fees not included') }})</small></td>
                                                     <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ ($promotionDiscountAmount + $couponDiscountAmount) > Cart::instance('cart')->rawTotal() ? format_price(0) : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount) }}</span></span></strong></td>
