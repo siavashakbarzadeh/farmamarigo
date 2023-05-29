@@ -7,6 +7,7 @@ use Botble\Ecommerce\Http\Requests\CartRequest;
 use Botble\Ecommerce\Http\Requests\UpdateCartRequest;
 use Botble\Ecommerce\Repositories\Interfaces\ProductInterface;
 use Botble\Ecommerce\Services\HandleApplyPromotionsService;
+use Illuminate\Support\Facades\Session;
 use Cart;
 use EcommerceHelper;
 use Exception;
