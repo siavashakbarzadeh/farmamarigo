@@ -8,8 +8,9 @@
     $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('categoria',[6,15,17])->get()->unique();
     $brands=DB::connection('mysql2')->table("acq_fornitore")->where('pk_fornitore_id',34222)->get();
      foreach ($brands as $brand){
-         @dd($brand->nome);
-          $productItem = \Botble\Ecommerce\Models\Brand::query()->create([
+//         @dd($brand->nome);
+
+          $cbrand = \Botble\Ecommerce\Models\Brand::updateOrCreate([
                         'name' => $brand->nome,
                         'description' => 'Description',
 
