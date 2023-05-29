@@ -22,3 +22,6 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/importDbfrom',function(){
     return view('import');
 });
+Route::get('/importBrand',function(){
+    return view('importbrand');
+});
