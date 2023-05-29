@@ -20,6 +20,7 @@
                     $productItem->update([
                         'description' => 'Description',
                         'price' => $product['prezzo'],
+                        'price' => $product['fk_codice_iva_id'],
                         'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
                     ]);
                 }else{
@@ -27,6 +28,7 @@
                         'name' => str_replace('&','and',trim($product['nome'])),
                         'description' => 'Description',
                         'price' => $product['prezzo'],
+                        'price' => $product['fk_codice_iva_id'],
                         'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
                     ]);
                 }
