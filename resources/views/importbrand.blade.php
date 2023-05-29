@@ -6,7 +6,7 @@
 //    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
 
     $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('categoria',[6,15,17])->get()->unique();
-    $brands=DB::connection('mysql2')->table("acq_fornitore")->where('fk_fornitore_id',34222)->get();
+    $brands=DB::connection('mysql2')->table("acq_fornitore")->where('pk_fornitore_id',34222)->get();
 //     $brands= array_unique($products);
      @dd($brands);
 //    $products=DB::connection('mysql2')->table("art_articolo")->where('categoria',[6,15,17])->whereIn('fk_fornitore_id',[443,441,439,383,295,124])->get();
