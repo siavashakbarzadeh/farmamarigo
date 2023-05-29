@@ -71,10 +71,11 @@
                                             <p>{{ __('Shipping fee') }}:</p>
                                         </div>
                                         <div class="col-6 float-end">
-                                            <p class="price-text shipping-price-text">{{ format_price($shippingAmount) }}</p>
+                                            <p class="price-text shipping-price-text">{{ format_price(floatval(Session::get('shippingAmount'))) }}</p>
                                         </div>
                                     </div>
                                 @endif
+
 
                                 @if (EcommerceHelper::isTaxEnabled())
                                     <div class="row">
