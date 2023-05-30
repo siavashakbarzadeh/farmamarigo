@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="056867f3-64bc-4cfb-83f5-bc18326a9b9b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="056867f3-64bc-4cfb-83f5-bc18326a9b9b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -282,7 +280,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Utente/Documents/GitHub/icoa",
+    "last_opened_file_path": "C:/Users/Utente/Documents/GitHub/farmamarigo",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -338,6 +336,7 @@
       <workItem from="1685346030671" duration="13377000" />
       <workItem from="1685435415469" duration="10000" />
       <workItem from="1685435433437" duration="10855000" />
+      <workItem from="1685454567770" duration="812000" />
     </task>
     <servers />
   </component>
