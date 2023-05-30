@@ -29,7 +29,7 @@
                         'price' => $product['prezzo'],
                         'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
                     ]);
-                    \Illuminate\Support\Facades\DB::table('ec_product_translations')->insert([
+                    \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
                         'lang_code'=>"en_US",
                         'ec_products_id'=>$productItem->id,
                         'name'=>str_replace('&','and',trim($product['nome'])),
