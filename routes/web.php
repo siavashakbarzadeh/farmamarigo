@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Mail;
     OrderSubmittedJob::dispatch(\Botble\Ecommerce\Models\Order::query()->latest()->first());
 });
 
-Route::get('/importDbfrom',function(){
+Route::get('/importP',function(){
     return view('import');
 });
 Route::get('/importBrand',function(){
