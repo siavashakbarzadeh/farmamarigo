@@ -10,13 +10,12 @@
         return (array)$item;
     })->pluck('fk_fornitore_id')->unique();
     $brands=DB::connection('mysql2')->table("acq_fornitore")->whereIn('pk_fornitore_id',$brandsId->toArray())->get();
-    @dd($brands);
      foreach ($brands as $brand){
 //         @dd($brand->nome);
 
           $cbrand = \Botble\Ecommerce\Models\Brand::updateOrCreate([
                         'name' => $brand->nome,
-                        'description' => 'Description',
+                       
 
                     ]);
      }
