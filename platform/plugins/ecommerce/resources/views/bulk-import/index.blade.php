@@ -7,7 +7,7 @@
                     <h4>{{ trans('plugins/ecommerce::bulk-import.menu') }}</h4>
                 </div>
                 <div class="widget-body">
-                   
+
                     <div class="form-group mb-3 d-grid">
                         <button type="submit" class="btn btn-info"
                                 data-choose-file="{{ trans('plugins/ecommerce::bulk-import.please_choose_the_file')}}"
