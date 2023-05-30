@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="product-content-wrap">
-        @dd($product->url)
+
         <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>
         @if (EcommerceHelper::isReviewEnabled())
             <div class="rating_wrap">
