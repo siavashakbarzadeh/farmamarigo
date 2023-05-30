@@ -5,8 +5,10 @@
 
 //    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
 
-    $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('categoria',[6,15,17])->get()->unique();
-    dd($brandsId);
+    $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('categoria',[6,15,17])->get();
+    dd(collect($brandsId)->map(function ($item){
+        return (array)$item;
+    }));
     $brands=DB::connection('mysql2')->table("acq_fornitore")->whereIn('pk_fornitore_id',$brandsId->toArray())->get();
     @dd($brands);
      foreach ($brands as $brand){
