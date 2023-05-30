@@ -8,7 +8,7 @@
     $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('categoria',[6,15,17])->get();
     dd(collect($brandsId)->map(function ($item){
         return (array)$item;
-    })->pluck('fk_fornitore_id')->union());
+    })->pluck('fk_fornitore_id')->unique());
     $brands=DB::connection('mysql2')->table("acq_fornitore")->whereIn('pk_fornitore_id',$brandsId->toArray())->get();
     @dd($brands);
      foreach ($brands as $brand){
