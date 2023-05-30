@@ -7,7 +7,11 @@
 
     $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
     $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('categoria',[6,15,17])->get();
-    @dd($brandsId);
+    $brandsId = collect($brandsId)->map(function ($item){
+        return (array)$item;
+    })->pluck('fk_fornitore_id')->unique();
+    $brands=DB::connection('mysql2')->table("acq_fornitore")->whereIn('pk_fornitore_id',$brandsId->toArray())->get();
+    @dd($brands);
     $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
     $products = $products->map(function ($item){
             return (array)$item;
