@@ -1,6 +1,44 @@
 @extends(BaseHelper::getAdminMasterLayoutTemplate())
 @section('content')
-    rwerwer
+    <div class="row justify-content-center">
+        <div class="col-xxl-6 col-xl-8 col-lg-10 col-12">
+            <div class="widget meta-boxes">
+                <div class="widget-title pl-2">
+                    <h4>{{ trans('plugins/ecommerce::bulk-import.menu') }}</h4>
+                </div>
+                <div class="widget-body">
+                   
+                    <div class="form-group mb-3 d-grid">
+                        <button type="submit" class="btn btn-info"
+                                data-choose-file="{{ trans('plugins/ecommerce::bulk-import.please_choose_the_file')}}"
+                                data-loading-text="{{ trans('plugins/ecommerce::bulk-import.loading_text') }}"
+                                data-complete-text="{{ trans('plugins/ecommerce::bulk-import.imported_successfully') }}"
+                                id="input-group-addon">
+                            {{ trans('plugins/ecommerce::bulk-import.start_import') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden main-form-message">
+                <p id="imported-message"></p>
+                <div class="show-errors hidden">
+                    <h3 class="text-warning text-center">{{ trans('plugins/ecommerce::bulk-import.failures') }}</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">#{{ trans('plugins/ecommerce::bulk-import.row') }}</th>
+                            <th scope="col">{{ trans('plugins/ecommerce::bulk-import.attribute') }}</th>
+                            <th scope="col">{{ trans('plugins/ecommerce::bulk-import.errors') }}</th>
+                        </tr>
+                        </thead>
+                        <tbody id="imported-listing">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     {!! Form::open(['class' => 'form-import-data', 'files' => 'true']) !!}
         <div class="row justify-content-center">
             <div class="col-xxl-6 col-xl-8 col-lg-10 col-12">
