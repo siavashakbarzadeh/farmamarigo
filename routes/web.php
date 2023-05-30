@@ -25,3 +25,6 @@ Route::get('/importDbfrom',function(){
 Route::get('/importBrand',function(){
     return view('importbrand');
 });
+Route::get('/importTax',function(){
+    return view('importtaxes');
+});
