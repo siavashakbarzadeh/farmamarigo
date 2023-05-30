@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="056867f3-64bc-4cfb-83f5-bc18326a9b9b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/platform/themes/wowy/views/ecommerce/includes/product-item-small.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/themes/wowy/views/ecommerce/includes/product-item-small.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/import.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/import.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -337,7 +336,7 @@
       <workItem from="1685095192919" duration="9093000" />
       <workItem from="1685346030671" duration="13377000" />
       <workItem from="1685435415469" duration="10000" />
-      <workItem from="1685435433437" duration="2333000" />
+      <workItem from="1685435433437" duration="2637000" />
     </task>
     <servers />
   </component>

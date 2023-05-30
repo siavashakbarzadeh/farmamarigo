@@ -5,7 +5,6 @@
 
 //    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
 
-dd((new \Botble\Ecommerce\Models\Product())->getMorphClass());
     $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
     $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
     $products = $products->map(function ($item){
@@ -38,7 +37,8 @@ dd((new \Botble\Ecommerce\Models\Product())->getMorphClass());
                     \Botble\Slug\Models\Slug::create([
                         'key'=>\Illuminate\Support\Str::slug(str_replace('&','and',trim($product['nome']))),
                         'reference_id'=>$productItem->id,
-                        'reference_type'=>1,
+                        'reference_type'=>$productItem->getMorphClass(),
+                        'prefix'=>"products"
                     ]);
                 }
                 $productItem->categories()->sync([$product['fk_linea_id']]);
