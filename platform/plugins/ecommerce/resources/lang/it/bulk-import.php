@@ -19,7 +19,6 @@ return [
     'choose_file_with_mime' => 'Scegli file con mime: (:types)',
     'choose_file' => 'Scegli il file',
     'menu' => 'Importare prodotti',
-    'menuauto' => 'Importare prodotti',
     'download-csv-file' => 'Scarica il modello CSV',
     'download-excel-file' => 'Scarica il modello Excel',
     'downloading' => 'Download...',
