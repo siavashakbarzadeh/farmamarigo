@@ -14,6 +14,7 @@
     $brands=collect($brands)->map(function ($item){
         return (array)$item;
     })->pluck('nome','pk_fornitore_id');
+    dd($brands);
     $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
     $products = $products->map(function ($item){
             return (array)$item;
