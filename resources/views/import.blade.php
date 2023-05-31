@@ -24,11 +24,22 @@
     try {
         \Illuminate\Support\Facades\DB::transaction(function ()use($products,$brands,$items){
             foreach ($brands as $brand){
-                \Botble\Ecommerce\Models\Brand::updateOrCreate([
+                $brandItem =\Botble\Ecommerce\Models\Brand::updateOrCreate([
                     'name'=>$brand,
                 ],[
                     'name'=>$brand
                 ]);
+                \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
+                        'lang_code'=>"en_US",
+                        'ec_products_id'=>$brandItem->id,
+                        'name'=>$brand,
+                    ]);
+                \Botble\Slug\Models\Slug::create([
+                        'key'=>$brand,
+                        'reference_id'=>$brandItem->id,
+                        'reference_type'=>$brandItem->getMorphClass(),
+                        'prefix'=>"brands"
+                    ]);
             }
             foreach ($products as $product) {
                 if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
