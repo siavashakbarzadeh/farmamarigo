@@ -126,45 +126,45 @@
                                                         <td class="cart_total_amount"><span class="font-lg fw-900 text-brand">{{ format_price($promotionDiscountAmount) }}</span></td>
                                                     </tr>
                                                 @endif
-@if(auth('customer'))
-    @php
-        session()->forget('shippingAmount');
-            $address=Botble\Ecommerce\Models\Address::where('customer_id', auth('customer')->user()->id)->first();
-            $weight=0.00;
-            $IVAPERCENTAGE=1.22;
+{{--@if(auth('customer'))--}}
+{{--    @php--}}
+{{--        session()->forget('shippingAmount');--}}
+{{--            $address=Botble\Ecommerce\Models\Address::where('customer_id', auth('customer')->user()->id)->first();--}}
+{{--            $weight=0.00;--}}
+{{--            $IVAPERCENTAGE=1.22;--}}
 
-            foreach (Cart::instance('cart')->content() as $key => $cartItem) {
-                $product = $products->find($cartItem->id);
-                $weight=$weight+($product->weight * $cartItem->qty);
-            }
-            $shippingAmount=0;//shippingAmount needs to be calculated by products weights and prices
+{{--            foreach (Cart::instance('cart')->content() as $key => $cartItem) {--}}
+{{--                $product = $products->find($cartItem->id);--}}
+{{--                $weight=$weight+($product->weight * $cartItem->qty);--}}
+{{--            }--}}
+{{--            $shippingAmount=0;//shippingAmount needs to be calculated by products weights and prices--}}
 
 
-            if(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 350.00){
-                if($weight>50000.00){
-                    $extraWeight=intval($weight/50000.00);
-                    $shippingAmount=(29.00+5*($extraWeight )) *$IVAPERCENTAGE;
-                }else{
-                    $shippingAmount=29.00*$IVAPERCENTAGE;
-                }
-            }elseif(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount > 350.00 && Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 600.00 ) {
-                if($weight>50000.00){
-                    $extraWeight=intval($weight/50000.00);
-                    $shippingAmount=(12.90+5*($extraWeight )) *$IVAPERCENTAGE;
-                }else{
-                    $shippingAmount=12.90*$IVAPERCENTAGE;
-                }
-            }else{
-                if($weight>50000.00){
-                    $extraWeight=intval($weight/50000.00);
-                    $shippingAmount=(7.90+5*($extraWeight )) *$IVAPERCENTAGE;
-                }else{
-                    $shippingAmount=7.90*$IVAPERCENTAGE;
-                }
-            }
+{{--            if(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 350.00){--}}
+{{--                if($weight>50000.00){--}}
+{{--                    $extraWeight=intval($weight/50000.00);--}}
+{{--                    $shippingAmount=(29.00+5*($extraWeight )) *$IVAPERCENTAGE;--}}
+{{--                }else{--}}
+{{--                    $shippingAmount=29.00*$IVAPERCENTAGE;--}}
+{{--                }--}}
+{{--            }elseif(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount > 350.00 && Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 600.00 ) {--}}
+{{--                if($weight>50000.00){--}}
+{{--                    $extraWeight=intval($weight/50000.00);--}}
+{{--                    $shippingAmount=(12.90+5*($extraWeight )) *$IVAPERCENTAGE;--}}
+{{--                }else{--}}
+{{--                    $shippingAmount=12.90*$IVAPERCENTAGE;--}}
+{{--                }--}}
+{{--            }else{--}}
+{{--                if($weight>50000.00){--}}
+{{--                    $extraWeight=intval($weight/50000.00);--}}
+{{--                    $shippingAmount=(7.90+5*($extraWeight )) *$IVAPERCENTAGE;--}}
+{{--                }else{--}}
+{{--                    $shippingAmount=7.90*$IVAPERCENTAGE;--}}
+{{--                }--}}
+{{--            }--}}
 
-    @endphp
-@endif
+{{--    @endphp--}}
+{{--@endif--}}
 
                                                 <input type="hidden" name="shippingAmount" value="{{ $shippingAmount }}">
 
