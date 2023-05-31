@@ -29,11 +29,14 @@
                 ],[
                     'name'=>$brand
                 ]);
-//                \Illuminate\Support\Facades\DB::table('ec_brands_translations')->insert([
-//                        'lang_code'=>"en_US",
-//                        'ec_brands_id'=>$brandItem->id,
-//                        'name'=>$brand,
-//                    ]);
+                if (!\Illuminate\Support\Facades\DB::table('ec_brands_translations')->where('lang_code',"en_US")->where('ec_brands_id')->count()){
+                    \Illuminate\Support\Facades\DB::table('ec_brands_translations')->insert([
+                        'lang_code'=>"en_US",
+                        'ec_brands_id'=>$brandItem->id,
+                        'name'=>$brand,
+                    ]);
+                }
+
                 \Botble\Slug\Models\Slug::create([
                         'key'=>$brand,
                         'reference_id'=>$brandItem->id,
