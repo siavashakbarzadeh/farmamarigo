@@ -121,17 +121,16 @@
                                                 @endif
                                                 @if (auth('customer')->check())
                                                         <li>
-                                                            <a class="language-dropdown-active" href="#"> <i class="fa fa-coins"></i> {{ get_application_currency()->title }} <i class="fa fa-chevron-down"></i></a>
+                                                            <a href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a>
                                                             <ul class="language-dropdown">
 
-                                                                        <li><a href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a></li>
-                                                               <li><a class="bg-primary text-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a></li>
+                                                               <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a></li>
                                                                 <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a></li>
                                                                 <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/orders">Ordini</a></li>
                                                                 <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/wishlist">Desideri</a></li>
                                                                 <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/change-password">Password</a></li>
                                                                 <li>  <a class="bg-light item-profile-wrap" style="margin-bottom:0 !important" href="https://marigopharma.marigo.collaudo.biz/customer/overview">IL TUO ACCOUNT</a></li>
-                                                               
+
 
                                                             </ul>
                                                         </li>
