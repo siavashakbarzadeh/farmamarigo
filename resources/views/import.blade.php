@@ -6,7 +6,10 @@
 //    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
 
     $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
-    $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('categoria',[6,15,17])->get();
+    $products = $products->map(function ($item){
+            return (array)$item;
+        });
+    $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id',$products->pluck('fk_fornitore_id')->toArray())->get();
     $brandsId = collect($brandsId)->map(function ($item){
         return (array)$item;
     })->pluck('fk_fornitore_id')->unique();
@@ -15,9 +18,7 @@
         return (array)$item;
     })->pluck('nome','pk_fornitore_id');
     $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
-    $products = $products->map(function ($item){
-            return (array)$item;
-        })->unique(function ($item) use($items) {
+    $products = $products->unique(function ($item) use($items) {
             return trim($item['nome']);
         });
     try {
