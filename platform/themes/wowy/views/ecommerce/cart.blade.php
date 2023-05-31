@@ -166,7 +166,7 @@
 {{--    @endphp--}}
 {{--@endif--}}
 
-                                                <input type="hidden" name="shippingAmount" value="{{ $shippingAmount }}">
+{{--                                                <input type="hidden" name="shippingAmount" value="{{ $shippingAmount }}">--}}
 
                                                 <tr>
                                                     <td class="cart_total_label">{{ __('Total') }} <small>({{ __('Shipping fees not included') }})</small></td>
