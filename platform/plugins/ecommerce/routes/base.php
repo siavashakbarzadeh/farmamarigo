@@ -213,6 +213,28 @@ Route::group(['namespace' => 'Botble\Ecommerce\Http\Controllers', 'middleware' =
                 'permission' => 'product-label.destroy',
             ]);
         });
+        Route::group(['prefix' => 'customImport', 'as' => 'ecommerce.customImport.'], function () {
+            Route::get('/', [
+                'as' => 'consumabili',
+                'uses' => 'CustomImport@consumabili',
+            ]);
+            Route::get('/foreign-keys', [
+                'as' => 'foreignkey',
+                'uses' => 'CustomImport@foreignKeys',
+            ]);
+            Route::get('/strumenti', [
+                'as' => 'strumenti',
+                'uses' => 'CustomImport@strumenti',
+            ]);
+            Route::get('/brands', [
+                'as' => 'brands',
+                'uses' => 'CustomImport@brands',
+            ]);
+            Route::get('/taxes', [
+                'as' => 'taxes',
+                'uses' => 'CustomImport@taxes',
+            ]);
+        });
 
         Route::group(['prefix' => 'bulk-import', 'as' => 'ecommerce.bulk-import.'], function () {
             Route::get('/', [
