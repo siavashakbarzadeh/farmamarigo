@@ -9,30 +9,30 @@
         ],
         [
             'key'   => 'customer.edit-account',
-            'label' => __('Profile'),
+            'label' => __('Profilo'),
             'icon'  => 'fa fa-user-edit',
         ],
         [
             'key'   => 'customer.orders',
-            'label' => __('Orders'),
+            'label' => __('Ordini'),
             'icon'  => 'fa fa-shopping-basket',
             'routes'    => ['customer.orders.view'],
         ],
-        [
-            'key'   => 'customer.downloads',
-            'label' => __('Downloads'),
-            'icon'  => 'fa fa-shopping-basket',
-            'routes'    => ['customer.downloads'],
-        ],
-        [
-            'key'    => 'customer.order_returns',
-            'label'  => __('Order return requests'),
-            'icon'   => 'fa  fa-cart-arrow-down',
-            'routes' => ['customer.order_returns.view'],
-        ],
+        // [
+        //     'key'   => 'customer.downloads',
+        //     'label' => __('Downloads'),
+        //     'icon'  => 'fa fa-shopping-basket',
+        //     'routes'    => ['customer.downloads'],
+        // ],
+        // [
+        //     'key'    => 'customer.order_returns',
+        //     'label'  => __('Order return requests'),
+        //     'icon'   => 'fa  fa-cart-arrow-down',
+        //     'routes' => ['customer.order_returns.view'],
+        // ],
         [
             'key'   => 'customer.address',
-            'label' => __('Address books'),
+            'label' => __('Indirizzi'),
             'icon'  => 'fa fa-map-marked',
             'routes'    => [
                 'customer.address.create',
@@ -46,7 +46,7 @@
         ],
         [
             'key'   => 'customer.change-password',
-            'label' => __('Change password'),
+            'label' => __('Cambiare Password'),
             'icon'  => 'fa fa-key',
         ],
         [
@@ -65,9 +65,34 @@
         <div class="row">
             <div class="col-lg-10 m-auto">
                 <div class="row">
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4 d-none">
+
+                        <div class="dashboard-menu">
+                            <ul class="nav flex-column">
+                                @foreach ($menus as $item)
+                                    @if (Arr::get($item, 'key') == 'public.wishlist' && !EcommerceHelper::isWishlistEnabled())
+                                        @continue
+                                    @endif
+                                    <li class="nav-item">
+                                        <a class="nav-link
+                                            @if (Route::currentRouteName() == Arr::get($item, 'key')
+                                                || in_array(Route::currentRouteName(), Arr::get($item, 'routes', []))) active @endif"
+                                            href="{{ route(Arr::get($item, 'key')) }}"
+                                            aria-controls="dashboard"
+                                            aria-selected="false">
+                                            @if (Arr::get($item, 'icon'))
+                                                <i class="{{ Arr::get($item, 'icon') }} mr-15" aria-hidden="true"></i>
+                                            @endif
+                                            {{ Arr::get($item, 'label') }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div> --}}
+                    <div class="col-md-12">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-1">
                                 <div class="profile-sidebar crop-avatar">
                                     <form id="avatar-upload-form" enctype="multipart/form-data" action="javascript:void(0)" onsubmit="return false">
                                         <div class="avatar-upload-container">
@@ -87,7 +112,7 @@
                                         </div>
                                     </form>
                                     <div class="modal fade" id="avatar-modal" tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label"
-                                        aria-hidden="true">
+                                         aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <form class="avatar-form" method="post" action="{{ route('customer.avatar') }}" enctype="multipart/form-data">
@@ -123,8 +148,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="btn btn-small btn-secondary" type="button" data-dismiss="modal">{{ __('Close') }}</button>
-                                                        <button class="btn btn-small btn-primary avatar-save" type="submit">{{ __('Save') }}</button>
+                                                        <button class="btn btn-small btn-secondary" type="button" data-dismiss="modal">{{ __('Chiudi') }}</button>
+                                                        <button class="btn btn-small btn-primary avatar-save" type="submit">{{ __('Salva') }}</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -132,7 +157,7 @@
                                     </div><!-- /.modal -->
                                 </div>
                             </div>
-                            <div class="col-8">
+                            <div class="col-11" style='align-self:center;'>
                                 <div class="profile-usertitle-name pt-2">
                                     <strong>{{ auth('customer')->user()->name }}</strong>
                                     <p><small>{{ auth('customer')->user()->email }}</small></p>
@@ -140,30 +165,6 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="dashboard-menu">
-                            <ul class="nav flex-column">
-                                @foreach ($menus as $item)
-                                    @if (Arr::get($item, 'key') == 'public.wishlist' && !EcommerceHelper::isWishlistEnabled())
-                                        @continue
-                                    @endif
-                                    <li class="nav-item">
-                                        <a class="nav-link
-                                            @if (Route::currentRouteName() == Arr::get($item, 'key')
-                                                || in_array(Route::currentRouteName(), Arr::get($item, 'routes', []))) active @endif"
-                                            href="{{ route(Arr::get($item, 'key')) }}"
-                                            aria-controls="dashboard"
-                                            aria-selected="false">
-                                            @if (Arr::get($item, 'icon'))
-                                                <i class="{{ Arr::get($item, 'icon') }} mr-15" aria-hidden="true"></i>
-                                            @endif
-                                            {{ Arr::get($item, 'label') }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
                         <div class="tab-content dashboard-content">
                             <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                 @yield('content')
