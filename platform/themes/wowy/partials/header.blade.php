@@ -124,11 +124,12 @@
                                                             <a class="language-dropdown-active" href="#"> <i class="fa fa-coins"></i> {{ get_application_currency()->title }} <i class="fa fa-chevron-down"></i></a>
                                                             <ul class="language-dropdown">
 
-                                                                        <li><a href="">a</a></li>
+                                                                        <li><a href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a></li>
                                                                 <li><a href="">b</a></li>
 
                                                             </ul>
                                                         </li>
+                                                    
 {{--                                                        <li>--}}
 {{--                                                            <i class="fa fa-user mr-5"></i>--}}
 {{--                                                            <a class="profile-action-2" href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a>--}}
