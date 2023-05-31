@@ -50,7 +50,7 @@
         {!! Theme::partial('preloader') !!}
 
         <header class="header-area header-height-2 {{ $headerStyle }}">
-            <div class="header-top header-top-ptb-1 d-none d-lg-block">
+            <div class="header header-top-ptb-1 d-none d-lg-block">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-xl-3 col-lg-4">
@@ -120,37 +120,37 @@
                                                     </li>
                                                 @endif
                                                 @if (auth('customer')->check())
-                                                        <li>
-                                                            <i class="fa fa-user mr-5"></i>
-                                                            <a class="profile-action-2" href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a>
-                                                            <div class="profile-dropdown-wrap profile-dropdown-hm2">
-                                                                <div class="row" style="width: 100%">
-                                                                    <a class=" item-profile-wrap"> Benvenuto, {{ auth('customer')->user()->name }} </a>
-                                                                </div>
+{{--                                                        <li>--}}
+{{--                                                            <i class="fa fa-user mr-5"></i>--}}
+{{--                                                            <a class="profile-action-2" href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a>--}}
+{{--                                                            <div class="profile-dropdown-wrap profile-dropdown-hm2">--}}
+{{--                                                                <div class="row" style="width: 100%">--}}
+{{--                                                                    <a class=" item-profile-wrap"> Benvenuto, {{ auth('customer')->user()->name }} </a>--}}
+{{--                                                                </div>--}}
 
 
-                                                                <div class="row" style="width: 100%">
-                                                                    <a class="bg-primary text-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a>
-                                                                </div>
-                                                                <div class="row" style="width: 100%">
-                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a>
-                                                                </div>
-                                                                <div class="row" style="width: 100%">
-                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/orders">Ordini</a>
-                                                                </div>
-                                                                <div class="row" style="width: 100%">
-                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/wishlist">Desideri</a>
-                                                                </div>
-                                                                <div class="row" style="width: 100%">
-                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/change-password">Password</a>
-                                                                </div>
-                                                                <div class="row" style="width: 100%">
-                                                                    <a class="bg-light item-profile-wrap" style="margin-bottom:0 !important" href="https://marigopharma.marigo.collaudo.biz/customer/overview">IL TUO ACCOUNT</a>
-                                                                </div>
+{{--                                                                <div class="row" style="width: 100%">--}}
+{{--                                                                    <a class="bg-primary text-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="row" style="width: 100%">--}}
+{{--                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="row" style="width: 100%">--}}
+{{--                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/orders">Ordini</a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="row" style="width: 100%">--}}
+{{--                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/wishlist">Desideri</a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="row" style="width: 100%">--}}
+{{--                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/change-password">Password</a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="row" style="width: 100%">--}}
+{{--                                                                    <a class="bg-light item-profile-wrap" style="margin-bottom:0 !important" href="https://marigopharma.marigo.collaudo.biz/customer/overview">IL TUO ACCOUNT</a>--}}
+{{--                                                                </div>--}}
 
 
-                                                            </div>
-                                                        </li>
+{{--                                                            </div>--}}
+{{--                                                        </li>--}}
                                                 @else
                                                     <li><a href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a></li>
                                                 @endif
