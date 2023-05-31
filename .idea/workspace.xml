@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="056867f3-64bc-4cfb-83f5-bc18326a9b9b" name="Changes" comment="" />
+    <list default="true" id="056867f3-64bc-4cfb-83f5-bc18326a9b9b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/platform/themes/wowy/partials/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/themes/wowy/partials/header.blade.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -337,7 +339,7 @@
       <workItem from="1685435415469" duration="10000" />
       <workItem from="1685435433437" duration="10855000" />
       <workItem from="1685454567770" duration="2979000" />
-      <workItem from="1685519643672" duration="8390000" />
+      <workItem from="1685519643672" duration="8700000" />
     </task>
     <servers />
   </component>

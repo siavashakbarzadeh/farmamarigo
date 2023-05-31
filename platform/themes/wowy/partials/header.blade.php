@@ -133,7 +133,7 @@
                                                                     <a class="bg-primary text-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a>
                                                                 </div>
                                                                 <div class="row" style="width: 100%">
-                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz//customer/edit-account">Profilo</a>
+                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a>
                                                                 </div>
                                                                 <div class="row" style="width: 100%">
                                                                     <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/orders">Ordini</a>
