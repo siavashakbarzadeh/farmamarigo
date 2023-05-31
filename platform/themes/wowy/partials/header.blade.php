@@ -125,11 +125,17 @@
                                                             <ul class="language-dropdown">
 
                                                                         <li><a href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a></li>
-                                                                <li><a href="">b</a></li>
+                                                               <li><a class="bg-primary text-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a></li>
+                                                                <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a></li>
+                                                                <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/orders">Ordini</a></li>
+                                                                <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/wishlist">Desideri</a></li>
+                                                                <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/change-password">Password</a></li>
+                                                                <li>  <a class="bg-light item-profile-wrap" style="margin-bottom:0 !important" href="https://marigopharma.marigo.collaudo.biz/customer/overview">IL TUO ACCOUNT</a></li>
+                                                               
 
                                                             </ul>
                                                         </li>
-                                                    
+
 {{--                                                        <li>--}}
 {{--                                                            <i class="fa fa-user mr-5"></i>--}}
 {{--                                                            <a class="profile-action-2" href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a>--}}
@@ -143,19 +149,19 @@
 {{--                                                                    <a class="bg-primary text-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a>--}}
 {{--                                                                </div>--}}
 {{--                                                                <div class="row" style="width: 100%">--}}
-{{--                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a>--}}
+
 {{--                                                                </div>--}}
 {{--                                                                <div class="row" style="width: 100%">--}}
-{{--                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/orders">Ordini</a>--}}
+
 {{--                                                                </div>--}}
 {{--                                                                <div class="row" style="width: 100%">--}}
-{{--                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/wishlist">Desideri</a>--}}
+
 {{--                                                                </div>--}}
 {{--                                                                <div class="row" style="width: 100%">--}}
-{{--                                                                    <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/change-password">Password</a>--}}
+
 {{--                                                                </div>--}}
 {{--                                                                <div class="row" style="width: 100%">--}}
-{{--                                                                    <a class="bg-light item-profile-wrap" style="margin-bottom:0 !important" href="https://marigopharma.marigo.collaudo.biz/customer/overview">IL TUO ACCOUNT</a>--}}
+
 {{--                                                                </div>--}}
 
 
