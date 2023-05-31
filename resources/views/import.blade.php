@@ -13,7 +13,7 @@
     $brandsId = collect($brandsId)->map(function ($item){
         return (array)$item;
     })->pluck('fk_fornitore_id')->unique();
-    $brands=DB::connection('mysql2')->table("acq_fornitore")->whereIn('pk_fornitore_id',$brandsId->toArray())->get();
+    $brands=DB::connection('mysql2')->table("acq_fornitore")->get();
     $brands=collect($brands)->map(function ($item){
         return (array)$item;
     })->pluck('nome','pk_fornitore_id');
@@ -43,7 +43,7 @@
                         'name' => str_replace('&','and',trim($product['nome'])),
                         'description' => 'Description',
                         'price' => $product['prezzo'],
-//                        'brand_id'=>\Botble\Ecommerce\Models\Brand::where('name',$brands->toArray()[$product['fk_fornitore_id']])->first()->id,
+                        'brand_id'=>\Botble\Ecommerce\Models\Brand::where('name',$brands->toArray()[$product['fk_fornitore_id']])->first()->id,
                         'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
                     ]);
                     \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
