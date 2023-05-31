@@ -198,18 +198,18 @@ class ProductTable extends TableAbstract
                     [
                         'className' => 'action-item',
                         'text' => ProductTypeEnum::PHYSICAL()->toIcon() . ' ' . Html::tag('span', ProductTypeEnum::PHYSICAL()->label(), [
-                            'data-action' => 'physical-product',
-                            'data-href' => route('products.create'),
-                            'class' => 'ms-1',
-                        ])->toHtml(),
+                                'data-action' => 'physical-product',
+                                'data-href' => route('products.create'),
+                                'class' => 'ms-1',
+                            ])->toHtml(),
                     ],
                     [
                         'className' => 'action-item',
                         'text' => ProductTypeEnum::DIGITAL()->toIcon() . ' ' . Html::tag('span', ProductTypeEnum::DIGITAL()->label(), [
-                            'data-action' => 'digital-product',
-                            'data-href' => route('products.create', ['product_type' => 'digital']),
-                            'class' => 'ms-1',
-                        ])->toHtml(),
+                                'data-action' => 'digital-product',
+                                'data-href' => route('products.create', ['product_type' => 'digital']),
+                                'class' => 'ms-1',
+                            ])->toHtml(),
                     ],
                 ],
             ];
@@ -218,9 +218,35 @@ class ProductTable extends TableAbstract
         }
 
         if (Auth::user()->hasPermission('ecommerce.bulk-import.index')) {
-            $buttons['import'] = [
-                'link' => route('ecommerce.bulk-import.index'),
-                'text' => '<i class="fas fa-file-import"></i> ' . trans('plugins/ecommerce::bulk-import.tables.import'),
+            $buttons['sync'] = [
+                'extend' => 'collection',
+                'text' => 'Synchronise',
+                'buttons' => [
+                    [
+                        'className' => 'action-item',
+                        'text' =>  Html::tag('span', 'Foreign keys', [
+                            'data-action' => 'foreign-keys',
+                            'data-href' => route('ecommerce.customImport.foreignkey'),
+                            'class' => 'ms-1',
+                        ])->toHtml(),
+                    ],
+                    [
+                        'className' => 'action-item',
+                        'text' =>  Html::tag('span', 'Consumabili', [
+                            'data-action' => 'consumabili',
+                            'data-href' => route('ecommerce.customImport.consumabili'),
+                            'class' => 'ms-1',
+                        ])->toHtml(),
+                    ],
+                    [
+                        'className' => 'action-item',
+                        'text' =>  Html::tag('span', 'Strumenti', [
+                            'data-action' => 'strumenti',
+                            'data-href' => route('ecommerce.customImport.strumenti'),
+                            'class' => 'ms-1',
+                        ])->toHtml(),
+                    ],
+                ],
             ];
         }
 
