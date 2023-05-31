@@ -120,7 +120,37 @@
                                                     </li>
                                                 @endif
                                                 @if (auth('customer')->check())
-                                                    <li><a href="{{ route('customer.overview') }}">{{ auth('customer')->user()->name }}</a></li>
+                                                        <li>
+                                                            <i class="fa fa-user mr-5"></i>
+                                                            <a class="profile-action-2" href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a>
+                                                            <div class="profile-dropdown-wrap profile-dropdown-hm2">
+                                                                <div class="row" style="width: 100%">
+                                                                    <a class=" item-profile-wrap"> Benvenuto, {{ auth('customer')->user()->name }} </a>
+                                                                </div>
+
+
+                                                                <div class="row" style="width: 100%">
+                                                                    <a class="bg-primary text-light item-profile-wrap" href="https://dev.marigo.collaudo.biz/customer/logout">Esci</a>
+                                                                </div>
+                                                                <div class="row" style="width: 100%">
+                                                                    <a class="bg-light item-profile-wrap" href="https://dev.marigo.collaudo.biz/customer/edit-account">Profilo</a>
+                                                                </div>
+                                                                <div class="row" style="width: 100%">
+                                                                    <a class="bg-light item-profile-wrap" href="https://dev.marigo.collaudo.biz/customer/orders">Ordini</a>
+                                                                </div>
+                                                                <div class="row" style="width: 100%">
+                                                                    <a class="bg-light item-profile-wrap" href="https://dev.marigo.collaudo.biz/wishlist">Desideri</a>
+                                                                </div>
+                                                                <div class="row" style="width: 100%">
+                                                                    <a class="bg-light item-profile-wrap" href="https://dev.marigo.collaudo.biz/customer/change-password">Password</a>
+                                                                </div>
+                                                                <div class="row" style="width: 100%">
+                                                                    <a class="bg-light item-profile-wrap" style="margin-bottom:0 !important" href="https://dev.marigo.collaudo.biz/customer/overview">IL TUO ACCOUNT</a>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </li>
                                                 @else
                                                     <li><a href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a></li>
                                                 @endif
