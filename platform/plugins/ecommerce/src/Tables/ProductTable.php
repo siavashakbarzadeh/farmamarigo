@@ -246,6 +246,14 @@ class ProductTable extends TableAbstract
                             'class' => 'ms-1',
                         ])->toHtml(),
                     ],
+                    [
+                        'className' => 'action-item',
+                        'text' =>  Html::tag('span', 'import', [
+                            'data-action' => 'strumenti',
+                            'data-href' => route('ecommerce.customImport.strumenti'),
+                            'class' => 'ms-1',
+                        ])->toHtml(),
+                    ],
                 ],
             ];
         }
