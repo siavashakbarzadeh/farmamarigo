@@ -11,7 +11,9 @@
         return (array)$item;
     })->pluck('fk_fornitore_id')->unique();
     $brands=DB::connection('mysql2')->table("acq_fornitore")->whereIn('pk_fornitore_id',$brandsId->toArray())->get();
-    @dd($brands);
+    $brands=collect($brands)->map(function ($item){
+        return (array)$item;
+    })->pluck('nome','pk_fornitore_id');
     $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
     $products = $products->map(function ($item){
             return (array)$item;
@@ -19,7 +21,14 @@
             return trim($item['nome']);
         });
     try {
-        \Illuminate\Support\Facades\DB::transaction(function ()use($products,$items){
+        \Illuminate\Support\Facades\DB::transaction(function ()use($products,$brands,$items){
+            foreach ($brands as $brand){
+                \Botble\Ecommerce\Models\Brand::updateOrCreate([
+                    'name'=>$brand,
+                ],[
+                    'name'=>$brand
+                ]);
+            }
             foreach ($products as $product) {
                 if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
                     $productItem = \Botble\Ecommerce\Models\Product::query()->where('name',str_replace('&','and',trim($product['nome'])))->first();
@@ -33,6 +42,7 @@
                         'name' => str_replace('&','and',trim($product['nome'])),
                         'description' => 'Description',
                         'price' => $product['prezzo'],
+                        'brand_id'=>\Botble\Ecommerce\Models\Brand::where('name',$brands->toArray()[$product['fk_fornitore_id']])->first()->id,
                         'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
                     ]);
                     \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
