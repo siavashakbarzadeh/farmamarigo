@@ -222,35 +222,35 @@ class ProductTable extends TableAbstract
                 'extend' => 'collection',
                 'text' => 'Synchronise',
                 'buttons' => [
-                    [
-                        'className' => 'action-item',
-                        'text' =>  Html::tag('span', 'Foreign keys', [
-                            'data-action' => 'foreign-keys',
-                            'data-href' => route('ecommerce.customImport.foreignkey'),
-                            'class' => 'ms-1',
-                        ])->toHtml(),
-                    ],
-                    [
-                        'className' => 'action-item',
-                        'text' =>  Html::tag('span', 'Consumabili', [
-                            'data-action' => 'consumabili',
-                            'data-href' => route('ecommerce.customImport.consumabili'),
-                            'class' => 'ms-1',
-                        ])->toHtml(),
-                    ],
-                    [
-                        'className' => 'action-item',
-                        'text' =>  Html::tag('span', 'Strumenti', [
-                            'data-action' => 'strumenti',
-                            'data-href' => route('ecommerce.customImport.strumenti'),
-                            'class' => 'ms-1',
-                        ])->toHtml(),
-                    ],
+//                    [
+//                        'className' => 'action-item',
+//                        'text' =>  Html::tag('span', 'Foreign keys', [
+//                            'data-action' => 'foreign-keys',
+//                            'data-href' => route('ecommerce.customImport.foreignkey'),
+//                            'class' => 'ms-1',
+//                        ])->toHtml(),
+//                    ],
+//                    [
+//                        'className' => 'action-item',
+//                        'text' =>  Html::tag('span', 'Consumabili', [
+//                            'data-action' => 'consumabili',
+//                            'data-href' => route('ecommerce.customImport.consumabili'),
+//                            'class' => 'ms-1',
+//                        ])->toHtml(),
+//                    ],
+//                    [
+//                        'className' => 'action-item',
+//                        'text' =>  Html::tag('span', 'Strumenti', [
+//                            'data-action' => 'strumenti',
+//                            'data-href' => route('ecommerce.customImport.strumenti'),
+//                            'class' => 'ms-1',
+//                        ])->toHtml(),
+//                    ],
                     [
                         'className' => 'action-item',
                         'text' =>  Html::tag('span', 'import', [
                             'data-action' => 'strumenti',
-                            'data-href' => route('ecommerce.customImport.strumenti'),
+                            'data-href' => route('ecommerce.customImport.importproduct'),
                             'class' => 'ms-1',
                         ])->toHtml(),
                     ],
