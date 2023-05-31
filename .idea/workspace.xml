@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="056867f3-64bc-4cfb-83f5-bc18326a9b9b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platform/plugins/ecommerce/src/Tables/ProductTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/plugins/ecommerce/src/Tables/ProductTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platform/plugins/ecommerce/routes/base.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/plugins/ecommerce/routes/base.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -340,7 +339,7 @@
       <workItem from="1685435415469" duration="10000" />
       <workItem from="1685435433437" duration="10855000" />
       <workItem from="1685454567770" duration="2979000" />
-      <workItem from="1685519643672" duration="12447000" />
+      <workItem from="1685519643672" duration="12755000" />
     </task>
     <servers />
   </component>
@@ -357,5 +356,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/platform/plugins/ecommerce/src/Tables/ProductTable.php</url>
+          <line>240</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

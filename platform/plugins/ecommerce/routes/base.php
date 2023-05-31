@@ -234,6 +234,10 @@ Route::group(['namespace' => 'Botble\Ecommerce\Http\Controllers', 'middleware' =
                 'as' => 'taxes',
                 'uses' => 'CustomImport@taxes',
             ]);
+            Route::get('/importproduct', [
+                'as' => 'importproduct',
+                'uses' => 'CustomImport@importproduct',
+            ]);
         });
 
         Route::group(['prefix' => 'bulk-import', 'as' => 'ecommerce.bulk-import.'], function () {
