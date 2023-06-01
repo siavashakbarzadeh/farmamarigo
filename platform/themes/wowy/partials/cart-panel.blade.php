@@ -62,8 +62,8 @@
             @if(auth()->user())
                 <a href="{{ route('public.cart') }}">{{ __('View cart') }}</a>
             @else
-                <li><a href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a></li>
-               
+                <a href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a>
+
             @endif
 
 {{--            @if (session('tracked_start_checkout'))--}}
