@@ -332,8 +332,7 @@ class CustomImport extends BaseController
         }catch (Throwable $e){
             dd($e);
         }
-        dd($products,count($products));
-        @dd($products);
+        return redirect()->back()->withSuccess('IT WORKS!'); 
     }
 
 
