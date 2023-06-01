@@ -59,7 +59,7 @@
         </div>
         <div class="shopping-cart-button">
 {{--            @if(auth()->customer()use)--}}
-            @if(auth('customer'))
+            @if(auth()->user)
                 <a href="{{ route('public.cart') }}">{{ __('View cart') }}</a>
             @else
                 <span>{{ __('No products in the cart.') }}</span>
