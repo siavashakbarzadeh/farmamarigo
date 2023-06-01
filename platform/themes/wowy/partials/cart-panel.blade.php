@@ -58,7 +58,10 @@
             @endif
         </div>
         <div class="shopping-cart-button">
-            <a href="{{ route('public.cart') }}">{{ __('View cart') }}</a>
+            @if(auth('customer'))
+                <a href="{{ route('public.cart') }}">{{ __('View cart') }}</a>
+            @endif
+
 {{--            @if (session('tracked_start_checkout'))--}}
 {{--                <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}">{{ __('Checkout') }}</a>--}}
 {{--            @endif--}}
