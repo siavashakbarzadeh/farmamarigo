@@ -61,8 +61,10 @@
 {{--            @if(auth()->customer()use)--}}
             @if(auth('customer'))
                 <a href="{{ route('public.cart') }}">{{ __('View cart') }}</a>
-            @endif
+            @else
                 <span>{{ __('No products in the cart.') }}</span>
+            @endif
+
 {{--            @if (session('tracked_start_checkout'))--}}
 {{--                <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}">{{ __('Checkout') }}</a>--}}
 {{--            @endif--}}
