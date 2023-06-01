@@ -10,12 +10,18 @@
                    ]
                    ,
                    [
-                       'title' => $tax->nome,
-//                   'codice'=>$tax->codice,
-//                   'desc'=>$tax->descrizione,
-                   'percentage'=>$tax->percentuale,
-//                   'tipo'=>$tax->tipo,
-                   'status' => 'published',
+                       'nome' => $tax->nome,
+                       'codice'=>$tax->codice,
+            'desc'=>$tax->descrizione,
+            'percentage'=>$tax->percentuale,
+            'tipo'=>$tax->tipo,
+            'status' => 'published',
+//                       'title' => $tax->nome,
+////                   'codice'=>$tax->codice,
+////                   'desc'=>$tax->descrizione,
+//                   'percentage'=>$tax->percentuale,
+////                   'tipo'=>$tax->tipo,
+//                   'status' => 'published',
                    ]
                );
                if($row==true) array_push($taxes_updated, $row);
