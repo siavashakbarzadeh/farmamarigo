@@ -62,7 +62,7 @@
             @if(auth()->user())
                 <a href="{{ route('public.cart') }}">{{ __('View cart') }}</a>
             @else
-                <a href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a>
+{{--                <a href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a></li>--}}
 
             @endif
 
