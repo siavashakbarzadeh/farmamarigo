@@ -34,7 +34,7 @@ class LoginController extends Controller
 
     public function postVerify(Request $request)
     {
-        Mail::to("alikeshtkar@gmail.com")->send(new VerificationAccountMail());
+        Mail::to("alikeshtkar@gmail.com")->send(new VerificationAccountMail(auth()->user()));
         dd($request->all(),auth()->user()->email);
     }
 
