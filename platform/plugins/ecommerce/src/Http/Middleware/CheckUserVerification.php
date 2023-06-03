@@ -18,6 +18,7 @@ class CheckUserVerification
     {
 //        auth()->user()->markEmailAsVerified();
 //        auth()->user()->unMarkEmailAsVerified();
+        dd(auth('customer')->user());
         if (auth()->user() && !auth()->user()->hasVerifiedEmail()) {
             $key = 'VERIFICATION_URL_USER_'.auth()->user()->id;
             if (!Cache::has($key)){
