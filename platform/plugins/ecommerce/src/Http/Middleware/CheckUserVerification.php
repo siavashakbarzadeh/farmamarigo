@@ -21,8 +21,8 @@ class CheckUserVerification
         if (auth()->user() && !auth()->user()->hasVerifiedEmail()) {
             $key = 'VERIFICATION_URL_USER_'.auth()->user()->id;
             if (!Cache::has($key)){
-                Cache::set($key,time());
-                $url = URL::signedRoute('customer.user-verify',['id'=>auth()->user()->id],now()->addMinutes(1));
+                Cache::put($key,"generated",now()->addMinutes(2));
+                $url = URL::signedRoute('customer.user-verify',['id'=>auth()->user()->id],now()->addMinutes(2));
                 Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail($url));
             }
             return redirect('users/verify');
