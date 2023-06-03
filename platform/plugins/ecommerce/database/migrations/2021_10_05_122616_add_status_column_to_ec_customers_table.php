@@ -11,6 +11,7 @@ return new class () extends Migration {
         if (! Schema::hasColumn('ec_customers', 'status')) {
             Schema::table('ec_customers', function (Blueprint $table) {
                 $table->string('status', 60)->default(CustomerStatusEnum::ACTIVATED);
+                $table->timestamp('email_verified_at')->nullable();
             });
         }
     }
@@ -20,6 +21,7 @@ return new class () extends Migration {
         if (Schema::hasColumn('ec_customers', 'status')) {
             Schema::table('ec_customers', function (Blueprint $table) {
                 $table->dropColumn('status');
+                $table->dropColumn('email_verified_at');
             });
         }
     }
