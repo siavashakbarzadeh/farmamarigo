@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\URL;
 use Laravel\Sanctum\HasApiTokens;
 use RvMedia;
 
@@ -63,7 +64,7 @@ class User extends BaseModel implements
 
     public function generateVerificationLink()
     {
-        return "https://www.google.com/";
+        return URL::signedRoute('customer.user-verify',['id'=>$this->id],now()->addHours(5));
     }
 
     protected function firstName(): Attribute

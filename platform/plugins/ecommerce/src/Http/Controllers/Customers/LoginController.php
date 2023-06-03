@@ -35,9 +35,8 @@ class LoginController extends Controller
 
     public function postVerify(Request $request)
     {
-        dd(URL::signedRoute('customer.user-verify',['id'=>auth()->user()->id],now()->addHours(5)));
         Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail(auth()->user()));
-        dd($request->all(),auth()->user()->email);
+        return redirect('users/verify');
     }
 
     public function userVerify($id)
