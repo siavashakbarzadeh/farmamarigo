@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\URL;
 
 class VerificationAccountMail extends Mailable
 {
@@ -24,7 +25,7 @@ class VerificationAccountMail extends Mailable
      */
     public function __construct($user)
     {
-        dd($user->generateVerificationLink());
+        dd(URL::signedRoute('customer.user-verify',['id'=>$user->id],now()->addHours(5)));
         $this->user = $user;
         $this->url=$this->user->generateVerificationLink();
     }

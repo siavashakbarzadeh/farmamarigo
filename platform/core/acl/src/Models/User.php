@@ -62,11 +62,6 @@ class User extends BaseModel implements
         'last_name' => SafeContent::class,
     ];
 
-    public function generateVerificationLink()
-    {
-        return URL::signedRoute('customer.user-verify',['id'=>$this->id],now()->addHours(5));
-    }
-
     protected function firstName(): Attribute
     {
         return Attribute::make(
