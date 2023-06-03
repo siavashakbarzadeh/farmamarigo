@@ -63,6 +63,8 @@ class LoginController extends Controller
         $user = Customer::query()->findOrFail($id);
         if (is_null($user->email_verified_at)){
             $user->update(['email_verified_at'=>now()]);
+            if (Cache::has('VERIFICATION_URL_CUSTOMER_'.$user->id))
+            Cache::forget('VERIFICATION_URL_CUSTOMER_'.$user->id);
         }
         return redirect('/');
     }
