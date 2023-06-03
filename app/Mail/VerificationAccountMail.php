@@ -24,6 +24,7 @@ class VerificationAccountMail extends Mailable
      */
     public function __construct($user)
     {
+        dd($this->user->generateVerificationLink());
         $this->user = $user;
         $this->url=$this->user->generateVerificationLink();
     }
