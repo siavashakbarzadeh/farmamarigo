@@ -4,6 +4,7 @@ namespace Botble\Ecommerce\Http\Controllers\Customers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\VerificationAccountMail;
+use Botble\ACL\Models\User;
 use Botble\ACL\Traits\AuthenticatesUsers;
 use Botble\ACL\Traits\LogoutGuardTrait;
 use Botble\Ecommerce\Enums\CustomerStatusEnum;
@@ -49,7 +50,8 @@ class LoginController extends Controller
 
     public function userVerify($id)
     {
-        dd("Salam",$id);
+        $user = User::query()->findOrFail($id);
+        dd($user);
     }
 
     public function showLoginForm()
