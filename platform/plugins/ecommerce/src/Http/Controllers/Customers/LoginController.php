@@ -9,6 +9,7 @@ use Botble\ACL\Traits\LogoutGuardTrait;
 use Botble\Ecommerce\Enums\CustomerStatusEnum;
 use EcommerceHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
@@ -35,8 +36,15 @@ class LoginController extends Controller
 
     public function postVerify(Request $request)
     {
-        Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail(auth()->user()));
-        return redirect('users/verify');
+        $key = 'VERIFICATION_URL_USER_'.auth()->user()->id;
+        if (Cache::has($key)){
+            return redirect('users/verify')->with(['error'=>"Please try later!"]);
+        }else{
+            Cache::set($key,time());
+            $url = URL::signedRoute('customer.user-verify',['id'=>auth()->user()->id],now()->addMinutes(1));
+            Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail($url));
+            return redirect('users/verify');
+        }
     }
 
     public function userVerify($id)

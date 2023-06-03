@@ -14,8 +14,6 @@ class VerificationAccountMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-
     public $url;
 
     /**
@@ -23,10 +21,9 @@ class VerificationAccountMail extends Mailable
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($url)
     {
-        $this->user = $user;
-        $this->url=URL::signedRoute('customer.user-verify',['id'=>$user->id],now()->addHours(5));
+        $this->url=$url;
     }
 
     /**
