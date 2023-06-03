@@ -51,7 +51,10 @@ class LoginController extends Controller
     public function userVerify($id)
     {
         $user = User::query()->findOrFail($id);
-        dd($user);
+        if (is_null($user->email_verified_at)){
+            $user->update(['email_verified_at'=>now()]);
+        }
+        return redirect('/');
     }
 
     public function showLoginForm()
