@@ -4,6 +4,6 @@
     <title>Document</title>
 </head>
 <body>
-test
+<a href="{{ $user->id }}" target="_blank">{{ $user->email }}</a>
 </body>
 </html>
