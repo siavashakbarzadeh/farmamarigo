@@ -72,6 +72,7 @@ if (defined('THEME_MODULE_SCREEN_NAME')) {
             'middleware' => ['web', 'core'],
             'as' => 'customer.',
         ], function () {
+            Route::get('users/verify/{id}', 'LoginController@userVerify')->name('user-verify')->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
             Route::get('users/verify', 'LoginController@verify')->name('verify')->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
             Route::post('users/verify', 'LoginController@postVerify')->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
         });

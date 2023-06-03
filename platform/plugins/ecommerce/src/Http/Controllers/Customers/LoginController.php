@@ -10,6 +10,7 @@ use Botble\Ecommerce\Enums\CustomerStatusEnum;
 use EcommerceHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
 use SeoHelper;
 use Theme;
@@ -34,8 +35,14 @@ class LoginController extends Controller
 
     public function postVerify(Request $request)
     {
+        dd(URL::signedRoute('customer.user-verify',['id'=>auth()->user()->id],now()->addHours(5)));
         Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail(auth()->user()));
         dd($request->all(),auth()->user()->email);
+    }
+
+    public function userVerify($id)
+    {
+        dd("Salam",$id);
     }
 
     public function showLoginForm()
