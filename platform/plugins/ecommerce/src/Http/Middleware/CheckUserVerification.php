@@ -13,11 +13,10 @@ class CheckUserVerification
     public function handle(Request $request, Closure $next)
     {
 //        auth()->user()->markEmailAsVerified();
-        dd(auth()->user());
-        /*auth()->user()->unMarkEmailAsVerified();
+//        auth()->user()->unMarkEmailAsVerified();
         if (auth()->user() && !auth()->user()->hasVerifiedEmail()) {
             return redirect('users/verify');
-        }*/
+        }
         return $next($request);
     }
 }
