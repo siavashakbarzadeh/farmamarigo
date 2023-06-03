@@ -8,6 +8,7 @@ use Botble\ACL\Models\User;
 use Botble\ACL\Traits\AuthenticatesUsers;
 use Botble\ACL\Traits\LogoutGuardTrait;
 use Botble\Ecommerce\Enums\CustomerStatusEnum;
+use Botble\Ecommerce\Models\Customer;
 use EcommerceHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -32,7 +33,7 @@ class LoginController extends Controller
 
     public function verify()
     {
-        if (auth()->user()->hasVerifiedEmail()){
+        if (auth('customer')->user()->email_verified_at){
             return redirect('/');
         }
         return Theme::scope('ecommerce.customers.verify', [], 'plugins/ecommerce::themes.customers.verify')->render();
@@ -40,12 +41,12 @@ class LoginController extends Controller
 
     public function postVerify(Request $request)
     {
-        $key = 'VERIFICATION_URL_USER_'.auth()->user()->id;
+        $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
         if (Cache::has($key)){
             return redirect('users/verify')->with(['error'=>"Please try later!"]);
         }else{
-            Cache::put($key,"generated",now()->addMinutes(2));
-            $url = URL::signedRoute('customer.user-verify',['id'=>auth()->user()->id],now()->addMinutes(2));
+            Cache::put($key,"generated",now()->addMinutes(5));
+            $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
             Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail($url));
             return redirect('users/verify');
         }
@@ -53,7 +54,7 @@ class LoginController extends Controller
 
     public function userVerify($id)
     {
-        $user = User::query()->findOrFail($id);
+        $user = Customer::query()->findOrFail($id);
         if (is_null($user->email_verified_at)){
             $user->update(['email_verified_at'=>now()]);
         }

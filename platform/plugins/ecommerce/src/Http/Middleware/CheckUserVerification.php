@@ -18,12 +18,11 @@ class CheckUserVerification
     {
 //        auth()->user()->markEmailAsVerified();
 //        auth()->user()->unMarkEmailAsVerified();
-        dd(auth('customer')->user());
-        if (auth()->user() && !auth()->user()->hasVerifiedEmail()) {
-            $key = 'VERIFICATION_URL_USER_'.auth()->user()->id;
+        if (auth('customer')->user() && !auth('customer')->user()->email_verified_at) {
+            $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
             if (!Cache::has($key)){
-                Cache::put($key,"generated",now()->addMinutes(2));
-                $url = URL::signedRoute('customer.user-verify',['id'=>auth()->user()->id],now()->addMinutes(2));
+                Cache::put($key,"generated",now()->addMinutes(5));
+                $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
                 Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail($url));
             }
             return redirect('users/verify');
