@@ -13,6 +13,7 @@ use Botble\Ecommerce\Facades\OrderHelperFacade;
 use Botble\Ecommerce\Facades\OrderReturnHelperFacade;
 use Botble\Ecommerce\Facades\ProductCategoryHelperFacade;
 use Botble\Ecommerce\Http\Middleware\CaptureFootprintsMiddleware;
+use Botble\Ecommerce\Http\Middleware\CheckUserVerification;
 use Botble\Ecommerce\Http\Middleware\RedirectIfCustomer;
 use Botble\Ecommerce\Http\Middleware\RedirectIfNotCustomer;
 use Botble\Ecommerce\Models\Address;
@@ -436,6 +437,8 @@ class EcommerceServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->app['router']->aliasMiddleware('verify', CheckUserVerification::class);
+        $this->app['router']->pushMiddlewareToGroup('web', CheckUserVerification::class);
         SlugHelper::registerModule(Product::class, 'Products');
         SlugHelper::registerModule(Brand::class, 'Brands');
         SlugHelper::registerModule(ProductCategory::class, 'Product Categories');

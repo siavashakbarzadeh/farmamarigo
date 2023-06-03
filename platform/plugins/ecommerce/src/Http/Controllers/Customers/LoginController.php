@@ -3,11 +3,13 @@
 namespace Botble\Ecommerce\Http\Controllers\Customers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\VerificationAccountMail;
 use Botble\ACL\Traits\AuthenticatesUsers;
 use Botble\ACL\Traits\LogoutGuardTrait;
 use Botble\Ecommerce\Enums\CustomerStatusEnum;
 use EcommerceHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use SeoHelper;
 use Theme;
@@ -22,7 +24,18 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('customer.guest', ['except' => 'logout']);
+        $this->middleware('customer.guest', ['except' => ['logout','verify']]);
+    }
+
+    public function verify()
+    {
+        return Theme::scope('ecommerce.customers.verify', [], 'plugins/ecommerce::themes.customers.verify')->render();
+    }
+
+    public function postVerify(Request $request)
+    {
+        Mail::to("alikeshtkar@gmail.com")->send(new VerificationAccountMail());
+        dd($request->all(),auth()->user()->email);
     }
 
     public function showLoginForm()

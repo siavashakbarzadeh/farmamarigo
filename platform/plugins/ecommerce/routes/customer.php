@@ -69,6 +69,15 @@ if (defined('THEME_MODULE_SCREEN_NAME')) {
     Route::group(apply_filters(BASE_FILTER_GROUP_PUBLIC_ROUTE, []), function () {
         Route::group([
             'namespace' => 'Botble\Ecommerce\Http\Controllers\Customers',
+            'middleware' => ['web', 'core'],
+            'as' => 'customer.',
+        ], function () {
+            Route::get('users/verify', 'LoginController@verify')->name('verify')->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
+            Route::post('users/verify', 'LoginController@postVerify')->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
+        });
+
+        Route::group([
+            'namespace' => 'Botble\Ecommerce\Http\Controllers\Customers',
             'middleware' => ['web', 'core', 'customer.guest'],
             'as' => 'customer.',
         ], function () {

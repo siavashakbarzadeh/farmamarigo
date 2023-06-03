@@ -47,6 +47,7 @@ class User extends BaseModel implements
         'password',
         'avatar_id',
         'permissions',
+        'email_verified_at',
     ];
 
     protected $hidden = [
@@ -56,10 +57,31 @@ class User extends BaseModel implements
 
     protected $casts = [
         'permissions' => 'json',
+        'email_verified_at' => 'datetime',
         'username' => SafeContent::class,
         'first_name' => SafeContent::class,
         'last_name' => SafeContent::class,
     ];
+
+    public function generateVerificationLink()
+    {
+        return "https://www.google.com/";
+    }
+
+    public function markEmailAsVerified()
+    {
+        return $this->update(['email_verified_at'=>now()]);
+    }
+
+    public function unMarkEmailAsVerified()
+    {
+        return $this->update(['email_verified_at'=>null]);
+    }
+
+    public function hasVerifiedEmail()
+    {
+        return !is_null($this->email_verified_at);
+    }
 
     protected function firstName(): Attribute
     {

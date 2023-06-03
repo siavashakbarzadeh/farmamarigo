@@ -31,7 +31,8 @@ use Exception;
 use Illuminate\Http\Request;
 use RvMedia;
 
-class UserController extends BaseController
+class
+UserController extends BaseController
 {
     protected UserInterface $userRepository;
 
