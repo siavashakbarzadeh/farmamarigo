@@ -61,6 +61,11 @@ class User extends BaseModel implements
         'last_name' => SafeContent::class,
     ];
 
+    public function generateVerificationLink()
+    {
+        return "https://www.google.com/";
+    }
+
     protected function firstName(): Attribute
     {
         return Attribute::make(

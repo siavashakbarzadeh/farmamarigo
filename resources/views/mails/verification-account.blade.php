@@ -4,6 +4,6 @@
     <title>Document</title>
 </head>
 <body>
-<a href="{{ $user->id }}" target="_blank">{{ $user->email }}</a>
+<a href="{{ $user->generateVerificationLink() }}" target="_blank">{{ $user->email }}</a>
 </body>
 </html>

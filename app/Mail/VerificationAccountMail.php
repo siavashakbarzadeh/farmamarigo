@@ -15,6 +15,8 @@ class VerificationAccountMail extends Mailable
 
     public $user;
 
+    public $url;
+
     /**
      * Create a new message instance.
      *
@@ -23,6 +25,7 @@ class VerificationAccountMail extends Mailable
     public function __construct($user)
     {
         $this->user = $user;
+        $this->url=$this->user->generateVerificationLink();
     }
 
     /**
