@@ -23,7 +23,7 @@ class CheckUserVerification
             if (!Cache::has($key)){
                 Cache::put($key,"generated",now()->addMinutes(5));
                 $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
-                Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail($url));
+                Mail::to(auth('customer')->user()->email)->send(new VerificationAccountMail($url));
             }
             return redirect('users/verify');
         }

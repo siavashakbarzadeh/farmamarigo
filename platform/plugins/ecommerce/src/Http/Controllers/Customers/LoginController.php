@@ -33,6 +33,9 @@ class LoginController extends Controller
 
     public function verify()
     {
+        if (is_null(auth('customer')->user())){
+            redirect('/login');
+        }
         if (auth('customer')->user()->email_verified_at){
             return redirect('/');
         }
@@ -41,13 +44,16 @@ class LoginController extends Controller
 
     public function postVerify(Request $request)
     {
+        if (is_null(auth('customer')->user())){
+            redirect('/login');
+        }
         $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
         if (Cache::has($key)){
             return redirect('users/verify')->with(['error'=>"Please try later!"]);
         }else{
             Cache::put($key,"generated",now()->addMinutes(5));
             $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
-            Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail($url));
+            Mail::to(auth('customer')->user()->email)->send(new VerificationAccountMail($url));
             return redirect('users/verify');
         }
     }
