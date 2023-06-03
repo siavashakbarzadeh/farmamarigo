@@ -36,7 +36,7 @@ class LoginController extends Controller
         if (auth('customer')->user()->email_verified_at){
             return redirect('/');
         }
-        return Theme::scope('ecommerce.customers.login', [], 'plugins/ecommerce::themes.customers.login')->render();
+        return Theme::scope('ecommerce.customers.verify', [], 'plugins/ecommerce::themes.customers.verify')->render();
     }
 
     public function postVerify(Request $request)

@@ -18,7 +18,7 @@ class CheckUserVerification
     {
 //        auth()->user()->markEmailAsVerified();
 //        auth()->user()->unMarkEmailAsVerified();
-        /*if (auth('customer')->user() && !auth('customer')->user()->email_verified_at) {
+        if (auth('customer')->user() && !auth('customer')->user()->email_verified_at) {
             $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
             if (!Cache::has($key)){
                 Cache::put($key,"generated",now()->addMinutes(5));
@@ -26,7 +26,7 @@ class CheckUserVerification
                 Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail($url));
             }
             return redirect('users/verify');
-        }*/
+        }
         return $next($request);
     }
 }
