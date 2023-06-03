@@ -25,9 +25,8 @@ class VerificationAccountMail extends Mailable
      */
     public function __construct($user)
     {
-        dd(URL::signedRoute('customer.user-verify',['id'=>$user->id],now()->addHours(5)));
         $this->user = $user;
-        $this->url=$this->user->generateVerificationLink();
+        $this->url=URL::signedRoute('customer.user-verify',['id'=>$user->id],now()->addHours(5));
     }
 
     /**
