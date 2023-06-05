@@ -53,12 +53,13 @@
             <div class="header header-top-ptb-1 d-none d-lg-block">
                 <div class="container">
                     <div class="row ">
-                        <div class="col-xl-5 col-lg-5">
+                        <div class="col-xl-3 col-lg-4">
                             <div class="header-info">
                                 <ul>
                                     @if (theme_option('hotline'))
                                         <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('hotline') }}">{{ theme_option('hotline') }}</a></li>
                                     @endif
+
                                     @if (theme_option('phone'))
                                         <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('phone') }}">{{ theme_option('phone') }}</a></li>
                                     @endif
@@ -68,6 +69,7 @@
                                     @if (theme_option('address'))
                                         <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('address') }}">{{ theme_option('address') }}</a></li>
                                     @endif
+
 
                                     @if (is_plugin_active('ecommerce') && EcommerceHelper::isOrderTrackingEnabled())
 {{--                                            <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:+39 0815344611">{{ __('+39 0815344611') }}</a></li>--}}
