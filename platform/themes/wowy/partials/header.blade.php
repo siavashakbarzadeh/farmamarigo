@@ -56,19 +56,19 @@
                         <div class="col-xl-3 col-lg-3">
                             <div class="header-info">
                                 <ul>
-                                    @if (theme_option('hotline'))
-                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('hotline') }}">{{ theme_option('hotline') }}</a></li>
-                                    @endif
+{{--                                    @if (theme_option('hotline'))--}}
+{{--                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('hotline') }}">{{ theme_option('hotline') }}</a></li>--}}
+{{--                                    @endif--}}
 
-                                    @if (theme_option('phone'))
-                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('phone') }}">{{ theme_option('phone') }}</a></li>
-                                    @endif
-                                    @if (theme_option('email'))
-                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('email') }}">{{ theme_option('email') }}</a></li>
-                                    @endif
-                                    @if (theme_option('address'))
-                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('address') }}">{{ theme_option('address') }}</a></li>
-                                    @endif
+{{--                                    @if (theme_option('phone'))--}}
+{{--                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('phone') }}">{{ theme_option('phone') }}</a></li>--}}
+{{--                                    @endif--}}
+{{--                                    @if (theme_option('email'))--}}
+{{--                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('email') }}">{{ theme_option('email') }}</a></li>--}}
+{{--                                    @endif--}}
+{{--                                    @if (theme_option('address'))--}}
+{{--                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('address') }}">{{ theme_option('address') }}</a></li>--}}
+{{--                                    @endif--}}
 
 
                                     @if (is_plugin_active('ecommerce') && EcommerceHelper::isOrderTrackingEnabled())
