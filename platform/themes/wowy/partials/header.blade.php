@@ -56,23 +56,23 @@
                         <div class="col-xl-7 col-lg-7">
                             <div class="header-info">
                                 <ul>
-{{--                                    @if (theme_option('hotline'))--}}
-{{--                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('hotline') }}">{{ theme_option('hotline') }}</a></li>--}}
-{{--                                    @endif--}}
-{{--                                    @if (theme_option('phone'))--}}
-{{--                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('phone') }}">{{ theme_option('phone') }}</a></li>--}}
-{{--                                    @endif--}}
-{{--                                    @if (theme_option('email'))--}}
-{{--                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('email') }}">{{ theme_option('email') }}</a></li>--}}
-{{--                                    @endif--}}
-{{--                                    @if (theme_option('address'))--}}
-{{--                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('address') }}">{{ theme_option('address') }}</a></li>--}}
-{{--                                    @endif--}}
+                                    @if (theme_option('hotline'))
+                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('hotline') }}">{{ theme_option('hotline') }}</a></li>
+                                    @endif
+                                    @if (theme_option('phone'))
+                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('phone') }}">{{ theme_option('phone') }}</a></li>
+                                    @endif
+                                    @if (theme_option('email'))
+                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('email') }}">{{ theme_option('email') }}</a></li>
+                                    @endif
+                                    @if (theme_option('address'))
+                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('address') }}">{{ theme_option('address') }}</a></li>
+                                    @endif
 
                                     @if (is_plugin_active('ecommerce') && EcommerceHelper::isOrderTrackingEnabled())
-                                            <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:+39 0815344611">{{ __('+39 0815344611') }}</a></li>
-                                            <li><i class="fa fa-envelope mr-5"></i><a href="">{{ __('info@marigoitalia.it ') }}</a></li>
-                                            <li><i class="fa fa-location mr-5"></i><a href="">{{ __('Via Bagnulo, 168,80063 Piano di Sorrento NA') }}</a></li>
+{{--                                            <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:+39 0815344611">{{ __('+39 0815344611') }}</a></li>--}}
+{{--                                            <li><i class="fa fa-envelope mr-5"></i><a href="">{{ __('info@marigoitalia.it ') }}</a></li>--}}
+{{--                                            <li><i class="fa fa-location mr-5"></i><a href="">{{ __('Via Bagnulo, 168,80063 Piano di Sorrento NA') }}</a></li>--}}
 {{--                                        <li><i class="far fa-anchor mr-5"></i><a href="{{ route('public.orders.tracking') }}">{{ __('Track Your Order') }}</a></li>--}}
                                     @endif
                                 </ul>
