@@ -59,6 +59,9 @@
                                     @if (theme_option('hotline'))
                                         <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('hotline') }}">{{ theme_option('hotline') }}</a></li>
                                     @endif
+                                    @if (theme_option('phone'))
+                                        <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:{{ theme_option('phone') }}">{{ theme_option('phone') }}</a></li>
+                                    @endif
 
                                     @if (is_plugin_active('ecommerce') && EcommerceHelper::isOrderTrackingEnabled())
                                         <li><i class="far fa-anchor mr-5"></i><a href="{{ route('public.orders.tracking') }}">{{ __('Track Your Order') }}</a></li>
