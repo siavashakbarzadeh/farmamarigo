@@ -72,9 +72,9 @@
 
 
                                     @if (is_plugin_active('ecommerce') && EcommerceHelper::isOrderTrackingEnabled())
-{{--                                            <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:+39 0815344611">{{ __('+39 0815344611') }}</a></li>--}}
-{{--                                            <li><i class="fa fa-envelope mr-5"></i><a href="">{{ __('info@marigoitalia.it ') }}</a></li>--}}
-{{--                                            <li><i class="fa fa-location mr-5"></i><a href="">{{ __('Via Bagnulo, 168,80063 Piano di Sorrento NA') }}</a></li>--}}
+                                            <li><i class="fa fa-phone-alt mr-5"></i><a href="tel:+39 0815344611">{{ __('+39 0815344611') }}</a></li>
+                                            <li><i class="fa fa-envelope mr-5"></i><a href="">{{ __('info@marigoitalia.it ') }}</a></li>
+                                            <li><i class="fa fa-location mr-5"></i><a href="">{{ __('Via Bagnulo, 168,80063 Piano di Sorrento NA') }}</a></li>
 {{--                                        <li><i class="far fa-anchor mr-5"></i><a href="{{ route('public.orders.tracking') }}">{{ __('Track Your Order') }}</a></li>--}}
                                     @endif
                                 </ul>
