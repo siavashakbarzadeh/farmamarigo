@@ -270,7 +270,7 @@ class CustomImport extends BaseController
         })->mapWithKeys(function ($item,$key){
             return [$key=>collect($item)->groupBy(function ($item){
                 $i =explode(" ",$item['nome']);
-                return implode(" ",array_slice($i,0,count($i)-2));
+                return implode(" ",array_slice($i,-2));
             })];
         }));
         $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id',$products->pluck('fk_fornitore_id')->toArray())->get();
