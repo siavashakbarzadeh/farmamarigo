@@ -12,6 +12,7 @@ use Botble\Ecommerce\Http\Requests\ProductRequest;
 use Botble\Ecommerce\Imports\ProductImport;
 use Botble\Ecommerce\Imports\ValidateProductImport;
 use Botble\Ecommerce\Models\ProductAttribute;
+use Botble\Ecommerce\Models\ProductVariation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
@@ -289,7 +290,7 @@ class CustomImport extends BaseController
         });
         try {
             \Illuminate\Support\Facades\DB::transaction(function ()use($products,$variants,$brands,$items){
-                /*foreach ($brands as $brand){
+                foreach ($brands as $brand){
                     $brandItem =\Botble\Ecommerce\Models\Brand::updateOrCreate([
                         'name'=>$brand,
                     ],[
@@ -310,36 +311,6 @@ class CustomImport extends BaseController
                         'prefix'=>"brands"
                     ]);
                 }
-                foreach ($products as $product) {
-                    if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
-                        $productItem = \Botble\Ecommerce\Models\Product::query()->where('name',str_replace('&','and',trim($product['nome'])))->first();
-                        $productItem->update([
-                            'description' => 'Description',
-                            'price' => $product['prezzo'],
-                            'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
-                        ]);
-                    }else{
-                        $productItem = \Botble\Ecommerce\Models\Product::query()->create([
-                            'name' => str_replace('&','and',trim($product['nome'])),
-                            'description' => 'Description',
-                            'price' => $product['prezzo'],
-                            'brand_id'=>\Botble\Ecommerce\Models\Brand::where('name',$brands->toArray()[$product['fk_fornitore_id']])->first()->id,
-                            'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
-                        ]);
-                        \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
-                            'lang_code'=>"en_US",
-                            'ec_products_id'=>$productItem->id,
-                            'name'=>str_replace('&','and',trim($product['nome'])),
-                        ]);
-                        \Botble\Slug\Models\Slug::create([
-                            'key'=>\Illuminate\Support\Str::slug(str_replace('&','and',trim($product['nome']))),
-                            'reference_id'=>$productItem->id,
-                            'reference_type'=>$productItem->getMorphClass(),
-                            'prefix'=>"products"
-                        ]);
-                    }
-                    $productItem->categories()->sync([$product['fk_linea_id']]);
-                }*/
                 foreach ($variants as $variantItems) {
                     foreach ($variantItems as $item) {
                         foreach ($item as $item2) {
@@ -370,6 +341,51 @@ class CustomImport extends BaseController
                         }
                     }
                 }
+                foreach ($products as $product) {
+                    $variationItems =[];
+                    if ($product['variante_2'] && $var2=ProductAttribute::where('title',$product['variante_2'])->first()){
+                        $variantItems[]=$var2;
+                    }
+                    if ($product['variante_3'] && $var3=ProductAttribute::where('title',$product['variante_3'])->first()){
+                        $variantItems[]=$var3;
+                    }
+                    dump($variantItems);
+                    if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
+                        $productItem = \Botble\Ecommerce\Models\Product::query()->where('name',str_replace('&','and',trim($product['nome'])))->first();
+                        $productItem->update([
+                            'description' => 'Description',
+                            'price' => $product['prezzo'],
+                            'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
+                        ]);
+                    }else{
+                        $productItem = \Botble\Ecommerce\Models\Product::query()->create([
+                            'name' => str_replace('&','and',trim($product['nome'])),
+                            'description' => 'Description',
+                            'price' => $product['prezzo'],
+                            'brand_id'=>\Botble\Ecommerce\Models\Brand::where('name',$brands->toArray()[$product['fk_fornitore_id']])->first()->id,
+                            'images' => collect([strtolower($product['codice']).'.jpg'])->toJson(),
+                        ]);
+                        \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
+                            'lang_code'=>"en_US",
+                            'ec_products_id'=>$productItem->id,
+                            'name'=>str_replace('&','and',trim($product['nome'])),
+                        ]);
+                        \Botble\Slug\Models\Slug::create([
+                            'key'=>\Illuminate\Support\Str::slug(str_replace('&','and',trim($product['nome']))),
+                            'reference_id'=>$productItem->id,
+                            'reference_type'=>$productItem->getMorphClass(),
+                            'prefix'=>"products"
+                        ]);
+                        $productVariation = ProductVariation::create([
+                            'configurable_product_id'=>$productItem->id,
+                        ]);
+                        $productVariation->productAttributes()->attach([
+
+                        ]);
+                    }
+                    $productItem->categories()->sync([$product['fk_linea_id']]);
+                }
+                dd("ok");
             });
         }catch (Throwable $e){
             dd($e);
