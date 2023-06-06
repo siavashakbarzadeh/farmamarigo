@@ -349,7 +349,7 @@ class CustomImport extends BaseController
                     if ($product['variante_3'] && $var3=ProductAttribute::where('title',$product['variante_3'])->first()){
                         $variantItems[]=$var3;
                     }
-                    dump($variantItems);
+                    dump($variationItems);
                     if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
                         $productItem = \Botble\Ecommerce\Models\Product::query()->where('name',str_replace('&','and',trim($product['nome'])))->first();
                         $productItem->update([
