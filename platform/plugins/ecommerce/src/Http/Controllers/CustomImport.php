@@ -11,7 +11,9 @@ use Botble\Ecommerce\Http\Requests\BulkImportRequest;
 use Botble\Ecommerce\Http\Requests\ProductRequest;
 use Botble\Ecommerce\Imports\ProductImport;
 use Botble\Ecommerce\Imports\ValidateProductImport;
+use Botble\Ecommerce\Models\ProductAttribute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\DB;
 
@@ -262,7 +264,7 @@ class CustomImport extends BaseController
         $products = $products->map(function ($item){
             return (array)$item;
         });
-        dd($products->filter(function ($item){
+        $variants=$products->filter(function ($item){
             return strlen($item['variante_1']);
         })->groupBy(function ($item){
             $i =explode(" ",$item['nome']);
@@ -272,7 +274,7 @@ class CustomImport extends BaseController
                 $i =array_filter(explode(" ",$item['nome']));
                 return implode(" ",array_slice($i,0,count($i) == 3 ? 1 : 2));
             })];
-        }));
+        });
         $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id',$products->pluck('fk_fornitore_id')->toArray())->get();
         $brandsId = collect($brandsId)->map(function ($item){
             return (array)$item;
@@ -286,8 +288,8 @@ class CustomImport extends BaseController
             return trim($item['nome']);
         });
         try {
-            \Illuminate\Support\Facades\DB::transaction(function ()use($products,$brands,$items){
-                foreach ($brands as $brand){
+            \Illuminate\Support\Facades\DB::transaction(function ()use($products,$variants,$brands,$items){
+                /*foreach ($brands as $brand){
                     $brandItem =\Botble\Ecommerce\Models\Brand::updateOrCreate([
                         'name'=>$brand,
                     ],[
@@ -337,6 +339,34 @@ class CustomImport extends BaseController
                         ]);
                     }
                     $productItem->categories()->sync([$product['fk_linea_id']]);
+                }*/
+                foreach ($variants as $variantItems) {
+                    foreach ($variantItems as $item) {
+                        if ($item['variante_2']){
+                            $order = intval(ProductAttribute::query()->where('attribute_set_id',1)->max('order'));
+                            ProductAttribute::query()->firstOrCreate([
+                                'title'=>$item['variante_2'],
+                            ],[
+                                'title'=>$item['variante_2'],
+                                'slug'=>Str::slug($item['variante_2']),
+                                'attribute_set_id'=>1,
+                                'status'=>"published",
+                                'order'=>$order +=1,
+                            ]);
+                        }
+                        if ($item['variante_3']){
+                            $order = intval(ProductAttribute::query()->where('attribute_set_id',3)->max('order'));
+                            ProductAttribute::query()->firstOrCreate([
+                                'title'=>$item['variante_3'],
+                            ],[
+                                'title'=>$item['variante_3'],
+                                'slug'=>Str::slug($item['variante_3']),
+                                'attribute_set_id'=>3,
+                                'status'=>"published",
+                                'order'=>$order +=1,
+                            ]);
+                        }
+                    }
                 }
             });
         }catch (Throwable $e){
