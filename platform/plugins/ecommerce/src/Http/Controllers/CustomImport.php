@@ -342,6 +342,7 @@ class CustomImport extends BaseController
                 }*/
                 foreach ($variants as $variantItems) {
                     foreach ($variantItems as $item) {
+                        dd($item);
                         if ($item['variante_2']){
                             $order = intval(ProductAttribute::query()->where('attribute_set_id',1)->max('order'));
                             ProductAttribute::query()->firstOrCreate([
