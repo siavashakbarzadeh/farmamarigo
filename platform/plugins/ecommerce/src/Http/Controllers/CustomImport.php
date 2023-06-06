@@ -263,7 +263,9 @@ class CustomImport extends BaseController
         $products = $products->map(function ($item){
             return (array)$item;
         });
-        dd($products);
+        dd($products->filter(function ($item){
+            return $item['variant_1'];
+        }));
         $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id',$products->pluck('fk_fornitore_id')->toArray())->get();
         $brandsId = collect($brandsId)->map(function ($item){
             return (array)$item;
