@@ -238,7 +238,29 @@ Route::group(['namespace' => 'Botble\Ecommerce\Http\Controllers', 'middleware' =
                 'as' => 'importproduct',
                 'uses' => 'CustomImport@importproduct',
             ]);
+
+            Route::post('/sconto', [
+                'as' => 'sconto',
+                'uses' => 'CustomImport@sconto',
+            ]);
+
+            Route::get('/user-regione', [
+                'as' => 'user-regione',
+                'uses' => 'CustomImport@regione',
+            ]);
+
+            Route::get('/users', [
+                'as' => 'users',
+                'uses' => 'CustomImport@users',
+            ]);
+
+            Route::get('/user-tags', [
+                'as' => 'user-tags',
+                'uses' => 'CustomImport@user-tags',
+            ]);
+
         });
+
 
         Route::group(['prefix' => 'bulk-import', 'as' => 'ecommerce.bulk-import.'], function () {
             Route::get('/', [

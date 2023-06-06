@@ -1,7 +1,7 @@
 @extends(BaseHelper::getAdminMasterLayoutTemplate())
 @section('content')
 
-    {!! Form::open() !!}
+    {{-- {!! Form::open() !!} --}}
         <div class="container" id="main-discount">
             <div class="max-width-1200 row">
                 <div class="col-md-12">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-md-6">
                     <h5>Sconto Percentuale % </h5>
-                    <input type="text" class="form-control" name="value" placeholder="10">
+                    <input id='sconto' type="text" class="form-control" name="value" placeholder="10">
                     <hr>
                 </div>
                 <div class="col-md-6">
@@ -77,7 +77,7 @@
                                         $regione=DB::connection('mysql')->select('select * from cities');
                                     @endphp
                                     @foreach($regione as $reg)
-                                                <input class="form-check-input"
+                                                <input class="form-check-input region-check"
                                                        name="regione[]"
                                                        type="checkbox"
                                                        id="brand-filter-{{ $reg->id}}"
@@ -94,12 +94,32 @@
                     </div>
                     <hr>
                 </div>
+                <form action="https://dev.marigo.collaudo.biz/admin/ecommerce/customImport/sconto" method="post" class="sconto-form">
+                    @csrf
+                    <input type="submit" class="btn btn-primary mb-5 col-6" name="submit" value="Creare Sconto">
+                </form>
 
 
-                <discount-component currency="{{ get_application_currency()->symbol }}" date-format="{{ config('core.base.general.date_format.date') }}"></discount-component>
+                <div class="alert alert-success update-alert hidden" role="alert">
+
+                </div>
+                <br>
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Initial price</th>
+                        <th scope="col">Final price</th>
+                      </tr>
+                    </thead>
+                    <tbody class='product-row'>
+
+                    </tbody>
+                  </table>
             </div>
         </div>
-    {!! Form::close() !!}
+    {{-- {!! Form::close() !!} --}}
 @stop
 
 @push('header')
@@ -206,7 +226,7 @@
                         $('#div-select-product .panel .panel-body .list-search-data .navigation').html('');
 
                         products.forEach(element => {
-                            $('#div-select-product .panel .panel-body .list-search-data .clearfix').append("<li class='row' data-href='"+element.id+"' data-value='"+element.price+"'>"+element.name+"</li>");
+                            $('#div-select-product .panel .panel-body .list-search-data .clearfix').append("<li class='row product-select-btn' data-sku='"+element.sku+"' data-value='"+element.price+"'>"+element.name+"</li>");
 
                         });
                         $('#div-select-product .panel .panel-body .list-search-data .navigation').append("<span class='prev-page' data-href='"+response.data.data.prev_page_url+"'>prev page</span>")
@@ -219,7 +239,6 @@
 
 
                 $('#customer-search-realtime').keyup(function(){
-                console.log('amir');
                 const keyword=$(this).val()
                 if($('#customer-search-current-page').val()!=''){
                     var page=$('#customer-search-current-page').val()
@@ -239,7 +258,7 @@
                         $('#div-select-customer .panel .panel-body .list-search-data .navigation').html('');
 
                         products.forEach(element => {
-                        $('#div-select-customer .panel .panel-body .list-search-data .clearfix').append("<li class='row' data-href='"+element.id+"' data-value='"+element.email+"'>"+element.name+"</li>");
+                        $('#div-select-customer .panel .panel-body .list-search-data .clearfix').append("<li class='row customer-select-btn' data-href='"+element.id+"' data-value='"+element.email+"'>"+element.name+"</li>");
                         });
                         $('#div-select-customer .panel .panel-body .list-search-data .navigation').append("<span class='prev-page' data-href='"+response.data.data.prev_page_url+"'>prev page</span>")
                         $('#div-select-customer .panel .panel-body .list-search-data .navigation').append("<span class='next-page' data-href='"+response.data.data.next_page_url+"'>next page</span>")
@@ -248,7 +267,97 @@
 
                     .catch((err) => console.log(err));
                     });
+
+
+
             });
+            $(document).on("click", ".product-select-btn", function(){
+                var sku=$(this).attr('data-sku');
+                $('.sconto-form').append("<input type='hidden' name='products[]' value="+sku+">");
+                var price=$(this).attr('data-value');
+                var name=$(this).text();
+                var sconto=$('#sconto').val();
+                $('.product-row').append(`
+                <tr>
+                    <td>${sku}</td>
+                    <td>${name}</td>
+                    <td>${price}</td>
+                    <td>${(price*(100-sconto))/100}</td>
+                </tr>
+                `);
+            });
+
+
+            $(document).on("click", ".customer-select-btn", function(){
+                var id=$(this).attr('data-href');
+                var inputs=$(".sconto-form input[name='users[]']");
+
+                var hasValue = false;
+                inputs.each(function() {
+                // Check if the value of the current input is equal to 12
+                if ($(this).val() === id) {
+                    hasValue = true;
+                    // Break out of the loop if you want to stop checking after finding the first occurrence
+                    return false;
+                }
+                });
+
+                // Check the result
+                if (hasValue) {
+                    alert("User already included!");
+                } else {
+                    $('.sconto-form').append("<input type='hidden' name='users[]' value="+id+">");
+                var regioncount = $('input:checkbox:checked').length;
+
+
+                var inputs = $(".sconto-form input[name='users[]']");
+                var uniqueValues = {};
+                inputs.each(function() {
+                var value = $(this).val();
+                if (!uniqueValues[value]) {
+                    uniqueValues[value] = true;
+                }
+                });
+                var userscount = Object.keys(uniqueValues).length;
+
+
+                $('.update-alert').removeClass('hidden');
+                $('.update-alert').html(`
+                    This price list will affect on ${userscount}users and ${regioncount} regions
+                `);
+                }
+
+
+
+
+
+
+
+
+                });
+
+            $(document).on("click", ".region-check", function(){
+
+                var id=$(this).attr('value');
+                $('.sconto-form').append("<input type='hidden' name='region[]' value="+id+">");
+                var regioncount = $('input:checkbox:checked').length;
+                var inputs = $(".sconto-form input[name='users[]']");
+                var uniqueValues = {};
+                inputs.each(function() {
+                var value = $(this).val();
+                if (!uniqueValues[value]) {
+                    uniqueValues[value] = true;
+                }
+                });
+                var userscount = Object.keys(uniqueValues).length;
+                $('.update-alert').removeClass('hidden');
+                $('.update-alert').html(`
+                    This price list will affect on ${userscount} users and ${regioncount} regions
+                `);
+            });
+
+
+
 
 
 

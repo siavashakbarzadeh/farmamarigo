@@ -20,11 +20,23 @@ use Illuminate\Support\Facades\DB;
 
 class CustomImport extends BaseController
 {
+    public function sconto(){
+        $inputs = request()->all();
+        $products=$inputs['products'];
+        $users=$inputs['users'];
+        $region=$inputs['region'];
+        $where='';
+        foreach($region as $reg){
+            $where.= 'region_id='.$reg.' or';
+        }
+        $last = strrpos($where, ' or');
+        $where = substr($where,0, $last);
+        $SourceProducts=DB::connection('mysql')->select('select id from ec_customers where '.$where);
 
-    public function index(){
-
-
-
+        foreach($SourceProducts as $src){
+            array_push($users, $src->id);
+        }
+        dd($users);
     }
 
 
