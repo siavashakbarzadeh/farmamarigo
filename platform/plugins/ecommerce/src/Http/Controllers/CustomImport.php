@@ -342,30 +342,31 @@ class CustomImport extends BaseController
                 }*/
                 foreach ($variants as $variantItems) {
                     foreach ($variantItems as $item) {
-                        dd($item);
-                        if ($item['variante_2']){
-                            $order = intval(ProductAttribute::query()->where('attribute_set_id',1)->max('order'));
-                            ProductAttribute::query()->firstOrCreate([
-                                'title'=>$item['variante_2'],
-                            ],[
-                                'title'=>$item['variante_2'],
-                                'slug'=>Str::slug($item['variante_2']),
-                                'attribute_set_id'=>1,
-                                'status'=>"published",
-                                'order'=>$order +=1,
-                            ]);
-                        }
-                        if ($item['variante_3']){
-                            $order = intval(ProductAttribute::query()->where('attribute_set_id',3)->max('order'));
-                            ProductAttribute::query()->firstOrCreate([
-                                'title'=>$item['variante_3'],
-                            ],[
-                                'title'=>$item['variante_3'],
-                                'slug'=>Str::slug($item['variante_3']),
-                                'attribute_set_id'=>3,
-                                'status'=>"published",
-                                'order'=>$order +=1,
-                            ]);
+                        foreach ($item as $item2) {
+                            if ($item2['variante_2']){
+                                $order1 = intval(ProductAttribute::query()->where('attribute_set_id',1)->max('order'));
+                                ProductAttribute::query()->firstOrCreate([
+                                    'title'=>$item2['variante_2'],
+                                ],[
+                                    'title'=>$item2['variante_2'],
+                                    'slug'=>Str::slug($item2['variante_2']),
+                                    'attribute_set_id'=>1,
+                                    'status'=>"published",
+                                    'order'=>$order1 == 0 ? 0 :$order1++,
+                                ]);
+                            }
+                            if ($item2['variante_3']){
+                                $order2 = intval(ProductAttribute::query()->where('attribute_set_id',3)->max('order'));
+                                ProductAttribute::query()->firstOrCreate([
+                                    'title'=>$item2['variante_3'],
+                                ],[
+                                    'title'=>$item2['variante_3'],
+                                    'slug'=>Str::slug($item2['variante_3']),
+                                    'attribute_set_id'=>3,
+                                    'status'=>"published",
+                                    'order'=>$order2 == 0 ? 0 :$order2++,
+                                ]);
+                            }
                         }
                     }
                 }
