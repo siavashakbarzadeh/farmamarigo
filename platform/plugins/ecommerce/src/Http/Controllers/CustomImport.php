@@ -265,7 +265,8 @@ class CustomImport extends BaseController
         dd($products->filter(function ($item){
             return strlen($item['variante_1']);
         })->groupBy(function ($item){
-            dd(explode(" ",$item['nome']));
+            $i =explode(" ",$item['nome']);
+            dd(array_slice($i,0,count($i)-2));
             return ;
         }));
         $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id',$products->pluck('fk_fornitore_id')->toArray())->get();
