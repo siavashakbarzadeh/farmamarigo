@@ -11,6 +11,7 @@ use Botble\Ecommerce\Http\Requests\BulkImportRequest;
 use Botble\Ecommerce\Http\Requests\ProductRequest;
 use Botble\Ecommerce\Imports\ProductImport;
 use Botble\Ecommerce\Imports\ValidateProductImport;
+use Botble\Ecommerce\Models\Product;
 use Botble\Ecommerce\Models\ProductAttribute;
 use Botble\Ecommerce\Models\ProductVariation;
 use Illuminate\Http\Request;
@@ -217,10 +218,13 @@ class CustomImport extends BaseController
                             'reference_type' => $productItem->getMorphClass(),
                             'prefix' => "products"
                         ]);
-                        dd($productItem->toArray());
                         if ($variationItems->count()) {
                             $productVariation = ProductVariation::create([
-                                'product_id' => $productItem->toArray(),
+                                'product_id' => Product::create(collect($productItem->toArray())
+                                    ->put('is_variation',1)
+                                    ->put('quantity',null)
+                                    ->put('cost_per_item',null)
+                                    ->toArray()),
                                 'configurable_product_id' => $productItem->id,
                             ]);
                             $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
