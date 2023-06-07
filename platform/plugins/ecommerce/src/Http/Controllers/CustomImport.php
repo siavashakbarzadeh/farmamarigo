@@ -222,6 +222,7 @@ class CustomImport extends BaseController
                             ->put('is_variation',1)
                             ->put('quantity',null)
                             ->put('cost_per_item',null)
+                            ->put('images',collect($productItem->images)->toJson())
                             ->toArray());
                         if ($variationItems->count()) {
                             $productVariation = ProductVariation::create([
