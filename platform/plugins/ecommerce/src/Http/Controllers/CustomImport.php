@@ -221,6 +221,13 @@ class CustomImport extends BaseController
                             $productVariation = ProductVariation::create([
                                 'configurable_product_id' => $productItem->id,
                             ]);
+                            DB::table("ec_product_with_attribute_set")->insert($variationItems->map(function ($item)use($productItem){
+                                return [
+                                    'product_id'=>$productItem->id,
+                                    'attribute_set_id'=>$item,
+                                    'order'=>0
+                                ];
+                            })->toArray());
                             $productVariation->productAttributes()->attach($variationItems->toArray());
                         }
                     }
