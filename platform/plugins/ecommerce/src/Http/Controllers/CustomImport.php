@@ -151,6 +151,7 @@ class CustomImport extends BaseController
                             $order1 = intval(ProductAttribute::query()->where('attribute_set_id', 1)->max('order'));
                             ProductAttribute::query()->firstOrCreate([
                                 'title' => $item['variante_2'],
+                                'attribute_set_id' => 1,
                             ], [
                                 'title' => $item['variante_2'],
                                 'slug' => Str::slug($item['variante_2']),
@@ -163,6 +164,7 @@ class CustomImport extends BaseController
                             $order2 = intval(ProductAttribute::query()->where('attribute_set_id', 3)->max('order'));
                             ProductAttribute::query()->firstOrCreate([
                                 'title' => $item['variante_3'],
+                                'attribute_set_id' => 3,
                             ], [
                                 'title' => $item['variante_3'],
                                 'slug' => Str::slug($item['variante_3']),
@@ -187,7 +189,7 @@ class CustomImport extends BaseController
                             }
                         })->toArray();
                     }));*/
-                    $variationItems = collect();
+                   /* $variationItems = collect();
                     if (strlen($product['variante_2'])) {
                         $var2 = ProductAttribute::where('title', $product['variante_2'])->first();
                         if ($var2) {
@@ -234,7 +236,7 @@ class CustomImport extends BaseController
                         }
                     }
                     $productItem->categories()->sync([$product['fk_linea_id']]);
-                    /*foreach ($products as $product) {
+                    foreach ($products as $product) {
 
                     }*/
                 }
