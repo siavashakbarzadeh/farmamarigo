@@ -187,8 +187,8 @@ class CustomImport extends BaseController
                             if ($var3) {
                                 $collection->push($var3->id);
                             }
-                        })->flatten(2)->unique()->toArray();
-                    }));
+                        });
+                    })->flatten()->unique()->toArray());
                     $variationItems = collect();
                     if (strlen($product['variante_2'])) {
                         $var2 = ProductAttribute::where('title', $product['variante_2'])->first();
