@@ -177,6 +177,7 @@ class CustomImport extends BaseController
                     }
                 }
                 foreach ($products as $product) {
+                    dd($product);
                     $variationItems =[];
                     if ($product['variante_2']){
                         $var2=ProductAttribute::where('title',$product['variante_2'])->first();
@@ -190,7 +191,7 @@ class CustomImport extends BaseController
                             $variantItems[]=$var3;
                         }
                     }
-                    if (count($variationItems)){
+                    if (count($variationItems) > 0){
                         dump($product,$variationItems);
                     }
                     if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
