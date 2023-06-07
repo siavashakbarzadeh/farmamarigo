@@ -177,19 +177,21 @@ class CustomImport extends BaseController
                     }
                 }
                 foreach ($products as $product) {
-                    dd($product);
                     $variationItems =[];
-                    if ($product['variante_2']){
+                    if (strlen($product['variante_2'])){
                         $var2=ProductAttribute::where('title',$product['variante_2'])->first();
                         if($var2){
                             $variantItems[]=$var2;
                         }
                     }
-                    if ($product['variante_3']){
+                    if (strlen($product['variante_3'])){
                         $var3=ProductAttribute::where('title',$product['variante_3'])->first();
                         if ($var3){
                             $variantItems[]=$var3;
                         }
+                    }
+                    if (count($variationItems)){
+                        dd($variationItems);
                     }
                     if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
                         $productItem = \Botble\Ecommerce\Models\Product::query()->where('name',str_replace('&','and',trim($product['nome'])))->first();
