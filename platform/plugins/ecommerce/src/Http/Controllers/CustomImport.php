@@ -192,10 +192,6 @@ class CustomImport extends BaseController
                             $variationItems->push($var3->toArray());
                         }
                     }
-                    dd($variationItems);
-                    if (count($variationItems)){
-                        dd($variationItems);
-                    }
                     if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
                         $productItem = \Botble\Ecommerce\Models\Product::query()->where('name',str_replace('&','and',trim($product['nome'])))->first();
                         $productItem->update([
@@ -222,12 +218,12 @@ class CustomImport extends BaseController
                             'reference_type'=>$productItem->getMorphClass(),
                             'prefix'=>"products"
                         ]);
-                        $productVariation = ProductVariation::create([
-                            'configurable_product_id'=>$productItem->id,
-                        ]);
-                        $productVariation->productAttributes()->attach([
-
-                        ]);
+                        if ($variationItems->count()){
+                            $productVariation = ProductVariation::create([
+                                'configurable_product_id'=>$productItem->id,
+                            ]);
+                            $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
+                        }
                     }
                     $productItem->categories()->sync([$product['fk_linea_id']]);
                 }
