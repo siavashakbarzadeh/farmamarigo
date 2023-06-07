@@ -99,6 +99,8 @@ class CustomImport extends BaseController
         $products=DB::connection('mysql2')->table("art_articolo")->whereIn('categoria',[6,15,17])->whereIn('fk_linea_id',[443,441,439,383,295,124])->get();
         $products = $products->map(function ($item){
             return (array)$item;
+        })->filter(function ($item){
+            return strlen($item['variante_1']);
         });
         $variants=$products->filter(function ($item){
             return strlen($item['variante_1']);
