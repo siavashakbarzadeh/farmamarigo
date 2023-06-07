@@ -219,6 +219,7 @@ class CustomImport extends BaseController
                         ]);
                         if ($variationItems->count()) {
                             $productVariation = ProductVariation::create([
+                                'product_id' => $productItem->id,
                                 'configurable_product_id' => $productItem->id,
                             ]);
                             DB::table("ec_product_with_attribute_set")->insert($variationItems->pluck('attribute_set_id')
