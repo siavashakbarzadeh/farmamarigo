@@ -189,7 +189,6 @@ class CustomImport extends BaseController
                             }
                         });
                     })->flatten(1);
-                    dd($variationItems);
                     $product = collect($products)->first();
                     $price = $product ? $product['prezzo'] : 0;
                     if (in_array(str_replace('&', 'and', trim($product_name)), $items)) {
@@ -222,14 +221,16 @@ class CustomImport extends BaseController
                             $productVariation = ProductVariation::create([
                                 'configurable_product_id' => $productItem->id,
                             ]);
-                            DB::table("ec_product_with_attribute_set")->insert($variationItems->map(function ($item)use($productItem){
+                            DB::table("ec_product_with_attribute_set")->insert($variationItems->pluck('attribute_set_id')
+                                ->unique()
+                                ->map(function ($item)use($productItem){
                                 return [
                                     'product_id'=>$productItem->id,
                                     'attribute_set_id'=>$item,
                                     'order'=>0
                                 ];
                             })->toArray());
-                            $productVariation->productAttributes()->attach($variationItems->toArray());
+                            $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
                         }
                     }
                     $productItem->categories()->sync([$product['fk_linea_id']]);
