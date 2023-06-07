@@ -180,15 +180,16 @@ class CustomImport extends BaseController
                         return collect()->when(strlen($item['variante_2']),function (Collection $collection)use ($item){
                             $var2 = ProductAttribute::where('attribute_set_id',1)->where('title', $item['variante_2'])->first();
                             if ($var2) {
-                                $collection->push($var2->id);
+                                $collection->push($var2->toArray());
                             }
                         })->when(strlen($item['variante_3']),function (Collection $collection)use ($item){
                             $var3 = ProductAttribute::where('attribute_set_id',3)->where('title', $item['variante_3'])->first();
                             if ($var3) {
-                                $collection->push($var3->id);
+                                $collection->push($var3->toArray());
                             }
                         });
-                    })->flatten()->unique();
+                    })->flatten();
+                    dd($variationItems);
                     $product = collect($products)->first();
                     $price = $product ? $product['prezzo'] : 0;
                     if (in_array(str_replace('&', 'and', trim($product_name)), $items)) {
