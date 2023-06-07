@@ -221,7 +221,7 @@ class CustomImport extends BaseController
                             $productVariation = ProductVariation::create([
                                 'configurable_product_id' => $productItem->id,
                             ]);
-                            $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
+                            $productVariation->productAttributes()->attach($variationItems->toArray());
                         }
                     }
                     $productItem->categories()->sync([$product['fk_linea_id']]);
