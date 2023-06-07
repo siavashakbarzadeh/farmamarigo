@@ -232,7 +232,7 @@ class CustomImport extends BaseController
                                 'configurable_product_id' => $productItem->id,
                             ]);
                             $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
-                            DB::table("ec_product_with_attribute_set")->insert($variationItems->pluck('attribute_set_id')
+                            DB::table("ec_product_with_attribute_set")->insert($variationItems->pluck('id')
                                 ->unique()
                                 ->map(function ($item)use($productItem){
                                 return [
