@@ -191,9 +191,6 @@ class CustomImport extends BaseController
                             $variantItems[]=$var3;
                         }
                     }
-                    if (count($variationItems) > 0){
-                        dump($product,$variationItems);
-                    }
                     if (in_array(str_replace('&','and',trim($product['nome'])),$items)){
                         $productItem = \Botble\Ecommerce\Models\Product::query()->where('name',str_replace('&','and',trim($product['nome'])))->first();
                         $productItem->update([
