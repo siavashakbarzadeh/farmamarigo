@@ -183,6 +183,7 @@ class CustomImport extends BaseController
                     if (strlen($product['variante_2'])){
                         $var2=ProductAttribute::where('title',$product['variante_2'])->first();
                         if($var2){
+                            dd($var2);
                             $variantItems[]=$var2->toArray();
                         }
                     }
