@@ -217,9 +217,10 @@ class CustomImport extends BaseController
                             'reference_type' => $productItem->getMorphClass(),
                             'prefix' => "products"
                         ]);
+                        dd($productItem->toArray());
                         if ($variationItems->count()) {
                             $productVariation = ProductVariation::create([
-                                'product_id' => $productItem->id,
+                                'product_id' => $productItem->toArray(),
                                 'configurable_product_id' => $productItem->id,
                             ]);
                             $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
