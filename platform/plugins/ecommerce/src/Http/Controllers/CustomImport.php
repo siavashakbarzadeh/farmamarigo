@@ -188,7 +188,7 @@ class CustomImport extends BaseController
                                 $collection->push($var3->toArray());
                             }
                         });
-                    })->flatten();
+                    })->flatten(1);
                     dd($variationItems);
                     $product = collect($products)->first();
                     $price = $product ? $product['prezzo'] : 0;
