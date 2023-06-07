@@ -129,6 +129,7 @@ class CustomImport extends BaseController
             \Illuminate\Support\Facades\DB::table('ec_product_variation_items')->truncate();
             \Illuminate\Support\Facades\DB::table('ec_product_variations')->truncate();
             \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();
+            dd("ok");
             \Illuminate\Support\Facades\DB::transaction(function () use ($products, $variants, $brands, $items) {
 
                 foreach ($brands as $brand) {
@@ -195,7 +196,7 @@ class CustomImport extends BaseController
                                 $collection->push($var3->toArray());
                             }
                         });
-                    })->flatten(1);
+                    });
                     $product = collect($products)->first();
                     $price = $product ? $product['prezzo'] : 0;
                     if (in_array(str_replace('&', 'and', trim($product_name)), $items)) {
