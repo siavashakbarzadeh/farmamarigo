@@ -222,6 +222,7 @@ class CustomImport extends BaseController
                                 'product_id' => $productItem->id,
                                 'configurable_product_id' => $productItem->id,
                             ]);
+                            $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
                             DB::table("ec_product_with_attribute_set")->insert($variationItems->pluck('attribute_set_id')
                                 ->unique()
                                 ->map(function ($item)use($productItem){
@@ -231,7 +232,6 @@ class CustomImport extends BaseController
                                     'order'=>0
                                 ];
                             })->toArray());
-                            $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
                         }
                     }
                     $productItem->categories()->sync([$product['fk_linea_id']]);
