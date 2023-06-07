@@ -174,8 +174,7 @@ class CustomImport extends BaseController
                     }
                 }
                 foreach ($variants as $product_name=>$products) {
-                    dd(collect($products)->map(function ($item){
-                        dump($item);
+                    /*dd(collect($products)->map(function ($item){
                         return collect()->when(strlen($item['variante_2']),function (Collection $collection)use ($item){
                             $var2 = ProductAttribute::where('attribute_set_id',1)->where('title', $item['variante_2'])->first();
                             if ($var2) {
@@ -187,7 +186,7 @@ class CustomImport extends BaseController
                                 $collection->push($var3->id);
                             }
                         })->toArray();
-                    }));
+                    }));*/
                     $variationItems = collect();
                     if (strlen($product['variante_2'])) {
                         $var2 = ProductAttribute::where('title', $product['variante_2'])->first();
@@ -235,9 +234,9 @@ class CustomImport extends BaseController
                         }
                     }
                     $productItem->categories()->sync([$product['fk_linea_id']]);
-                    foreach ($products as $product) {
+                    /*foreach ($products as $product) {
 
-                    }
+                    }*/
                 }
             });
         } catch (Throwable $e) {
