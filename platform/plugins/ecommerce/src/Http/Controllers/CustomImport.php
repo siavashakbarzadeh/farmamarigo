@@ -173,55 +173,58 @@ class CustomImport extends BaseController
                     }
                 }
                 foreach ($variants as $product_name=>$products) {
-                    dd($product_name,$products);
+                    dd(collect($products)->map(function ($item){
+                        return collect()->toArray();
+                    }));
+                    $variationItems = collect();
+                    if (strlen($product['variante_2'])) {
+                        $var2 = ProductAttribute::where('title', $product['variante_2'])->first();
+                        if ($var2) {
+                            $variationItems->push($var2->toArray());
+                        }
+                    }
+                    if (strlen($product['variante_3'])) {
+                        $var3 = ProductAttribute::where('title', $product['variante_3'])->first();
+                        if ($var3) {
+                            $variationItems->push($var3->toArray());
+                        }
+                    }
+                    if (in_array(str_replace('&', 'and', trim($product['nome'])), $items)) {
+                        $productItem = \Botble\Ecommerce\Models\Product::query()->where('name', str_replace('&', 'and', trim($product['nome'])))->first();
+                        $productItem->update([
+                            'description' => 'Description',
+                            'price' => $product['prezzo'],
+                            'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
+                        ]);
+                    } else {
+                        $productItem = \Botble\Ecommerce\Models\Product::query()->create([
+                            'name' => str_replace('&', 'and', trim($product['nome'])),
+                            'description' => 'Description',
+                            'price' => $product['prezzo'],
+                            'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
+                            'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
+                        ]);
+                        \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
+                            'lang_code' => "en_US",
+                            'ec_products_id' => $productItem->id,
+                            'name' => str_replace('&', 'and', trim($product['nome'])),
+                        ]);
+                        \Botble\Slug\Models\Slug::create([
+                            'key' => \Illuminate\Support\Str::slug(str_replace('&', 'and', trim($product['nome']))),
+                            'reference_id' => $productItem->id,
+                            'reference_type' => $productItem->getMorphClass(),
+                            'prefix' => "products"
+                        ]);
+                        if ($variationItems->count()) {
+                            $productVariation = ProductVariation::create([
+                                'configurable_product_id' => $productItem->id,
+                            ]);
+                            $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
+                        }
+                    }
+                    $productItem->categories()->sync([$product['fk_linea_id']]);
                     foreach ($products as $product) {
-                        $variationItems = collect();
-                        if (strlen($product['variante_2'])) {
-                            $var2 = ProductAttribute::where('title', $product['variante_2'])->first();
-                            if ($var2) {
-                                $variationItems->push($var2->toArray());
-                            }
-                        }
-                        if (strlen($product['variante_3'])) {
-                            $var3 = ProductAttribute::where('title', $product['variante_3'])->first();
-                            if ($var3) {
-                                $variationItems->push($var3->toArray());
-                            }
-                        }
-                        if (in_array(str_replace('&', 'and', trim($product['nome'])), $items)) {
-                            $productItem = \Botble\Ecommerce\Models\Product::query()->where('name', str_replace('&', 'and', trim($product['nome'])))->first();
-                            $productItem->update([
-                                'description' => 'Description',
-                                'price' => $product['prezzo'],
-                                'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
-                            ]);
-                        } else {
-                            $productItem = \Botble\Ecommerce\Models\Product::query()->create([
-                                'name' => str_replace('&', 'and', trim($product['nome'])),
-                                'description' => 'Description',
-                                'price' => $product['prezzo'],
-                                'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
-                                'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
-                            ]);
-                            \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
-                                'lang_code' => "en_US",
-                                'ec_products_id' => $productItem->id,
-                                'name' => str_replace('&', 'and', trim($product['nome'])),
-                            ]);
-                            \Botble\Slug\Models\Slug::create([
-                                'key' => \Illuminate\Support\Str::slug(str_replace('&', 'and', trim($product['nome']))),
-                                'reference_id' => $productItem->id,
-                                'reference_type' => $productItem->getMorphClass(),
-                                'prefix' => "products"
-                            ]);
-                            if ($variationItems->count()) {
-                                $productVariation = ProductVariation::create([
-                                    'configurable_product_id' => $productItem->id,
-                                ]);
-                                $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
-                            }
-                        }
-                        $productItem->categories()->sync([$product['fk_linea_id']]);
+
                     }
                 }
             });
