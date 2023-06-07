@@ -218,18 +218,14 @@ class CustomImport extends BaseController
                             'reference_type' => $productItem->getMorphClass(),
                             'prefix' => "products"
                         ]);
-                        dd(collect($productItem->toArray())
-                            ->put('is_variation',1)
-                            ->put('quantity',null)
-                            ->put('cost_per_item',null)
-                            ->put('images',collect($productItem->images)->toJson())
-                            ->toArray());
                         if ($variationItems->count()) {
                             $productVariation = ProductVariation::create([
                                 'product_id' => Product::create(collect($productItem->toArray())
                                     ->put('is_variation',1)
                                     ->put('quantity',null)
                                     ->put('cost_per_item',null)
+                                    ->put('images',collect($productItem->images)->toJson())
+                                    ->put('product_collections',collect($productItem->product_collections)->toJson())
                                     ->toArray()),
                                 'configurable_product_id' => $productItem->id,
                             ]);
