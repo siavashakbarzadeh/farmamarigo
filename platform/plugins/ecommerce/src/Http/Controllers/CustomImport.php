@@ -179,6 +179,7 @@ class CustomImport extends BaseController
                     }
                 }
                 foreach ($products as $product) {
+                    dd($product);
                     $variationItems =[];
                     if (strlen($product['variante_2'])){
                         $var2=ProductAttribute::where('title',$product['variante_2'])->first();
