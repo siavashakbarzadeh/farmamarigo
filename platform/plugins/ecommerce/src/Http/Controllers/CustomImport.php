@@ -129,7 +129,6 @@ class CustomImport extends BaseController
             \Illuminate\Support\Facades\DB::table('ec_product_variation_items')->truncate();
             \Illuminate\Support\Facades\DB::table('ec_product_variations')->truncate();
             \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();
-            dd("ok");
             \Illuminate\Support\Facades\DB::transaction(function () use ($products, $variants, $brands, $items) {
 
                 foreach ($brands as $brand) {
@@ -226,20 +225,23 @@ class CustomImport extends BaseController
                             'prefix' => "products"
                         ]);
                         if ($variationItems->count()) {
-                            $productVariation = ProductVariation::create([
-                                'product_id' => Product::create([
-                                    'name' => $productItem->name,
-                                    'description' => 'Description',
-                                    'price' => $price,
-                                    'is_variation' => true,
-                                    'cost_per_item' => null,
-                                    'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
-                                    'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
-                                ])->id,
-                                'configurable_product_id' => $productItem->id,
-                            ]);
-                            $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
-                            DB::table("ec_product_with_attribute_set")->insert($variationItems->pluck('attribute_set_id')
+                            foreach ($variationItems as $variationItem) {
+                                $productVariation = ProductVariation::create([
+                                    'product_id' => Product::create([
+                                        'name' => $productItem->name,
+                                        'description' => $productItem->description,
+                                        'price' => $productItem->price,
+                                        'is_variation' => true,
+                                        'cost_per_item' => null,
+                                        'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
+                                        'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
+                                    ])->id,
+                                    'configurable_product_id' => $productItem->id,
+                                ]);
+                                $productVariation->productAttributes()->attach($variationItem->pluck('id')->unique()->toArray());
+                            }
+                            DB::table("ec_product_with_attribute_set")->insert($variationItems->flatten(1)
+                                ->pluck('attribute_set_id')
                                 ->unique()
                                 ->map(function ($item)use($productItem){
                                 return [
