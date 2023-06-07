@@ -220,13 +220,15 @@ class CustomImport extends BaseController
                         ]);
                         if ($variationItems->count()) {
                             $productVariation = ProductVariation::create([
-                                'product_id' => Product::create(collect($productItem->toArray())
-                                    ->put('is_variation',1)
-                                    ->put('quantity',null)
-                                    ->put('cost_per_item',null)
-                                    ->put('images',null)
-                                    ->put('product_collections',null)
-                                    ->toArray()),
+                                'product_id' => Product::create([
+                                    'name' => $productItem->name,
+                                    'description' => 'Description',
+                                    'price' => $price,
+                                    'is_variation' => true,
+                                    'cost_per_item' => null,
+                                    'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
+                                    'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
+                                ])->id,
                                 'configurable_product_id' => $productItem->id,
                             ]);
                             $productVariation->productAttributes()->attach($variationItems->pluck('id')->unique()->toArray());
