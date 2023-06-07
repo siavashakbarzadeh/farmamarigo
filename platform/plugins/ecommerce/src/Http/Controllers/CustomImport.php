@@ -125,6 +125,11 @@ class CustomImport extends BaseController
         });
         try {
             \Illuminate\Support\Facades\DB::transaction(function () use ($products, $variants, $brands, $items) {
+                Product::truncate();
+                \Illuminate\Support\Facades\DB::table('ec_products_translations')->truncate();
+                \Illuminate\Support\Facades\DB::table('ec_product_variation_items')->truncate();
+                \Illuminate\Support\Facades\DB::table('ec_product_variations')->truncate();
+                \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();
                 foreach ($brands as $brand) {
                     $brandItem = \Botble\Ecommerce\Models\Brand::updateOrCreate([
                         'name' => $brand,
