@@ -180,6 +180,11 @@ class CustomImport extends BaseController
                             if ($var2) {
                                 $collection->push($var2->toArray());
                             }
+                        })->when(strlen($item['variante_3']),function (Collection $collection)use ($item){
+                            $var3 = ProductAttribute::where('title', $item['variante_3'])->first();
+                            if ($var3) {
+                                $collection->push($var3->toArray());
+                            }
                         })->toArray();
                     }));
                     $variationItems = collect();
