@@ -105,14 +105,10 @@ class CustomImport extends BaseController
         $variants=$products->filter(function ($item){
             return strlen($item['variante_1']);
         })->groupBy(function ($item){
-            $i =explode(" ",$item['nome']);
-            return $i[0];
-        })->mapWithKeys(function ($item,$key){
-            return [$key=>collect($item)->groupBy(function ($item){
-                $i =array_filter(explode(" ",$item['nome']));
-                return implode(" ",array_slice($i,0,count($i) == 3 ? 1 : 2));
-            })];
+            $i =array_filter(explode(" ",$item['nome']));
+            return implode(" ",array_slice($i,0,count($i) == 3 ? 1 : 2));
         });
+        dd($variants);
         $brandsId=DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id',$products->pluck('fk_fornitore_id')->toArray())->get();
         $brandsId = collect($brandsId)->map(function ($item){
             return (array)$item;
