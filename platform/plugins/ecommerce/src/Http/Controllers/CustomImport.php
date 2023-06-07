@@ -227,7 +227,6 @@ class CustomImport extends BaseController
                     }
                     $productItem->categories()->sync([$product['fk_linea_id']]);
                 }
-                dd("ok");
             });
         }catch (Throwable $e){
             dd($e);
