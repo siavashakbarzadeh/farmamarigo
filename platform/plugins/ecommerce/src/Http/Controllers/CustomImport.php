@@ -14,6 +14,7 @@ use Botble\Ecommerce\Imports\ValidateProductImport;
 use Botble\Ecommerce\Models\ProductAttribute;
 use Botble\Ecommerce\Models\ProductVariation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\DB;
@@ -174,7 +175,12 @@ class CustomImport extends BaseController
                 }
                 foreach ($variants as $product_name=>$products) {
                     dd(collect($products)->map(function ($item){
-                        return collect()->toArray();
+                        return collect()->when(strlen($item['variante_2']),function (Collection $collection)use ($item){
+                            $var2 = ProductAttribute::where('title', $item['variante_2'])->first();
+                            if ($var2) {
+                                $collection->push($var2->toArray());
+                            }
+                        })->toArray();
                     }));
                     $variationItems = collect();
                     if (strlen($product['variante_2'])) {
