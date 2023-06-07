@@ -224,8 +224,8 @@ class CustomImport extends BaseController
                                     ->put('is_variation',1)
                                     ->put('quantity',null)
                                     ->put('cost_per_item',null)
-                                    ->put('images',collect($productItem->images)->toJson())
-                                    ->put('product_collections',collect($productItem->product_collections)->toJson())
+                                    ->put('images',null)
+                                    ->put('product_collections',null)
                                     ->toArray()),
                                 'configurable_product_id' => $productItem->id,
                             ]);
