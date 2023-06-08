@@ -102,8 +102,6 @@ class CustomImport extends BaseController
         $products = DB::connection('mysql2')->table("art_articolo")->whereIn('categoria', [6, 15, 17])->whereIn('fk_linea_id', [443, 441, 439, 383, 295, 124])->get();
         $products = $products->map(function ($item) {
             return (array)$item;
-        })->filter(function ($item) {
-            return strlen($item['variante_1']);
         });
         $productsWithoutVariants=$products->filter(function ($item) {
             return !strlen($item['variante_1']);
@@ -123,9 +121,6 @@ class CustomImport extends BaseController
             return (array)$item;
         })->pluck('nome', 'pk_fornitore_id');
         $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
-        $products = $products->unique(function ($item) use ($items) {
-            return trim($item['nome']);
-        });
         try {
             Product::truncate();
             \Illuminate\Support\Facades\DB::table('ec_products_translations')->truncate();
