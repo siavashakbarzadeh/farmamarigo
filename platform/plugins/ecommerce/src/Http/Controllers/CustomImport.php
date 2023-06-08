@@ -126,7 +126,7 @@ class CustomImport extends BaseController
         \Illuminate\Support\Facades\DB::table('ec_product_variation_items')->truncate();
         \Illuminate\Support\Facades\DB::table('ec_product_variations')->truncate();
         \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();
-        \Illuminate\Support\Facades\DB::table('slugs')->where('prefix','products')->truncate();
+        \Illuminate\Support\Facades\DB::table('slugs')->where('prefix','products')->delete();
 
         $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
 
@@ -169,6 +169,7 @@ class CustomImport extends BaseController
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
                     }
+                    $productItem->categories()->sync([$productsWithoutVariant['fk_linea_id']]);
                 }
                 foreach ($variants as $variantItems) {
                     foreach ($variantItems as $item) {
