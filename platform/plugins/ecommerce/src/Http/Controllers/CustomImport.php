@@ -105,6 +105,9 @@ class CustomImport extends BaseController
         })->filter(function ($item) {
             return strlen($item['variante_1']);
         });
+        $productsWithoutVariants=$products->filter(function ($item) {
+            return !strlen($item['variante_1']);
+        });
         $variants = $products->filter(function ($item) {
             return strlen($item['variante_1']);
         })->groupBy(function ($item) {
@@ -129,7 +132,7 @@ class CustomImport extends BaseController
             \Illuminate\Support\Facades\DB::table('ec_product_variation_items')->truncate();
             \Illuminate\Support\Facades\DB::table('ec_product_variations')->truncate();
             \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();
-            \Illuminate\Support\Facades\DB::transaction(function () use ($products, $variants, $brands, $items) {
+            \Illuminate\Support\Facades\DB::transaction(function () use ($products,$productsWithoutVariants, $variants, $brands, $items) {
 
                 foreach ($brands as $brand) {
                     $brandItem = \Botble\Ecommerce\Models\Brand::updateOrCreate([
@@ -151,6 +154,22 @@ class CustomImport extends BaseController
                         'reference_type' => $brandItem->getMorphClass(),
                         'prefix' => "brands"
                     ]);
+                }
+                foreach ($productsWithoutVariants as $productsWithoutVariant) {
+                    $product_name = str_replace('&', 'and', trim($productsWithoutVariant['nome']));
+                    $price = $productsWithoutVariant['prezzo'];
+                    if (in_array($product_name, $items)) {
+                        $productItem = \Botble\Ecommerce\Models\Product::query()->where('name', $product_name)->first();
+                        $productItem->update([
+                            'description' => 'Description',
+                            'price' => $price,
+                            'images' => collect([strtolower($productsWithoutVariant['codice']) . '.jpg'])->toJson(),
+                        ]);
+                    }else{
+                        $productItem = $this->_generateProduct($product_name,$productsWithoutVariant,$price,$brands);
+                        $this->_generateTranslationProduct($product_name,$productItem);
+                        $this->_generateSlugProduct($product_name,$productItem);
+                    }
                 }
                 foreach ($variants as $variantItems) {
                     foreach ($variantItems as $item) {
@@ -206,24 +225,9 @@ class CustomImport extends BaseController
                             'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
                         ]);
                     } else {
-                        $productItem = \Botble\Ecommerce\Models\Product::query()->create([
-                            'name' => str_replace('&', 'and', trim($product_name)),
-                            'description' => 'Description',
-                            'price' => $price,
-                            'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
-                            'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
-                        ]);
-                        \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
-                            'lang_code' => "en_US",
-                            'ec_products_id' => $productItem->id,
-                            'name' => str_replace('&', 'and', trim($product_name)),
-                        ]);
-                        \Botble\Slug\Models\Slug::create([
-                            'key' => \Illuminate\Support\Str::slug(str_replace('&', 'and', trim($product_name))),
-                            'reference_id' => $productItem->id,
-                            'reference_type' => $productItem->getMorphClass(),
-                            'prefix' => "products"
-                        ]);
+                        $productItem = $this->_generateProduct($product_name,$product,$price,$brands);
+                        $this->_generateTranslationProduct($product_name,$productItem);
+                        $this->_generateSlugProduct($product_name,$productItem);
                         if ($variationItems->count()) {
                             foreach ($variationItems as $variationItem) {
                                 $productVariation = ProductVariation::create([
@@ -261,5 +265,34 @@ class CustomImport extends BaseController
         return redirect()->back()->withSuccess('IT WORKS!');
     }
 
+    private function _generateProduct($product_name,$product,$price,$brands)
+    {
+        return \Botble\Ecommerce\Models\Product::query()->create([
+            'name' => str_replace('&', 'and', trim($product_name)),
+            'description' => 'Description',
+            'price' => $price,
+            'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
+            'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
+        ]);
+    }
+
+    private function _generateSlugProduct($product_name, $product)
+    {
+        return \Botble\Slug\Models\Slug::create([
+            'key' => \Illuminate\Support\Str::slug(str_replace('&', 'and', trim($product_name))),
+            'reference_id' => $product->id,
+            'reference_type' => $product->getMorphClass(),
+            'prefix' => "products"
+        ]);
+    }
+
+    private function _generateTranslationProduct($product_name, $product)
+    {
+        return \Illuminate\Support\Facades\DB::table('ec_products_translations')->insert([
+            'lang_code' => "en_US",
+            'ec_products_id' => $product->id,
+            'name' => str_replace('&', 'and', trim($product_name)),
+        ]);
+    }
 
 }
