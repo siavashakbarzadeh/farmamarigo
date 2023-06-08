@@ -126,6 +126,7 @@ class CustomImport extends BaseController
         \Illuminate\Support\Facades\DB::table('ec_product_variation_items')->truncate();
         \Illuminate\Support\Facades\DB::table('ec_product_variations')->truncate();
         \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();
+        \Illuminate\Support\Facades\DB::table('slugs')->where('prefix','products')->truncate();
 
         $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
 
