@@ -154,7 +154,7 @@ class CustomImport extends BaseController
                         'prefix' => "brands"
                     ]);
                 }
-                /*foreach ($productsWithoutVariants as $productsWithoutVariant) {
+                foreach ($productsWithoutVariants as $productsWithoutVariant) {
                     $product_name = str_replace('&', 'and', trim($productsWithoutVariant['nome']));
                     $price = $productsWithoutVariant['prezzo'];
                     if (in_array($product_name, $items)) {
@@ -169,7 +169,7 @@ class CustomImport extends BaseController
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
                     }
-                }*/
+                }
                 foreach ($variants as $variantItems) {
                     foreach ($variantItems as $item) {
                         if ($item['variante_2']) {
