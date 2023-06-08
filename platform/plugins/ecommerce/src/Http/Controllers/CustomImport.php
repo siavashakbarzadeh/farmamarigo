@@ -120,13 +120,16 @@ class CustomImport extends BaseController
         $brands = collect($brands)->map(function ($item) {
             return (array)$item;
         })->pluck('nome', 'pk_fornitore_id');
+
+        Product::truncate();
+        \Illuminate\Support\Facades\DB::table('ec_products_translations')->truncate();
+        \Illuminate\Support\Facades\DB::table('ec_product_variation_items')->truncate();
+        \Illuminate\Support\Facades\DB::table('ec_product_variations')->truncate();
+        \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();
+
         $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
+
         try {
-            Product::truncate();
-            \Illuminate\Support\Facades\DB::table('ec_products_translations')->truncate();
-            \Illuminate\Support\Facades\DB::table('ec_product_variation_items')->truncate();
-            \Illuminate\Support\Facades\DB::table('ec_product_variations')->truncate();
-            \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();
             \Illuminate\Support\Facades\DB::transaction(function () use ($products,$productsWithoutVariants, $variants, $brands, $items) {
 
                 foreach ($brands as $brand) {
