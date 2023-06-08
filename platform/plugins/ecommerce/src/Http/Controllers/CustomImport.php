@@ -121,11 +121,11 @@ class CustomImport extends BaseController
             return (array)$item;
         })->pluck('nome', 'pk_fornitore_id');
 
-        /*Product::truncate();
+        Product::truncate();
         \Illuminate\Support\Facades\DB::table('ec_products_translations')->truncate();
         \Illuminate\Support\Facades\DB::table('ec_product_variation_items')->truncate();
         \Illuminate\Support\Facades\DB::table('ec_product_variations')->truncate();
-        \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();*/
+        \Illuminate\Support\Facades\DB::table('ec_product_with_attribute_set')->truncate();
 
         $items = \Botble\Ecommerce\Models\Product::query()->get()->pluck('name')->toArray();
 
@@ -153,7 +153,7 @@ class CustomImport extends BaseController
                         'prefix' => "brands"
                     ]);
                 }
-                foreach ($productsWithoutVariants as $productsWithoutVariant) {
+                /*foreach ($productsWithoutVariants as $productsWithoutVariant) {
                     $product_name = str_replace('&', 'and', trim($productsWithoutVariant['nome']));
                     $price = $productsWithoutVariant['prezzo'];
                     if (in_array($product_name, $items)) {
@@ -168,7 +168,7 @@ class CustomImport extends BaseController
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
                     }
-                }
+                }*/
                 foreach ($variants as $variantItems) {
                     foreach ($variantItems as $item) {
                         if ($item['variante_2']) {
