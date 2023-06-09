@@ -14,6 +14,7 @@ use Botble\Ecommerce\Imports\ValidateProductImport;
 use Botble\Ecommerce\Models\Product;
 use Botble\Ecommerce\Models\ProductAttribute;
 use Botble\Ecommerce\Models\ProductVariation;
+use Botble\Ecommerce\Models\Tax;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -168,6 +169,7 @@ class CustomImport extends BaseController
                         ]);
                     }else{
                         $productItem = $this->_generateProduct($product_name,$productsWithoutVariant,$price,$brands,$taxId);
+                        // product_id va tax_id be table ec_tax_products ezafe shavad
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
                     }
@@ -272,7 +274,7 @@ class CustomImport extends BaseController
 
     private function _generateProduct($product_name,$product,$price,$brands,$taxId)
     {
-        return \Botble\Ecommerce\Models\Product::query()->create([
+        $productItem= \Botble\Ecommerce\Models\Product::query()->create([
             'name' => str_replace('&', 'and', trim($product_name)),
             'description' => 'Description',
             'price' => $price,
@@ -280,6 +282,11 @@ class CustomImport extends BaseController
             'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
             'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
         ]);
+        $tax = Tax::find($taxId);
+        if ($tax){
+            $tax->products()->sync([$productItem->id]);
+        }
+        return $productItem;
     }
 
     private function _generateSlugProduct($product_name, $product)
