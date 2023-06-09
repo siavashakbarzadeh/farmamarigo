@@ -157,15 +157,17 @@ class CustomImport extends BaseController
                 foreach ($productsWithoutVariants as $productsWithoutVariant) {
                     $product_name = str_replace('&', 'and', trim($productsWithoutVariant['nome']));
                     $price = $productsWithoutVariant['prezzo'];
+                    $taxId = $productsWithoutVariant['fk_codice_iva_id'];
                     if (in_array($product_name, $items)) {
                         $productItem = \Botble\Ecommerce\Models\Product::query()->where('name', $product_name)->first();
                         $productItem->update([
                             'description' => 'Description',
                             'price' => $price,
+                            'tax_id' => $taxId,
                             'images' => collect([strtolower($productsWithoutVariant['codice']) . '.jpg'])->toJson(),
                         ]);
                     }else{
-                        $productItem = $this->_generateProduct($product_name,$productsWithoutVariant,$price,$brands);
+                        $productItem = $this->_generateProduct($product_name,$productsWithoutVariant,$price,$brands,$taxId);
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
                     }
@@ -217,15 +219,17 @@ class CustomImport extends BaseController
                     });
                     $product = collect($products)->first();
                     $price = $product ? $product['prezzo'] : 0;
+                    $taxId= $product['fk_codice_iva_id'];
                     if (in_array(str_replace('&', 'and', trim($product_name)), $items)) {
                         $productItem = \Botble\Ecommerce\Models\Product::query()->where('name', str_replace('&', 'and', trim($product_name)))->first();
                         $productItem->update([
                             'description' => 'Description',
                             'price' => $price,
+                            'tax_id' => $taxId,
                             'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
                         ]);
                     } else {
-                        $productItem = $this->_generateProduct($product_name,$product,$price,$brands);
+                        $productItem = $this->_generateProduct($product_name,$product,$price,$brands,$taxId);
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
                         if ($variationItems->count()) {
@@ -237,6 +241,7 @@ class CustomImport extends BaseController
                                         'price' => $productItem->price,
                                         'is_variation' => true,
                                         'cost_per_item' => null,
+                                        'tax_id' => $productItem->tax_id,
                                         'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
                                         'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
                                     ])->id,
@@ -265,12 +270,13 @@ class CustomImport extends BaseController
         return redirect()->back()->withSuccess('IT WORKS!');
     }
 
-    private function _generateProduct($product_name,$product,$price,$brands)
+    private function _generateProduct($product_name,$product,$price,$brands,$taxId)
     {
         return \Botble\Ecommerce\Models\Product::query()->create([
             'name' => str_replace('&', 'and', trim($product_name)),
             'description' => 'Description',
             'price' => $price,
+            'tax_id' => $taxId,
             'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
             'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
         ]);
