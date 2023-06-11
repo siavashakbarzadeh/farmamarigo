@@ -79,11 +79,11 @@
                         </div>
 
                         <div id="tax-settings" class="mb-4 border rounded-top rounded-bottom p-3 bg-light @if (!EcommerceHelper::isTaxEnabled()) d-none @endif">
-                            <div class="form-group mb-3">
+                            {{-- <div class="form-group mb-3">
                                 <label class="text-title-field" for="default_tax_rate">{{ trans('plugins/ecommerce::ecommerce.setting.default_tax_rate') }}</label>
                                 {!! Form::customSelect('default_tax_rate', [0 => trans('plugins/ecommerce::tax.select_tax')] + app(\Botble\Ecommerce\Repositories\Interfaces\TaxInterface::class)->pluck('title', 'id'), get_ecommerce_setting('default_tax_rate')) !!}
                                 <span class="help-ts">{{ trans('plugins/ecommerce::ecommerce.setting.default_tax_rate_description') }}</span>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group mb-3">
                                 <label class="text-title-field"
