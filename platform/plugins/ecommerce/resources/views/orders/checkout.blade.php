@@ -173,7 +173,7 @@
                                     </div>
                                 </div>
                                 <h5 class="checkout-payment-title">{{ __('Payment method') }}</h5>
-                                <input type="hidden" name="amount" value="{{ ($promotionDiscountAmount + $couponDiscountAmount - $shippingAmount) > Cart::instance('cart')->rawTotal() ? 0 : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount + $shippingAmount, null, true) }}">
+                                <input type="hidden" name="amount" value="{{ ($promotionDiscountAmount + $couponDiscountAmount - floatval(Session::get('shippingAmount'))) > Cart::instance('cart')->rawTotal() ? 0 : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount + floatval(Session::get('shippingAmount')), null, true) }}">
                                 <input type="hidden" name="currency" value="{{ strtoupper(get_application_currency()->title) }}">
                                 {!! apply_filters(PAYMENT_FILTER_PAYMENT_PARAMETERS, null) !!}
                                 <ul class="list-group list_payment_method">
