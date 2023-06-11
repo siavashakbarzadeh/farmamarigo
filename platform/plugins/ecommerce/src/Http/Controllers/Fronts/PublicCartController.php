@@ -196,7 +196,6 @@ class PublicCartController extends Controller
         if (! EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
-        dd($request);
         Session::put('note',$request->note);
         Session::put('shippingAmount',$request->shippingAmount);
         if ($request->has('checkout')) {
