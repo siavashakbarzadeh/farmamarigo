@@ -66,6 +66,11 @@ Route::group(
 );
 Route::group([
     'namespace' => 'Botble\Ecommerce\Http\Controllers\Customers',
+<<<<<<< HEAD
+=======
+    'middleware' => ['web', 'core'],
+    'as' => 'customer.',
+>>>>>>> parent of a7009ede (1)
 ], function () {
     Route::get('users/verify/{id}', 'LoginController@userVerify')
         ->middleware(['signed'])
