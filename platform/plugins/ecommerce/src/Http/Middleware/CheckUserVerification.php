@@ -25,7 +25,7 @@ class CheckUserVerification
                 $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
                 Mail::to(auth('customer')->user()->email)->send(new VerificationAccountMail($url));
             }
-            return redirect('users/verify');
+            return redirect('customer/edit-account');
         }
         return $next($request);
     }
