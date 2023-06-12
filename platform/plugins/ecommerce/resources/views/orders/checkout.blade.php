@@ -111,14 +111,14 @@
                             @include('plugins/ecommerce::orders.partials.logo')
                         </div>
                         <div class="form-checkout">
-{{--                            @if ($isShowAddressForm)--}}
-{{--                                <div>--}}
-{{--                                    <h5 class="checkout-payment-title">{{ __('Shipping information') }}</h5>--}}
-{{--                                    <input type="hidden" value="{{ route('public.checkout.save-information', $token) }}" id="save-shipping-information-url">--}}
-{{--                                    @include('plugins/ecommerce::orders.partials.address-form', compact('sessionCheckoutData'))--}}
-{{--                                </div>--}}
-{{--                                <br>--}}
-{{--                            @endif--}}
+                            @if ($isShowAddressForm)
+                                <div>
+                                    <h5 class="checkout-payment-title">{{ __('Shipping information') }}</h5>
+                                    <input type="hidden" value="{{ route('public.checkout.save-information', $token) }}" id="save-shipping-information-url">
+                                    @include('plugins/ecommerce::orders.partials.address-form', compact('sessionCheckoutData'))
+                                </div>
+                                <br>
+                            @endif
 
                             @if (EcommerceHelper::isBillingAddressEnabled())
                                 <div>
@@ -129,41 +129,41 @@
                             @endif
 
                             @if (! is_plugin_active('marketplace'))
-                                @if (Arr::get($sessionCheckoutData, 'is_available_shipping', true))
-                                    <div id="shipping-method-wrapper">
-                                        <h5 class="checkout-payment-title">{{ __('Shipping method') }}</h5>
-                                        <div class="shipping-info-loading" style="display: none;">
-                                            <div class="shipping-info-loading-content">
-                                                <i class="fas fa-spinner fa-spin"></i>
-                                            </div>
-                                        </div>
-                                        @if (!empty($shipping))
-                                            <div class="payment-checkout-form">
-                                                <input type="hidden" name="shipping_option" value="{{ old('shipping_option', $defaultShippingOption) }}">
-                                                <ul class="list-group list_payment_method">
-                                                    @foreach ($shipping as $shippingKey => $shippingItems)
-                                                        @foreach($shippingItems as $shippingOption => $shippingItem)
-                                                            @include('plugins/ecommerce::orders.partials.shipping-option', [
-                                                                'shippingItem' => $shippingItem,
-                                                                'attributes' =>[
-                                                                    'id' => 'shipping-method-' . $shippingKey . '-' . $shippingOption,
-                                                                    'name' => 'shipping_method',
-                                                                    'class' => 'magic-radio',
-                                                                    'checked' => old('shipping_method', $defaultShippingMethod) == $shippingKey && old('shipping_option', $defaultShippingOption) == $shippingOption,
-                                                                    'disabled' => Arr::get($shippingItem, 'disabled'),
-                                                                    'data-option' => $shippingOption,
-                                                                ],
-                                                            ])
-                                                        @endforeach
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @else
-                                            <p>{{ __('No shipping methods available!') }}</p>
-                                        @endif
-                                    </div>
-                                    <br>
-                                @endif
+{{--                                @if (Arr::get($sessionCheckoutData, 'is_available_shipping', true))--}}
+{{--                                    <div id="shipping-method-wrapper">--}}
+{{--                                        <h5 class="checkout-payment-title">{{ __('Shipping method') }}</h5>--}}
+{{--                                        <div class="shipping-info-loading" style="display: none;">--}}
+{{--                                            <div class="shipping-info-loading-content">--}}
+{{--                                                <i class="fas fa-spinner fa-spin"></i>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        @if (!empty($shipping))--}}
+{{--                                            <div class="payment-checkout-form">--}}
+{{--                                                <input type="hidden" name="shipping_option" value="{{ old('shipping_option', $defaultShippingOption) }}">--}}
+{{--                                                <ul class="list-group list_payment_method">--}}
+{{--                                                    @foreach ($shipping as $shippingKey => $shippingItems)--}}
+{{--                                                        @foreach($shippingItems as $shippingOption => $shippingItem)--}}
+{{--                                                            @include('plugins/ecommerce::orders.partials.shipping-option', [--}}
+{{--                                                                'shippingItem' => $shippingItem,--}}
+{{--                                                                'attributes' =>[--}}
+{{--                                                                    'id' => 'shipping-method-' . $shippingKey . '-' . $shippingOption,--}}
+{{--                                                                    'name' => 'shipping_method',--}}
+{{--                                                                    'class' => 'magic-radio',--}}
+{{--                                                                    'checked' => old('shipping_method', $defaultShippingMethod) == $shippingKey && old('shipping_option', $defaultShippingOption) == $shippingOption,--}}
+{{--                                                                    'disabled' => Arr::get($shippingItem, 'disabled'),--}}
+{{--                                                                    'data-option' => $shippingOption,--}}
+{{--                                                                ],--}}
+{{--                                                            ])--}}
+{{--                                                        @endforeach--}}
+{{--                                                    @endforeach--}}
+{{--                                                </ul>--}}
+{{--                                            </div>--}}
+{{--                                        @else--}}
+{{--                                            <p>{{ __('No shipping methods available!') }}</p>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                    <br>--}}
+{{--                                @endif--}}
                             @endif
 
                             <div class="position-relative">
