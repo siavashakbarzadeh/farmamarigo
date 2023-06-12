@@ -66,7 +66,7 @@ class LoginController extends Controller
             if (Cache::has('VERIFICATION_URL_CUSTOMER_'.$user->id))
             Cache::forget('VERIFICATION_URL_CUSTOMER_'.$user->id);
         }
-        return redirect('/');
+        return redirect('/customer/edit-account');
     }
 
     public function showLoginForm()
