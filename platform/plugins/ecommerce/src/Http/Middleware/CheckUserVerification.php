@@ -18,8 +18,7 @@ class CheckUserVerification
     {
 //        auth()->user()->markEmailAsVerified();
 //        auth()->user()->unMarkEmailAsVerified();
-        dd($request->route()->getName());
-        if (auth('customer')->user() && !auth('customer')->user()->email_verified_at) {
+        if (auth('customer')->user() && !auth('customer')->user()->email_verified_at && $request->route()->getName()!="customer.overview") {
             $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
             if (!Cache::has($key)){
                 Cache::put($key,"generated",now()->addMinutes(5));
