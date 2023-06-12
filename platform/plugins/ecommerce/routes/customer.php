@@ -66,7 +66,7 @@ Route::group(
 );
 Route::group([
     'namespace' => 'Botble\Ecommerce\Http\Controllers\Customers',
-    'middleware' => ['web', 'core'],
+    'middleware' => ['web'],
     'as' => 'customer.',
 ], function () {
     Route::get('users/verify/{id}', 'LoginController@userVerify')->name('user-verify')
