@@ -236,6 +236,7 @@ class CustomImport extends BaseController
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
                         if ($variationItems->count()) {
+                            $assigned = false;
                             foreach ($variationItems as $key=>$variationItem) {
                                 if (count($variationItem)){
                                     $cProduct=$products->first(function ($item)use($variationItem){
@@ -249,6 +250,7 @@ class CustomImport extends BaseController
                                 }else{
                                     $cProduct=null;
                                 }
+                                if ($cProduct) $assigned=true;
                                 $productVariation = ProductVariation::create([
                                     'product_id' => Product::create([
                                         'name' => $productItem->name,
@@ -261,6 +263,7 @@ class CustomImport extends BaseController
                                         'images' => $cProduct ? collect([strtolower($cProduct['codice']) . '.jpg'])->toJson() : collect([strtolower($product['codice']) . '.jpg'])->toJson(),
                                     ])->id,
                                     'configurable_product_id' => $productItem->id,
+                                    'is_default'=>$assigned
                                 ]);
                                 $productVariation->productAttributes()->attach($variationItem->pluck('id')->unique()->toArray());
                             }
