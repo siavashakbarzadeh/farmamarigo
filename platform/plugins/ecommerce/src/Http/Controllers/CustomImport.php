@@ -216,7 +216,7 @@ class CustomImport extends BaseController
                         })->when(strlen($item['variante_3']),function (Collection $collection)use ($item){
                             $var3 = ProductAttribute::where('attribute_set_id',3)->where('title', $item['variante_3'])->first();
                             if ($var3) {
-                                $collection->push('variante_3',$var3->toArray());
+                                $collection->put('variante_3',$var3->toArray());
                             }
                         });
                     });
