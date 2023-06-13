@@ -238,6 +238,7 @@ class CustomImport extends BaseController
                         if ($variationItems->count()) {
                             foreach ($variationItems as $key=>$variationItem) {
                                 dd($key,$products->first(function ($item)use($variationItem){
+                                    $variationItem=$variationItem->toArray();
                                     if (count($variationItem) < 2){
                                         return $item[array_key_first($variationItem)] == $variationItem[array_key_first($variationItem)]['title'];
                                     }else{
