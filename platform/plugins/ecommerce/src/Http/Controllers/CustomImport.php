@@ -250,7 +250,7 @@ class CustomImport extends BaseController
                                 }else{
                                     $cProduct=null;
                                 }
-                                if ($cProduct) $assigned=true;
+                                if ($cProduct && !$assigned) $assigned=true;
                                 $productVariation = ProductVariation::create([
                                     'product_id' => Product::create([
                                         'name' => $productItem->name,
