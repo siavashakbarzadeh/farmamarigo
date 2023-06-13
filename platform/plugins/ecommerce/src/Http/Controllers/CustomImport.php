@@ -237,10 +237,13 @@ class CustomImport extends BaseController
                         $this->_generateSlugProduct($product_name,$productItem);
                         if ($variationItems->count()) {
                             foreach ($variationItems as $key=>$variationItem) {
-                                dd($variationItem);
-                                dd($key,$products->first(function ($item)use($variationItems){
-
-                                }),$products->where('variante_2',$variationItem[0]['title'])->firstWhere('variante_3',$variationItem[1]['title']),$variationItems);
+                                dd($key,$products->first(function ($item)use($variationItem){
+                                    if (count($variationItem) < 2){
+                                        return $item[array_key_first($variationItem)] == $variationItem[array_key_first($variationItem)]['title'];
+                                    }else{
+                                        return $item[array_key_first($variationItem)] == $variationItem[array_key_first($variationItem)]['title'] && $item[array_key_last($variationItem)] == $variationItem[array_key_last($variationItem)]['title'];
+                                    }
+                                }));
                                 $productVariation = ProductVariation::create([
                                     'product_id' => Product::create([
                                         'name' => $productItem->name,
