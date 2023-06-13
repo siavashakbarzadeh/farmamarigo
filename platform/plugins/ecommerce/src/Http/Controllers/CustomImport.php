@@ -237,14 +237,14 @@ class CustomImport extends BaseController
                         $this->_generateSlugProduct($product_name,$productItem);
                         if ($variationItems->count()) {
                             foreach ($variationItems as $key=>$variationItem) {
-                                dd($key,$products->first(function ($item)use($variationItem){
+                                $cProduct=$products->first(function ($item)use($variationItem){
                                     $variationItem=$variationItem->toArray();
                                     if (count($variationItem) < 2){
                                         return $item[array_key_first($variationItem)] == $variationItem[array_key_first($variationItem)]['title'];
                                     }else{
                                         return $item[array_key_first($variationItem)] == $variationItem[array_key_first($variationItem)]['title'] && $item[array_key_last($variationItem)] == $variationItem[array_key_last($variationItem)]['title'];
                                     }
-                                }));
+                                });
                                 $productVariation = ProductVariation::create([
                                     'product_id' => Product::create([
                                         'name' => $productItem->name,
@@ -254,7 +254,7 @@ class CustomImport extends BaseController
                                         'cost_per_item' => null,
                                         'tax_id' => $productItem->tax_id,
                                         'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
-                                        'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
+                                        'images' => $cProduct ? collect([strtolower($cProduct['codice']) . '.jpg'])->toJson() : collect([strtolower($product['codice']) . '.jpg'])->toJson(),
                                     ])->id,
                                     'configurable_product_id' => $productItem->id,
                                 ]);
