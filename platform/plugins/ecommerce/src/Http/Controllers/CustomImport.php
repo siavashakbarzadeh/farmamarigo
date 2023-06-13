@@ -211,12 +211,12 @@ class CustomImport extends BaseController
                         return collect()->when(strlen($item['variante_2']),function (Collection $collection)use ($item){
                             $var2 = ProductAttribute::where('attribute_set_id',1)->where('title', $item['variante_2'])->first();
                             if ($var2) {
-                                $collection->push($var2->toArray());
+                                $collection->put('variante_2',$var2->toArray());
                             }
                         })->when(strlen($item['variante_3']),function (Collection $collection)use ($item){
                             $var3 = ProductAttribute::where('attribute_set_id',3)->where('title', $item['variante_3'])->first();
                             if ($var3) {
-                                $collection->push($var3->toArray());
+                                $collection->push('variante_3',$var3->toArray());
                             }
                         });
                     });
@@ -237,7 +237,14 @@ class CustomImport extends BaseController
                         $this->_generateSlugProduct($product_name,$productItem);
                         if ($variationItems->count()) {
                             foreach ($variationItems as $variationItem) {
-                                dd($products->where('variante_2',$variationItem[0]['title'])->firstWhere('variante_3',$variationItem[1]['title']),$variationItems);
+                                dd($variationItems);
+                                dd($products->first(function ($item)use($variationItems){
+                                   if (count($variationItems) > 1){
+
+                                   } else{
+
+                                   }
+                                }),$products->where('variante_2',$variationItem[0]['title'])->firstWhere('variante_3',$variationItem[1]['title']),$variationItems);
                                 $productVariation = ProductVariation::create([
                                     'product_id' => Product::create([
                                         'name' => $productItem->name,
