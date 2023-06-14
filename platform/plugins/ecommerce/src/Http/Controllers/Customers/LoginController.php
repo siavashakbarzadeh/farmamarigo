@@ -36,7 +36,7 @@ class LoginController extends Controller
         if (is_null(auth('customer')->user())){
             redirect('/login');
         }
-        if (auth('customer')->user()->email_verified_at){
+        if (auth('customer')->user() && auth('customer')->user()->email_verified_at){
             return redirect('/');
         }
         if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
