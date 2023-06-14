@@ -49,7 +49,7 @@ class LoginController extends Controller
         if (is_null(auth('customer')->user())){
             redirect('/login');
         }
-        $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
+        /*$key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
         if (Cache::has($key)){
             return redirect('users/verify')->with(['error'=>"Please try later!"]);
         }else{
@@ -57,7 +57,7 @@ class LoginController extends Controller
             $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
             Mail::to(auth('customer')->user()->email)->send(new VerificationAccountMail($url));
             return redirect('users/verify');
-        }
+        }*/
     }
 
     public function userVerify($id)

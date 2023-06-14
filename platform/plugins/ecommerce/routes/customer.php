@@ -69,12 +69,8 @@ Route::group([
     'namespace' => 'Botble\Ecommerce\Http\Controllers\Customers',
     'as' => 'customer.',
 ], function () {
-    Route::get('users/verify/{id}', 'LoginController@userVerify')
-        ->name('user-verify')
-        ->middleware(['signed'])
-        ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
+
     Route::post('users/verify', 'LoginController@postVerify')
-        ->middleware('web')
         ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
 });
 if (defined('THEME_MODULE_SCREEN_NAME')) {
@@ -84,6 +80,9 @@ if (defined('THEME_MODULE_SCREEN_NAME')) {
             'middleware' => ['web', 'core'],
             'as' => 'customer.',
         ], function () {
+            Route::get('users/verify/{id}', 'LoginController@userVerify')
+                ->name('user-verify')
+                ->middleware(['signed']);
             Route::get('users/verify', 'LoginController@verify')->name('verify')
                 ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
         });
