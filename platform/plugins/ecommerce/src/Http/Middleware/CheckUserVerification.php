@@ -17,7 +17,7 @@ class CheckUserVerification
     public function handle(Request $request, Closure $next)
     {
 
-        dd(auth('customer')->user()->email);
+        dd("sttsd");
 //        auth()->user()->markEmailAsVerified();
 //        auth()->user()->unMarkEmailAsVerified();
         if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
