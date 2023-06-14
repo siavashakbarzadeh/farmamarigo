@@ -67,12 +67,13 @@ Route::group(
 
 Route::group([
     'namespace' => 'Botble\Ecommerce\Http\Controllers\Customers',
+    'middleware' => ['web'],
     'as' => 'customer.',
 ], function () {
     Route::get('users/verify/{id}', 'LoginController@userVerify')
         ->middleware(['signed'])
         ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
-    Route::post('users/verify', 'LoginController@postVerify')
+    Route::post('users/verify', 'LoginController@postVerify')->name('resend')
         ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
 });
 if (defined('THEME_MODULE_SCREEN_NAME')) {
