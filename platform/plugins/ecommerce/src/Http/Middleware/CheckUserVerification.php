@@ -16,7 +16,8 @@ class CheckUserVerification
 {
     public function handle(Request $request, Closure $next)
     {
-        dd(auth('customer')->user()->email,URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5)));
+
+        dd(auth('customer')->user()->email);
 //        auth()->user()->markEmailAsVerified();
 //        auth()->user()->unMarkEmailAsVerified();
         if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
