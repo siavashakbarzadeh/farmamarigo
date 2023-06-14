@@ -16,13 +16,7 @@ class CheckUserVerification
 {
     public function handle(Request $request, Closure $next)
     {
-        try {
-//            $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
-            Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail("salam"));
-            dd("salma");
-        }catch (\Throwable $e){
-            dd($e);
-        }
+        Mail::to("akbarzadehsiavash@gmail.com")->send(new VerificationAccountMail("salam"));
 
 //        auth()->user()->markEmailAsVerified();
 //        auth()->user()->unMarkEmailAsVerified();
