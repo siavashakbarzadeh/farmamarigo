@@ -18,11 +18,7 @@
 
                     {{ __('Before proceeding, please check your email for a verification link.') }}
                     {{ __('If you did not receive the email') }}.
-                    <form action="{{ url('users/verify') }}" method="post">
-                        @csrf
-                        <button type="submit"
-                                class="btn btn-primary text-sm">{{ __('click here to request another') }}</button>
-                    </form>
+                        <a href="{{ url()->current() }}" class="btn btn-primary text-sm">{{ __('click here to request another') }}</a>
                 </div>
 
             </div>
