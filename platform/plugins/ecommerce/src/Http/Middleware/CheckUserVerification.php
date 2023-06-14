@@ -20,7 +20,6 @@ class CheckUserVerification
 //        auth()->user()->unMarkEmailAsVerified();
         Cache::forget('VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id);
         if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
-            
             return redirect('users/verify');
         }
         return $next($request);
