@@ -42,24 +42,6 @@ class LoginController extends Controller
         return Theme::scope('ecommerce.customers.verify', [], 'plugins/ecommerce::themes.customers.verify')->render();
     }
 
-    public function postVerify(Request $request)
-    {
-
-        dd(auth('customer')->user());
-        if (is_null(auth('customer')->user())){
-            redirect('/login');
-        }
-        /*$key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
-        if (Cache::has($key)){
-            return redirect('users/verify')->with(['error'=>"Please try later!"]);
-        }else{
-            Cache::put($key,"generated",now()->addMinutes(5));
-            $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
-            Mail::to(auth('customer')->user()->email)->send(new VerificationAccountMail($url));
-            return redirect('users/verify');
-        }*/
-    }
-
     public function userVerify($id)
     {
         $user = Customer::query()->findOrFail($id);
