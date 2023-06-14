@@ -33,6 +33,7 @@ class LoginController extends Controller
 
     public function verify()
     {
+        dd(auth('customer')->user());
         if (is_null(auth('customer')->user())){
             redirect('/login');
         }
