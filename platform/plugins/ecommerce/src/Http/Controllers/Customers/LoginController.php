@@ -44,7 +44,6 @@ class LoginController extends Controller
 
     public function postVerify(Request $request)
     {
-        dd("salam");
         if (is_null(auth('customer')->user())){
             redirect('/login');
         }
