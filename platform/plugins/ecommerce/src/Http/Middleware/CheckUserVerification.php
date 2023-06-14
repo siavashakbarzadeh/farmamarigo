@@ -19,7 +19,7 @@ class CheckUserVerification
 //        auth()->user()->markEmailAsVerified();
 //        auth()->user()->unMarkEmailAsVerified();
 
-        dd($request->url());
+        dd(auth('customer')->user());
         if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
             $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
 
