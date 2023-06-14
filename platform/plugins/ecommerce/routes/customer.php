@@ -64,6 +64,7 @@ Route::group(
         });
     }
 );
+
 Route::group([
     'namespace' => 'Botble\Ecommerce\Http\Controllers\Customers',
 
