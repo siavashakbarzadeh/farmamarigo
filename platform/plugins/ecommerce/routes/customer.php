@@ -74,7 +74,7 @@ Route::group([
         ->middleware(['signed'])
         ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
     Route::post('users/verify', 'LoginController@postVerify')
-        ->middleware('core')
+        ->middleware('web')
         ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
 });
 if (defined('THEME_MODULE_SCREEN_NAME')) {
