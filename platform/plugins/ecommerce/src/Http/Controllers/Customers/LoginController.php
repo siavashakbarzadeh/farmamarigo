@@ -34,7 +34,7 @@ class LoginController extends Controller
     public function verify()
     {
         if (is_null(auth('customer')->user())){
-            redirect('/login');
+            return redirect('/login');
         }
         if (auth('customer')->user() && auth('customer')->user()->email_verified_at){
             return redirect('/');
