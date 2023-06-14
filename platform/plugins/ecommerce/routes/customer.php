@@ -70,6 +70,7 @@ Route::group([
     'as' => 'customer.',
 ], function () {
     Route::get('users/verify/{id}', 'LoginController@userVerify')
+        ->name('user-verify')
         ->middleware(['signed'])
         ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
     Route::post('users/verify', 'LoginController@postVerify')
