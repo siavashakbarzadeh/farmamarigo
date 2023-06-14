@@ -20,13 +20,7 @@ class CheckUserVerification
 //        auth()->user()->unMarkEmailAsVerified();
         Cache::forget('VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id);
         if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
-            $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
-            if (!Cache::has($key)){
-
-                Cache::put($key,"generated",now()->addMinutes(5));
-                $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
-                Mail::to(auth('customer')->user()->email)->send(new VerificationAccountMail($url));
-            }
+            
             return redirect('users/verify');
         }
         return $next($request);
