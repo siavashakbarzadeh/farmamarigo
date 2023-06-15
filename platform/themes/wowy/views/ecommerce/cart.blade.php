@@ -65,7 +65,7 @@
                                                 <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                             </td>
                                             <td class="action" data-title="{{ __('Remove') }}">
-                                                <a href="#" class="text-muted remove-cart-button" data-url="{{ route('public.cart.remove', $cartItem->rowId) }}"><i class="fa fa-trash-alt"></i></a>
+                                                <a href="#" class="text-muted remove-cart-button" data-url="{{ route('public.cart.remove', $cartItem->rowId) }}"><i class="fa fa-trash-alt bg-danger"></i></a>
                                             </td>
                                         </tr>
                                     @endif
