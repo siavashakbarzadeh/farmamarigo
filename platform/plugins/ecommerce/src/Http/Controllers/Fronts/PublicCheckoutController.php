@@ -13,9 +13,9 @@ use Botble\Ecommerce\Facades\DiscountFacade;
 use Botble\Ecommerce\Http\Requests\ApplyCouponRequest;
 use Botble\Ecommerce\Http\Requests\CheckoutRequest;
 use Botble\Ecommerce\Http\Requests\SaveCheckoutInformationRequest;
-use Botble\Ecommerce\Jobs\ChangeOrderConfirmation;
-use Botble\Ecommerce\Jobs\EditOrderJob;
-use Botble\Ecommerce\Jobs\OrderSubmittedJob;
+// use Botble\Ecommerce\Jobs\ChangeOrderConfirmation;
+// use Botble\Ecommerce\Jobs\EditOrderJob;
+// use Botble\Ecommerce\Jobs\OrderSubmittedJob;
 use Botble\Ecommerce\Models\Order;
 use Botble\Ecommerce\Models\OrderShippingAmount;
 use Botble\Ecommerce\Models\OrderHistory;
@@ -699,11 +699,11 @@ class PublicCheckoutController
                 'is_confirmed' => true,
                 'status' => OrderStatusEnum::COMPLETED,
             ]);
-            EditOrderJob::dispatch($order);
+            // EditOrderJob::dispatch($order);
         }else {
             $order = $this->createOrderFromData($request->input(),null);
-            OrderSubmittedJob::dispatch($order);
-            ChangeOrderConfirmation::dispatch($order)->delay(now()->addMinutes(30));
+            // OrderSubmittedJob::dispatch($order);
+            // ChangeOrderConfirmation::dispatch($order)->delay(now()->addMinutes(30));
         }
 
 
