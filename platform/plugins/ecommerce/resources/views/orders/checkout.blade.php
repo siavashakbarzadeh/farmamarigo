@@ -12,10 +12,8 @@
 
             <div class="container" id="main-checkout-product-info">
                 <div class="row">
-                    <div class="order-1 order-md-2 col-lg-5 col-md-6 right">
 
-                    </div>
-                    <div class="col-lg-7 col-md-6 left">
+                    <div class="col-lg-12 col-md-6 left">
                         <div class="d-none d-sm-block">
                             @include('plugins/ecommerce::orders.partials.logo')
                         </div>
