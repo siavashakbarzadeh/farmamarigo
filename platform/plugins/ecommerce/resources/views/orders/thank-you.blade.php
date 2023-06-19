@@ -6,7 +6,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-7 col-md-6 col-12 left">
+            <div class="col-lg-7 col-md-6 col-12 ">
                 @include('plugins/ecommerce::orders.partials.logo')
 
                 <div class="thank-you">
@@ -23,14 +23,7 @@
 
                 <a href="{{ route('public.index') }}" class="btn payment-checkout-btn"> {{ __('Continue shopping') }} </a>
             </div>
-            <div class="col-lg-5 col-md-6 d-none d-md-block right">
 
-                @include('plugins/ecommerce::orders.thank-you.order-info')
-
-                <hr>
-
-                @include('plugins/ecommerce::orders.thank-you.total-info', ['order' => $order])
-            </div>
         </div>
     </div>
 @stop
