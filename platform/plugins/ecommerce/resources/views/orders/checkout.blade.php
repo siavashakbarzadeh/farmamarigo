@@ -13,7 +13,7 @@
             <div class="container" id="main-checkout-product-info">
                 <div class="row">
 
-                    <div class="col-lg-12 col-md-6 left">
+                    <div class="col-lg-12 col-md-6 ">
                         <div class="d-none d-sm-block">
                             @include('plugins/ecommerce::orders.partials.logo')
                         </div>
