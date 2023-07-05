@@ -28,3 +28,12 @@ Route::get('/importBrand',function(){
 Route::get('/importTax',function(){
     return view('importtaxes');
 });
+Route::get('/questionindex', [QuestionnaireController::class, 'index'])
+    ->middleware(['check.auth.customer'])
+    ->name('questionary.index');
+Route::get('/questionnaire/thank-you', [QuestionnaireController::class, 'thankYou'])
+    ->middleware(['check.auth.customer'])
+    ->name('questionnaire.thank-you');
+Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
+    ->middleware(['check.auth.customer'])
+    ->name('questionary.save-answers');
