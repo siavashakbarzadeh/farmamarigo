@@ -41,7 +41,7 @@ Route::prefix('/admin/ecommerce/questionnaires')
         $router->get('/{id}/edit', [QuestionnaireController::class, 'edit'])->name('edit');
         $router->put('/{questionnaire}/active', [QuestionnaireController::class, 'active'])->name('active');
         $router->put('/{questionnaire}/inactive', [QuestionnaireController::class, 'inactive'])->name('inactive');
-    });
+  });
 Route::get('/questionindex', [QuestionnaireController::class, 'index'])
     ->middleware(['check.auth.customer'])
     ->name('questionary.index');
