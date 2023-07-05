@@ -39,7 +39,7 @@
 @endforeach
 <li class="nav-item" id="0">
     <a href="" class="nav-link nav-toggle">
-    <!-- <a href="{{ route('admin.ecommerce.questionnaires.index') }}" class="nav-link nav-toggle"> -->
+
         <i class="fa fa-question"></i>
         <span class="title">Questionnaires</span>
     </a>
