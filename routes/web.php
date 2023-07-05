@@ -28,26 +28,26 @@ Route::get('/importBrand',function(){
 Route::get('/importTax',function(){
     return view('importtaxes');
 });
-Route::prefix('/admin/ecommerce/questionnaires')
-    ->name('admin.ecommerce.questionnaires.')
-    ->middleware('auth')
-    ->group(function (Router $router) {
-        $router->get('/', [QuestionnaireController::class, 'questionnaires'])->name('index');
-        $router->get('/create', [QuestionnaireController::class, 'create'])->name('create');
-        $router->post('/store', [QuestionnaireController::class, 'store'])->name('store');
-        $router->post('/check-active-changes', [QuestionnaireController::class, 'checkActiveChanges'])->name('check-active-changes');
-        $router->put('/{id}', [QuestionnaireController::class, 'update'])->name('update');
-        $router->delete('/{questionnaire}', [QuestionnaireController::class, 'delete'])->name('delete');
-        $router->get('/{id}/edit', [QuestionnaireController::class, 'edit'])->name('edit');
-        $router->put('/{questionnaire}/active', [QuestionnaireController::class, 'active'])->name('active');
-        $router->put('/{questionnaire}/inactive', [QuestionnaireController::class, 'inactive'])->name('inactive');
-  });
-Route::get('/questionindex', [QuestionnaireController::class, 'index'])
-    ->middleware(['check.auth.customer'])
-    ->name('questionary.index');
-Route::get('/questionnaire/thank-you', [QuestionnaireController::class, 'thankYou'])
-    ->middleware(['check.auth.customer'])
-    ->name('questionnaire.thank-you');
-Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
-    ->middleware(['check.auth.customer'])
-    ->name('questionary.save-answers');
+// Route::prefix('/admin/ecommerce/questionnaires')
+//     ->name('admin.ecommerce.questionnaires.')
+//     ->middleware('auth')
+//     ->group(function (Router $router) {
+//         $router->get('/', [QuestionnaireController::class, 'questionnaires'])->name('index');
+//         $router->get('/create', [QuestionnaireController::class, 'create'])->name('create');
+//         $router->post('/store', [QuestionnaireController::class, 'store'])->name('store');
+//         $router->post('/check-active-changes', [QuestionnaireController::class, 'checkActiveChanges'])->name('check-active-changes');
+//         $router->put('/{id}', [QuestionnaireController::class, 'update'])->name('update');
+//         $router->delete('/{questionnaire}', [QuestionnaireController::class, 'delete'])->name('delete');
+//         $router->get('/{id}/edit', [QuestionnaireController::class, 'edit'])->name('edit');
+//         $router->put('/{questionnaire}/active', [QuestionnaireController::class, 'active'])->name('active');
+//         $router->put('/{questionnaire}/inactive', [QuestionnaireController::class, 'inactive'])->name('inactive');
+//   });
+// Route::get('/questionindex', [QuestionnaireController::class, 'index'])
+//     ->middleware(['check.auth.customer'])
+//     ->name('questionary.index');
+// Route::get('/questionnaire/thank-you', [QuestionnaireController::class, 'thankYou'])
+//     ->middleware(['check.auth.customer'])
+//     ->name('questionnaire.thank-you');
+// Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
+//     ->middleware(['check.auth.customer'])
+//     ->name('questionary.save-answers');
