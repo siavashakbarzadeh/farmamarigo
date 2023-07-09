@@ -14,9 +14,8 @@ use Botble\Ecommerce\Jobs\OrderSubmittedJob;
 use Botble\Ecommerce\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
 
-\Illuminate\Support\Facades\Route::get('/mail',function (){
-    Mail::to($this->order->address->email)->send(new OrderConfirmed($this->order));
-    OrderSubmittedJob::dispatch(\Botble\Ecommerce\Models\Order::query()->latest()->first());
+\Illuminate\Support\Facades\Route::get('/import',function (){
+    dd("test");
 });
 
 Route::get('/importP',function(){

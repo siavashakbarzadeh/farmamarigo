@@ -23,6 +23,11 @@ use Illuminate\Support\Facades\DB;
 
 class CustomImport extends BaseController
 {
+    public function importProducts()
+    {
+
+    }
+
     public function sconto()
     {
         $inputs = request()->all();
