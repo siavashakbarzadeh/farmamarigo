@@ -147,7 +147,23 @@
 
 
 </script>
+<script>
 
+    $(".form--auth--btn").click(function(e){
+        e.preventDefault();
+        if($("#captcha-login").val()==(parseFloat($('#captcha-1').text())+parseFloat($('#captcha-2').text()))){
+            $(".form--auth").submit();
+        }else{
+            alert('Il captcha inserito non è corretto');
+
+            $('#captcha-1').html(Math.floor(Math.random()*9)+1);
+            $('#captcha-2').html(Math.floor(Math.random()*9)+1);
+
+        }
+    });
+
+
+</script>
 
 <div id="scrollUp"><i class="fal fa-long-arrow-up"></i></div>
 </body>

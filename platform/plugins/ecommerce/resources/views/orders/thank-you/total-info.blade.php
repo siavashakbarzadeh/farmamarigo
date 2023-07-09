@@ -5,8 +5,9 @@
 
 @if ($order->shipping_method->getValue())
     @include('plugins/ecommerce::orders.thank-you.total-row', [
-            'label' =>  __('Shipping fee') . ($order->is_free_shipping ? ' <small>(' . __('Using coupon code') . ': <strong>' . $order->coupon_code . '</strong>)</small>' : ''),
-            'value' => $order->shipping_method_name . ' - ' . format_price($order->shipping_amount)
+            'label' =>  __('Contributo spese di spedizione e imballaggio') . ($order->is_free_shipping ? ' <small>(' . __('Using coupon code') . ': <strong>' . $order->coupon_code . '</strong>)</small>' : ''),
+            // 'value' => $order->shipping_method_name . ' - ' . format_price($order->shipping_amount)
+            'value' => format_price($order->shippingAmount->shippingAmount)
         ])
 @endif
 

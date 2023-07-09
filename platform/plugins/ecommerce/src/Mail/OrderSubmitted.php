@@ -1,29 +1,27 @@
 <?php
 
-namespace App\Mail;
+namespace Botble\Ecommerce\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\URL;
 
-class VerificationAccountMail extends Mailable
+class OrderSubmitted extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $url;
+    public $order;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($url)
+    public function __construct($order)
     {
-        $this->url=$url;
+        $this->order = $order;
     }
 
     /**
@@ -34,7 +32,7 @@ class VerificationAccountMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Verification Account Mail',
+            subject: 'Il tuo ordine è stato registrato',
         );
     }
 
@@ -46,7 +44,7 @@ class VerificationAccountMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mails.verification-account',
+            view: 'mails.order-submitted',
         );
     }
 

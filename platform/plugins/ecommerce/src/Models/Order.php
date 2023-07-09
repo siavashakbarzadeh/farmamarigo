@@ -120,10 +120,20 @@ class Order extends BaseModel
         return $this->hasOne(OrderReferral::class, 'order_id')->withDefault();
     }
 
+
+
+    public function shippingAmount(): HasOne
+    {
+        return $this->hasOne(OrderShippingAmount::class, 'order_id')->withDefault();
+    }
+
     public function products(): HasMany
     {
         return $this->hasMany(OrderProduct::class, 'order_id')->with(['product']);
     }
+
+
+
 
     public function histories(): HasMany
     {
@@ -196,6 +206,11 @@ class Order extends BaseModel
     public function getDiscountAmountFormatAttribute(): string
     {
         return format_price($this->shipping_amount);
+    }
+
+    public function canEdit()
+    {
+        return $this->created_at->addMinutes(30)->gte(now()) && $this->status != OrderStatusEnum::COMPLETED;
     }
 
     public function isInvoiceAvailable(): bool

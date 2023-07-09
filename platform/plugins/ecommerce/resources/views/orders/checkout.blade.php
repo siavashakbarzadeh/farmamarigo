@@ -12,7 +12,11 @@
 
             <div class="container" id="main-checkout-product-info">
                 <div class="row">
-                    <div class="order-1 order-md-2 col-lg-5 col-md-6 right">
+
+                    <div class="col-lg-12 col-md-6 ">
+                        <div class="d-none d-sm-block">
+                            @include('plugins/ecommerce::orders.partials.logo')
+                        </div>
                         <div class="d-block d-sm-none">
                             @include('plugins/ecommerce::orders.partials.logo')
                         </div>
@@ -94,7 +98,7 @@
                                     </div>
                                     <div class="col-6 float-end">
                                         <p class="total-text raw-total-text"
-                                        data-price="{{ format_price(Cart::instance('cart')->rawTotal(), null, true) }}"> {{ ($promotionDiscountAmount + $couponDiscountAmount - $shippingAmount) > Cart::instance('cart')->rawTotal() ? format_price(0) : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount + $shippingAmount) }} </p>
+                                           data-price="{{ format_price(Cart::instance('cart')->rawTotal(), null, true) }}"> {{ ($promotionDiscountAmount + $couponDiscountAmount - floatval(Session::get('shippingAmount'))) > Cart::instance('cart')->rawTotal() ? format_price(0) : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount + floatval(Session::get('shippingAmount'))) }} </p>
                                     </div>
                                 </div>
                             </div>
@@ -104,11 +108,6 @@
 
                         <div class="mt-3 mb-5">
                             @include('plugins/ecommerce::themes.discounts.partials.form')
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-6 left">
-                        <div class="d-none d-sm-block">
-                            @include('plugins/ecommerce::orders.partials.logo')
                         </div>
                         <div class="form-checkout">
                             @if ($isShowAddressForm)
@@ -173,7 +172,7 @@
                                     </div>
                                 </div>
                                 <h5 class="checkout-payment-title">{{ __('Payment method') }}</h5>
-                                <input type="hidden" name="amount" value="{{ ($promotionDiscountAmount + $couponDiscountAmount - $shippingAmount) > Cart::instance('cart')->rawTotal() ? 0 : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount + $shippingAmount, null, true) }}">
+                                <input type="hidden" name="amount" value="{{ ($promotionDiscountAmount + $couponDiscountAmount - floatval(Session::get('shippingAmount'))) > Cart::instance('cart')->rawTotal() ? 0 : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount + floatval(Session::get('shippingAmount')), null, true) }}">
                                 <input type="hidden" name="currency" value="{{ strtoupper(get_application_currency()->title) }}">
                                 {!! apply_filters(PAYMENT_FILTER_PAYMENT_PARAMETERS, null) !!}
                                 <ul class="list-group list_payment_method">

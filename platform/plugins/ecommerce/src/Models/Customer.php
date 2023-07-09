@@ -51,6 +51,7 @@ class Customer extends BaseModel implements
         'phone',
         'dob',
         'status',
+        'email_verified_at'
     ];
 
     protected $hidden = [
@@ -60,6 +61,7 @@ class Customer extends BaseModel implements
 
     protected $casts = [
         'status' => CustomerStatusEnum::class,
+        'email_verified_at'=>'datetime'
     ];
 
     public function sendPasswordResetNotification($token): void

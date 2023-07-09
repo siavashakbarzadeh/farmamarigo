@@ -37,6 +37,26 @@
                                         <span class="text-danger">{{ $errors->first('password') }}</span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label for="txt-password" class="required">{{ __('Captcha') }}</label>
+                                    <div class="row">
+                                        <div class="col-12 captcha">
+                                            <div class="captcha-value">
+                                                <span id="captcha-1">
+                                                    {{ mt_rand(1,9) }}
+                                                </span>
+                                                +
+                                                <span id="captcha-2">
+
+                                                    {{ mt_rand(1,9) }}
+                                                </span>
+                                            </div>
+                                            <div class="form__password">
+                                                <input type="text" id="captcha-login" placeholder="{{ __('Risultato della somma') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="login_footer form-group">
                                     <div class="chek-form">
                                         <div class="custome-checkbox">

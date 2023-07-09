@@ -3,8 +3,8 @@
 @endphp
 @foreach ($menus as $menu)
     @php $menu = apply_filters(BASE_FILTER_DASHBOARD_MENU, $menu); @endphp
-    @if ($menu['id']=='cms-plugins-ads' || $menu['id']=='cms-plugins-newsletter'
-|| $menu['id']=='cms-plugins-simple-slider'
+    @if ( $menu['id']=='cms-plugins-newsletter'
+
 || $menu['id']=='cms-plugins-location'
     || $menu['id']=='cms-core-plugins' || $menu['id']=='cms-core-platform-administration' )
 
@@ -37,3 +37,10 @@
 
 
 @endforeach
+<li class="nav-item" id="0">
+    <a href="" class="nav-link nav-toggle">
+
+        <i class="fa fa-question"></i>
+        <span class="title">Questionnaires</span>
+    </a>
+</li>

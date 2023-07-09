@@ -4,12 +4,16 @@ namespace Botble\Ecommerce\Http\Controllers\Customers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\VerificationAccountMail;
+use Botble\ACL\Models\User;
 use Botble\ACL\Traits\AuthenticatesUsers;
 use Botble\ACL\Traits\LogoutGuardTrait;
 use Botble\Ecommerce\Enums\CustomerStatusEnum;
+use Botble\Ecommerce\Models\Customer;
 use EcommerceHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
 use SeoHelper;
 use Theme;
@@ -29,13 +33,37 @@ class LoginController extends Controller
 
     public function verify()
     {
+        if (is_null(auth('customer')->user())){
+            return redirect('/login');
+        }
+        if (auth('customer')->user() && auth('customer')->user()->email_verified_at){
+            return redirect('/');
+        }
+        if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
+            $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
+            if (!Cache::has($key)){
+                Cache::put($key,"generated",now()->addMinutes(5));
+                $url = URL::signedRoute('customer.user-verify',['id'=>auth('customer')->user()->id],now()->addMinutes(5));
+                Mail::to(auth('customer')->user()->email)->send(new VerificationAccountMail($url));
+            }
+        }
         return Theme::scope('ecommerce.customers.verify', [], 'plugins/ecommerce::themes.customers.verify')->render();
     }
 
-    public function postVerify(Request $request)
+    public function userVerify($id)
     {
+<<<<<<< HEAD
         Mail::to("alikeshtkar@gmail.com")->send(new VerificationAccountMail(auth()->user()));
         dd($request->all(),auth()->user()->email);
+=======
+        $user = Customer::query()->findOrFail($id);
+        if (is_null($user->email_verified_at)){
+            $user->update(['email_verified_at'=>now()]);
+            if (Cache::has('VERIFICATION_URL_CUSTOMER_'.$user->id))
+            Cache::forget('VERIFICATION_URL_CUSTOMER_'.$user->id);
+        }
+        return redirect('/customer/edit-account');
+>>>>>>> 13c2e844e9015403136d12e41024e91768b57c97
     }
 
     public function showLoginForm()

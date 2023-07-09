@@ -32,7 +32,6 @@
         </div>
 
         <div class="row">
-
             <h5>{{ __('Order information') }}</h5>
             <div class="col-md-12">
                 <span>{{ __('Order status') }}:</span> <span
@@ -61,7 +60,7 @@
 
             <div class="col-md-12">
                 <span>{{ __('Shipping fee') }}:</span> <span
-                    class="order-detail-value">  {{ format_price($order->shipping_amount) }} </span>
+                    class="order-detail-value">  {{ format_price($order->shippingAmount->shippingAmount) }} </span>
             </div>
 
             <div class="col-md-12">
