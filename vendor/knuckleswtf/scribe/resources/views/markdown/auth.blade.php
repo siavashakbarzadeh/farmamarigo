@@ -1,7 +1,10 @@
-# {{ __("scribe::headers.auth") }}
+@php
+    use Knuckles\Scribe\Tools\Utils as u;
+@endphp
+# {{ u::trans("scribe::headings.auth") }}
 
 @if(!$isAuthed)
-{!! __("scribe::no_auth") !!}
+{!! u::trans("scribe::auth.none") !!}
 @else
 {!! $authDescription !!}
 

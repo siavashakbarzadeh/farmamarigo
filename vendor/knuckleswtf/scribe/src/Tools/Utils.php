@@ -353,6 +353,27 @@ class Utils
         );
     }
 
+    /**
+     * Like Laravel's trans/__ function, but will fallback to using the default translation if translation fails.
+     * For instance, if the user's locale is DE, but they have no DE strings defined,
+     * Laravel simply renders the translation key.
+     * Instead, we render the EN version.
+     */
+    public static function trans(string $key, array $replace = [])
+    {
+        $translation = trans($key, $replace);
+
+        if ($translation === $key || $translation === null) {
+            $translation = trans($key, $replace, 'en');
+        }
+
+
+        if ($translation === $key) {
+            throw new \Exception("Translation not found for $key. You can add a translation for this in your `lang/scribe.php`, but this is likely a problem with the package. Please open an issue.");
+        }
+
+        return $translation;
+    }
 }
 
 function getTopLevelItemsFromMixedOrderList(array $mixedList): array
