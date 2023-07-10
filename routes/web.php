@@ -31,7 +31,6 @@ use Illuminate\Support\Facades\Mail;
                         else if (is_object($item) && method_exists($item, 'getValue')) $item = $item->getValue();
                         return [$key => $item];
                     })->toArray();
-                dd($item);
                 \Illuminate\Support\Facades\DB::connection('farma2')
                     ->table('ec_products')
                     ->updateOrInsert([
