@@ -23,10 +23,13 @@ use Illuminate\Support\Facades\Mail;
             foreach ($items as $item) {
                 $item = collect($item)
                     ->put('u_id', $item->id)
-                    ->forget(['id','original_price','front_sale_price','product_collections'])
+                    ->forget(['id', 'original_price', 'front_sale_price', 'product_collections'])
                     ->mapWithKeys(function ($item, $key) {
+                        if (strtotime($item) > strtotime(0)) {
+                            dump($item);
+                        }
                         if (is_array($item)) $item = collect($item)->toJson();
-                        if (is_object($item) && method_exists($item,'getValue')) $item=$item->getValue();
+                        if (is_object($item) && method_exists($item, 'getValue')) $item = $item->getValue();
                         return [$key => $item];
                     })->toArray();
                 \Illuminate\Support\Facades\DB::connection('farma2')
