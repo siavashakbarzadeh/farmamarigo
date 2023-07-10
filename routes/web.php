@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Mail;
                         if (is_object($item) && method_exists($item, 'getValue')){
                             $item = $item->getValue();
                         }elseif (is_array($item)){
-                            collect($item)->toJson();
+                            $item =collect($item)->toJson();
                         }elseif (is_string($item) && strtotime($item) > strtotime(0) && $date = \Illuminate\Support\Carbon::createFromTimeString($item)){
                             $item = $date->format('Y-m-d H:i:s');
                         }
