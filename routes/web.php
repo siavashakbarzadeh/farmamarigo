@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Mail;
                     ->put('u_id', $item->id)
                     ->forget(['id', 'original_price', 'front_sale_price', 'product_collections'])
                     ->mapWithKeys(function ($item, $key) {
-                        if (strtotime($item) > strtotime(0)) {
+                        if (is_string($item) && strtotime($item) > strtotime(0)) {
                             dump($item);
                         }
                         if (is_array($item)) $item = collect($item)->toJson();
