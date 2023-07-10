@@ -25,8 +25,8 @@ use Illuminate\Support\Facades\Mail;
                     ->put('u_id', $item->id)
                     ->forget(['id', 'original_price', 'front_sale_price', 'product_collections'])
                     ->mapWithKeys(function ($item, $key) {
-                        if (is_string($item) && strtotime($item) > strtotime(0)) {
-                            $item=\Illuminate\Support\Carbon::createFromTimeString($item)->format($item);
+                        if ($date = \Illuminate\Support\Carbon::createFromTimeString($item)) {
+                            $item=$date->format($item);
                         }
                         if (is_array($item)) $item = collect($item)->toJson();
                         if (is_object($item) && method_exists($item, 'getValue')) $item = $item->getValue();
