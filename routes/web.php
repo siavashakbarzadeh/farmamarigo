@@ -10,22 +10,30 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 use Botble\Ecommerce\Jobs\OrderSubmittedJob;
 use Botble\Ecommerce\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
 
-\Illuminate\Support\Facades\Route::get('/import',function (){
-    $products=\Botble\Ecommerce\Models\Product::all();
-    dd(\Illuminate\Support\Facades\DB::connection('farma2')->table('ec_products')->get());
+\Illuminate\Support\Facades\Route::get('/import', function () {
+    $products = \Botble\Ecommerce\Models\Product::all();
+    try {
+        return \Illuminate\Support\Facades\DB::transaction(function () {
+            $items = \Botble\Ecommerce\Models\Product::all();
+            dd($items,$items->first());
+        });
+    }catch (Throwable $e){
+        dd($e);
+    }
 });
 
-Route::get('/importP',function(){
+Route::get('/importP', function () {
     return view('import');
 });
-Route::get('/importBrand',function(){
+Route::get('/importBrand', function () {
     return view('importbrand');
 });
-Route::get('/importTax',function(){
+Route::get('/importTax', function () {
     return view('importtaxes');
 });
 // Route::prefix('/admin/ecommerce/questionnaires')
