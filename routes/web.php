@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Mail;
                     ->forget('id')
                     ->mapWithKeys(function ($item, $key) {
                         if (is_array($item)) $item = collect($item)->toJson();
-                        if (is_object($item) && property_exists($item,'value')) dump(get_object_vars($item));
+                        if (is_object($item) && property_exists($item,'value')) dump($item);
                         return [$key => $item];
                     })->toArray();
                 dd($item);
