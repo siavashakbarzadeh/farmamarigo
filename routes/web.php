@@ -22,11 +22,12 @@ use Illuminate\Support\Facades\Mail;
             $items = \Botble\Ecommerce\Models\Product::all();
             foreach ($items as $item) {
                 $item = collect($item)->put('u_id', $item->id)->forget('id')->toArray();
+                dd($item);
                 \Illuminate\Support\Facades\DB::connection('farma2')
                     ->table('ec_products')
                     ->updateOrInsert([
                         'u_id' => $item['u_id'],
-                    ],$item);
+                    ], $item);
             }
         });
     } catch (Throwable $e) {
