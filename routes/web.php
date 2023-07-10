@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Mail;
         return \Illuminate\Support\Facades\DB::transaction(function () {
             $items = \Botble\Ecommerce\Models\Product::all();
             foreach ($items as $item) {
-                dd(collect($item)->toArray());
+                dd(collect($item)->put('u_id',$item->id)->forget('id')->toArray());
                 \Illuminate\Support\Facades\DB::connection('farma2')
                     ->table('ec_products')
                     ->updateOrInsert([
