@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Mail;
                         }
                         return [$key => $item];
                     })->toArray();
+                dd($item,$item['u_id']);
                 \Illuminate\Support\Facades\DB::connection('farma2')
                     ->table('ec_products')
                     ->updateOrInsert([
