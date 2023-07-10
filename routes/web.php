@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Mail;
             foreach ($items as $item) {
                 $item = collect($item)
                     ->put('u_id', $item->id)
-                    ->forget(['id','original_price'])
+                    ->forget(['id','original_price','front_sale_price'])
                     ->mapWithKeys(function ($item, $key) {
                         if (is_array($item)) $item = collect($item)->toJson();
                         if (is_object($item) && method_exists($item,'getValue')) $item=$item->getValue();
