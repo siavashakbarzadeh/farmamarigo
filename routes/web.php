@@ -15,7 +15,8 @@ use Botble\Ecommerce\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
 
 \Illuminate\Support\Facades\Route::get('/import',function (){
-    dd("test");
+    $products=\Botble\Ecommerce\Models\Product::all();
+    dd($products);
 });
 
 Route::get('/importP',function(){
