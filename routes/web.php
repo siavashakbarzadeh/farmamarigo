@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Mail;
 
 \Illuminate\Support\Facades\Route::get('/import',function (){
     $products=\Botble\Ecommerce\Models\Product::all();
-    dd(\Illuminate\Support\Facades\DB::connection('marigo2')->table('ec_products')->get());
+    dd(\Illuminate\Support\Facades\DB::table('ec_products')->get());
 });
 
 Route::get('/importP',function(){
