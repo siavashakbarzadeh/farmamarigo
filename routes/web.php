@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Mail;
             foreach ($items as $item) {
                 $item = collect($item)
                     ->put('u_id', $item->id)
-                    ->forget(['id', 'original_price', 'front_sale_price', 'product_collections'])
+                    ->forget(['id', 'original_price', 'front_sale_price', 'product_collections','variation_info'])
                     ->mapWithKeys(function ($item, $key) {
                         if (is_string($item) && strtotime($item) > strtotime(0) && $date = \Illuminate\Support\Carbon::createFromTimeString($item)) {
                             $item = $date->format('Y-m-d H:i:s');
