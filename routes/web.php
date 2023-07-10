@@ -21,12 +21,12 @@ use Illuminate\Support\Facades\Mail;
         return \Illuminate\Support\Facades\DB::transaction(function () {
             $items = \Botble\Ecommerce\Models\Product::all();
             foreach ($items as $item) {
-                dd(collect($item)->put('u_id',$item->id)->forget('id')->toArray());
+                $item = collect($item)->put('u_id', $item->id)->forget('id')->toArray();
                 \Illuminate\Support\Facades\DB::connection('farma2')
                     ->table('ec_products')
                     ->updateOrInsert([
-                        'u_id' => $item->id,
-                    ]);
+                        'u_id' => $item['u_id'],
+                    ],$item);
             }
         });
     } catch (Throwable $e) {
