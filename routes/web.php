@@ -20,9 +20,16 @@ use Illuminate\Support\Facades\Mail;
     try {
         return \Illuminate\Support\Facades\DB::transaction(function () {
             $items = \Botble\Ecommerce\Models\Product::all();
-            dd($items,$items->first());
+            foreach ($items as $item) {
+                dd(collect($item)->toArray());
+                \Illuminate\Support\Facades\DB::connection('farma2')
+                    ->table('ec_products')
+                    ->updateOrInsert([
+                        'u_id' => $item->id,
+                    ]);
+            }
         });
-    }catch (Throwable $e){
+    } catch (Throwable $e) {
         dd($e);
     }
 });
