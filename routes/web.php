@@ -21,7 +21,14 @@ use Illuminate\Support\Facades\Mail;
         return \Illuminate\Support\Facades\DB::transaction(function () {
             $items = \Botble\Ecommerce\Models\Product::all();
             foreach ($items as $item) {
-                $item = collect($item)->put('u_id', $item->id)->forget('id')->toArray();
+                $item = collect($item)
+                    ->put('u_id', $item->id)
+                    ->forget('id')
+                    ->mapWithKeys(function ($item, $key) {
+                        dump(property_exists($item,'value'));
+                        if (is_array($item)) $item = collect($item)->toJson();
+                        return [$key => $item];
+                    })->toArray();
                 dd($item);
                 \Illuminate\Support\Facades\DB::connection('farma2')
                     ->table('ec_products')
