@@ -52,10 +52,10 @@ class LoginController extends Controller
 
     public function userVerify($id)
     {
-<<<<<<< HEAD
+
         Mail::to("alikeshtkar@gmail.com")->send(new VerificationAccountMail(auth()->user()));
         dd($request->all(),auth()->user()->email);
-=======
+
         $user = Customer::query()->findOrFail($id);
         if (is_null($user->email_verified_at)){
             $user->update(['email_verified_at'=>now()]);
@@ -63,7 +63,7 @@ class LoginController extends Controller
             Cache::forget('VERIFICATION_URL_CUSTOMER_'.$user->id);
         }
         return redirect('/customer/edit-account');
->>>>>>> 13c2e844e9015403136d12e41024e91768b57c97
+
     }
 
     public function showLoginForm()
