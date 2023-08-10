@@ -10,7 +10,7 @@
             <form action="{{ route('admin.ecommerce.questionnaires.store') }}" method="post" class="w-100 js-form">
                 @csrf
                 <div class="mb-3">
-                    <label for="questionnaire_title">Title</label>
+                    <label for="questionnaire_title">Titolo</label>
                     <input type="text" class="form-control" name="title" value="{{ old('title') }}"
                            id="questionnaire_title">
                     @error('title')
@@ -18,7 +18,7 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="questionnaire_desc">Description</label>
+                    <label for="questionnaire_desc">Descrizione</label>
                     <textarea name="desc" class="form-control" id="questionnaire_desc" cols="30"
                               rows="10">{{ old('desc') }}</textarea>
                     @error('desc')
@@ -28,26 +28,26 @@
                 <div class="row mb-2">
                     <div class="col-12 col-md-6 mb-2">
                         <div class="d-flex flex-column justify-content-center align-items-center">
-                            <label for="start_at">Start at</label>
+                            <label for="start_at">DATA DI INIZIO</label>
                             <input type="date" name="start_at" value="{{ old('start_at') }}" id="start_at">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 mb-2">
                         <div class="d-flex flex-column justify-content-center align-items-center">
-                            <label for="end_at">End at</label>
+                            <label for="end_at">DATA DI SCADENZA</label>
                             <input type="date" name="end_at" value="{{ old('end_at') }}" id="end_at">
                         </div>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <div class="py-2 border-bottom">Queistions</div>
+                    <div class="py-2 border-bottom">Domande</div>
                     <div class="questions js-questions d-flex flex-column">
                         @if(old('questions') && count(old('questions')))
                             @foreach(old('questions') as $i => $question)
-                                <div class="question-item py-2">
+                                <div data-id="{{ $i }}" class="question-item px-2 py-2 rounded-3 border mb-3">
                                     <label class="d-block w-100">
                                         <textarea class="form-control"
-                                                  name="questions[{{ $i }}]">{{ $question }}</textarea>
+                                                  name="questions[{{ $i }}][value]">{{ $question['value'] }}</textarea>
                                         @error('questions.'.$i)
                                         <div class="text-danger text-small">{{ $message }}</div>
                                         @enderror
@@ -57,18 +57,46 @@
                                             <i class="fa fa-minus"></i>
                                         </button>
                                     </div>
+                                    <div class="mt-3">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="d-flex margin-right-10">Aggiungi risposta predefinita</div>
+                                            <button type="button" class="btn btn-success js-btn-add-question-option">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="js-question-options">
+                                            @if(array_key_exists('option',$question) && is_array($question['option']) && count($question['option']))
+                                                @foreach($question['option'] as $key_option=>$option)
+                                                    <div class="js-question-option pb-2">
+                                                        <label class="d-block w-100">
+                                                    <textarea class="form-control"
+                                                              name="questions[{{ $i }}][option][{{ $key_option }}]">{{ $option }}</textarea>
+                                                            @error('questions.'.$i.'.option.'.$key_option)
+                                                            <div class="text-danger text-small">{{ $message }}</div>
+                                                            @enderror
+                                                        </label>
+                                                        <div class="mt-1 d-flex justify-content-end">
+                                                            <button type="button" class="btn btn-danger js-btn-remove-question-option">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             @endforeach
                         @endif
                     </div>
-                    <div class="mt-2 d-flex justify-content-end">
+                    <div class="d-flex justify-content-end mt-2">
                         <button type="button" class="btn btn-success js-btn-add-question">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary col-12">
-                    Create
+                    Salva
                 </button>
             </form>
         </div>
@@ -101,18 +129,22 @@
                             if (response.questionnaire.activeQuestionnaireDates && response.questionnaire.activeQuestionnaireDates.end_at && response.questionnaire.activeQuestionnaireDates.start_at) {
                                 Swal.fire({
                                     html:
-                                        '<div>ATTENZIONE! abbiamo rilevato un questionario attivo oppure previsto per intervallo di tempo selezionato:' + response.questionnaire.el.title + '</div>' +
-                                        '<div>Puoi cambiare le date del questionario' + response.questionnaire.el.title + '</div>' +
+                                        '<div>ATTENZIONE! abbiamo rilevato un questionario attivo oppure previsto per intervallo di tempo selezionato: </div>' +
+                                        '<div>*' + response.questionnaire.el.title + ' </div>' +
+                                        '<div>Puoi cambiare le date del questionario</div>' +
+
+                                        '<div>*' + response.questionnaire.el.title + ' </div>' +
 
                                         '<div> premendo CONFERMA oppure ritornare all editing di questo questionario premendo CANCELLA </div>' +
+                                        '<div> Se confermi questa programmazione, le nuove date del precedente questionario saranno cambiate </div>' +
                                         '<div>Inizio: ' + response.questionnaire.activeQuestionnaireDates.start_at + '</div>' +
                                         '<div>Scadenza: ' + response.questionnaire.activeQuestionnaireDates.end_at + '</div>',
                                     showCloseButton: true,
                                     showCancelButton: true,
-                                    confirmButtonText: 'Comfirma',
-                                    cancelButtonText: 'Cancella',
+                                    confirmButtonText: 'CONFERMA',
+                                    cancelButtonText: 'CANCELLA',
                                 }).then((result) => {
-                                    if(result.isConfirmed){
+                                    if (result.isConfirmed) {
                                         form.submit();
                                     }
                                 });
@@ -125,12 +157,36 @@
                 $(document).on('click', '.js-btn-add-question', function () {
                     const questions = $('.js-questions');
                     const i = Math.abs(questions.find('.question-item').length + 1) * -1;
-                    questions.append('<div class="question-item py-2">' +
+                    questions.append('<div data-id="' + i + '" class="question-item px-2 py-2 rounded-3 border mb-3">' +
                         '<label class="d-block w-100">' +
-                        '<textarea class="form-control" name="questions[' + i + ']"></textarea>' +
+                        '<textarea class="form-control" name="questions[' + i + '][value]"></textarea>' +
                         '</label>' +
                         '<div class="mt-1 d-flex justify-content-end">' +
                         '<button type="button" class="btn btn-danger js-btn-remove-question">' +
+                        '<i class="fa fa-minus"></i>' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="mt-3">' +
+                        '<div class="d-flex align-items-center mb-2">' +
+                        '<div class="d-flex margin-right-10">Aggiungi risposta predefinita</div>' +
+                        '<button type="button" class="btn btn-success js-btn-add-question-option">' +
+                        '<i class="fa fa-plus"></i>' +
+                        '</button>' +
+                        '</div>' +
+                        '<div class="js-question-options"></div>' +
+                        '</div>' +
+                        '</div>');
+                });
+                $(document).on('click', '.js-btn-add-question-option', function () {
+                    const questionOptions = $(this).closest('.question-item').find('.js-question-options');
+                    const id = $(this).closest('.question-item').data('id');
+                    const i = Math.abs(questionOptions.find('.js-question-option').length + 1) * -1;
+                    questionOptions.append('<div class="js-question-option pb-2">' +
+                        '<label class="d-block w-100">' +
+                        '<textarea class="form-control" name="questions[' + id + '][option]['+i+']"></textarea>' +
+                        '</label>' +
+                        '<div class="mt-1 d-flex justify-content-end">' +
+                        '<button type="button" class="btn btn-danger js-btn-remove-question-option">' +
                         '<i class="fa fa-minus"></i>' +
                         '</button>' +
                         '</div>' +
@@ -138,6 +194,9 @@
                 });
                 $(document).on('click', '.js-btn-remove-question', function (e) {
                     $(this).closest('.question-item').remove();
+                });
+                $(document).on('click', '.js-btn-remove-question-option', function (e) {
+                    $(this).closest('.js-question-option').remove();
                 });
             });
         </script>
