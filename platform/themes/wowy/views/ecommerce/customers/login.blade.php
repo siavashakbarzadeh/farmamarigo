@@ -61,6 +61,7 @@
                                             <div class="form__password">
                                                 <input type="text" id="captcha-login" placeholder="{{ __('Risultato della somma') }}">
                                             </div>
+                                            <span class="text-danger captcha-error"></span>
                                         </div>
                                     </div>
                                 </div>
