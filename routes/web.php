@@ -79,7 +79,6 @@ Route::get('/importTax', function () {
 // Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
 //     ->middleware(['check.auth.customer'])
 //     ->name('questionary.save-answers');
-dd("salam");
 Route::prefix('/admin/ecommerce/questionnaires')
     ->name('admin.ecommerce.questionnaires.')
     ->middleware('auth')
