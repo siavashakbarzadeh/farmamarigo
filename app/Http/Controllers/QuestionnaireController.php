@@ -166,6 +166,7 @@ class QuestionnaireController extends Controller
 
     public function saveAnswers(AnswerRequest $request)
     {
+        dd($request->all());
         Answer::query()->insert(collect($request->answers)->map(function ($item) {
             return [
                 'customer_id' => auth('customer')->user()->id,
