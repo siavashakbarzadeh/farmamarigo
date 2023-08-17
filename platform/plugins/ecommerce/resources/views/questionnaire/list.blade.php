@@ -1,7 +1,7 @@
 @extends(BaseHelper::getAdminMasterLayoutTemplate())
 @section('content')
     <div class="py-3 d-flex justify-content-end">
-        <a href="{{ route('admin.ecommerce.questionnaires.create') }}" class="btn btn-primary">Create</a>
+        <a href="{{ route('admin.ecommerce.questionnaires.create') }}" class="btn btn-primary">Nuovo Questionario</a>
     </div>
     @if(session()->has('success'))
         <div class="alert alert-success" role="alert">
@@ -17,19 +17,19 @@
         <thead>
         <tr>
             <th>
-                Title
+                Titolo
             </th>
             <th>
-                Status
+                Stato
             </th>
             <th>
-                data di inizio
+                Data di inizio
             </th>
             <th>
-                data di scadenza
+                Data di scadenza
             </th>
             <th>
-                Operations
+                Azioni
             </th>
         </tr>
         </thead>
@@ -41,10 +41,12 @@
                 </td>
                 <td>
                     <span
-                        class="text-white py-1 px-2 rounded-1 {{ $questionnaire->is_active ? 'bg-success' : 'bg-danger' }}">{{ $questionnaire->is_active ? 'Active' : 'Inactive' }}</span>
+                        class="text-white py-1 px-2 rounded-1 {{ $questionnaire->is_active ? 'bg-success' : 'bg-danger' }}">{{ $questionnaire->is_active ? 'Attivo' : 'Inattivo' }}</span>
                 </td>
-                <td>{{ $questionnaire->start_at }}</td>
-                <td>{{ $questionnaire->end_at }}</td>
+{{--                <td>{{ $questionnaire->start_at }}</td>--}}
+                <td>{{ Carbon\Carbon::parse($questionnaire->start_at)->format('d-m-Y') }}</td>
+                <td>{{ Carbon\Carbon::parse($questionnaire->end_at)->format('d-m-Y') }}</td>
+{{--                <td>{{ $questionnaire->end_at }}</td>--}}
                 <td>
                     {{--                <a class="btn btn-primary mr-2" href="https://dev.marigo.collaudo.biz/admin/ecommerce/questionnaire/viewQuestionnaire?id={{ $Q->id }}" class="viewQuestionnaire"><i class="fa fa-eye"></i></a>--}}
                     <div class="d-flex">

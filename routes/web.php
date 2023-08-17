@@ -14,8 +14,42 @@
 use Botble\Ecommerce\Jobs\OrderSubmittedJob;
 use Botble\Ecommerce\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
+<<<<<<< HEAD
 
 
+=======
+use App\Http\Controllers\QuestionnaireController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
+\Illuminate\Support\Facades\Route::get('/import', function () {
+    $products = \Botble\Ecommerce\Models\Product::all();
+    try {
+        return \Illuminate\Support\Facades\DB::transaction(function () {
+            $items = \Botble\Ecommerce\Models\Product::all();
+            foreach ($items as $item) {
+                $item = collect($item)
+                    ->put('u_id', $item->id)
+                    ->forget(['id', 'original_price','created_at','updated_at', 'front_sale_price', 'product_collections','variation_info'])
+                    ->mapWithKeys(function ($item, $key) {
+                        if (is_object($item) && method_exists($item, 'getValue')){
+                            $item = $item->getValue();
+                        }elseif (is_array($item)){
+                            $item =collect($item)->toJson();
+                        }
+                        return [$key => $item];
+                    })->toArray();
+                \Illuminate\Support\Facades\DB::connection('farma2')
+                    ->table('ec_products')
+                    ->updateOrInsert([
+                        'u_id' => $item['u_id'],
+                    ], $item);
+            }
+        });
+    } catch (Throwable $e) {
+        dd($e);
+    }
+});
+>>>>>>> d2096167fd9edcaaf6df18d5079d30e991e1b8e5
 
 Route::get('/importP', function () {
     return view('import');
@@ -49,3 +83,26 @@ Route::get('/importTax', function () {
 // Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
 //     ->middleware(['check.auth.customer'])
 //     ->name('questionary.save-answers');
+Route::prefix('/admin/ecommerce/questionnaires')
+    ->name('admin.ecommerce.questionnaires.')
+    ->middleware('auth')
+    ->group(function (Router $router) {
+        $router->get('/', [QuestionnaireController::class, 'questionnaires'])->name('index');
+        $router->get('/create', [QuestionnaireController::class, 'create'])->name('create');
+        $router->post('/store', [QuestionnaireController::class, 'store'])->name('store');
+        $router->post('/check-active-changes', [QuestionnaireController::class, 'checkActiveChanges'])->name('check-active-changes');
+        $router->put('/{id}', [QuestionnaireController::class, 'update'])->name('update');
+        $router->delete('/{questionnaire}', [QuestionnaireController::class, 'delete'])->name('delete');
+        $router->get('/{id}/edit', [QuestionnaireController::class, 'edit'])->name('edit');
+        $router->put('/{questionnaire}/active', [QuestionnaireController::class, 'active'])->name('active');
+        $router->put('/{questionnaire}/inactive', [QuestionnaireController::class, 'inactive'])->name('inactive');
+    });
+Route::get('/questionindex', [QuestionnaireController::class, 'index'])
+    ->middleware(['check.auth.customer'])
+    ->name('questionary.index');
+Route::get('/questionnaire/thank-you', [QuestionnaireController::class, 'thankYou'])
+    ->middleware(['check.auth.customer'])
+    ->name('questionnaire.thank-you');
+Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
+    ->middleware(['check.auth.customer'])
+    ->name('questionary.save-answers');

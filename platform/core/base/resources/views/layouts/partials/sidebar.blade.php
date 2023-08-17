@@ -3,10 +3,11 @@
 @endphp
 @foreach ($menus as $menu)
     @php $menu = apply_filters(BASE_FILTER_DASHBOARD_MENU, $menu); @endphp
-    @if ( $menu['id']=='cms-plugins-newsletter'
-
-|| $menu['id']=='cms-plugins-location'
-    || $menu['id']=='cms-core-plugins' || $menu['id']=='cms-core-platform-administration' )
+    @if (
+  $menu['id']=='cms-plugins-ads' || $menu['id']=='cms-plugins-newsletter' || $menu['id']=='cms-plugins-simple-slider' || $menu['id']=='cms-plugins-payments' || $menu['id']=='cms-plugins-location'
+  || $menu['id']=='cms-core-plugins' || $menu['id']=='cms-core-platform-administration'
+   || $menu['id']=='cms-core-tools' || $menu['id']=='cms-core-settings' || $menu['id']=='cms-core-appearance'
+   || $menu['id']=='cms-plugins-translations')
 
 
     @else
@@ -38,9 +39,21 @@
 
 @endforeach
 <li class="nav-item" id="0">
-    <a href="" class="nav-link nav-toggle">
-
+    <a href="{{ route('admin.ecommerce.questionnaires.index') }}" class="nav-link nav-toggle">
         <i class="fa fa-question"></i>
-        <span class="title">Questionnaires</span>
+        <span class="title">Questionari</span>
     </a>
 </li>
+
+{{--<li class="nav-item" id="1">--}}
+{{--    <a href="{{ route('admin.ecommerce.offertype.view') }}" class="nav-link nav-toggle">--}}
+{{--        <i class="fab fa-periscope"></i>--}}
+{{--        <span class="title">Suggeriti</span>--}}
+{{--    </a>--}}
+{{--</li>--}}
+{{--<li class="nav-item" id="2">--}}
+{{--    <a href="{{ route('admin.ecommerce.offerte.list-view') }}" class="nav-link nav-toggle">--}}
+{{--        <i class="fa fa-percent" aria-hidden="true"></i>--}}
+{{--        <span class="title">Offerte</span>--}}
+{{--    </a>--}}
+{{--</li>--}}
