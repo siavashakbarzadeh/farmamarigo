@@ -14,10 +14,7 @@
 use Botble\Ecommerce\Jobs\OrderSubmittedJob;
 use Botble\Ecommerce\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
-<<<<<<< HEAD
 
-
-=======
 use App\Http\Controllers\QuestionnaireController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
@@ -49,7 +46,6 @@ use Illuminate\Routing\Router;
         dd($e);
     }
 });
->>>>>>> d2096167fd9edcaaf6df18d5079d30e991e1b8e5
 
 Route::get('/importP', function () {
     return view('import');
@@ -83,6 +79,7 @@ Route::get('/importTax', function () {
 // Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
 //     ->middleware(['check.auth.customer'])
 //     ->name('questionary.save-answers');
+dd("salam");
 Route::prefix('/admin/ecommerce/questionnaires')
     ->name('admin.ecommerce.questionnaires.')
     ->middleware('auth')
