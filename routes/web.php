@@ -15,34 +15,7 @@ use Botble\Ecommerce\Jobs\OrderSubmittedJob;
 use Botble\Ecommerce\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
 
-\Illuminate\Support\Facades\Route::get('/import', function () {
-    $products = \Botble\Ecommerce\Models\Product::all();
-    try {
-        return \Illuminate\Support\Facades\DB::transaction(function () {
-            $items = \Botble\Ecommerce\Models\Product::all();
-            foreach ($items as $item) {
-                $item = collect($item)
-                    ->put('u_id', $item->id)
-                    ->forget(['id', 'original_price','created_at','updated_at', 'front_sale_price', 'product_collections','variation_info'])
-                    ->mapWithKeys(function ($item, $key) {
-                        if (is_object($item) && method_exists($item, 'getValue')){
-                            $item = $item->getValue();
-                        }elseif (is_array($item)){
-                            $item =collect($item)->toJson();
-                        }
-                        return [$key => $item];
-                    })->toArray();
-                \Illuminate\Support\Facades\DB::connection('farma2')
-                    ->table('ec_products')
-                    ->updateOrInsert([
-                        'u_id' => $item['u_id'],
-                    ], $item);
-            }
-        });
-    } catch (Throwable $e) {
-        dd($e);
-    }
-});
+
 
 Route::get('/importP', function () {
     return view('import');
