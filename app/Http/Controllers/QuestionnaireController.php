@@ -166,12 +166,11 @@ class QuestionnaireController extends Controller
 
     public function saveAnswers(AnswerRequest $request)
     {
-        dd($request->all());
         Answer::query()->insert(collect($request->answers)->map(function ($item) {
             return [
                 'customer_id' => auth('customer')->user()->id,
-                'question_id' => $item['question_id'],
-                'answer_text' => $item['answer_text'],
+                'question_id' => array_key_exists('question_id',$item) ? $item['question_id'] : null,
+                'answer_text' => array_key_exists('answer_text',$item) ? $item['answer_text'] : null,
                 'updated_at' => now(),
                 'created_at' => now(),
             ];
