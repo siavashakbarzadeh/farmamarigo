@@ -40,8 +40,15 @@
                                 <div class="form-group">
                                     <label for="txt-password" class="required">{{ __('Captcha') }}</label>
                                     <div class="row">
-                                        <div class="col-12 captcha">
-                                            <div class="captcha-value">
+                                        <div class="col-12 captcha" style="position: relative">
+                                            <div class="captcha-value" style="position: absolute;
+                                            top: 1%;
+                                            right: 2%;
+                                            background: white;
+                                            padding: 11px 20px;
+                                            font-weight: bold;
+                                            border-radius: 42px;
+                                            font-size: 13pt;">
                                                 <span id="captcha-1">
                                                     {{ mt_rand(1,9) }}
                                                 </span>
