@@ -57,7 +57,8 @@ class QuestionnaireController extends Controller
             'end_at' => ['required', 'date', 'after:' . $request->start_at],
             'start_at' => ['required', 'date', 'after:today'],
             'questions' => ['nullable', 'array'],
-            'questions.*' => ['required', 'string'],
+            'questions.*.value' => ['required', 'string'],
+            'questions.*.option' => ['nullable', 'array'],
         ]);
         $start_at = Carbon::createFromFormat('Y-m-d', $request->start_at)->startOfDay();
         $end_at = Carbon::createFromFormat('Y-m-d', $request->end_at)->startOfDay();
@@ -240,14 +241,14 @@ class QuestionnaireController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $this->validate($request, [
             'title' => ['required', 'string'],
             'desc' => ['required', 'string'],
             'start_at' => ['required', 'date', 'after:today'],
             'end_at' => ['required', 'date', 'after:' . $request->start_at],
             'questions' => ['nullable', 'array'],
-            'questions.*' => ['required', 'string'],
+            'questions.*.value' => ['required', 'string'],
+            'questions.*.option' => ['nullable', 'array'],
         ]);
         $start_at = Carbon::createFromFormat('Y-m-d', $request->start_at)->startOfDay();
         $end_at = Carbon::createFromFormat('Y-m-d', $request->end_at)->startOfDay();
