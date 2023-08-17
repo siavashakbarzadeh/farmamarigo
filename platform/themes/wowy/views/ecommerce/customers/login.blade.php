@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-fill-out btn-block hover-up">{{ __('Login') }}</button>
+                                <button type="submit" class="form--auth--btn btn btn-fill-out btn-block hover-up">{{ __('Login') }}</button>
                             </div>
                             <br>
                             <p>{{ __("Don't have an account?") }} <a href="{{ route('customer.register') }}" class="d-inline-block">{{ __('Create one') }}</a></p>
