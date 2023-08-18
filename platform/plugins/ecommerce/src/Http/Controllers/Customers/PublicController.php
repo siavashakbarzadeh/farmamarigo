@@ -176,7 +176,6 @@ class PublicController extends Controller
 
     public function getListOrders(Request $request)
     {
-        dd(auth('customer')->user());
         SeoHelper::setTitle(__('Orders'));
 
         $orders = $this->orderRepository->advancedGet([
@@ -191,6 +190,7 @@ class PublicController extends Controller
             'withCount' => ['products'],
             'order_by' => ['created_at' => 'DESC'],
         ]);
+        dd($orders);
 
         Theme::breadcrumb()
             ->add(__('Home'), route('public.index'))
