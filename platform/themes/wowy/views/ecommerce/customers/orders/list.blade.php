@@ -52,12 +52,12 @@
 
 
                                     <div class="row list-order-action">
-                                        <div class="col-4">
+                                        {{--<div class="col-4">
                                             <form  @if($order->canEdit()) action="{{ route('customer.orders.edit',$order->id) }}" method="post" @endif >
                                                 @csrf
                                                 <button type="submit" class="btn btn-success btn-sm" @if( $order->status !='pending') disabled @endif> <i class="fa fa-pen"></i> </button>
                                             </form>
-                                        </div>
+                                        </div>--}}
                                         <div class="col-4">
                                             <a @if($order->isInvoiceAvailable()) href="{{ route('customer.print-order', $order->id) }}" @endif
                                             class="btn btn-primary btn-sm" @if(!$order->isInvoiceAvailable()) disabled @endif><i class="fa fa-print"></i></a>
