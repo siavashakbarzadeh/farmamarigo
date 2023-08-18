@@ -176,6 +176,7 @@ class PublicController extends Controller
 
     public function getListOrders(Request $request)
     {
+        dd(auth('customer')->user());
         SeoHelper::setTitle(__('Orders'));
 
         $orders = $this->orderRepository->advancedGet([
