@@ -190,7 +190,6 @@ class PublicController extends Controller
             'withCount' => ['products'],
             'order_by' => ['created_at' => 'DESC'],
         ]);
-        dd($orders);
 
         Theme::breadcrumb()
             ->add(__('Home'), route('public.index'))

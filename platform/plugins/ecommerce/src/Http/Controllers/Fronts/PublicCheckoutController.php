@@ -690,9 +690,7 @@ class PublicCheckoutController
         ]);
 
 
-        $order = $this->createOrderFromData($request->input(),null);
-
-        /*if (Session::get('cart_order')){
+        if (Session::get('cart_order')){
             $mOrder = $this->orderRepository->findOrFail(Session::get('cart_order'));
             Session::forget('cart_order');
             $mOrder->products()->delete();
@@ -706,7 +704,7 @@ class PublicCheckoutController
             $order = $this->createOrderFromData($request->input(),null);
             // OrderSubmittedJob::dispatch($order);
             // ChangeOrderConfirmation::dispatch($order)->delay(now()->addMinutes(30));
-        }*/
+        }
 
 
         $this->orderHistoryRepository->createOrUpdate([
