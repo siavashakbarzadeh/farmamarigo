@@ -114,9 +114,7 @@
 
                     @if (Cart::instance('cart')->count() > 0)
 {{--                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>--}}
-                    <div class="col-4">
 
-                    </div>
                         <div class="col-4">
                         <div class="row mb-50">
 
@@ -195,7 +193,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <button type="submit" name="checkout" class="btn btn-rounded"> <i class="fa fa-share-square mr-10"></i> {{ __('Proceed To Checkout') }}</button>
+                                   
                                 </div>
                             </div>
                         </div>
