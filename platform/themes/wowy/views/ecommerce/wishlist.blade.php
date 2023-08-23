@@ -42,7 +42,7 @@
                                         </td>
 
                                         <td class="action" data-title="{{ __('Remove') }}">
-                                            <a href="#" class="js-remove-from-wishlist-button" data-url="{{ route('public.wishlist.remove', $product->id) }}"><i class="fa fa-trash-alt"></i></a>
+                                            <a href="#" class="js-remove-from-wishlist-button" data-url="{{ route('public.wishlist.remove', $product->id) }}"><i class="fa fa-trash-alt" style="color: red; font-size: 12pt;"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
