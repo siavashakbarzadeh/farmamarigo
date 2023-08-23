@@ -96,27 +96,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (Cart::instance('cart')->count() > 0)
-                                    <div class="row mt-30">
-                                        <div class="col-6" style="align-self: flex-end">
-                                            <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
-                                        </div>
-                                        <div class="col-6">
-                                            <button type="submit" name="checkout" class="btn btn-rounded"> <i class="fa fa-share-square mr-10"></i> {{ __('Proceed To Checkout') }}</button>
-                                        </div>
-
-
-                                    </div>
-                                    {{--                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>--}}
-
-
-                                @endif
-
                         </div>
                         <div class="col-4">
                             <div class="row mb-50">
 
-                                <div class="col-lg-6 col-md-12">
+                                <div class="col-lg-12 col-md-12">
                                     <div class="border p-md-4 p-30 border-radius-10 cart-totals">
                                         {{--                                    <div class="heading_s1 mb-3">--}}
                                         {{--                                        <h4>{{ __('Cart Total') }}</h4>--}}
@@ -198,6 +182,23 @@
                         </div>
 
 
+                    </div>
+                    <div class="row">
+                        @if (Cart::instance('cart')->count() > 0)
+                            <div class="row mt-30">
+                                <div class="col-8" style="align-self: flex-end">
+                                    <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" name="checkout" class="btn btn-rounded"> <i class="fa fa-share-square mr-10"></i> {{ __('Proceed To Checkout') }}</button>
+                                </div>
+
+
+                            </div>
+                            {{--                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>--}}
+
+
+                        @endif
                     </div>
 
 
