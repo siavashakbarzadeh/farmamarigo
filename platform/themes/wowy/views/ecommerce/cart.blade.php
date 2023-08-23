@@ -75,15 +75,16 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="cart-action text-end">
+                                    <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
+                                </div>
                         </div>
 
                     </div>
 
-                    <div class="cart-action text-end">
-                        <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
-                    </div>
+
                     @if (Cart::instance('cart')->count() > 0)
-                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>
+{{--                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>--}}
                         <div class="row mb-50">
                             <div class="col-lg-6 col-md-12">
                                 <div class="mb-30 mt-50">
