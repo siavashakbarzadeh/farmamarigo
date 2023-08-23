@@ -37,7 +37,7 @@
 {{--                                <td>{{ $order->created_at->format('Y/m/d h:m') }}</td>--}}
                                 <td>{{ \Carbon\Carbon::parse($order->created_at)}}</td>
 {{--                                <td>{{ __(':price for :total item(s)', ['price' => $order->amount_format, 'total' => $order->products_count]) }}</td>--}}
-                                <td>{{ __( ['price' => $order->amount_format, 'total' => $order->products_count]) }}</td>
+                                <td>{{ ['price' => $order->amount_format, 'total' => $order->products_count] }}</td>
                                 <td>
                                     @if( $order->status=='completed' & $order->shipment->status =='delivering')
 
