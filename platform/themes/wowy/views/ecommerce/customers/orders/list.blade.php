@@ -13,7 +13,21 @@
                             <th>{{ __('Date') }}</th>
                             <th>{{ __('Total') }}</th>
                             <th>{{ __('Status') }}</th>
-                            <th>{{ __('Actions') }}</th>
+                            <th>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-1"></div>
+                                        <div class="col-10 row" style="display: flex;
+                                        flex-basis: content;margin-left: 18px;
+                                        font-size: smaller;">
+                                            <div class="col">Modifica</div>
+                                            <div class="col">Stampa</div>
+                                            <div class="col">Rivedi</div>
+                                            <div class="col">Riordina</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
