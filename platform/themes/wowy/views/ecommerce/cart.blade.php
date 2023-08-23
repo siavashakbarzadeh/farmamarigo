@@ -187,7 +187,7 @@
                         @if (Cart::instance('cart')->count() > 0)
                             <div class="col-8 mt-30">
                                 <div class="row">
-                                    <div class="col-8" style="align-self: flex-end">
+                                    <div class="col-6" style="align-self: flex-end">
                                         <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
                                     </div>
                                     <div class="col-6">
