@@ -4,75 +4,81 @@
             <div class="col-12 section--shopping-cart">
                 <form class="form--shopping-cart" method="post" action="{{ route('public.cart.update') }}">
                     @csrf
-                    @if (count($products) > 0)
-                    <div class="table-responsive">
-                        <table class="table shopping-summery text-center clean table--cart">
-                            <thead>
-                            <tr class="main-heading">
-                                <th scope="col">{{ __('Image') }}</th>
-                                <th scope="col">{{ __('Name') }}</th>
-                                <th scope="col">{{ __('Price') }}</th>
-                                <th scope="col">{{ __('Quantity') }}</th>
-                                <th scope="col">{{ __('Subtotal') }}</th>
-                                <th scope="col">{{ __('Remove') }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                @foreach(Cart::instance('cart')->content() as $key => $cartItem)
-                                    @php
-                                        $product = $products->find($cartItem->id);
-                                    @endphp
-
-                                    @if (!empty($product))
-                                        <tr>
-                                            <td class="image product-thumbnail">
-                                                <input type="hidden" name="items[{{ $key }}][rowId]" value="{{ $cartItem->rowId }}">
-                                                <a href="{{ $product->original_product->url }}">
-                                                    <img src="{{ $cartItem->options['image'] }}" alt="{{ $product->name }}" />
-                                                </a>
-                                            </td>
-                                            <td class="product-des product-name">
-                                                <p class="product-name"><a href="{{ $product->original_product->url }}">{{ $product->name }}  @if ($product->isOutOfStock()) <span class="stock-status-label">({!! $product->stock_status_html !!})</span> @endif</a></p>
-                                                <p class="mb-0"><small>{{ $cartItem->options['attributes'] ?? '' }}</small></p>
-
-                                                @if (!empty($cartItem->options['options']))
-                                                    {!! render_product_options_info($cartItem->options['options'], $product, true) !!}
-                                                @endif
-
-                                                @if (!empty($cartItem->options['extras']) && is_array($cartItem->options['extras']))
-                                                    @foreach($cartItem->options['extras'] as $option)
-                                                        @if (!empty($option['key']) && !empty($option['value']))
-                                                            <p class="mb-0"><small>{{ $option['key'] }}: <strong> {{ $option['value'] }}</strong></small></p>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            </td>
-                                            <td class="price" data-title="{{ __('Price') }}">
-                                                <span>{{ format_price($cartItem->price) }}</span>
-                                                @if ($product->front_sale_price != $product->price)
-                                                    <small><del>{{ format_price($product->price) }}</del></small>
-                                                @endif
-                                            </td>
-
-                                            <td class="text-center" data-title="{{ __('Quantity') }}">
-                                                <div class="detail-qty border radius  m-auto">
-                                                    <a href="#" class="qty-down"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                                                    <input type="number" min="1" value="{{ $cartItem->qty }}" name="items[{{ $key }}][values][qty]" class="qty-val qty-input" />
-                                                    <a href="#" class="qty-up"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
-                                                </div>
-                                            </td>
-                                            <td class="text-right" data-title="{{ __('Subtotal') }}">
-                                                <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
-                                            </td>
-                                            <td class="action" data-title="{{ __('Remove') }}">
-                                                <a href="#" class="text-muted remove-cart-button " data-url="{{ route('public.cart.remove', $cartItem->rowId) }}"><i class="fa fa-trash-alt text-danger fa-2x "></i></a>
-                                            </td>
+                    <div class="row">
+                        <div class="col-8">
+                            @if (count($products) > 0)
+                                <div class="table-responsive">
+                                    <table class="table shopping-summery text-center clean table--cart">
+                                        <thead>
+                                        <tr class="main-heading">
+                                            <th scope="col">{{ __('Image') }}</th>
+                                            <th scope="col">{{ __('Name') }}</th>
+                                            <th scope="col">{{ __('Price') }}</th>
+                                            <th scope="col">{{ __('Quantity') }}</th>
+                                            <th scope="col">{{ __('Subtotal') }}</th>
+                                            <th scope="col">{{ __('Remove') }}</th>
                                         </tr>
-                                    @endif
-                                @endforeach
-                            </tbody>
-                        </table>
+                                        </thead>
+                                        <tbody>
+                                        @foreach(Cart::instance('cart')->content() as $key => $cartItem)
+                                            @php
+                                                $product = $products->find($cartItem->id);
+                                            @endphp
+
+                                            @if (!empty($product))
+                                                <tr>
+                                                    <td class="image product-thumbnail">
+                                                        <input type="hidden" name="items[{{ $key }}][rowId]" value="{{ $cartItem->rowId }}">
+                                                        <a href="{{ $product->original_product->url }}">
+                                                            <img src="{{ $cartItem->options['image'] }}" alt="{{ $product->name }}" />
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-des product-name">
+                                                        <p class="product-name"><a href="{{ $product->original_product->url }}">{{ $product->name }}  @if ($product->isOutOfStock()) <span class="stock-status-label">({!! $product->stock_status_html !!})</span> @endif</a></p>
+                                                        <p class="mb-0"><small>{{ $cartItem->options['attributes'] ?? '' }}</small></p>
+
+                                                        @if (!empty($cartItem->options['options']))
+                                                            {!! render_product_options_info($cartItem->options['options'], $product, true) !!}
+                                                        @endif
+
+                                                        @if (!empty($cartItem->options['extras']) && is_array($cartItem->options['extras']))
+                                                            @foreach($cartItem->options['extras'] as $option)
+                                                                @if (!empty($option['key']) && !empty($option['value']))
+                                                                    <p class="mb-0"><small>{{ $option['key'] }}: <strong> {{ $option['value'] }}</strong></small></p>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    </td>
+                                                    <td class="price" data-title="{{ __('Price') }}">
+                                                        <span>{{ format_price($cartItem->price) }}</span>
+                                                        @if ($product->front_sale_price != $product->price)
+                                                            <small><del>{{ format_price($product->price) }}</del></small>
+                                                        @endif
+                                                    </td>
+
+                                                    <td class="text-center" data-title="{{ __('Quantity') }}">
+                                                        <div class="detail-qty border radius  m-auto">
+                                                            <a href="#" class="qty-down"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                                            <input type="number" min="1" value="{{ $cartItem->qty }}" name="items[{{ $key }}][values][qty]" class="qty-val qty-input" />
+                                                            <a href="#" class="qty-up"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-right" data-title="{{ __('Subtotal') }}">
+                                                        <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
+                                                    </td>
+                                                    <td class="action" data-title="{{ __('Remove') }}">
+                                                        <a href="#" class="text-muted remove-cart-button " data-url="{{ route('public.cart.remove', $cartItem->rowId) }}"><i class="fa fa-trash-alt text-danger fa-2x "></i></a>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+
                     </div>
+
                     <div class="cart-action text-end">
                         <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
                     </div>
