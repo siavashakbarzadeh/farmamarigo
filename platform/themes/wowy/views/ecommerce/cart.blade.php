@@ -96,7 +96,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if (Cart::instance('cart')->count() > 0)
+                                    <div class="row mt-30">
+                                        <div class="col-6" style="align-self: flex-end">
+                                            <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
+                                        </div>
+                                        <div class="col-6">
+                                            <button type="submit" name="checkout" class="btn btn-rounded"> <i class="fa fa-share-square mr-10"></i> {{ __('Proceed To Checkout') }}</button>
+                                        </div>
 
+
+                                    </div>
+                                    {{--                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>--}}
+
+
+                                @endif
 
                         </div>
                         <div class="col-4">
@@ -187,21 +201,7 @@
                     </div>
 
 
-                    @if (Cart::instance('cart')->count() > 0)
-                        <div class="row mt-30">
-                            <div class="col-6" style="align-self: flex-end">
-                                <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
-                            </div>
-                            <div class="col-6">
-                                <button type="submit" name="checkout" class="btn btn-rounded"> <i class="fa fa-share-square mr-10"></i> {{ __('Proceed To Checkout') }}</button>
-                            </div>
 
-
-                        </div>
-{{--                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>--}}
-
-
-                    @endif
                 @else
                     <p class="text-center">{{ __('Your cart is empty!') }}</p>
                 @endif
