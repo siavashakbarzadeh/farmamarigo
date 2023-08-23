@@ -75,6 +75,27 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="cart-action row">
+                                    <div class="col-12">
+                                        {{--                                    <div class="heading_s1 mb-3">--}}
+                                        {{--                                        <h4>{{ __('Apply Coupon') }}</h4>--}}
+                                        {{--                                    </div>--}}
+                                        <div class="total-amount">
+                                            <div class="left">
+                                                <div class="coupon form-coupon-wrapper">
+                                                    <div class="form-row row justify-content-center">
+                                                        <div class="form-group col-lg-6">
+                                                            <input class="font-medium coupon-code" type="text" name="coupon_code" value="{{ old('coupon_code') }}" placeholder="{{ __('Enter coupon code') }}">
+                                                        </div>
+                                                        <div class="form-group col-lg-6">
+                                                            <button class="btn btn-rounded btn-sm btn-apply-coupon-code" type="button" data-url="{{ route('public.coupon.apply') }}"><i class="far fa-bookmark mr-5"></i>{{ __('Apply') }}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="cart-action text-end">
                                     <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
                                 </div>
@@ -86,27 +107,7 @@
                     @if (Cart::instance('cart')->count() > 0)
 {{--                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>--}}
                         <div class="row mb-50">
-                            <div class="col-lg-6 col-md-12">
-                                <div class="mb-30 mt-50">
-{{--                                    <div class="heading_s1 mb-3">--}}
-{{--                                        <h4>{{ __('Apply Coupon') }}</h4>--}}
-{{--                                    </div>--}}
-                                    <div class="total-amount">
-                                        <div class="left">
-                                            <div class="coupon form-coupon-wrapper">
-                                                <div class="form-row row justify-content-center">
-                                                    <div class="form-group col-lg-6">
-                                                        <input class="font-medium coupon-code" type="text" name="coupon_code" value="{{ old('coupon_code') }}" placeholder="{{ __('Enter coupon code') }}">
-                                                    </div>
-                                                    <div class="form-group col-lg-6">
-                                                        <button class="btn btn-rounded btn-sm btn-apply-coupon-code" type="button" data-url="{{ route('public.coupon.apply') }}"><i class="far fa-bookmark mr-5"></i>{{ __('Apply') }}</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="col-lg-6 col-md-12">
                                 <div class="border p-md-4 p-30 border-radius-10 cart-totals">
                                     <div class="heading_s1 mb-3">
