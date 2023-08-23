@@ -17,7 +17,7 @@
                 @if (!empty($product))
                     <li>
                         <div class="shopping-cart-img">
-                            <a href="{{ $product->original_product->url }}"><img alt="{{ $product->name }}" src="{{ Arr::get($cartItem->options, 'image', $product->original_product->image) }}"></a>
+                            <a href="{{ $product->original_product->url }}"><img style="width:40px"  alt="{{ $product->name }}" src="{{ Arr::get($cartItem->options, 'image', $product->original_product->image) }}"></a>
                         </div>
                         <div class="shopping-cart-title">
                             <h6><a href="{{ $product->original_product->url }}">{{ $product->name }}  @if ($product->isOutOfStock()) <span class="stock-status-label">({!! $product->stock_status_html !!})</span> @endif</a></h6>
