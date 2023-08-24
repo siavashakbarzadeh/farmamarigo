@@ -124,7 +124,7 @@
                                     <h5 class="checkout-payment-title">{{ __('Billing information') }}</h5>
                                     @include('plugins/ecommerce::orders.partials.billing-address-form', compact('sessionCheckoutData'))
                                 </div>
-                                <br>
+                                {{--<br>--}}
                             @endif
 
                             @if (! is_plugin_active('marketplace'))
