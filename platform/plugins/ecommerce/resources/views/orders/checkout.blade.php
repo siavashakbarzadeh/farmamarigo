@@ -129,7 +129,7 @@
 
                             @if (! is_plugin_active('marketplace'))
                                 @if (Arr::get($sessionCheckoutData, 'is_available_shipping', true))
-                                    <div id="shipping-method-wrapper">
+                                    <div id="shipping-method-wrapper d-none">
                                         <h5 class="checkout-payment-title">{{ __('Shipping method') }}</h5>
                                         <div class="shipping-info-loading" style="display: none;">
                                             <div class="shipping-info-loading-content">
