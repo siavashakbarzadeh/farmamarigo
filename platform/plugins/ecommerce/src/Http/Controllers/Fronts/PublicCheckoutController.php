@@ -111,7 +111,6 @@ class PublicCheckoutController
         HandleApplyPromotionsService $applyPromotionsService
     )
     {
-        dd("salam");
         if (!EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
