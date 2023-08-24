@@ -702,6 +702,10 @@ class PublicCheckoutController
             // EditOrderJob::dispatch($order);
         }else {
             $order = $this->createOrderFromData($request->input(),null);
+            $order->update([
+                'is_confirmed' => true,
+                'status' => OrderStatusEnum::COMPLETED,
+            ]);
             // OrderSubmittedJob::dispatch($order);
             // ChangeOrderConfirmation::dispatch($order)->delay(now()->addMinutes(30));
         }
