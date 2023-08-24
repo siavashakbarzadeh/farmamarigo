@@ -23,7 +23,7 @@
                                             <div class="col">Modifica</div>
                                             <div class="col">Stampa</div>
                                             <div class="col">Rivedi</div>
-                                            <div class="col">Riordina</div>
+                                            {{--<div class="col">Riordina</div>--}}
                                         </div>
                                     </div>
                                 </div>
