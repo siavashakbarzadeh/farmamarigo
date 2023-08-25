@@ -57,15 +57,16 @@ class PublicController extends Controller
     protected ReviewInterface $reviewRepository;
 
     public function __construct(
-        CustomerInterface $customerRepository,
-        ProductInterface $productRepository,
-        AddressInterface $addressRepository,
-        OrderInterface $orderRepository,
+        CustomerInterface     $customerRepository,
+        ProductInterface      $productRepository,
+        AddressInterface      $addressRepository,
+        OrderInterface        $orderRepository,
         OrderHistoryInterface $orderHistoryRepository,
-        OrderReturnInterface $orderReturnRepository,
+        OrderReturnInterface  $orderReturnRepository,
         OrderProductInterface $orderProductRepository,
-        ReviewInterface $reviewRepository
-    ) {
+        ReviewInterface       $reviewRepository
+    )
+    {
         $this->customerRepository = $customerRepository;
         $this->productRepository = $productRepository;
         $this->addressRepository = $addressRepository;
@@ -161,7 +162,7 @@ class PublicController extends Controller
     {
         $currentUser = auth('customer')->user();
 
-        if (! Hash::check($request->input('old_password'), $currentUser->getAuthPassword())) {
+        if (!Hash::check($request->input('old_password'), $currentUser->getAuthPassword())) {
             return $response
                 ->setError()
                 ->setMessage(trans('acl::users.current_password_not_valid'));
@@ -212,15 +213,19 @@ class PublicController extends Controller
             ['ec_orders.*'],
             ['address', 'products']
         );
-        if (! $order) {
+        if (!$order) {
             abort(404);
         }
         foreach ($order->products as $orderProduct) {
             $product = $this->productRepository->findById($orderProduct->product->id);
-            if ($product->variations->count() > 0 && ! $product->is_variation) {
+            if ($product->variations->count() > 0 && !$product->is_variation) {
                 $product = $product->defaultVariation->product;
             }
-            dd($orderProduct);
+            $maxQuantity = $product->quantity;
+            $product->quantity -= $orderProduct->qty;
+            $productRequest = new Request();
+            $productRequest->merge(['qty' => 1]);
+            dd($productRequest->all());
 
         }
     }
@@ -236,7 +241,7 @@ class PublicController extends Controller
             ['address', 'products']
         );
 
-        if (! $order) {
+        if (!$order) {
             abort(404);
         }
 
@@ -262,11 +267,11 @@ class PublicController extends Controller
             'user_id' => auth('customer')->id(),
         ], ['*']);
 
-        if (! $order) {
+        if (!$order) {
             abort(404);
         }
 
-        if (! $order->canBeCanceled()) {
+        if (!$order->canBeCanceled()) {
             return $response->setError()
                 ->setMessage(trans('plugins/ecommerce::order.cancel_error'));
         }
@@ -364,7 +369,7 @@ class PublicController extends Controller
             'customer_id' => auth('customer')->id(),
         ]);
 
-        if (! $address) {
+        if (!$address) {
             abort(404);
         }
 
@@ -419,7 +424,7 @@ class PublicController extends Controller
             'user_id' => auth('customer')->id(),
         ]);
 
-        if (! $order || ! $order->isInvoiceAvailable()) {
+        if (!$order || !$order->isInvoiceAvailable()) {
             abort(404);
         }
 
@@ -479,7 +484,7 @@ class PublicController extends Controller
             ['products']
         );
 
-        if (! $order || ! $order->canBeReturned()) {
+        if (!$order || !$order->canBeReturned()) {
             abort(404);
         }
 
@@ -512,11 +517,11 @@ class PublicController extends Controller
             'user_id' => auth('customer')->id(),
         ]);
 
-        if (! $order) {
+        if (!$order) {
             abort(404);
         }
 
-        if (! $order->canBeReturned()) {
+        if (!$order->canBeReturned()) {
             return $response
                 ->setError()
                 ->withInput()
@@ -538,7 +543,7 @@ class PublicController extends Controller
 
         [$status, $data, $message] = OrderReturnHelper::returnOrder($order, $orderReturnData);
 
-        if (! $status) {
+        if (!$status) {
             return $response
                 ->setError()
                 ->withInput()
@@ -592,7 +597,7 @@ class PublicController extends Controller
             'user_id' => auth('customer')->id(),
         ]);
 
-        if (! $orderReturn) {
+        if (!$orderReturn) {
             abort(404);
         }
 
@@ -613,7 +618,7 @@ class PublicController extends Controller
 
     public function getDownloads()
     {
-        if (! EcommerceHelper::isEnabledSupportDigitalProducts()) {
+        if (!EcommerceHelper::isEnabledSupportDigitalProducts()) {
             abort(404);
         }
 
@@ -647,7 +652,7 @@ class PublicController extends Controller
 
     public function getDownload(int $id, Request $request, BaseHttpResponse $response)
     {
-        if (! EcommerceHelper::isEnabledSupportDigitalProducts()) {
+        if (!EcommerceHelper::isEnabledSupportDigitalProducts()) {
             abort(404);
         }
 
@@ -666,7 +671,7 @@ class PublicController extends Controller
             ->with(['order', 'product'])
             ->first();
 
-        if (! $orderProduct) {
+        if (!$orderProduct) {
             abort(404);
         }
         $order = $orderProduct->order;
@@ -675,27 +680,26 @@ class PublicController extends Controller
             abort(404);
         } elseif (($hash = $request->input('hash'))) {
             $response->setNextUrl(route('public.index'));
-            if (! $orderProduct->download_token || ! Hash::check($orderProduct->download_token, $hash)) {
+            if (!$orderProduct->download_token || !Hash::check($orderProduct->download_token, $hash)) {
                 abort(404);
             }
         } else {
             abort(404);
         }
 
-        $zipName = 'digital-product-' . Str::slug($orderProduct->product_name) . Str::random(5) . '-' . Carbon::now(
-        )->format('Y-m-d-h-i-s') . '.zip';
+        $zipName = 'digital-product-' . Str::slug($orderProduct->product_name) . Str::random(5) . '-' . Carbon::now()->format('Y-m-d-h-i-s') . '.zip';
         $fileName = RvMedia::getRealPath($zipName);
         $zip = new Zipper();
         $zip->make($fileName);
         $product = $orderProduct->product;
         $productFiles = $product->id ? $product->productFiles : $orderProduct->productFiles;
 
-        if (! $productFiles->count()) {
+        if (!$productFiles->count()) {
             return $response->setError()->setMessage(__('Cannot found files'));
         }
         foreach ($productFiles as $file) {
             $filePath = RvMedia::getRealPath($file->url);
-            if (! RvMedia::isUsingCloud()) {
+            if (!RvMedia::isUsingCloud()) {
                 if (File::exists($filePath)) {
                     $zip->add($filePath);
                 }
@@ -724,7 +728,7 @@ class PublicController extends Controller
 
     public function getProductReviews()
     {
-        if (! EcommerceHelper::isReviewEnabled()) {
+        if (!EcommerceHelper::isReviewEnabled()) {
             abort(404);
         }
 
