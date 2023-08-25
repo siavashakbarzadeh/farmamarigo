@@ -216,7 +216,12 @@ class PublicController extends Controller
             abort(404);
         }
         foreach ($order->products as $orderProduct) {
-            dd($orderProduct);
+            $product = $this->productRepository->findById($orderProduct->product->id);
+            if ($product->variations->count() > 0 && ! $product->is_variation) {
+                $product = $product->defaultVariation->product;
+            }
+            dd($product);
+
         }
     }
 
