@@ -5,6 +5,7 @@ namespace Botble\Ecommerce\Http\Controllers\Customers;
 use Arr;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Http\Responses\BaseHttpResponse;
+use Botble\Ecommerce\Cart\Cart;
 use Botble\Ecommerce\Enums\OrderStatusEnum;
 use Botble\Ecommerce\Enums\ProductTypeEnum;
 use Botble\Ecommerce\Http\Requests\AddressRequest;
