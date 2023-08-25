@@ -227,7 +227,7 @@ class PublicController extends Controller
             $productRequest->merge(['qty' => $orderProduct->qty]);
             $cartItems = OrderHelper::handleAddCart($product, $productRequest);
         }
-        return redirect('/');
+        return redirect()->route('public.cart');
     }
 
     public function getViewOrder(int $id)
