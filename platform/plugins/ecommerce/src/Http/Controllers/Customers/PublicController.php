@@ -215,7 +215,7 @@ class PublicController extends Controller
         if (! $order) {
             abort(404);
         }
-        foreach ($order->product as $orderProduct) {
+        foreach ($order->products as $orderProduct) {
             dd($orderProduct);
         }
     }
