@@ -202,8 +202,19 @@ class PublicController extends Controller
         )->render();
     }
 
-    public function reorder($order)
+    public function reorder($id)
     {
+        $order = $this->orderRepository->getFirstBy(
+            [
+                'id' => $id,
+                'user_id' => auth('customer')->id(),
+            ],
+            ['ec_orders.*'],
+            ['address', 'products']
+        );
+        if (! $order) {
+            abort(404);
+        }
         dd($order);
     }
 
