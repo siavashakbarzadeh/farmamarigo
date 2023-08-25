@@ -215,9 +215,6 @@ class PublicController extends Controller
         if (! $order) {
             abort(404);
         }
-        if (! EcommerceHelper::isCartEnabled()) {
-            abort(404);
-        }
         foreach ($order->product as $orderProduct) {
 
             $product = $this->productRepository->findById($orderProduct->product->id);
