@@ -224,8 +224,8 @@ class PublicController extends Controller
             $maxQuantity = $product->quantity;
             $product->quantity -= $orderProduct->qty;
             $productRequest = new Request();
-            $productRequest->merge(['qty' => 1]);
-            dd($productRequest->all());
+            $productRequest->merge(['qty' => 50]);
+            dd($productRequest->input('qty', 1));
 
         }
     }
