@@ -220,7 +220,7 @@ class PublicController extends Controller
             if ($product->variations->count() > 0 && ! $product->is_variation) {
                 $product = $product->defaultVariation->product;
             }
-            dd($product);
+            dd($orderProduct);
 
         }
     }
