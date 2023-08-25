@@ -159,9 +159,9 @@ if (defined('THEME_MODULE_SCREEN_NAME')) {
                 'uses' => 'PublicController@getListOrders',
             ]);
 
-            Route::get('orders2', [
-                'as' => 'orders2',
-                'uses' => 'PublicController@getListOrders',
+            Route::post('orders/{order}/reorder', [
+                'as' => 'orders.reorder',
+                'uses' => 'PublicController@reorder',
             ]);
 
             Route::get('orders/view/{id}', [

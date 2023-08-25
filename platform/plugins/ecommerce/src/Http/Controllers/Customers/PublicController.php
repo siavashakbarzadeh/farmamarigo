@@ -202,6 +202,11 @@ class PublicController extends Controller
         )->render();
     }
 
+    public function reorder($order)
+    {
+        dd($order);
+    }
+
     public function getViewOrder(int $id)
     {
         $order = $this->orderRepository->getFirstBy(
