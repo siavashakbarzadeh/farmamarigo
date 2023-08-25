@@ -203,7 +203,7 @@ class PublicController extends Controller
         )->render();
     }
 
-    public function reorder($id,BaseHttpResponse $response)
+    public function reorder($id,Request $request,BaseHttpResponse $response)
     {
         $order = $this->orderRepository->getFirstBy(
             [
@@ -219,19 +219,94 @@ class PublicController extends Controller
         if (! EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
-        dd("ok");
         foreach ($order->products as $orderProduct) {
+
             $product = $this->productRepository->findById($orderProduct->product->id);
+
             if ($product->variations->count() > 0 && !$product->is_variation) {
                 $product = $product->defaultVariation->product;
             }
+
+            if ($product->isOutOfStock()) {
+                return $response
+                    ->setNextUrl(route('customer.orders'))
+                    ->setError()
+                    ->setMessage(__('Product :product is out of stock!', ['product' => $product->original_product->name ?: $product->name]));
+            }
+
             $maxQuantity = $product->quantity;
+
+            if (! $product->canAddToCart($orderProduct->qty)) {
+                return $response
+                    ->setNextUrl(route('customer.orders'))
+                    ->setError()
+                    ->setMessage(__('Maximum quantity is :max!', ['max' => $maxQuantity]));
+            }
+
             $product->quantity -= $orderProduct->qty;
+
+            $outOfQuantity = false;
+            foreach (Cart::instance('cart')->content() as $item) {
+                if ($item->id == $product->id) {
+                    $originalQuantity = $product->quantity;
+                    $product->quantity = (int)$product->quantity - $item->qty;
+
+                    if ($product->quantity < 0) {
+                        $product->quantity = 0;
+                    }
+
+                    if ($product->isOutOfStock()) {
+                        $outOfQuantity = true;
+
+                        break;
+                    }
+
+                    $product->quantity = $originalQuantity;
+                }
+            }
+
+            if ($product->original_product->options()->where('required', true)->exists()) {
+                if (! $request->input('options')) {
+                    return $response
+                        ->setError()
+                        ->setNextUrl(route('customer.orders'))
+                        ->setMessage(__('Please select product options!'));
+                }
+
+                $requiredOptions = $product->original_product->options()->where('required', true)->get();
+
+                $message = null;
+
+                foreach ($requiredOptions as $requiredOption) {
+                    if (! $request->input('options.' . $requiredOption->id . '.values')) {
+                        $message .= trans('plugins/ecommerce::product-option.add_to_cart_value_required', ['value' => $requiredOption->name]);
+                    }
+                }
+
+                if ($message) {
+                    return $response
+                        ->setError()
+                        ->setNextUrl(route('customer.orders'))
+                        ->setMessage(__('Please select product options!'));
+                }
+            }
+
+            if ($outOfQuantity) {
+                return $response
+                    ->setError()
+                    ->setNextUrl(route('customer.orders'))
+                    ->setMessage(__('Product :product is out of stock!', ['product' => $product->original_product->name ?: $product->name]));
+            }
+
             $productRequest = new Request();
             $productRequest->merge(['qty' => $orderProduct->qty]);
             $cartItems = OrderHelper::handleAddCart($product, $productRequest);
         }
-        return redirect()->route('public.cart');
+        return $response
+            ->setNextUrl(route('public.cart'))
+            ->setMessage(__(
+                'Added product to cart successfully!'
+            ));
     }
 
     public function getViewOrder(int $id)
