@@ -216,13 +216,10 @@ class PublicController extends Controller
         if (!$order) {
             abort(404);
         }
-        dd(EcommerceHelper::isCartEnabled());
         if (! EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
-        return $response->setNextUrl(route('public.cart'))
-            ->setError()
-            ->setMessage(__('Update profile successfully!'));
+        dd("ok");
         foreach ($order->products as $orderProduct) {
             $product = $this->productRepository->findById($orderProduct->product->id);
             if ($product->variations->count() > 0 && !$product->is_variation) {
