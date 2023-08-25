@@ -25,7 +25,6 @@ use Botble\Media\Services\ThumbnailService;
 use Botble\Media\Supports\Zipper;
 use Botble\Payment\Enums\PaymentStatusEnum;
 use Carbon\Carbon;
-use EcommerceHelper;
 use Exception;
 use Hash;
 use Illuminate\Http\Request;
