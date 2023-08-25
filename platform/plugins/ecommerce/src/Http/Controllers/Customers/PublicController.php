@@ -20,6 +20,7 @@ use Botble\Ecommerce\Repositories\Interfaces\OrderProductInterface;
 use Botble\Ecommerce\Repositories\Interfaces\OrderReturnInterface;
 use Botble\Ecommerce\Repositories\Interfaces\ProductInterface;
 use Botble\Ecommerce\Repositories\Interfaces\ReviewInterface;
+use Botble\Ecommerce\Supports\EcommerceHelper;
 use Botble\Media\Services\ThumbnailService;
 use Botble\Media\Supports\Zipper;
 use Botble\Payment\Enums\PaymentStatusEnum;
@@ -215,7 +216,113 @@ class PublicController extends Controller
         if (! $order) {
             abort(404);
         }
-        dd($order);
+        if (! EcommerceHelper::isCartEnabled()) {
+            abort(404);
+        }
+        foreach ($order->product as $orderProduct) {
+
+            $product = $this->productRepository->findById($orderProduct->product->id);
+            dd($product);
+
+            if ($product->variations->count() > 0 && ! $product->is_variation) {
+                $product = $product->defaultVariation->product;
+            }
+
+            if ($product->isOutOfStock()) {
+                return $response
+                    ->setError()
+                    ->setMessage(__('Product :product is out of stock!', ['product' => $product->original_product->name ?: $product->name]));
+            }
+
+            $maxQuantity = $product->quantity;
+
+            if (! $product->canAddToCart($request->input('qty', 1))) {
+                return $response
+                    ->setError()
+                    ->setMessage(__('Maximum quantity is :max!', ['max' => $maxQuantity]));
+            }
+
+            $product->quantity -= $request->input('qty', 1);
+
+            $outOfQuantity = false;
+            foreach (Cart::instance('cart')->content() as $item) {
+                if ($item->id == $product->id) {
+                    $originalQuantity = $product->quantity;
+                    $product->quantity = (int)$product->quantity - $item->qty;
+
+                    if ($product->quantity < 0) {
+                        $product->quantity = 0;
+                    }
+
+                    if ($product->isOutOfStock()) {
+                        $outOfQuantity = true;
+
+                        break;
+                    }
+
+                    $product->quantity = $originalQuantity;
+                }
+            }
+
+            if ($product->original_product->options()->where('required', true)->exists()) {
+                if (! $request->input('options')) {
+                    return $response
+                        ->setError()
+                        ->setData(['next_url' => $product->original_product->url])
+                        ->setMessage(__('Please select product options!'));
+                }
+
+                $requiredOptions = $product->original_product->options()->where('required', true)->get();
+
+                $message = null;
+
+                foreach ($requiredOptions as $requiredOption) {
+                    if (! $request->input('options.' . $requiredOption->id . '.values')) {
+                        $message .= trans('plugins/ecommerce::product-option.add_to_cart_value_required', ['value' => $requiredOption->name]);
+                    }
+                }
+
+                if ($message) {
+                    return $response
+                        ->setError()
+                        ->setMessage(__('Please select product options!'));
+                }
+            }
+
+            if ($outOfQuantity) {
+                return $response
+                    ->setError()
+                    ->setMessage(__('Product :product is out of stock!', ['product' => $product->original_product->name ?: $product->name]));
+            }
+
+            $cartItems = OrderHelper::handleAddCart($product, $request);
+
+            $response
+                ->setMessage(__(
+                    'Added product :product to cart successfully!',
+                    ['product' => $product->original_product->name ?: $product->name]
+                ));
+
+            $token = OrderHelper::getOrderSessionToken();
+
+            $nextUrl = route('public.checkout.information', $token);
+
+            if (EcommerceHelper::getQuickBuyButtonTarget() == 'cart') {
+                $nextUrl = route('public.cart');
+            }
+
+            if ($request->input('checkout')) {
+                $response->setData(['next_url' => $nextUrl]);
+
+                if ($request->ajax() && $request->wantsJson()) {
+                    return $response;
+                }
+
+                return $response
+                    ->setNextUrl($nextUrl);
+            }
+
+        }
     }
 
     public function getViewOrder(int $id)
