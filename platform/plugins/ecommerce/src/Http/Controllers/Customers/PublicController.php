@@ -216,7 +216,7 @@ class PublicController extends Controller
         if (!$order) {
             abort(404);
         }
-        return $response->setNextUrl(route('public.cart'));
+        return $response->setNextUrl(route('public.cart'))->setMessage(__('Update profile successfully!'));
         foreach ($order->products as $orderProduct) {
             $product = $this->productRepository->findById($orderProduct->product->id);
             if ($product->variations->count() > 0 && !$product->is_variation) {
