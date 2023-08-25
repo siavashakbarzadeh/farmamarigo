@@ -181,7 +181,7 @@ class PublicController extends Controller
         $orders = $this->orderRepository->advancedGet([
             'condition' => [
                 'user_id' => auth('customer')->id(),
-//                'is_finished' => 1,
+                'is_finished' => 1,
             ],
             'paginate' => [
                 'per_page' => 10,
