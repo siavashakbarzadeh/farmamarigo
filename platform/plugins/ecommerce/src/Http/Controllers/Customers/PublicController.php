@@ -224,10 +224,10 @@ class PublicController extends Controller
             $maxQuantity = $product->quantity;
             $product->quantity -= $orderProduct->qty;
             $productRequest = new Request();
-            $productRequest->merge(['qty' => 50]);
-            dd($productRequest->input('qty', 1));
-
+            $productRequest->merge(['qty' => $orderProduct->qty]);
+            $cartItems = OrderHelper::handleAddCart($product, $productRequest);
         }
+        return redirect('/');
     }
 
     public function getViewOrder(int $id)
