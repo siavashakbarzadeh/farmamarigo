@@ -203,7 +203,7 @@ class PublicController extends Controller
         )->render();
     }
 
-    public function reorder($id)
+    public function reorder($id,BaseHttpResponse $response)
     {
         $order = $this->orderRepository->getFirstBy(
             [
@@ -216,6 +216,7 @@ class PublicController extends Controller
         if (!$order) {
             abort(404);
         }
+        return $response->setNextUrl(route('public.cart'));
         foreach ($order->products as $orderProduct) {
             $product = $this->productRepository->findById($orderProduct->product->id);
             if ($product->variations->count() > 0 && !$product->is_variation) {
