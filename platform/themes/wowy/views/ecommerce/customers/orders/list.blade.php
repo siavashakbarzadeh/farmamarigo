@@ -84,7 +84,7 @@
 {{--                                        <form action="{{ route('customer.orders.repeat', $order->id) }}" method="post" class="col-3">--}}
                                         <form action="{{ route('customer.orders.reorder',$order->id) }}" method="post" class="col-3">
                                             @csrf
-                                            <a type="submit" class="btn btn-info btn-sm" style="width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;"><i class="fa fa-repeat"></i></a>
+                                            <button type="submit" class="btn btn-info btn-sm" style="width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;"><i class="fa fa-repeat"></i></button>
                                         </form>
                                     </div>
 
