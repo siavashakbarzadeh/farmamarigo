@@ -264,6 +264,14 @@ class ProductTable extends TableAbstract
                 'text' => '<i class="fas fa-file-export"></i> ' . trans('plugins/ecommerce::export.export'),
             ];
         }
+        $buttons['exportsql'] = [
+            'link' => route('ecommerce.customExport.product'),
+            'text' => 'Esportare sql',
+        ];
+        $buttons['product-to-db'] = [
+            'link' => route('ecommerce.customExport.product-to-db'),
+            'text' => 'Esportare DB',
+        ];
 
         return $buttons;
     }
