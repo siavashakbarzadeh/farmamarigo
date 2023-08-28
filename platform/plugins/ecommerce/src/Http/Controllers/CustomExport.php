@@ -26,7 +26,7 @@ class CustomExport extends BaseController
 
     public function customer1()
     {
-        dd('ok');
+
 
     }
 
