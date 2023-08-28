@@ -80,7 +80,7 @@ class CustomExport extends BaseController
                 foreach ($items as $item) {
                     $item = collect($item)
                         ->put('u_id', $item->id)
-                        ->forget(['id', 'confezione', 'linea_id', 'original_price', 'front_sale_price', 'product_collections'])
+                        ->forget(['id',])
                         ->mapWithKeys(function ($item, $key) {
                             if (str_ends_with($key,'_at')) {
                                 $item = date('Y-m-d H:i:s' , strtotime($item));
