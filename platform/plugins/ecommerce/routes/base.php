@@ -213,6 +213,51 @@ Route::group(['namespace' => 'Botble\Ecommerce\Http\Controllers', 'middleware' =
                 'permission' => 'product-label.destroy',
             ]);
         });
+        Route::group(['prefix' => 'customExport', 'as' => 'ecommerce.customExport.'], function () {
+
+            Route::get('/customer', [
+                'as' => 'customer',
+                'uses' => 'CustomExport@customer',
+            ]);
+            Route::get('/product', [
+                'as' => 'product',
+                'uses' => 'CustomExport@product',
+            ]);
+            Route::get('/product-to-db', [
+                'as' => 'product-to-db',
+                'uses' => 'CustomExport@productToDb',
+            ]);
+            Route::get('/customer-to-db', [
+                'as' => 'customer-to-db',
+                'uses' => 'CustomExport@customerToDb',
+            ]);
+            Route::get('/order-to-db', [
+                'as' => 'order-to-db',
+                'uses' => 'CustomExport@orderToDb',
+            ]);
+            Route::get('/order', [
+                'as' => 'order',
+                'uses' => 'CustomExport@order',
+            ]);
+
+            Route::get('/taxes', [
+                'as' => 'taxes',
+                'uses' => 'CustomImport@taxes',
+            ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
         Route::group(['prefix' => 'customImport', 'as' => 'ecommerce.customImport.'], function () {
             Route::get('/', [
                 'as' => 'consumabili',
