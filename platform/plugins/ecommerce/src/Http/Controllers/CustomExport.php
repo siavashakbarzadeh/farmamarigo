@@ -106,6 +106,7 @@ class CustomExport extends BaseController
 
     public function orderToDb()
     {
+        dd('ok');
         try {
             return \Illuminate\Support\Facades\DB::transaction(function () {
                 $items = \Botble\Ecommerce\Models\Order::all();
