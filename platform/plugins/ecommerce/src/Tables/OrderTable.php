@@ -172,11 +172,31 @@ class OrderTable extends TableAbstract
         return $columns;
     }
 
+//    public function buttons(): array
+//    {
+//        return $this->addCreateButton(route('orders.create'), 'orders.create');
+//    }
     public function buttons(): array
     {
-        return $this->addCreateButton(route('orders.create'), 'orders.create');
-    }
 
+
+        $buttons['create'] = [
+            'link' => route('orders.create'),
+            'text' => 'Creare clienti',
+            'permission' => 'orders.create',
+        ];
+        $buttons['exportsql'] = [
+            'link' => route('ecommerce.customExport.order'),
+            'text' => 'Esportare sql',
+        ];
+
+        $buttons['order-to-db'] = [
+            'link' => route('ecommerce.customExport.order-to-db'),
+            'text' => 'Esportare DB',
+        ];
+        return $buttons;
+
+    }
     public function bulkActions(): array
     {
         return $this->addDeleteAction(route('orders.deletes'), 'orders.destroy', parent::bulkActions());
@@ -239,4 +259,5 @@ class OrderTable extends TableAbstract
 
         return parent::saveBulkChangeItem($item, $inputKey, $inputValue);
     }
+
 }
