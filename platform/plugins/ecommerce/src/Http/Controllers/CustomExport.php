@@ -106,14 +106,14 @@ class CustomExport extends BaseController
 
     public function orderToDb()
     {
-        
+
         try {
             return \Illuminate\Support\Facades\DB::transaction(function () {
                 $items = \Botble\Ecommerce\Models\Order::all();
                 foreach ($items as $item) {
                     $item = collect($item)
                         ->put('u_id', $item->id)
-                        ->forget(['id'])
+                        ->forget(['id','confezione'])
                         ->mapWithKeys(function ($item, $key) {
                             if (str_ends_with($key,'_at')) {
                                 $item = date('Y-m-d H:i:s' , strtotime($item));
