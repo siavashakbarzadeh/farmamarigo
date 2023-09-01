@@ -179,6 +179,11 @@ class QuestionnaireController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        dd($id);
+    }
+
     public function update(Request $request, $id)
     {
         $questionnaire = Questionnaire::query()->with('questions')->findOrFail($id);

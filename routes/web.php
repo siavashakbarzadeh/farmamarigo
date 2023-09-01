@@ -87,6 +87,7 @@ Route::prefix('/admin/ecommerce/questionnaires')
         $router->get('/create', [QuestionnaireController::class, 'create'])->name('create');
         $router->post('/store', [QuestionnaireController::class, 'store'])->name('store');
         $router->post('/check-active-changes', [QuestionnaireController::class, 'checkActiveChanges'])->name('check-active-changes');
+        $router->get('/{id}', [QuestionnaireController::class, 'show'])->name('show');
         $router->put('/{id}', [QuestionnaireController::class, 'update'])->name('update');
         $router->delete('/{questionnaire}', [QuestionnaireController::class, 'delete'])->name('delete');
         $router->get('/{id}/edit', [QuestionnaireController::class, 'edit'])->name('edit');
