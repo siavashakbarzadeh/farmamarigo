@@ -80,6 +80,9 @@
                         <a class="btn btn-primary mr-2"
                            href="{{ route('admin.ecommerce.questionnaires.edit',$questionnaire->id) }}"><i
                                 class="fa fa-edit"></i></a>
+                        <a class="btn btn-dark mr-2"
+                           href="{{ route('admin.ecommerce.questionnaires.show',$questionnaire->id) }}"><i
+                                class="fa fa-eye text-white"></i></a>
                     </div>
                 </td>
             </tr>
