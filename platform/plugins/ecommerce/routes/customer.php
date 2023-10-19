@@ -159,6 +159,11 @@ if (defined('THEME_MODULE_SCREEN_NAME')) {
                 'uses' => 'PublicController@getListOrders',
             ]);
 
+            Route::post('orders/{order}/reorder', [
+                'as' => 'orders.reorder',
+                'uses' => 'PublicController@reorder',
+            ]);
+
             Route::get('orders/view/{id}', [
                 'as' => 'orders.view',
                 'uses' => 'PublicController@getViewOrder',

@@ -5,6 +5,7 @@ namespace Botble\Ecommerce\Http\Controllers\Customers;
 use Arr;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Http\Responses\BaseHttpResponse;
+use Cart;
 use Botble\Ecommerce\Enums\OrderStatusEnum;
 use Botble\Ecommerce\Enums\ProductTypeEnum;
 use Botble\Ecommerce\Http\Requests\AddressRequest;
@@ -57,15 +58,16 @@ class PublicController extends Controller
     protected ReviewInterface $reviewRepository;
 
     public function __construct(
-        CustomerInterface $customerRepository,
-        ProductInterface $productRepository,
-        AddressInterface $addressRepository,
-        OrderInterface $orderRepository,
+        CustomerInterface     $customerRepository,
+        ProductInterface      $productRepository,
+        AddressInterface      $addressRepository,
+        OrderInterface        $orderRepository,
         OrderHistoryInterface $orderHistoryRepository,
-        OrderReturnInterface $orderReturnRepository,
+        OrderReturnInterface  $orderReturnRepository,
         OrderProductInterface $orderProductRepository,
-        ReviewInterface $reviewRepository
-    ) {
+        ReviewInterface       $reviewRepository
+    )
+    {
         $this->customerRepository = $customerRepository;
         $this->productRepository = $productRepository;
         $this->addressRepository = $addressRepository;
@@ -161,7 +163,7 @@ class PublicController extends Controller
     {
         $currentUser = auth('customer')->user();
 
-        if (! Hash::check($request->input('old_password'), $currentUser->getAuthPassword())) {
+        if (!Hash::check($request->input('old_password'), $currentUser->getAuthPassword())) {
             return $response
                 ->setError()
                 ->setMessage(trans('acl::users.current_password_not_valid'));
@@ -181,7 +183,7 @@ class PublicController extends Controller
         $orders = $this->orderRepository->advancedGet([
             'condition' => [
                 'user_id' => auth('customer')->id(),
-//                'is_finished' => 1,
+                'is_finished' => 1,
             ],
             'paginate' => [
                 'per_page' => 10,
@@ -202,6 +204,112 @@ class PublicController extends Controller
         )->render();
     }
 
+    public function reorder($id,Request $request,BaseHttpResponse $response)
+    {
+        $order = $this->orderRepository->getFirstBy(
+            [
+                'id' => $id,
+                'user_id' => auth('customer')->id(),
+            ],
+            ['ec_orders.*'],
+            ['address', 'products']
+        );
+        if (!$order) {
+            abort(404);
+        }
+        if (! EcommerceHelper::isCartEnabled()) {
+            abort(404);
+        }
+        foreach ($order->products as $orderProduct) {
+
+            $product = $this->productRepository->findById($orderProduct->product->id);
+
+            if ($product->variations->count() > 0 && !$product->is_variation) {
+                $product = $product->defaultVariation->product;
+            }
+
+            if ($product->isOutOfStock()) {
+                return $response
+                    ->setNextUrl(route('customer.orders'))
+                    ->setError()
+                    ->setMessage(__('Product :product is out of stock!', ['product' => $product->original_product->name ?: $product->name]));
+            }
+
+            $maxQuantity = $product->quantity;
+
+            if (! $product->canAddToCart($orderProduct->qty)) {
+                return $response
+                    ->setNextUrl(route('customer.orders'))
+                    ->setError()
+                    ->setMessage(__('Maximum quantity is :max!', ['max' => $maxQuantity]));
+            }
+
+            $product->quantity -= $orderProduct->qty;
+
+            $outOfQuantity = false;
+            foreach (Cart::instance('cart')->content() as $item) {
+                if ($item->id == $product->id) {
+                    $originalQuantity = $product->quantity;
+                    $product->quantity = (int)$product->quantity - $item->qty;
+
+                    if ($product->quantity < 0) {
+                        $product->quantity = 0;
+                    }
+
+                    if ($product->isOutOfStock()) {
+                        $outOfQuantity = true;
+
+                        break;
+                    }
+
+                    $product->quantity = $originalQuantity;
+                }
+            }
+
+            if ($product->original_product->options()->where('required', true)->exists()) {
+                if (! $request->input('options')) {
+                    return $response
+                        ->setError()
+                        ->setNextUrl(route('customer.orders'))
+                        ->setMessage(__('Please select product options!'));
+                }
+
+                $requiredOptions = $product->original_product->options()->where('required', true)->get();
+
+                $message = null;
+
+                foreach ($requiredOptions as $requiredOption) {
+                    if (! $request->input('options.' . $requiredOption->id . '.values')) {
+                        $message .= trans('plugins/ecommerce::product-option.add_to_cart_value_required', ['value' => $requiredOption->name]);
+                    }
+                }
+
+                if ($message) {
+                    return $response
+                        ->setError()
+                        ->setNextUrl(route('customer.orders'))
+                        ->setMessage(__('Please select product options!'));
+                }
+            }
+
+            if ($outOfQuantity) {
+                return $response
+                    ->setError()
+                    ->setNextUrl(route('customer.orders'))
+                    ->setMessage(__('Product :product is out of stock!', ['product' => $product->original_product->name ?: $product->name]));
+            }
+
+            $productRequest = new Request();
+            $productRequest->merge(['qty' => $orderProduct->qty]);
+            $cartItems = OrderHelper::handleAddCart($product, $productRequest);
+        }
+        return $response
+            ->setNextUrl(route('public.cart'))
+            ->setMessage(__(
+                'Added product to cart successfully!'
+            ));
+    }
+
     public function getViewOrder(int $id)
     {
         $order = $this->orderRepository->getFirstBy(
@@ -213,7 +321,7 @@ class PublicController extends Controller
             ['address', 'products']
         );
 
-        if (! $order) {
+        if (!$order) {
             abort(404);
         }
 
@@ -239,11 +347,11 @@ class PublicController extends Controller
             'user_id' => auth('customer')->id(),
         ], ['*']);
 
-        if (! $order) {
+        if (!$order) {
             abort(404);
         }
 
-        if (! $order->canBeCanceled()) {
+        if (!$order->canBeCanceled()) {
             return $response->setError()
                 ->setMessage(trans('plugins/ecommerce::order.cancel_error'));
         }
@@ -341,7 +449,7 @@ class PublicController extends Controller
             'customer_id' => auth('customer')->id(),
         ]);
 
-        if (! $address) {
+        if (!$address) {
             abort(404);
         }
 
@@ -396,7 +504,7 @@ class PublicController extends Controller
             'user_id' => auth('customer')->id(),
         ]);
 
-        if (! $order || ! $order->isInvoiceAvailable()) {
+        if (!$order || !$order->isInvoiceAvailable()) {
             abort(404);
         }
 
@@ -456,7 +564,7 @@ class PublicController extends Controller
             ['products']
         );
 
-        if (! $order || ! $order->canBeReturned()) {
+        if (!$order || !$order->canBeReturned()) {
             abort(404);
         }
 
@@ -489,11 +597,11 @@ class PublicController extends Controller
             'user_id' => auth('customer')->id(),
         ]);
 
-        if (! $order) {
+        if (!$order) {
             abort(404);
         }
 
-        if (! $order->canBeReturned()) {
+        if (!$order->canBeReturned()) {
             return $response
                 ->setError()
                 ->withInput()
@@ -515,7 +623,7 @@ class PublicController extends Controller
 
         [$status, $data, $message] = OrderReturnHelper::returnOrder($order, $orderReturnData);
 
-        if (! $status) {
+        if (!$status) {
             return $response
                 ->setError()
                 ->withInput()
@@ -569,7 +677,7 @@ class PublicController extends Controller
             'user_id' => auth('customer')->id(),
         ]);
 
-        if (! $orderReturn) {
+        if (!$orderReturn) {
             abort(404);
         }
 
@@ -590,7 +698,7 @@ class PublicController extends Controller
 
     public function getDownloads()
     {
-        if (! EcommerceHelper::isEnabledSupportDigitalProducts()) {
+        if (!EcommerceHelper::isEnabledSupportDigitalProducts()) {
             abort(404);
         }
 
@@ -624,7 +732,7 @@ class PublicController extends Controller
 
     public function getDownload(int $id, Request $request, BaseHttpResponse $response)
     {
-        if (! EcommerceHelper::isEnabledSupportDigitalProducts()) {
+        if (!EcommerceHelper::isEnabledSupportDigitalProducts()) {
             abort(404);
         }
 
@@ -643,7 +751,7 @@ class PublicController extends Controller
             ->with(['order', 'product'])
             ->first();
 
-        if (! $orderProduct) {
+        if (!$orderProduct) {
             abort(404);
         }
         $order = $orderProduct->order;
@@ -652,27 +760,26 @@ class PublicController extends Controller
             abort(404);
         } elseif (($hash = $request->input('hash'))) {
             $response->setNextUrl(route('public.index'));
-            if (! $orderProduct->download_token || ! Hash::check($orderProduct->download_token, $hash)) {
+            if (!$orderProduct->download_token || !Hash::check($orderProduct->download_token, $hash)) {
                 abort(404);
             }
         } else {
             abort(404);
         }
 
-        $zipName = 'digital-product-' . Str::slug($orderProduct->product_name) . Str::random(5) . '-' . Carbon::now(
-        )->format('Y-m-d-h-i-s') . '.zip';
+        $zipName = 'digital-product-' . Str::slug($orderProduct->product_name) . Str::random(5) . '-' . Carbon::now()->format('Y-m-d-h-i-s') . '.zip';
         $fileName = RvMedia::getRealPath($zipName);
         $zip = new Zipper();
         $zip->make($fileName);
         $product = $orderProduct->product;
         $productFiles = $product->id ? $product->productFiles : $orderProduct->productFiles;
 
-        if (! $productFiles->count()) {
+        if (!$productFiles->count()) {
             return $response->setError()->setMessage(__('Cannot found files'));
         }
         foreach ($productFiles as $file) {
             $filePath = RvMedia::getRealPath($file->url);
-            if (! RvMedia::isUsingCloud()) {
+            if (!RvMedia::isUsingCloud()) {
                 if (File::exists($filePath)) {
                     $zip->add($filePath);
                 }
@@ -701,7 +808,7 @@ class PublicController extends Controller
 
     public function getProductReviews()
     {
-        if (! EcommerceHelper::isReviewEnabled()) {
+        if (!EcommerceHelper::isReviewEnabled()) {
             abort(404);
         }
 

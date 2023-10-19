@@ -17,11 +17,11 @@
                 @if (!empty($product))
                     <li>
                         <div class="shopping-cart-img">
-                            <a href="{{ $product->original_product->url }}"><img alt="{{ $product->name }}" src="{{ Arr::get($cartItem->options, 'image', $product->original_product->image) }}"></a>
+                            <a href="{{ $product->original_product->url }}"><img style="width:40px"  alt="{{ $product->name }}" src="{{ Arr::get($cartItem->options, 'image', $product->original_product->image) }}"></a>
                         </div>
                         <div class="shopping-cart-title">
                             <h6><a href="{{ $product->original_product->url }}">{{ $product->name }}  @if ($product->isOutOfStock()) <span class="stock-status-label">({!! $product->stock_status_html !!})</span> @endif</a></h6>
-                            <h3><span class="d-inline-block">{{ $cartItem->qty }}</span> <span class="d-inline-block"> x </span> <span class="d-inline-block">{{ format_price($cartItem->price) }}</span> @if ($product->front_sale_price != $product->price)
+                            <h3 style="font-size: small;font-weight: 500;" ><span class="d-inline-block">{{ $cartItem->qty }}</span> <span class="d-inline-block"> x </span> <span class="d-inline-block">{{ format_price($cartItem->price) }}</span> @if ($product->front_sale_price != $product->price)
                                     <small><del>{{ format_price($product->price) }}</del></small>@endif</h3>
                             <p class="mb-0"><small>{{ $cartItem->options['attributes'] ?? '' }}</small></p>
 
@@ -38,7 +38,7 @@
                             @endif
                         </div>
                         <div class="shopping-cart-delete">
-                            <a href="#" data-url="{{ route('public.cart.remove', $cartItem->rowId) }}" class="remove-cart-item"><i class="far fa-times"></i></a>
+                            <a href="#" data-url="{{ route('public.cart.remove', $cartItem->rowId) }}" class="remove-cart-item"><i class="fa fa-trash-alt  " style="color: red; font-size: 12pt;"></i></a>
                         </div>
                     </li>
                 @endif

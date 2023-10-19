@@ -135,7 +135,7 @@
                                     @foreach($products as $product)
                                         <td class="row_remove">
                                             <a class="js-remove-from-compare-button" href="#" data-url="{{ route('public.compare.remove', $product->id) }}">
-                                                <i class="fa fa-trash-alt mr-5"></i>
+                                                <i class="fa fa-trash-alt mr-5 " style="color: red; font-size: 12pt;"></i>
                                                 <span>{{ __('Remove') }}</span>
                                             </a>
                                         </td>

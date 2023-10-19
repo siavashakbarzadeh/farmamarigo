@@ -148,7 +148,47 @@ class CustomerTable extends TableAbstract
 
     public function buttons(): array
     {
-        return $this->addCreateButton(route('customers.create'), 'customers.create');
+
+        if (Auth::user()->hasPermission('ecommerce.bulk-import.index')) {
+            $buttons['sync'] = [
+                'extend' => 'collection',
+                'text' => 'Synchronise',
+                'buttons' => [
+                    [
+                        'className' => 'action-item',
+                        'text' =>  Html::tag('span', 'Users', [
+                            'data-action' => 'users',
+                            'data-href' => route('ecommerce.customImport.users'),
+                            'class' => 'ms-1',
+                        ])->toHtml(),
+                    ],
+                    [
+                        'className' => 'action-item',
+                        'text' =>  Html::tag('span', 'Regione', [
+                            'data-action' => 'regione',
+                            'data-href' => route('ecommerce.customImport.user-regione'),
+                            'class' => 'ms-1',
+                        ])->toHtml(),
+                    ],
+
+                ],
+            ];
+        }
+        $buttons['create'] = [
+            'link' => route('customers.create'),
+            'text' => 'Creare clienti',
+        ];
+        $buttons['exportsql'] = [
+            'link' => route('ecommerce.customExport.customer'),
+            'text' => 'Esportare sql',
+        ];
+
+        $buttons['customer-to-db'] = [
+            'link' => route('ecommerce.customExport.customer-to-db'),
+            'text' => 'Esportare DB',
+        ];
+        return $buttons;
+        // return $this->addCreateButton(route('customers.create'), 'customers.create');
     }
 
     public function bulkActions(): array
