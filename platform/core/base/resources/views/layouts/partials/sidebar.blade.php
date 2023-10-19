@@ -11,8 +11,8 @@
    $menu['id']=='cms-plugins-location'
   || $menu['id']=='cms-core-plugins' ||
    $menu['id']=='cms-core-platform-administration'
- || 
-     $menu['id']=='cms-core-appearance'
+ ||
+
 
    )
 
