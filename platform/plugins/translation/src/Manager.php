@@ -243,7 +243,7 @@ class Manager
 
                 $translations = BaseHelper::getFileData($file->getRealPath());
 
-                $defaultEnglishFile = theme_path(Theme::getThemeName() . '/lang/en.json');
+                $defaultEnglishFile = theme_path(Theme::getThemeName() . '/lang/enold.json');
 
                 if ($defaultEnglishFile) {
                     $enTranslations = BaseHelper::getFileData($defaultEnglishFile);

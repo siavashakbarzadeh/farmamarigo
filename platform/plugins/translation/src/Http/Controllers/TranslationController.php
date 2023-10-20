@@ -283,7 +283,7 @@ class TranslationController extends BaseController
             }
 
             if ($group['locale'] != 'en') {
-                $defaultEnglishFile = theme_path(Theme::getThemeName() . '/lang/en.json');
+                $defaultEnglishFile = theme_path(Theme::getThemeName() . '/lang/enold.json');
 
                 if ($defaultEnglishFile) {
                     $enTranslations = BaseHelper::getFileData($defaultEnglishFile);
@@ -332,7 +332,7 @@ class TranslationController extends BaseController
             }
 
             if ($locale != 'en') {
-                $defaultEnglishFile = theme_path(Theme::getThemeName() . '/lang/en.json');
+                $defaultEnglishFile = theme_path(Theme::getThemeName() . '/lang/enold.json');
 
                 if ($defaultEnglishFile) {
                     $enTranslations = BaseHelper::getFileData($defaultEnglishFile);

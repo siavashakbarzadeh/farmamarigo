@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a8d0eafd-fa70-42b7-acd6-659160cf9b7b" name="Changes" comment="" />
+    <list default="true" id="a8d0eafd-fa70-42b7-acd6-659160cf9b7b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lang/enold.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/lang/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platform/plugins/translation/src/Console/UpdateThemeTranslationCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/plugins/translation/src/Console/UpdateThemeTranslationCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platform/plugins/translation/src/Http/Controllers/TranslationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/plugins/translation/src/Http/Controllers/TranslationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platform/plugins/translation/src/Manager.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/plugins/translation/src/Manager.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -236,19 +242,23 @@
     </include_path>
   </component>
   <component name="ProjectId" id="2UmrJOFZthuFExmzqp4ZbFF0dIY" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Utente/Documents/GitHub/farmamarigo/lang",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
@@ -264,6 +274,7 @@
       <option name="presentableId" value="Default" />
       <updated>1693555525662</updated>
       <workItem from="1693555549324" duration="597000" />
+      <workItem from="1697789214551" duration="846000" />
     </task>
     <servers />
   </component>
