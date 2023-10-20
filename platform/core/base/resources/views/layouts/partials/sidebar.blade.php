@@ -6,7 +6,7 @@
     @if (
   $menu['id']=='cms-plugins-ads' ||
    $menu['id']=='cms-plugins-newsletter' ||
-   $menu['id']=='cms-plugins-simple-slider' ||
+
    $menu['id']=='cms-plugins-payments' ||
    $menu['id']=='cms-plugins-location'
   || $menu['id']=='cms-core-plugins' ||
