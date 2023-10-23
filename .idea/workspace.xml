@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="a8d0eafd-fa70-42b7-acd6-659160cf9b7b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platform/themes/wowy/views/ecommerce/customers/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/themes/wowy/views/ecommerce/customers/register.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -309,7 +311,7 @@
       <updated>1693555525662</updated>
       <workItem from="1693555549324" duration="597000" />
       <workItem from="1697789214551" duration="846000" />
-      <workItem from="1698059336005" duration="301000" />
+      <workItem from="1698059336005" duration="734000" />
     </task>
     <servers />
   </component>
