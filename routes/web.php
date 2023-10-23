@@ -103,3 +103,25 @@ Route::get('/questionnaire/thank-you', [QuestionnaireController::class, 'thankYo
 Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
     ->middleware(['check.auth.customer'])
     ->name('questionary.save-answers');
+
+
+    Route::post('/admin/spc_store', [SPCController::class, 'store']);
+    Route::post('/admin/spc_deactive', [SPCController::class, 'deactive']);
+    Route::post('/spc_apply', [SPCController::class, 'applyCoupon']);
+    Route::post('/spc_remove', [SPCController::class, 'removeCoupon']);
+
+
+
+        Route::prefix('/admin/ecommerce/spedizione')
+        ->name('admin.ecommerce.spedizione.')
+        ->group(function (Router $router) {
+
+            $router->get('/view', [SPCController::class, 'getSpedizioneView'])->name('view');
+            $router->get('/list', [SPCController::class, 'getSpedizioneListView'])->name('list');
+            $router->get('/create-offer', [SPCController::class, 'createOfferView'])->name('create-offer');
+            $router->post('/customers_export', [SPCController::class, 'customersExport'])->name('customers_export');
+            $router->post('/delete', [SPCController::class, 'delete'])->name('delete');
+            $router->post('/update', [CreaSconto::class, 'spedizioneUpdate'])->name('update');
+
+
+        });
