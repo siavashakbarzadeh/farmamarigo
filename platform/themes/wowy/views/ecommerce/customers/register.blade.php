@@ -27,15 +27,11 @@
 
 
                                     </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="txt-name" class="required">{{ __('tipo di cliente') }}</label>
-                                    <input class="form-control" name="name" id="txt-name" type="text" value="{{ old('name') }}" placeholder="{{ __('Please enter your name') }}">
-                                    @if ($errors->has('name'))
-                                        <span class="text-danger">{{ $errors->first('tipo di cliente') }}</span>
+                                    @if ($errors->has('tipodicliente'))
+                                        <span class="text-danger">{{ $errors->first('tipodicliente') }}</span>
                                     @endif
                                 </div>
+
                                 <div class="form-group">
                                     <label for="txt-name" class="required">{{ __('Name') }}</label>
                                     <input class="form-control" name="name" id="txt-name" type="text" value="{{ old('name') }}" placeholder="{{ __('Please enter your name') }}">
