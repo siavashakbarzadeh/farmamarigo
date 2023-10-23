@@ -18,7 +18,7 @@
                             <div class="form__content">
                                 <div class="form-group">
                                     <label for="txt-name" class="required">{{ __('tipo di cliente') }}</label>
-                                    <select name="email_driver" class="ui-select setting-select-options" id="email_driver">
+                                    <select name="email_driver" class="form-control" id="email_driver">
                                         <option value="Farmacia">Farmacia</option>
                                         <option value="Farmacia">Parafarmacia</option>
                                         <option value="Farmacia">Dentista</option>
