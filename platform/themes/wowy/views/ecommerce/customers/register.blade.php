@@ -16,6 +16,22 @@
                         <form class="form--auth" method="POST" action="{{ route('customer.register.post') }}">
                             @csrf
                             <div class="form__content">
+                                <select name="email_driver" class="ui-select setting-select-options" id="email_driver">
+                                    <option value="Farmacia">Farmacia</option>
+                                    <option value="Farmacia">Parafarmacia</option>
+                                    <option value="Farmacia">Dentista</option>
+                                    <option value="Farmacia">Studio Medico</option>
+                                    <option value="Farmacia">Altro Pharma</option>
+
+
+                                </select>
+                                <div class="form-group">
+                                    <label for="txt-name" class="required">{{ __('tipo di cliente') }}</label>
+                                    <input class="form-control" name="name" id="txt-name" type="text" value="{{ old('name') }}" placeholder="{{ __('Please enter your name') }}">
+                                    @if ($errors->has('name'))
+                                        <span class="text-danger">{{ $errors->first('tipo di cliente') }}</span>
+                                    @endif
+                                </div>
                                 <div class="form-group">
                                     <label for="txt-name" class="required">{{ __('Name') }}</label>
                                     <input class="form-control" name="name" id="txt-name" type="text" value="{{ old('name') }}" placeholder="{{ __('Please enter your name') }}">

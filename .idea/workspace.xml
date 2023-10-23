@@ -2,16 +2,46 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8d0eafd-fa70-42b7-acd6-659160cf9b7b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lang/enold.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/lang/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platform/plugins/translation/src/Console/UpdateThemeTranslationCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/plugins/translation/src/Console/UpdateThemeTranslationCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platform/plugins/translation/src/Http/Controllers/TranslationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/plugins/translation/src/Http/Controllers/TranslationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platform/plugins/translation/src/Manager.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/plugins/translation/src/Manager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platform/themes/wowy/views/ecommerce/customers/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/platform/themes/wowy/views/ecommerce/customers/register.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerConfigs">
+    <option name="configs">
+      <option value="$PROJECT_DIR$/platform/plugins/paypal/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/plugin-management/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/payment/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/revision/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/optimize/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/stripe/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/slug/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/social-login/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/ecommerce/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/newsletter/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/theme/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/paystack/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/get-started/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/shippo/composer.json" />
+      <option value="$PROJECT_DIR$/platform/core/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/shortcode/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/analytics/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/simple-slider/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/api/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/widget/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/menu/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/captcha/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/seo-helper/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/sitemap/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/mollie/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/installer/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/translation/composer.json" />
+      <option value="$PROJECT_DIR$/platform/plugins/razorpay/composer.json" />
+      <option value="$PROJECT_DIR$/platform/packages/page/composer.json" />
+    </option>
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
@@ -23,7 +53,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/botble/get-started" />
       <path value="$PROJECT_DIR$/vendor/dompdf/dompdf" />
@@ -255,6 +285,10 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/Utente/Documents/GitHub/farmamarigo/lang",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -275,6 +309,7 @@
       <updated>1693555525662</updated>
       <workItem from="1693555549324" duration="597000" />
       <workItem from="1697789214551" duration="846000" />
+      <workItem from="1698059336005" duration="301000" />
     </task>
     <servers />
   </component>
