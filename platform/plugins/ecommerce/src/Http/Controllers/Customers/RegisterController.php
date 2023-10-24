@@ -110,6 +110,7 @@ class RegisterController extends Controller
             'name' => BaseHelper::clean($data['name']),
             'email' => BaseHelper::clean($data['email']),
             'password' => Hash::make($data['password']),
+            'type' => BaseHelper::clean($data['type']),
         ]);
     }
 
