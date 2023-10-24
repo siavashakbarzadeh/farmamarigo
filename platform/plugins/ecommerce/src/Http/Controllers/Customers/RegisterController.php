@@ -49,10 +49,10 @@ class RegisterController extends Controller
 
     public function register(Request $request, BaseHttpResponse $response)
     {
-        $this->validator($request->input())->validate();
-
-
-        do_action('customer_register_validation', $request);
+//        $this->validator($request->input())->validate();
+//
+//
+//        do_action('customer_register_validation', $request);
 
         $customer = $this->create($request->input());
 
@@ -79,7 +79,6 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:ec_customers',
             'password' => 'required|min:6|confirmed',
-            'type'=>'required|max:255'
         ];
 
         if (is_plugin_active('captcha') && setting('enable_captcha') && get_ecommerce_setting(
@@ -92,15 +91,12 @@ class RegisterController extends Controller
         if (request()->has('agree_terms_and_policy')) {
             $rules['agree_terms_and_policy'] = 'accepted:1';
         }
-        if (request()->has('type')) {
-            $rules['type'] = $data['type'];
-        }
+
 
         $attributes = [
             'name' => __('Name'),
             'email' => __('Email'),
             'password' => __('Password'),
-            'type'=>'type',
             'g-recaptcha-response' => __('Captcha'),
             'agree_terms_and_policy' => __('Term and Policy'),
         ];
