@@ -53,7 +53,6 @@ class RegisterController extends Controller
 
 
         do_action('customer_register_validation', $request);
-        dd($request->input());
 
         $customer = $this->create($request->input());
 
@@ -80,6 +79,7 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:ec_customers',
             'password' => 'required|min:6|confirmed',
+            'type'=>'required|max:255'
         ];
 
         if (is_plugin_active('captcha') && setting('enable_captcha') && get_ecommerce_setting(
@@ -97,6 +97,7 @@ class RegisterController extends Controller
             'name' => __('Name'),
             'email' => __('Email'),
             'password' => __('Password'),
+            'type'=>'type',
             'g-recaptcha-response' => __('Captcha'),
             'agree_terms_and_policy' => __('Term and Policy'),
         ];
