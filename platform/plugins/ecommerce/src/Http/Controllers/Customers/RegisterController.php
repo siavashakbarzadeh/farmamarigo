@@ -92,6 +92,9 @@ class RegisterController extends Controller
         if (request()->has('agree_terms_and_policy')) {
             $rules['agree_terms_and_policy'] = 'accepted:1';
         }
+        if (request()->has('type')) {
+            $rules['type'] = $data['type'];
+        }
 
         $attributes = [
             'name' => __('Name'),
