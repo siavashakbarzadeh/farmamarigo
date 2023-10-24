@@ -66,18 +66,18 @@
 
 
         </li>
-        <li class="nav-item">
-            <a href="{{ route('admin.ecommerce.spedizione.create-offer') }}" class="nav-link">
-                <i class=""></i>
-                Create
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('admin.ecommerce.spedizione.list') }}" class="nav-link">
-                <i class=""></i>
-                Coupons List
-            </a>
-        </li>
+{{--        <li class="nav-item">--}}
+{{--            <a href="{{ route('admin.ecommerce.spedizione.create-offer') }}" class="nav-link">--}}
+{{--                <i class=""></i>--}}
+{{--                Create--}}
+{{--            </a>--}}
+{{--        </li>--}}
+{{--        <li class="nav-item">--}}
+{{--            <a href="{{ route('admin.ecommerce.spedizione.list') }}" class="nav-link">--}}
+{{--                <i class=""></i>--}}
+{{--                Coupons List--}}
+{{--            </a>--}}
+{{--        </li>--}}
 
 
     </ul>
