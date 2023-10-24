@@ -48,6 +48,7 @@ class Customer extends BaseModel implements
         'email',
         'password',
         'avatar',
+        'type',
         'phone',
         'dob',
         'status',
