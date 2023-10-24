@@ -54,7 +54,6 @@ class RegisterController extends Controller
         do_action('customer_register_validation', $request);
 
         $customer = $this->create($request->input());
-        dd($customer);
 
 
         event(new Registered($customer));
@@ -108,6 +107,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+        dd($data);
         return $this->customerRepository->create([
             'name' => BaseHelper::clean($data['name']),
             'email' => BaseHelper::clean($data['email']),
