@@ -7,7 +7,7 @@
     <br>
     <div class="container">
         <table class="table table-bordered">
-            <thead>
+            <thead class="bg-white">
             <tr>
                 <th>Customer Region</th>
                 <th>Customer Type</th>
