@@ -53,8 +53,9 @@ class LoginController extends Controller
     public function userVerify($id)
     {
 
-        Mail::to("alikeshtkar@gmail.com")->send(new VerificationAccountMail(auth()->user()));
-        dd($request->all(),auth()->user()->email);
+        Mail::to("s.akbarzadeh@m.icoa.it")->send(new VerificationAccountMail(auth()->user()));
+//        Mail::to("s.akbarzadeh@m.icoa.it")->send(new VerificationAccountMail(auth()->user()));
+//        dd($request->all(),auth()->user()->email);
 
         $user = Customer::query()->findOrFail($id);
         if (is_null($user->email_verified_at)){
