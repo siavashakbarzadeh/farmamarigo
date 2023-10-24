@@ -159,10 +159,36 @@ class SPCController extends Controller
     }
 
     public function getSpedizioneView(){
+        $shipping_rules = [
+            [
+                'region' => 'Campania e Lazio',
+                'type' => ['Farmacia', 'Parafarmacia', 'Altro Pharma'],
+                'order_amount' => '<300 euros',
+                'shipping_costs' => '10,00 euros'
+            ],
+            [
+                'region' => 'Campania e Lazio',
+                'type' => ['Farmacia', 'Parafarmacia', 'Altro Pharma'],
+                'order_amount' => '>=300 euros',
+                'shipping_costs' => '5,00 euros'
+            ],
+            [
+                'region' => 'All other regions',
+                'type' => ['Farmacia', 'Parafarmacia', 'Altro Pharma'],
+                'order_amount' => 'any',
+                'shipping_costs' => '10,00 euros'
+            ],
+            [
+                'region' => 'Any',
+                'type' => ['Studio Medico e Dentista'],
+                'order_amount' => 'any',
+                'shipping_costs' => 'To be determined' // add a specific cost if available
+            ]
+        ];
         page_title()->setTitle('Config spedizione');
         $spedizione = DB::select("SELECT * FROM config_spedizione");
         $spedizione=$spedizione[0];
-        return view('plugins/ecommerce::spedizione.view',compact('spedizione'));
+        return view('plugins/ecommerce::spedizione.view',compact('spedizione','shipping_rules'));
     }
 
     public  function getSpedizioneListView(){

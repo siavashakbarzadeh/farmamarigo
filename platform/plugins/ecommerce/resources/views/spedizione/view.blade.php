@@ -16,14 +16,14 @@
             </tr>
             </thead>
             <tbody>
-{{--            @foreach($shipping_rules as $rule)--}}
-{{--                <tr>--}}
-{{--                    <td>{{ $rule['region'] }}</td>--}}
-{{--                    <td>{{ implode(', ', $rule['type']) }}</td>--}}
-{{--                    <td>{{ $rule['order_amount'] }}</td>--}}
-{{--                    <td>{{ $rule['shipping_costs'] }}</td>--}}
-{{--                </tr>--}}
-{{--            @endforeach--}}
+            @foreach($shipping_rules as $rule)
+                <tr>
+                    <td>{{ $rule['region'] }}</td>
+                    <td>{{ implode(', ', $rule['type']) }}</td>
+                    <td>{{ $rule['order_amount'] }}</td>
+                    <td>{{ $rule['shipping_costs'] }}</td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
