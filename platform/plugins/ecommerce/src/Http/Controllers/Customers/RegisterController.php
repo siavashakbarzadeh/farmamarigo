@@ -49,6 +49,7 @@ class RegisterController extends Controller
 
     public function register(Request $request, BaseHttpResponse $response)
     {
+        dd($request);
         $this->validator($request->input())->validate();
 
         do_action('customer_register_validation', $request);
