@@ -73,12 +73,13 @@ class CustomExport extends BaseController
     }
     public function customerToDb()
     {
-        dd('ok');
+//        dd('ok');
         try {
             return \Illuminate\Support\Facades\DB::transaction(function () {
                 $items = \Botble\Ecommerce\Models\Customer::all();
                 foreach ($items as $item) {
-                    $item = collect($item)
+                    $item = collect($item);
+                        dd($item)
                         ->put('u_id', $item->id)
                         ->forget(['id'])
                         ->mapWithKeys(function ($item, $key) {
