@@ -71,8 +71,38 @@ class CustomExport extends BaseController
             return redirect()->back();
         }
     }
-
     public function customerToDb()
+    {
+        try {
+            return \Illuminate\Support\Facades\DB::transaction(function () {
+                $items = \Botble\Ecommerce\Models\Customer::all();
+                foreach ($items as $item) {
+                    $item = collect($item)
+                        ->put('u_id', $item->id)
+                        ->forget(['id', 'confezione', 'linea_id', 'original_price', 'front_sale_price', 'product_collections'])
+                        ->mapWithKeys(function ($item, $key) {
+                            if (str_ends_with($key,'_at')) {
+                                $item = date('Y-m-d H:i:s' , strtotime($item));
+                            } elseif (is_object($item) && method_exists($item, 'getValue')) {
+                                $item = $item->getValue();
+                            } elseif (is_array($item)) {
+                                $item = collect($item)->toJson();
+                            }
+                            return [$key => $item];
+                        })->toArray();
+                    \Illuminate\Support\Facades\DB::connection('mysql2')
+                        ->table('fa_ec_customers')
+                        ->updateOrInsert([
+                            'u_id' => $item['u_id'],
+                        ], $item);
+                }
+                return redirect()->back();
+            });
+        } catch (Throwable $e) {
+            return redirect()->back();
+        }
+    }
+    public function customerToDb2()
     {
         try {
             return \Illuminate\Support\Facades\DB::transaction(function () {
