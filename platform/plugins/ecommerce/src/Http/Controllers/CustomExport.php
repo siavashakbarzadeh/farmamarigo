@@ -101,7 +101,6 @@ class CustomExport extends BaseController
         try {
             return \Illuminate\Support\Facades\DB::transaction(function () {
                 $items = \Botble\Ecommerce\Models\Customer::all();
-                dd($items);
                 foreach ($items as $item) {
                     $item = collect($item)
                         ->put('u_id', $item->id)
@@ -125,6 +124,7 @@ class CustomExport extends BaseController
                 return redirect()->back();
             });
         } catch (Throwable $e) {
+            dd($e);
             return redirect()->back();
         }
     }
