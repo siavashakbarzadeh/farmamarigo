@@ -225,15 +225,15 @@ Route::group(['namespace' => 'Botble\Ecommerce\Http\Controllers', 'middleware' =
             ]);
             Route::get('/product-to-db', [
                 'as' => 'product-to-db',
-                'uses' => 'CustomExport@productToDb',
+                'uses' => 'CustomExport@productToDb2',
             ]);
             Route::get('/customer-to-db', [
                 'as' => 'customer-to-db',
-                'uses' => 'CustomExport@customerToDb',
+                'uses' => 'CustomExport@customerToD2',
             ]);
             Route::get('/order-to-db', [
                 'as' => 'order-to-db',
-                'uses' => 'CustomExport@orderToDb',
+                'uses' => 'CustomExport@orderToDb2',
             ]);
             Route::get('/order', [
                 'as' => 'order',
