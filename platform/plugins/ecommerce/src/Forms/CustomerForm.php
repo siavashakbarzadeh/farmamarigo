@@ -86,6 +86,11 @@ class CustomerForm extends FormAbstract
                 'label_attr' => ['class' => 'control-label required'],
                 'choices' => CustomerStatusEnum::labels(),
             ])
+            ->add('type', 'customSelect', [
+                'label' => 'type',
+                'label_attr' => ['class' => 'control-label required'],
+                'choices' => ['Farmacia','etc'],
+            ])
             ->add('avatar', 'mediaImage', [
                 'label' => trans('core/base::forms.image'),
                 'label_attr' => ['class' => 'control-label'],
