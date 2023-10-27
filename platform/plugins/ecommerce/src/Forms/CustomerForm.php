@@ -87,7 +87,7 @@ class CustomerForm extends FormAbstract
                 'choices' => CustomerStatusEnum::labels(),
             ])
             ->add('type', 'customSelect', [
-                'label' => 'type',
+                'label' => 'Type',
                 'label_attr' => ['class' => 'control-label required'],
                 'choices' => ['Farmacia'=>'Farmacia','Parafarmacia'=>'Parafarmacia','Dentista'=>'Dentista','Studio Medico'=>'Studio Medico','Altra Pharma'=>'Altra Pharma'],
             ])
