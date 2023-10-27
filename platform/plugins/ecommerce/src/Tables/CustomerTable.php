@@ -94,6 +94,7 @@ class CustomerTable extends TableAbstract
             'id',
             'name',
             'email',
+            'type',
             'avatar',
             'created_at',
             'status',
