@@ -95,12 +95,14 @@ class CustomExport extends BaseController
                         })->toArray();
 
                     \Illuminate\Support\Facades\DB::connection('mysql2')
+                         dd($item)
                         ->table('fa_ec_customers')
                         ->updateOrInsert([
+
                             'u_id' => $item['u_id'],
                         ], $item);
                 }
-                dd($item);
+
                 return redirect()->back();
             });
         } catch (Throwable $e) {
