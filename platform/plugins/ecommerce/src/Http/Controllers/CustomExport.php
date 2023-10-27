@@ -82,45 +82,18 @@ class CustomExport extends BaseController
     }
     public function customerToDb()
     {
-        $mysql2= \Illuminate\Support\Facades\DB::connection('mysql2');
-        if ($this->isConnected($mysql2)) {
-            dd('ok');
-        } else {
-            dd('nok');
-        }
         try {
-            return \Illuminate\Support\Facades\DB::transaction(function () {
-                $items = \Botble\Ecommerce\Models\Customer::all();
-                foreach ($items as $item) {
-                    $item = collect($item)
+            $pdo = DB::connection('mysql2')->getPdo();
 
-                        ->put('u_id', $item->id)
-                        ->forget(['id'])
+            if($pdo instanceof PDO) {
+                echo "Connected to mysql2";
+            } else {
+                echo "Not connected to mysql2";
+            }
 
-                        ->mapWithKeys(function ($item, $key) {
-                            if (str_ends_with($key,'_at')) {
-                                $item = date('Y-m-d H:i:s' , strtotime($item));
-                            } elseif (is_object($item) && method_exists($item, 'getValue')) {
-                                $item = $item->getValue();
-                            } elseif (is_array($item)) {
-                                $item = collect($item)->toJson();
-                            }
-                            return [$key => $item];
-                        })->toArray();
-
-//                    \Illuminate\Support\Facades\DB::connection('mysql2')
-//
-//                        ->table('fa_ec_customers')
-//                        ->updateOrInsert([
-//
-//                            'u_id' => $item['u_id'],
-//                        ], $item);
-                }
-
-                return redirect()->back();
-            });
-        } catch (Throwable $e) {
-            return redirect()->back();
+        } catch (\Exception $e) {
+            // This catch block will handle any exceptions that may arise, such as if the connection string is invalid.
+            echo "Failed to connect to mysql2. Error: " . $e->getMessage();
         }
     }
     public function customerToDb2()
