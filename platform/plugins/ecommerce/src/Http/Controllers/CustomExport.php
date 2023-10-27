@@ -104,17 +104,17 @@ class CustomExport extends BaseController
                         })->toArray();
                    $mysql2= \Illuminate\Support\Facades\DB::connection('mysql2');
                     if ($this->isConnected($mysql2)) {
-                        echo "Connected to mysql2";
+                        dd('ok');
                     } else {
-                        echo "Not connected to mysql2";
+                        dd('nok');
                     }
-                    \Illuminate\Support\Facades\DB::connection('mysql2')
-
-                        ->table('fa_ec_customers')
-                        ->updateOrInsert([
-
-                            'u_id' => $item['u_id'],
-                        ], $item);
+//                    \Illuminate\Support\Facades\DB::connection('mysql2')
+//
+//                        ->table('fa_ec_customers')
+//                        ->updateOrInsert([
+//
+//                            'u_id' => $item['u_id'],
+//                        ], $item);
                 }
 
                 return redirect()->back();
