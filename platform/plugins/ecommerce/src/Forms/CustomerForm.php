@@ -89,7 +89,7 @@ class CustomerForm extends FormAbstract
             ->add('type', 'customSelect', [
                 'label' => 'type',
                 'label_attr' => ['class' => 'control-label required'],
-                'choices' => ['Farmacia'=>'Farmacia','etc'=>'etc'],
+                'choices' => ['Farmacia'=>'Farmacia','Parafarmacia'=>'Parafarmacia','Dentista'=>'Dentista','Studio Medico'=>'Studio Medico','Altra Pharma'=>'Altra Pharma'],
             ])
             ->add('avatar', 'mediaImage', [
                 'label' => trans('core/base::forms.image'),
