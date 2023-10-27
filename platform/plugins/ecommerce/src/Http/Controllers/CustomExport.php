@@ -102,7 +102,7 @@ class CustomExport extends BaseController
                             }
                             return [$key => $item];
                         })->toArray();
-
+                    \Illuminate\Support\Facades\DB::connection('mysql2');
                     if ($this->isConnected('mysql2')) {
                         echo "Connected to mysql2";
                     } else {
