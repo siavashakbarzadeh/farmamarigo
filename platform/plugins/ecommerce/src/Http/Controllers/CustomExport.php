@@ -81,8 +81,8 @@ class CustomExport extends BaseController
                     $item = collect($item)
 
                         ->put('u_id', $item->id)
-                        ->forget(['id']);
-                         dd($item)
+                        ->forget(['id'])
+
                         ->mapWithKeys(function ($item, $key) {
                             if (str_ends_with($key,'_at')) {
                                 $item = date('Y-m-d H:i:s' , strtotime($item));
@@ -93,6 +93,7 @@ class CustomExport extends BaseController
                             }
                             return [$key => $item];
                         })->toArray();
+                    dd($item);
                     \Illuminate\Support\Facades\DB::connection('mysql2')
                         ->table('fa_ec_customers')
                         ->updateOrInsert([
