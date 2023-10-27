@@ -82,7 +82,12 @@ class CustomExport extends BaseController
     }
     public function customerToDb()
     {
-//        dd('ok');
+        $mysql2= \Illuminate\Support\Facades\DB::connection('mysql2');
+        if ($this->isConnected($mysql2)) {
+            dd('ok');
+        } else {
+            dd('nok');
+        }
         try {
             return \Illuminate\Support\Facades\DB::transaction(function () {
                 $items = \Botble\Ecommerce\Models\Customer::all();
@@ -102,12 +107,7 @@ class CustomExport extends BaseController
                             }
                             return [$key => $item];
                         })->toArray();
-                   $mysql2= \Illuminate\Support\Facades\DB::connection('mysql2');
-                    if ($this->isConnected($mysql2)) {
-                        dd('ok');
-                    } else {
-                        dd('nok');
-                    }
+
 //                    \Illuminate\Support\Facades\DB::connection('mysql2')
 //
 //                        ->table('fa_ec_customers')
