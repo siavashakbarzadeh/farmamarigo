@@ -24,10 +24,19 @@ class CustomExport extends BaseController
 {
     use HasBackupTable;
 
-    public function customer1()
-    {
+    function isConnected($connectionName = 'mysql') {
+        try {
+            $pdo = DB::connection($connectionName)->getPdo();
 
-
+            if($pdo) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            // You might want to log the exception here or handle it in some other way.
+            return false;
+        }
     }
 
     public function customer()
@@ -94,8 +103,13 @@ class CustomExport extends BaseController
                             return [$key => $item];
                         })->toArray();
 
+                    if ($this->isConnected('mysql2')) {
+                        echo "Connected to mysql2";
+                    } else {
+                        echo "Not connected to mysql2";
+                    }
                     \Illuminate\Support\Facades\DB::connection('mysql2')
-                         dd($item)
+
                         ->table('fa_ec_customers')
                         ->updateOrInsert([
 
