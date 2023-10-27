@@ -80,7 +80,7 @@ class CustomExport extends BaseController
             return redirect()->back();
         }
     }
-    public function customerToDb()
+    public function dbconection()
     {
         try {
             $pdo = DB::connection('mysql2')->getPdo();

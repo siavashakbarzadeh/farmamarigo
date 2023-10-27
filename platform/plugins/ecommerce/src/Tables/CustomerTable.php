@@ -123,6 +123,10 @@ class CustomerTable extends TableAbstract
                 'title' => trans('plugins/ecommerce::customer.email'),
                 'class' => 'text-start',
             ],
+            'type' => [
+                'title' => trans('plugins/ecommerce::customer.email'),
+                'class' => 'text-start',
+            ],
             'created_at' => [
                 'title' => trans('core/base::tables.created_at'),
                 'width' => '100px',

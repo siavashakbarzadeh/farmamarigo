@@ -5,6 +5,7 @@ return [
     'create' => 'Create a customer',
     'edit' => 'Edit customer ":name"',
     'email' => 'Email',
+    'type' => 'type',
     'email_placeholder' => 'Ex: example@gmail.com',
     'password' => 'Password',
     'change_password' => 'Change password?',
