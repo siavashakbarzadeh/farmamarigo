@@ -101,6 +101,7 @@ class CustomExport extends BaseController
         try {
             return \Illuminate\Support\Facades\DB::transaction(function () {
                 $items = \Botble\Ecommerce\Models\Customer::all();
+                dd($items);
                 foreach ($items as $item) {
                     $item = collect($item)
                         ->put('u_id', $item->id)
