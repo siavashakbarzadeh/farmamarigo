@@ -78,10 +78,11 @@ class CustomExport extends BaseController
             return \Illuminate\Support\Facades\DB::transaction(function () {
                 $items = \Botble\Ecommerce\Models\Customer::all();
                 foreach ($items as $item) {
-                    $item = collect($item);
-                        dd($item)
+                    $item = collect($item)
+
                         ->put('u_id', $item->id)
-                        ->forget(['id'])
+                        ->forget(['id']);
+                         dd($item)
                         ->mapWithKeys(function ($item, $key) {
                             if (str_ends_with($key,'_at')) {
                                 $item = date('Y-m-d H:i:s' , strtotime($item));
