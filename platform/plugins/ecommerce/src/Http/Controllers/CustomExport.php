@@ -73,6 +73,7 @@ class CustomExport extends BaseController
     }
     public function customerToDb()
     {
+        dd('ok');
         try {
             return \Illuminate\Support\Facades\DB::transaction(function () {
                 $items = \Botble\Ecommerce\Models\Customer::all();
