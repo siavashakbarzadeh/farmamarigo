@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnswerRequest;
+use App\Http\Requests\QuestionnaireCustomersRequest;
 use App\Tables\QuestionnaireTable;
 use Aws\DocDB\DocDBClient;
+use Botble\Ecommerce\Jobs\SendQuestionnaireToCustomerJob;
+use Botble\Ecommerce\Models\Customer;
+use Botble\Ecommerce\Models\QuestionOption;
 use Botble\Ecommerce\Tables\OrderTable;
 use Botble\Ecommerce\Tables\ProductTable;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -15,18 +20,62 @@ use Botble\Ecommerce\Models\Questionnaire;
 use Botble\Ecommerce\Models\Question;
 use Botble\Ecommerce\Models\Answer;
 use Illuminate\Support\Facades\Validator;
+use Botble\SeoHelper\SeoHelper;
+use Botble\Theme\Breadcrumb;
+use Theme;
+use Throwable;
 
 class QuestionnaireController extends Controller
 {
+    
+    public function checksession(Request $request){
+        dd($request->session()->all());
+    }
+
+
     public function index()
     {
+
         $questonary = Questionnaire::query()->active()->first();
-        $questions = $questonary->questions()->whereDoesntHave('answers', function ($q) {
-            $q->where('customer_id', auth('customer')->user()->id);
-        })->get();
+        $questions = collect();
+        if ($questonary) {
+            $questions = $questonary->questions()->whereDoesntHave('answers', function ($q) {
+                $q->where('customer_id', request()->user('customer')->id);
+            })->get();
+        }
+
         if ($questions->count())
             return view('questionnaire.questionaryForm', compact('questions', 'questonary'));
         return redirect('/');
+    }
+
+    public function questionnaireCustomers($id)
+    {
+        $questionnaire = Questionnaire::query()->findOrFail($id);
+        $questions = collect();
+        if ($questionnaire) {
+            $questions = $questionnaire->questions()->whereDoesntHave('answers', function ($q) {
+                $q->where('customer_id', request()->user('customer')->id);
+            })->get();
+        }
+        if ($questions->count())
+            return view('questionnaire.questionnaire-customers', compact('questions', 'questionnaire'));
+        return redirect('/');
+    }
+
+    public function saveQuestionnaireCustomers(QuestionnaireCustomersRequest $request, $id)
+    {
+        Answer::query()->insert(collect($request->answers)->map(function ($item) {
+            return [
+                'customer_id' => request()->user('customer')->id,
+                'question_id' => $item['question_id'],
+                'question_option_id' => array_key_exists('answer_option_id', $item) ? $item['answer_option_id'] : null,
+                'answer_text' => array_key_exists('answer_text', $item) ? $item['answer_text'] : null,
+                'updated_at' => now(),
+                'created_at' => now(),
+            ];
+        })->toArray());
+        return redirect()->route('questionnaire.thank-you')->with(['success' => "Grazie per la risposta"]);
     }
 
     public function thankYou()
@@ -96,6 +145,71 @@ class QuestionnaireController extends Controller
         return redirect()->route('admin.ecommerce.questionnaires.index')->with('success', "La modifica dello stato ha avuto successo");
     }
 
+    public function export($questionnaire)
+    {
+        $questionnaire = Questionnaire::query()->findOrFail($questionnaire);
+        try {
+            return DB::transaction(function () use ($questionnaire) {
+                DB::connection('mysql2')->table('ec_questionnaire')->updateOrInsert([
+                    'u_id' => $questionnaire->id,
+                ], [
+                    'u_id' => $questionnaire->id,
+                    'title' => $questionnaire->title,
+                    'desc' => $questionnaire->desc,
+                    'is_active' => $questionnaire->is_active,
+                    'start_at' => $questionnaire->start_at ?? null,
+                    'end_at' => $questionnaire->end_at ?? null,
+                    'created_at' => $questionnaire->created_at,
+                    'updated_at' => $questionnaire->updated_at,
+                ]);
+                if ($questionnaire->questions->count()) {
+                    foreach ($questionnaire->questions as $question) {
+                        DB::connection('mysql2')->table('ec_question')->updateOrInsert([
+                            'u_id' => $question->id,
+                        ], [
+                            'u_id' => $question->id,
+                            'question_text' => $question->question_text,
+                            'question_type' => $question->question_type,
+                            'questionnaire_id' => $question->questionnaire_id,
+                            'created_at' => $question->created_at,
+                            'updated_at' => $question->updated_at,
+                        ]);
+                        if ($question->options->count()) {
+                            foreach ($question->options as $option) {
+                                DB::connection('mysql2')->table('question_options')->updateOrInsert([
+                                    'u_id' => $option->id,
+                                ], [
+                                    'u_id' => $option->id,
+                                    'question_id' => $option->question_id,
+                                    'value' => $option->value,
+                                    'created_at' => $option->created_at,
+                                    'updated_at' => $option->updated_at,
+                                ]);
+                            }
+                        }
+                        if ($question->answers->count()){
+                            foreach ($question->answers as $answer) {
+                                DB::connection('mysql2')->table('ec_answers_questionary')->updateOrInsert([
+                                    'u_id' => $answer->id,
+                                ], [
+                                    'u_id' => $answer->id,
+                                    'answer_text'=>$answer['answer_text'],
+                                    'question_id'=>$answer['question_id'],
+                                    'customer_id'=>$answer['customer_id'],
+                                    'created_at' => $answer->created_at,
+                                    'updated_at' => $answer->updated_at,
+                                ]);
+                            }
+                        }
+                    }
+                }
+                return redirect()->back();
+            });
+        } catch (Throwable $e) {
+            return redirect()->back();
+        }
+    }
+
     public function delete($questionnaire)
     {
         $questionnaire = Questionnaire::query()->findOrFail($questionnaire);
@@ -108,7 +222,7 @@ class QuestionnaireController extends Controller
     {
         Answer::query()->insert(collect($request->answers)->map(function ($item) {
             return [
-                'customer_id' => auth('customer')->user()->id,
+                'customer_id' => request()->user('customer')->id,
                 'question_id' => $item['question_id'],
                 'question_option_id' => array_key_exists('answer_option_id', $item) ? $item['answer_option_id'] : null,
                 'answer_text' => array_key_exists('answer_text', $item) ? $item['answer_text'] : null,
@@ -116,7 +230,7 @@ class QuestionnaireController extends Controller
                 'created_at' => now(),
             ];
         })->toArray());
-        return redirect()->route('questionnaire.thank-you')->with(['success' => "Grazie per la risposta"]);
+        return redirect()->route('questionnaire.thank-you')->with(['success' => trans('plugins/ecommerce::questionnire.success_save_answers')]);
     }
 
     public function getAnswers(Request $request)
@@ -157,6 +271,49 @@ class QuestionnaireController extends Controller
         ]);
     }
 
+    public function ajaxUsers(Request $request)
+    {
+        $customers = Customer::query()
+            ->when($request->filled('s'), function ($q) use ($request) {
+                $q->where('codice', 'LIKE', '%' . $request->s . '%')
+                    ->orWhere('name', 'LIKE', '%' . $request->s . '%')
+                    ->orWhere('email', 'LIKE', '%' . $request->s . '%');
+            })->paginate();
+        return response()->json([
+            'status' => 200,
+            'table' => view('plugins/ecommerce::questionnaire.partials.modal.table', ['items' => $customers])->render(),
+        ]);
+    }
+
+    public function sendEmailToCustomers(Request $request, $id)
+    {
+        $questionnaire = Questionnaire::query()->findOrFail($id);
+        $this->validate($request, [
+            'ids' => ['required', 'array'],
+            'ids.*' => ['required', 'exists:ec_customers,id'],
+        ]);
+        $customers = Customer::query()->select(['id', 'email'])
+            ->when($request->filled('selected_all') && $request->selected_all == 0, function ($q) use ($request) {
+                $q->whereIn('id', $request->ids);
+            }, function ($q) use ($request) {
+                $q->when($request->filled('expect_customers') && count($request->expect_customers), function ($q) use ($request) {
+                    $q->whereNotIn('id', $request->expect_customers);
+                });
+            })->whereNotNull('email')
+            ->get()
+            ->pluck('email')
+            ->toArray();
+        try {
+            SendQuestionnaireToCustomerJob::dispatch($customers, $questionnaire);
+            return response()->json(['msg' => 'success']);
+        } catch (Throwable $e) {
+            return response()->json([
+                'msg' => "Internal server error"
+            ], 500);
+        }
+
+    }
+
     private function activeQuestionnaireDates($questionnaireActiveStartAt, $questionnaireActiveEndAt, $start_at, $end_at)
     {
         if ($start_at->between($questionnaireActiveStartAt, $questionnaireActiveEndAt) && $end_at->between($questionnaireActiveStartAt, $questionnaireActiveEndAt)) {
@@ -181,7 +338,12 @@ class QuestionnaireController extends Controller
 
     public function show($id)
     {
-        dd($id);
+        $questionnaire = Questionnaire::query()->withCount('answers')
+            ->with(['questions' => function (HasMany $hasMany) {
+                $hasMany->withCount('answers');
+            }])->findOrFail($id);
+        $answers = $questionnaire->answers()->paginate();
+        return view('plugins/ecommerce::questionnaire.show', compact('questionnaire', 'answers'));
     }
 
     public function update(Request $request, $id)
@@ -264,7 +426,7 @@ class QuestionnaireController extends Controller
                 }
                 return redirect()->route('admin.ecommerce.questionnaires.index')->with('success', "Questionario aggiunto con successo!");
             });
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
@@ -321,7 +483,7 @@ class QuestionnaireController extends Controller
                 }
                 return redirect()->route('admin.ecommerce.questionnaires.index')->with('success', "Questionario aggiunto con successo!");
             });
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
