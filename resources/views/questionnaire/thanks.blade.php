@@ -12,7 +12,7 @@
             </div>
         @endif
         <div class="py-3 d-flex justify-content-center">
-            <a href="{{ url('/') }}" class="">Back to home</a>
+            <a href="{{ url('/') }}" class="">{{ trans('plugins/ecommerce::questionnire.back_to_home') }}</a>
         </div>
     </main>
 </div>

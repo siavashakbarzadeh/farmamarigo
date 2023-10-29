@@ -13,7 +13,7 @@
         </button>
     </div>
 
-    <form class="questions_section" action="https://dev.marigo.collaudo.biz/admin/ecommerce/questionnaire/createQuestions" method=post >
+    <form class="questions_section" action="https://marigolab.it/admin/ecommerce/questionnaire/createQuestions" method=post >
         @csrf
 
     </form>
