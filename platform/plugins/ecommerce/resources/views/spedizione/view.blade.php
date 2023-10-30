@@ -53,12 +53,12 @@
 
 
         <div class="form-group">
-            <label for="order_600">Ordini ≥ €300 (€):</label>
+            <label for="order_300">Ordini ≥ €300 (€):</label>
             <input type="number" step="0.01" name="order_600" id="order_600" class="form-control" value="{{ old('order_600', $spedizione->order_600 ?? 13.90) }}">
         </div>
 
         <div class="form-group">
-            <label for="order_below_600">Ordini < €300 (€):</label>
+            <label for="order_below_300">Ordini < €300 (€):</label>
             <input type="number" step="0.01" name="order_below_600" id="order_below_600" class="form-control" value="{{ old('order_below_600', $spedizione->order_below_600 ?? 18.90) }}">
         </div>
 

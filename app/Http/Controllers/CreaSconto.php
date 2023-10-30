@@ -82,6 +82,7 @@ class CreaSconto extends BaseController
 
 
     public function spedizioneUpdate(Request $request){
+
         $request->validate([
             'min_order' => 'required|numeric|min:0',
             'contribution_lower_order' => 'required|numeric|min:0',
