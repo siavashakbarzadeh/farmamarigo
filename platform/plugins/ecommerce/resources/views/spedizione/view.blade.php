@@ -32,7 +32,7 @@
 
          <div class="form-group">
             <label for="min_order">TIPO DI CLIENTE:</label>
-             <select name="customertype">
+             <select name="customertype" class="form-control">
                  <option value="Farmacia">Farmacia</option>
                  <option value="Parafarmacia">Parafarmacia</option>
                  <option value="Altro Pharma">Altro Pharma</option>
