@@ -107,7 +107,7 @@
                                         {{--                                    </div>--}}
                                         <div class="table-responsive">
                                             <table class="table">
-                                                <tbody>fa fa-trash-alt
+                                                <tbody>
                                                 @if (EcommerceHelper::isTaxEnabled())
                                                     <tr>
                                                         <td class="cart_total_label">{{ __('Tax') }}</td>
