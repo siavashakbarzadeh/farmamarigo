@@ -130,6 +130,7 @@
                                                     @php
                                                         session()->forget('shippingAmount');
                                                             $address=Botble\Ecommerce\Models\Address::where('customer_id', auth('customer')->user()->id)->first();
+                                                            @dd(auth('customer')->user()->address->city);
                                                             $weight=0.00;
                                                             $IVAPERCENTAGE=1.22;
 
@@ -139,7 +140,7 @@
                                                             }
                                                             $shippingAmount=0;//shippingAmount needs to be calculated by products weights and prices
 
-  dd(auth('customer')->user()->address->city);
+
 
                                                             if(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 350.00){
                                                                 if($weight>50000.00){
