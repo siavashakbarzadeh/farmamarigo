@@ -22,6 +22,8 @@ use Botble\Ecommerce\Models\PriceList;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use App\Jobs\OfferDeactivationJob;
+use App\Models\Shipping;
+
 use Carbon\Carbon;
 use LDAP\Result;
 use Symfony\Component\HttpFoundation\StreamedResponse;
