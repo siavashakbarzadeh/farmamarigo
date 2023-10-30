@@ -196,7 +196,7 @@ $orderAmount=Cart::instance('cart')->rawTotal();
                                                 <tr>
 
                                                     <td class="cart_total_label">{{ __('Contributo spese di spedizione e imballagio') }} </td>
-                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ $shippingAmount }}</span></strong></td>
+                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ format_price($shippingAmount)}}</span></strong></td>
                                                 </tr>
                                                 <tr>
 
