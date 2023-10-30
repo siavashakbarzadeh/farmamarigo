@@ -139,6 +139,7 @@
                                                             }
                                                             $shippingAmount=0;//shippingAmount needs to be calculated by products weights and prices
 
+  dd(auth('customer')->user()->address->city);
 
                                                             if(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 350.00){
                                                                 if($weight>50000.00){
