@@ -89,12 +89,15 @@ Route::prefix('/admin/ecommerce/questionnaires')
         $router->get('/create', [QuestionnaireController::class, 'create'])->name('create');
         $router->post('/store', [QuestionnaireController::class, 'store'])->name('store');
         $router->post('/check-active-changes', [QuestionnaireController::class, 'checkActiveChanges'])->name('check-active-changes');
+        $router->get('/ajax/users', [QuestionnaireController::class, 'ajaxUsers'])->name('ajax-users');
         $router->get('/{id}', [QuestionnaireController::class, 'show'])->name('show');
         $router->put('/{id}', [QuestionnaireController::class, 'update'])->name('update');
         $router->delete('/{questionnaire}', [QuestionnaireController::class, 'delete'])->name('delete');
         $router->get('/{id}/edit', [QuestionnaireController::class, 'edit'])->name('edit');
+        $router->post('/{id}/send-email/customers', [QuestionnaireController::class, 'sendEmailToCustomers'])->name('send-email-to-customers');
         $router->put('/{questionnaire}/active', [QuestionnaireController::class, 'active'])->name('active');
         $router->put('/{questionnaire}/inactive', [QuestionnaireController::class, 'inactive'])->name('inactive');
+
     });
 Route::get('/questionindex', [QuestionnaireController::class, 'index'])
     ->middleware(['check.auth.customer'])
