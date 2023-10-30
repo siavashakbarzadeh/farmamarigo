@@ -76,7 +76,8 @@
                                                             @enderror
                                                         </label>
                                                         <div class="mt-1 d-flex justify-content-end">
-                                                            <button type="button" class="btn btn-danger js-btn-remove-question-option">
+                                                            <button type="button"
+                                                                    class="btn btn-danger js-btn-remove-question-option">
                                                                 <i class="fa fa-minus"></i>
                                                             </button>
                                                         </div>
@@ -125,7 +126,23 @@
                         },
                         type: 'POST',
                         dataType: 'json',
+                        error: function (xhr, status, error) {
+                            if (xhr.status === 422) {
+                                const errors = xhr.responseJSON.errors;
+                                var html = '';
+                                if (errors) {
+                                    Object.keys(errors).forEach(function (key) {
+                                        html = html + '<div>' + errors[key][0] + '</div>';
+                                    });
+                                    Swal.fire({
+                                        icon: 'error',
+                                        html: html
+                                    });
+                                }
+                            }
+                        },
                         success: function (response) {
+                            console.log(response)
                             if (response.questionnaire.activeQuestionnaireDates && response.questionnaire.activeQuestionnaireDates.end_at && response.questionnaire.activeQuestionnaireDates.start_at) {
                                 Swal.fire({
                                     html:
@@ -183,7 +200,7 @@
                     const i = Math.abs(questionOptions.find('.js-question-option').length + 1) * -1;
                     questionOptions.append('<div class="js-question-option pb-2">' +
                         '<label class="d-block w-100">' +
-                        '<textarea class="form-control" name="questions[' + id + '][option]['+i+']"></textarea>' +
+                        '<textarea class="form-control" name="questions[' + id + '][option][' + i + ']"></textarea>' +
                         '</label>' +
                         '<div class="mt-1 d-flex justify-content-end">' +
                         '<button type="button" class="btn btn-danger js-btn-remove-question-option">' +

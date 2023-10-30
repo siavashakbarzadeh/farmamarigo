@@ -33,7 +33,7 @@
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <label for="start_at">DATA DI INIZIO</label>
                             <input type="date" name="start_at"
-                                   value="{{ old('start_at') ?? $questionnaire->start_at->format('Y-m-d') }}"
+                                   value="{{ old('start_at') ?? $questionnaire->start_at->format('d-m-Y') }}"
                                    id="start_at">
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <label for="end_at">DATA DI SCADENZA</label>
                             <input type="date" name="end_at"
-                                   value="{{ old('end_at') ?? $questionnaire->end_at->format('Y-m-d') }}" id="end_at">
+                                   value="{{ old('end_at') ?? $questionnaire->end_at->format('d-m-Y') }}" id="end_at">
                         </div>
                     </div>
                 </div>
@@ -177,6 +177,21 @@
                         },
                         type: 'POST',
                         dataType: 'json',
+                        error: function (xhr, status, error) {
+                            if (xhr.status === 422) {
+                                const errors = xhr.responseJSON.errors;
+                                var html = '';
+                                if (errors) {
+                                    Object.keys(errors).forEach(function (key) {
+                                        html = html + '<div>' + errors[key][0] + '</div>';
+                                    });
+                                    Swal.fire({
+                                        icon: 'error',
+                                        html: html
+                                    });
+                                }
+                            }
+                        },
                         success: function (response) {
                             if (response.questionnaire.activeQuestionnaireDates && response.questionnaire.activeQuestionnaireDates.end_at && response.questionnaire.activeQuestionnaireDates.start_at) {
                                 Swal.fire({
