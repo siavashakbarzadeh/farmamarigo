@@ -19,10 +19,10 @@
 <a href="{{ $url }}" target="_blank">{{ $url }}</a>
 <div class="card text-center">
     <div class="card-header">
-        <h2>La ringraziamo per il suo ordine!</h2>
+        <h2>Vi preghiamo di confermare la vostra richiesta di iscrizione premendo il seguente link:</h2>
     </div>
     <div class="card-body">
-
+        <a href="{{ $url }}" target="_blank">{{ $url }}</a>
     </div>
     <div class="card-footer text-body-secondary"> Per qualsiasi informazione, ci contatti via <a href='https://dev.marigo.collaudo.biz/contact'>Pagina dei contatti</a>
     </div>
