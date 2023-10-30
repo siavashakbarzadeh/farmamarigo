@@ -155,7 +155,7 @@ $orderAmount=Cart::instance('cart')->rawTotal();
 
               $shippingAmount= 10;
         }
-@dd(Cart::instance('cart'));
+@dd(Cart::instance('cart')->subTotal());
 
 //                                                            foreach (Cart::instance('cart')->content() as $key => $cartItem) {
 //                                                                $product = $products->find($cartItem->id);
