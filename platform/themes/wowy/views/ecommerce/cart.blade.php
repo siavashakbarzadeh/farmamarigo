@@ -200,8 +200,8 @@ $orderAmount=Cart::instance('cart')->rawTotal();
                                                 </tr>
                                                 <tr>
 
-                                                    <td class="cart_total_label">{{ __('Total') }} <small>({{ __('Shipping fees not included') }})</small></td>
-                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ ($promotionDiscountAmount + $couponDiscountAmount) > Cart::instance('cart')->rawTotal() ? format_price(0) : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount) }}</span></span></strong></td>
+                                                    <td class="cart_total_label">{{ __('Totale IVA inclusa') }}</td>
+                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ format_price($shippingAmount+$orderAmount)}}</span></strong></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
