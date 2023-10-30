@@ -3,7 +3,7 @@
 
 <div class="container mt-5">
     <h2>Calculate Shipping Cost</h2>
-    <form action="{{ route('calculate.shipping') }}" method="POST">
+    <form action="{{ route('admin.ecommerce.spedizione.calculate.shipping') }}" method="POST">
 @csrf
 
 <div class="form-group">
