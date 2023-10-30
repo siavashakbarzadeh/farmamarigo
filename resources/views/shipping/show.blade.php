@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Shipping Cost</title>
-</head>
-<body>
+@extends(BaseHelper::getAdminMasterLayoutTemplate())
+@section('content')
 <h2>Shipping Cost</h2>
 <p>The shipping cost is: {{ $shippingCost }}</p>
-</body>
-</html>
+
