@@ -197,7 +197,7 @@ $orderAmount=Cart::instance('cart')->rawTotal();
                                                 <tr>
 
                                                     <td class="cart_total_label">{{ __('Subtotale IVA esclusa') }} </td>
-                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ format_price($subtotal)}}</span></strong></td>
+                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ format_price((float)$subtotal)}}</span></strong></td>
                                                 </tr>
                                                 <tr>
 
