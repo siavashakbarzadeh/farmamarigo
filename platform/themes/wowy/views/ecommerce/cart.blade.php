@@ -155,6 +155,7 @@ $orderAmount=Cart::instance('cart')->rawTotal();
 
               $shippingAmount= 10;
         }
+        $subtotal=Cart::instance('cart')->subTotal();
 //@dd(Cart::instance('cart')->subTotal());
 
 //                                                            foreach (Cart::instance('cart')->content() as $key => $cartItem) {
@@ -196,7 +197,7 @@ $orderAmount=Cart::instance('cart')->rawTotal();
                                                 <tr>
 
                                                     <td class="cart_total_label">{{ __('Subtotale IVA esclusa') }} </td>
-                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ format_price(Cart::instance('cart')->subTotal())}}</span></strong></td>
+                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ format_price($subtotal)}}</span></strong></td>
                                                 </tr>
                                                 <tr>
 
