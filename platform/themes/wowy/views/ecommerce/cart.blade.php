@@ -130,7 +130,7 @@
                                                     @php
                                                         session()->forget('shippingAmount');
                                                             $address=Botble\Ecommerce\Models\Address::where('customer_id', auth('customer')->user()->id)->first();
-                                                            @dd(auth('customer')->user());
+                                                            @dd(auth('customer')->user()->type);
 
 //                                                       $customerType
                                                           $region= $address->state;
