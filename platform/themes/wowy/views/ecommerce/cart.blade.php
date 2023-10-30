@@ -130,7 +130,8 @@
                                                     @php
                                                         session()->forget('shippingAmount');
                                                             $address=Botble\Ecommerce\Models\Address::where('customer_id', auth('customer')->user()->id)->first();
-                                                            @dd(auth('customer')->user()->address->city);
+                                                            @dd($address);
+//                                                            @dd(auth('customer')->user());
                                                             $weight=0.00;
                                                             $IVAPERCENTAGE=1.22;
 
