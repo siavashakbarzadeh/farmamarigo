@@ -36,12 +36,12 @@
                 </li>
             @endif
 
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle dropdown-header-name" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="d-inline d-sm-none"><i class="fas fa-palette"></i></span>
-                        <span class="d-none d-sm-inline">{{ strtoupper(App::getLocale()) }}</span>
-                        <i class="fa fa-angle-down"></i>
-                    </a>
+{{--                <li class="dropdown">--}}
+{{--                    <a href="javascript:;" class="dropdown-toggle dropdown-header-name" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                        <span class="d-inline d-sm-none"><i class="fas fa-palette"></i></span>--}}
+{{--                        <span class="d-none d-sm-inline">{{ strtoupper(App::getLocale()) }}</span>--}}
+{{--                        <i class="fa fa-angle-down"></i>--}}
+{{--                    </a>--}}
 {{--                    <ul class="dropdown-menu dropdown-menu-right icons-right">--}}
 {{--                        @foreach (Config::get('core.base.admin_languages') as $lang => $language)--}}
 {{--                            @if ($lang != App::getLocale())--}}
@@ -49,7 +49,7 @@
 {{--                            @endif--}}
 {{--                        @endforeach--}}
 {{--                    </ul>--}}
-                </li>
+{{--                </li>--}}
             <li class="dropdown dropdown-user">
                 <a href="javascript:void(0)" class="dropdown-toggle dropdown-header-name" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img alt="{{ Auth::user()->name }}" class="rounded-circle" src="{{ Auth::user()->avatar_url }}" />
