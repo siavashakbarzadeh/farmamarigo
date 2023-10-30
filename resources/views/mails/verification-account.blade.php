@@ -14,9 +14,6 @@
 </head>
 <body>
 
-<p>Vi preghiamo di confermare la vostra richiesta di iscrizione premendo il seguente link:</p>
-
-<a href="{{ $url }}" target="_blank">{{ $url }}</a>
 <div class="card text-center">
     <div class="card-header">
         <h2>Vi preghiamo di confermare la vostra richiesta di iscrizione premendo il seguente link:</h2>
