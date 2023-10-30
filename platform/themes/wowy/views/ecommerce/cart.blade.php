@@ -138,13 +138,14 @@
                                                             $weight=0.00;
                                                             $IVAPERCENTAGE=1.22;
 $orderAmount=Cart::instance('cart')->rawTotal();
+@dd($region, $customerType,$orderAmount);
 if ($region == 'Lazio' && $customerType == 'Farmacia' && $orderAmount < 300) {
 //            return '10,00 euros';
              dd('10,00 euros');
         }else{
      dd('no');
                  }
-//@dd($region, $customerType,$orderAmount);
+
                                                             foreach (Cart::instance('cart')->content() as $key => $cartItem) {
                                                                 $product = $products->find($cartItem->id);
                                                                 $weight=$weight+($product->weight * $cartItem->qty);
