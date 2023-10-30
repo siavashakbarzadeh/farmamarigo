@@ -141,23 +141,21 @@ $orderAmount=Cart::instance('cart')->rawTotal();
 //@dd($region, $customerType,$orderAmount);
 
         if ($region == ('campania'||'lazio') && $customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') && $orderAmount < 300) {
-              dd('10,00 ');
+
+              $shippingAmount= 10;
 
         }
         if ($region == ('campania'||'lazio') && $customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') && $orderAmount >= 300) {
 
-              dd('5,00 euros');
+
+              $shippingAmount= 5;
         }
         if ($customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') ) {
 
-              dd('10,00 euros');
+
+              $shippingAmount= 10;
         }
-if ($region == ('campania'||'lazio') && $customerType == 'Farmacia' && $orderAmount < 300) {
-//            return '10,00 euros';
-             dd('ok');
-        }else{
-     dd('no');
-                 }
+@dd($region, $customerType,$orderAmount,$shippingAmount);
 
                                                             foreach (Cart::instance('cart')->content() as $key => $cartItem) {
                                                                 $product = $products->find($cartItem->id);
