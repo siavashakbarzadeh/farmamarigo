@@ -16,7 +16,7 @@ use Botble\Ecommerce\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\SPCController;
 use App\Http\Controllers\CreaSconto;
-
+use App\Http\Controllers\ShippingController;
 
 
 use App\Http\Controllers\QuestionnaireController;
@@ -129,6 +129,8 @@ Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
             $router->post('/customers_export', [SPCController::class, 'customersExport'])->name('customers_export');
             $router->post('/delete', [SPCController::class, 'delete'])->name('delete');
             $router->post('/update', [CreaSconto::class, 'spedizioneUpdate'])->name('update');
+            Route::get('/shipping-form', [ShippingController::class, 'showForm'])->name('shipping.form');
+            Route::post('/calculate-shipping', [ShippingController::class, 'calculateShipping'])->name('calculate.shipping');
 
 
         });

@@ -60,7 +60,7 @@
     <ul class="sub-menu hidden-ul">
         <li class="nav-item">
 
-            <a href="{{ route('admin.ecommerce.spedizione.view') }}" class="nav-link">
+            <a href="{{ route('admin.ecommerce.spedizione.calculate.shipping') }}" class="nav-link">
                 <span class="title">Configurazione</span>
             </a>
 
