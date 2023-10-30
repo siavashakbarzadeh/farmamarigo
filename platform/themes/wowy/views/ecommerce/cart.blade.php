@@ -139,16 +139,20 @@
                                                             $IVAPERCENTAGE=1.22;
 $orderAmount=Cart::instance('cart')->rawTotal();
  if ($customerType == 'Studio Medico,Dentista' ) {
-            return 'To be determined';
+     dd('To be determined');
+
         }
         if ($region == 'Campania,Lazio' && $customerType == 'Farmacia, Parafarmacia, Altro Pharma' && $orderAmount < 300) {
-            return '10,00 euros';
+//            return '10,00 euros';
+             dd('10,00 euros');
         }
         if ($region == 'Campania,Lazio' && $customerType == 'Farmacia, Parafarmacia, Altro Pharma' && $orderAmount >= 300) {
-            return '5,00 euros';
+//            return '5,00 euros';
+            dd('10,00 euros');
         }
         if ($customerType == 'Farmacia, Parafarmacia, Altro Pharma') {
-            return '10,00 euros';
+            dd('10,00 euros');
+//            return '10,00 euros';
         }
 //@dd($region, $customerType,$orderAmount);
                                                             foreach (Cart::instance('cart')->content() as $key => $cartItem) {
