@@ -82,29 +82,37 @@ class CreaSconto extends BaseController
 
 
     public function spedizioneUpdate(Request $request){
+        dd('ok');
+        $region = $request->input('region');
+        $customerType = $request->input('customer_type');
+        $orderAmount = $request->input('order_amount');
 
-        $request->validate([
-            'min_order' => 'required|numeric|min:0',
-            'customertype' => 'required',
-            'contribution_lower_order' => 'required|numeric|min:0',
-            'supplement_over_50kg' => 'required|numeric|min:0',
-            'order_300' => 'required|numeric|min:0|max:1000',
-            'order_below_300' => 'required|numeric|min:0|max:1000',
-        ]);
+        $shippingCost = Shipping::getShippingCost($region, $customerType, $orderAmount);
 
-        DB::update("UPDATE config_spedizione SET min_order = ? , customertype = ? ,contribution_lower_order = ? , order_300 = ? , order_below_300 = ? , supplement_over_50kg = ?  WHERE id = 2",
-            [
-                $request->min_order,
-                $request->customertype,
-                $request->contribution_lower_order,
-                $request->order_300,
-                $request->order_below_300,
-                $request->supplement_over_50kg
-            ]);
-
-        $spedizione = DB::select("SELECT * FROM config_spedizione");
-        $spedizione=$spedizione[0];
-        return redirect()->route('admin.ecommerce.spedizione.view');
+        return view('admin.ecommerce.spedizione.view', ['shippingCost' => $shippingCost]);
+//        return redirect()->route('admin.ecommerce.spedizione.view');
+//        $request->validate([
+//            'min_order' => 'required|numeric|min:0',
+//            'customertype' => 'required',
+//            'contribution_lower_order' => 'required|numeric|min:0',
+//            'supplement_over_50kg' => 'required|numeric|min:0',
+//            'order_300' => 'required|numeric|min:0|max:1000',
+//            'order_below_300' => 'required|numeric|min:0|max:1000',
+//        ]);
+//
+//        DB::update("UPDATE config_spedizione SET min_order = ? , customertype = ? ,contribution_lower_order = ? , order_300 = ? , order_below_300 = ? , supplement_over_50kg = ?  WHERE id = 2",
+//            [
+//                $request->min_order,
+//                $request->customertype,
+//                $request->contribution_lower_order,
+//                $request->order_300,
+//                $request->order_below_300,
+//                $request->supplement_over_50kg
+//            ]);
+//
+//        $spedizione = DB::select("SELECT * FROM config_spedizione");
+//        $spedizione=$spedizione[0];
+//        return redirect()->route('admin.ecommerce.spedizione.view');
 
 
     }
