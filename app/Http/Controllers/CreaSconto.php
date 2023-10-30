@@ -85,13 +85,22 @@ class CreaSconto extends BaseController
 
         $request->validate([
             'min_order' => 'required|numeric|min:0',
+            'customertype' => 'required',
             'contribution_lower_order' => 'required|numeric|min:0',
             'supplement_over_50kg' => 'required|numeric|min:0',
-            'order_600' => 'required|numeric|min:0|max:1000',
-            'order_below_600' => 'required|numeric|min:0|max:1000',
+            'order_300' => 'required|numeric|min:0|max:1000',
+            'order_below_300' => 'required|numeric|min:0|max:1000',
         ]);
 
-        DB::update("UPDATE config_spedizione SET min_order = ? , contribution_lower_order = ? , order_600 = ? , order_below_600 = ? , supplement_over_50kg = ?  WHERE id = 0", [$request->min_order, $request->contribution_lower_order,$request->order_600,$request->order_below_600,$request->supplement_over_50kg]);
+        DB::update("UPDATE config_spedizione SET min_order = ? , contribution_lower_order = ? , order_600 = ? , order_below_600 = ? , supplement_over_50kg = ?  WHERE id = 0",
+            [
+                $request->min_order,
+                $request->customertype,
+                $request->contribution_lower_order,
+                $request->order_300,
+                $request->order_below_300,
+                $request->supplement_over_50kg
+            ]);
 
         $spedizione = DB::select("SELECT * FROM config_spedizione");
         $spedizione=$spedizione[0];
