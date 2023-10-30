@@ -133,9 +133,6 @@
                                                             $customerType=auth('customer')->user()->type;
                                                             $region= $address->state;
 
-                                                            @dd($region, $customerType,);
-
-//                                                       $customerType
 
 
                                                             $weight=0.00;
@@ -176,7 +173,7 @@
                                                 @endif
 
                                                 <input type="hidden" name="shippingAmount" value="{{ $shippingAmount }}">
-
+                                                @dd($region, $customerType,$shippingAmount);
                                                 <tr>
                                                     <td class="cart_total_label">{{ __('Total') }} <small>({{ __('Shipping fees not included') }})</small></td>
                                                     <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ ($promotionDiscountAmount + $couponDiscountAmount) > Cart::instance('cart')->rawTotal() ? format_price(0) : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount) }}</span></span></strong></td>
