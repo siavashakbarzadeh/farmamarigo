@@ -31,6 +31,17 @@
         @csrf
 
          <div class="form-group">
+            <label for="min_order">TIPO DI CLIENTE:</label>
+             <select name="customertype">
+                 <option value="Farmacia">Farmacia</option>
+                 <option value="Parafarmacia">Parafarmacia</option>
+                 <option value="Altro Pharma">Altro Pharma</option>
+                 <option value="Studio Medico">Studio Medico</option>
+                 <option value="Dentista">Dentista</option>
+             </select>
+
+        </div>
+         <div class="form-group">
             <label for="min_order">Ordine Minimo (€):</label>
             <input type="number" step="0.01" name="min_order" id="min_order" class="form-control" value="{{ old('min_order', $spedizione->min_order ?? 350) }}">
         </div>
