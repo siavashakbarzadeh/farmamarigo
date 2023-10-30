@@ -107,7 +107,7 @@
                                         {{--                                    </div>--}}
                                         <div class="table-responsive">
                                             <table class="table">
-                                                <tbody>
+                                                <tbody>fa fa-trash-alt
                                                 @if (EcommerceHelper::isTaxEnabled())
                                                     <tr>
                                                         <td class="cart_total_label">{{ __('Tax') }}</td>
@@ -155,7 +155,7 @@ $orderAmount=Cart::instance('cart')->rawTotal();
 
               $shippingAmount= 10;
         }
-//@dd($region, $customerType,$orderAmount,$shippingAmount);
+@dd(Cart::instance('cart'));
 
 //                                                            foreach (Cart::instance('cart')->content() as $key => $cartItem) {
 //                                                                $product = $products->find($cartItem->id);
@@ -193,6 +193,11 @@ $orderAmount=Cart::instance('cart')->rawTotal();
 
                                                 <input type="hidden" name="shippingAmount" value="{{ $shippingAmount }}">
 
+                                                <tr>
+
+                                                    <td class="cart_total_label">{{ __('Subtotale IVA esclusa') }} </td>
+                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ format_price($shippingAmount)}}</span></strong></td>
+                                                </tr>
                                                 <tr>
 
                                                     <td class="cart_total_label">{{ __('Contributo spese di spedizione e imballagio') }} </td>
