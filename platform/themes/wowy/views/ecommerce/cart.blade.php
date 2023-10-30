@@ -141,11 +141,11 @@ $orderAmount=Cart::instance('cart')->rawTotal();
 //@dd($region, $customerType,$orderAmount);
 
         if ($region == ('campania'||'lazio') && $customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') && $orderAmount < 300) {
-              dd('10,00 euros');
+              dd('10,00 ');
 
         }
         if ($region == ('campania'||'lazio') && $customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') && $orderAmount >= 300) {
-           
+
               dd('5,00 euros');
         }
         if ($customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') ) {
