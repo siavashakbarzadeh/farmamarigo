@@ -139,9 +139,9 @@
                                                             $IVAPERCENTAGE=1.22;
 $orderAmount=Cart::instance('cart')->rawTotal();
 @dd($region, $customerType,$orderAmount);
-if ($region == 'Lazio' && $customerType == 'Farmacia' && $orderAmount < 300) {
+if ($region == 'lazio' && $customerType == 'Farmacia' && $orderAmount < 300) {
 //            return '10,00 euros';
-             dd('10,00 euros');
+             dd('ok');
         }else{
      dd('no');
                  }
