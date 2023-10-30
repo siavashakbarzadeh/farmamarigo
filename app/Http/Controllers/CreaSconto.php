@@ -92,7 +92,7 @@ class CreaSconto extends BaseController
             'order_below_300' => 'required|numeric|min:0|max:1000',
         ]);
 
-        DB::update("UPDATE config_spedizione SET min_order = ? , contribution_lower_order = ? , order_300 = ? , order_below_300 = ? , supplement_over_50kg = ?  WHERE id = 0",
+        DB::update("UPDATE config_spedizione SET min_order = ? , customertype = ? ,contribution_lower_order = ? , order_300 = ? , order_below_300 = ? , supplement_over_50kg = ?  WHERE id = 0",
             [
                 $request->min_order,
                 $request->customertype,
