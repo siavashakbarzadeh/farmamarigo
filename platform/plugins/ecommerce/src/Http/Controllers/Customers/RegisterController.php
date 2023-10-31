@@ -110,7 +110,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        dd($data);
+//        dd($data);
         return $this->customerRepository->create([
             'name' => BaseHelper::clean($data['name']),
             'email' => BaseHelper::clean($data['email']),
@@ -126,7 +126,8 @@ class RegisterController extends Controller
 //        $customer->save();
         // Save address data
         $address = new Address;
-        $address->country = $request->country;
+        $address->phone = $data['phone'];
+        dd( $address->phone);
         $address->state = $request->state;
         $address->city = $request->city;
         $address->address = $request->address;
