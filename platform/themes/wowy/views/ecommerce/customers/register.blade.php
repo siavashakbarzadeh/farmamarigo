@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-12 m-auto">
 
-                <div class="col-lg-6 login_wrap widget-taber-content p-30 background-white border-radius-10">
+                <div class=" login_wrap widget-taber-content p-30 background-white border-radius-10">
                     <div class="padding_eight_all bg-white">
                         <div class="heading_s1 mb-20">
                             <h3 class="mb-20">{{ __('Register') }}</h3>
