@@ -7,7 +7,6 @@ use Botble\Ecommerce\Models\Address;
 use Botble\ACL\Traits\RegistersUsers;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Ecommerce\Repositories\Interfaces\CustomerInterface;
-use Botble\Ecommerce\Supports\EcommerceHelper;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -17,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Theme;
 use SeoHelper;
 use BaseHelper;
+use EcommerceHelper;
 
 class RegisterController extends Controller
 {
@@ -111,7 +111,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         try {
-            return DB::transaction(function () use ($data) {
+            DB::transaction(function () use ($data) {
                 $customer = $this->customerRepository->create([
                     'name' => BaseHelper::clean($data['name']),
                     'email' => BaseHelper::clean($data['email']),
@@ -127,7 +127,6 @@ class RegisterController extends Controller
                     'customer_id' => $customer->id,
                     'is_default' => true,
                 ]);
-                return redirect('/');
             });
         } catch (\Throwable $e) {
             dd($e);
