@@ -6,6 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 m-auto">
+
                 <div class="col-lg-6 login_wrap widget-taber-content p-30 background-white border-radius-10">
                     <div class="padding_eight_all bg-white">
                         <div class="heading_s1 mb-20">
@@ -15,6 +16,68 @@
 
                         <form class="form--auth" method="POST" action="{{ route('customer.register.post') }}">
                             @csrf
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email">
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" class="form-control" id="phone" name="phone">
+                            </div>
+
+                            <!-- Country -->
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" class="form-control" id="country" name="country">
+                            </div>
+
+                            <!-- State -->
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" class="form-control" id="state" name="state">
+                            </div>
+
+                            <!-- City -->
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" name="city">
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+
+                            <!-- Customer ID -->
+                            <div class="form-group">
+                                <label for="customer_id">Customer ID</label>
+                                <input type="number" class="form-control" id="customer_id" name="customer_id" required>
+                            </div>
+
+                            <!-- Is Default -->
+                            <div class="form-group">
+                                <label for="is_default">Is Default?</label>
+                                <select class="form-control" id="is_default" name="is_default">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+
+                            <!-- Zip Code -->
+                            <div class="form-group">
+                                <label for="zip_code">Zip Code</label>
+                                <input type="text" class="form-control" id="zip_code" name="zip_code">
+                            </div>
                             <div class="form__content">
                                 <div class="form-group">
                                     <label for="txt-name" class="required">{{ __('tipo di cliente') }}</label>
