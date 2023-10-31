@@ -3,20 +3,19 @@
 namespace Botble\Ecommerce\Http\Controllers\Customers;
 
 use App\Http\Controllers\Controller;
-use BaseHelper;
+use Botble\Base\Helpers\BaseHelper;
 use Botble\Ecommerce\Models\Address;
 use Botble\ACL\Traits\RegistersUsers;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Ecommerce\Repositories\Interfaces\CustomerInterface;
+use Botble\Ecommerce\Supports\EcommerceHelper;
 use Carbon\Carbon;
-use EcommerceHelper;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use SeoHelper;
 use Theme;
-use URL;
 
 class RegisterController extends Controller
 {
@@ -38,8 +37,8 @@ class RegisterController extends Controller
 
         Theme::breadcrumb()->add(__('Home'), route('public.index'))->add(__('Register'), route('customer.register'));
 
-        if (! session()->has('url.intended')) {
-            if (! in_array(url()->previous(), [route('customer.login'), route('customer.register')])) {
+        if (!session()->has('url.intended')) {
+            if (!in_array(url()->previous(), [route('customer.login'), route('customer.register')])) {
                 session(['url.intended' => url()->previous()]);
             }
         }
@@ -83,9 +82,9 @@ class RegisterController extends Controller
         ];
 
         if (is_plugin_active('captcha') && setting('enable_captcha') && get_ecommerce_setting(
-            'enable_recaptcha_in_register_page',
-            0
-        )) {
+                'enable_recaptcha_in_register_page',
+                0
+            )) {
             $rules += ['g-recaptcha-response' => 'required|captcha'];
         }
 
@@ -110,28 +109,28 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-//        dd($data);
-        return $this->customerRepository->create([
-            'name' => BaseHelper::clean($data['name']),
-            'email' => BaseHelper::clean($data['email']),
-            'password' => Hash::make($data['password']),
-            'type' => $data['type'],
-        ]);
-//        // Save customer data
-//        $customer = new Customer;
-//        $customer->name = $request->name;
-//        $customer->email = $request->email;
-//        $customer->password = bcrypt($request->password);
-//        //... Add more fields
-//        $customer->save();
-        // Save address data
-        $address = new Address;
-        $address->phone = $data['phone'];  // Assuming phone is present in the $data array
-        $address->state = $data['state'];  // Adjusted to use $data instead of $request
-        $address->city = $data['city'];    // Adjusted to use $data instead of $request
-        $address->address = $data['address'];  // Adjusted to use $data instead of $request
-        $address->customer_id = $customer->id;  // Link the address to the customer
-        $address->save();
+        try {
+            return DB::transaction(function () use ($data) {
+                $customer = $this->customerRepository->create([
+                    'name' => BaseHelper::clean($data['name']),
+                    'email' => BaseHelper::clean($data['email']),
+                    'password' => Hash::make($data['password']),
+                    'type' => $data['type'],
+                ]);
+                Address::create([
+                    'name' => BaseHelper::clean($data['name']),
+                    'phone' => $data['phone'],
+                    'state' => $data['state'],
+                    'city' => $data['city'],
+                    'address' => $data['address'],
+                    'customer_id' => $customer->id,
+                    'is_default' => true,
+                ]);
+                return redirect('/');
+            });
+        } catch (\Throwable $e) {
+            dd($e);
+        }
     }
 
     protected function guard()
@@ -141,7 +140,7 @@ class RegisterController extends Controller
 
     public function confirm(int $id, Request $request, BaseHttpResponse $response, CustomerInterface $customerRepository)
     {
-        if (! URL::hasValidSignature($request)) {
+        if (!URL::hasValidSignature($request)) {
             abort(404);
         }
 
@@ -158,13 +157,14 @@ class RegisterController extends Controller
     }
 
     public function resendConfirmation(
-        Request $request,
+        Request           $request,
         CustomerInterface $customerRepository,
-        BaseHttpResponse $response
-    ) {
+        BaseHttpResponse  $response
+    )
+    {
         $customer = $customerRepository->getFirstBy(['email' => $request->input('email')]);
 
-        if (! $customer) {
+        if (!$customer) {
             return $response
                 ->setError()
                 ->setMessage(__('Cannot find this customer!'));
