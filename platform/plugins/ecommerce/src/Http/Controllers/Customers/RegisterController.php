@@ -111,7 +111,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         try {
-            DB::transaction(function () use ($data) {
+            return DB::transaction(function () use ($data) {
                 $customer = $this->customerRepository->create([
                     'name' => BaseHelper::clean($data['name']),
                     'email' => BaseHelper::clean($data['email']),
@@ -127,6 +127,7 @@ class RegisterController extends Controller
                     'customer_id' => $customer->id,
                     'is_default' => true,
                 ]);
+                return $customer;
             });
         } catch (\Throwable $e) {
             dd($e);
