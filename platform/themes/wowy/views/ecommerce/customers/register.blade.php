@@ -5,7 +5,7 @@
 <section class="pt-100 pb-100">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 m-auto">
+            <div class="col-lg-12 m-auto">
                 <div class="login_wrap widget-taber-content p-30 background-white border-radius-10">
                     <div class="padding_eight_all bg-white">
                         <div class="heading_s1 mb-20">
