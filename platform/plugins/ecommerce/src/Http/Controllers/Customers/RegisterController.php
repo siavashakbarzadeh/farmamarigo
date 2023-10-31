@@ -126,13 +126,11 @@ class RegisterController extends Controller
 //        $customer->save();
         // Save address data
         $address = new Address;
-        $address->phone = $data['phone'];
-        dd( $address->phone);
-        $address->state = $request->state;
-        $address->city = $request->city;
-        $address->address = $request->address;
-        //... Add more fields
-        $address->customer_id = $customer->id; // Link the address to the customer
+        $address->phone = $data['phone'];  // Assuming phone is present in the $data array
+        $address->state = $data['state'];  // Adjusted to use $data instead of $request
+        $address->city = $data['city'];    // Adjusted to use $data instead of $request
+        $address->address = $data['address'];  // Adjusted to use $data instead of $request
+        $address->customer_id = $customer->id;  // Link the address to the customer
         $address->save();
     }
 
