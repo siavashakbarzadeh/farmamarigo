@@ -24,34 +24,13 @@
             <input type="hidden" class="form-control" id="customer_id" name="customer_id" required>
         </div>
 
-        <!-- Is Default -->
-        <div class="form-group">
-            <label for="is_default">Is Default?</label>
-            <select class="form-control" id="is_default" name="is_default">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select>
-        </div>
+
 
 
 
 
         <div class="form__content">
-            <div class="form-group">
-                <label for="txt-name" class="required">{{ __('tipo di cliente') }}</label>
-                <select class="form-control" name="type" required>
-                    <option value="Farmacia">Farmacia</option>
-                    <option value="Farmacia">Parafarmacia</option>
-                    <option value="Farmacia">Dentista</option>
-                    <option value="Farmacia">Studio Medico</option>
-                    <option value="Farmacia">Altro Pharma</option>
 
-
-                </select>
-                @if ($errors->has('tipodicliente'))
-                    <span class="text-danger">{{ $errors->first('tipodicliente') }}</span>
-                @endif
-            </div>
 
             <div class="form-group">
                 <label for="txt-name" class="required">{{ __('Name') }}</label>
@@ -87,7 +66,29 @@
                     {!! Captcha::display() !!}
                 </div>
             @endif
+            <!-- Is Default -->
+            <div class="form-group">
+                <label for="is_default">Is Default?</label>
+                <select class="form-control" id="is_default" name="is_default">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="txt-name" class="required">{{ __('tipo di cliente') }}</label>
+                <select class="form-control" name="type" required>
+                    <option value="Farmacia">Farmacia</option>
+                    <option value="Farmacia">Parafarmacia</option>
+                    <option value="Farmacia">Dentista</option>
+                    <option value="Farmacia">Studio Medico</option>
+                    <option value="Farmacia">Altro Pharma</option>
 
+
+                </select>
+                @if ($errors->has('tipodicliente'))
+                    <span class="text-danger">{{ $errors->first('tipodicliente') }}</span>
+                @endif
+            </div>
             <div class="form-group">
                 <div class="ps-checkbox">
 
