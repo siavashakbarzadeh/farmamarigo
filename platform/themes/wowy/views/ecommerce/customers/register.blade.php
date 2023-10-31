@@ -48,6 +48,11 @@
             <label for="address">Address</label>
             <input type="text" class="form-control" id="address" name="address" required>
         </div>
+        <!-- Zip Code -->
+        <div class="form-group">
+            <label for="zip_code">Zip Code</label>
+            <input type="text" class="form-control" id="zip_code" name="zip_code">
+        </div>
     </div>
     <div class="col-lg-6">
         <!-- Customer ID -->
@@ -67,11 +72,7 @@
 
 
 
-        <!-- Zip Code -->
-        <div class="form-group">
-            <label for="zip_code">Zip Code</label>
-            <input type="text" class="form-control" id="zip_code" name="zip_code">
-        </div>
+
         <div class="form__content">
             <div class="form-group">
                 <label for="txt-name" class="required">{{ __('tipo di cliente') }}</label>
