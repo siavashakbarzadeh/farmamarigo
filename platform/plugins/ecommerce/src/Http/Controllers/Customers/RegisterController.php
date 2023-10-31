@@ -4,6 +4,7 @@ namespace Botble\Ecommerce\Http\Controllers\Customers;
 
 use App\Http\Controllers\Controller;
 use BaseHelper;
+use Botble\Ecommerce\Models\Address;
 use Botble\ACL\Traits\RegistersUsers;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Ecommerce\Repositories\Interfaces\CustomerInterface;
@@ -115,6 +116,22 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'type' => $data['type'],
         ]);
+//        // Save customer data
+//        $customer = new Customer;
+//        $customer->name = $request->name;
+//        $customer->email = $request->email;
+//        $customer->password = bcrypt($request->password);
+//        //... Add more fields
+//        $customer->save();
+        // Save address data
+        $address = new Address;
+        $address->country = $request->country;
+        $address->state = $request->state;
+        $address->city = $request->city;
+        $address->address = $request->address;
+        //... Add more fields
+        $address->customer_id = $customer->id; // Link the address to the customer
+        $address->save();
     }
 
     protected function guard()

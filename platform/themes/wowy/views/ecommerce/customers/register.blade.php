@@ -52,8 +52,8 @@
     <div class="col-lg-6">
         <!-- Customer ID -->
         <div class="form-group">
-            <label for="customer_id">Customer ID</label>
-            <input type="number" class="form-control" id="customer_id" name="customer_id" required>
+{{--            <label for="customer_id">Customer ID</label>--}}
+            <input type="hidden" class="form-control" id="customer_id" name="customer_id" required>
         </div>
 
         <!-- Is Default -->
