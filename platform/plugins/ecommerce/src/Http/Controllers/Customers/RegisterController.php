@@ -110,6 +110,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+        dd($data);
         return $this->customerRepository->create([
             'name' => BaseHelper::clean($data['name']),
             'email' => BaseHelper::clean($data['email']),
