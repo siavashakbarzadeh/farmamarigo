@@ -3,7 +3,6 @@
 namespace Botble\Ecommerce\Http\Controllers\Customers;
 
 use App\Http\Controllers\Controller;
-use Botble\Base\Helpers\BaseHelper;
 use Botble\Ecommerce\Models\Address;
 use Botble\ACL\Traits\RegistersUsers;
 use Botble\Base\Http\Responses\BaseHttpResponse;
@@ -17,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Theme;
 use SeoHelper;
+use BaseHelper;
 
 class RegisterController extends Controller
 {
