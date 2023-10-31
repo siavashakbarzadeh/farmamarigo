@@ -120,6 +120,7 @@ class RegisterController extends Controller
                 ]);
                 Address::create([
                     'name' => BaseHelper::clean($data['name']),
+                    'email' => BaseHelper::clean($data['email']),
                     'phone' => $data['phone'],
                     'state' => $data['state'],
                     'city' => $data['city'],
