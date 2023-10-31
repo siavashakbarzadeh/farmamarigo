@@ -9,6 +9,8 @@ use Botble\ACL\Traits\RegistersUsers;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Ecommerce\Repositories\Interfaces\CustomerInterface;
 use Botble\Ecommerce\Supports\EcommerceHelper;
+use Botble\SeoHelper\SeoHelper;
+use Botble\Theme\Theme;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
