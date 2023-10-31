@@ -29,7 +29,7 @@
 
 
 
-        <div class="form__content">
+
 
 
             <div class="form-group">
@@ -118,7 +118,7 @@
             <div class="text-left">
                 {!! apply_filters(BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM, null, \Botble\Ecommerce\Models\Customer::class) !!}
             </div>
-        </div>
+
     </div>
     <div class="col-lg-6">
 
