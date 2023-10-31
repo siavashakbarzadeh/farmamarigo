@@ -39,7 +39,7 @@
         <div class="form__content">
             <div class="form-group">
                 <label for="txt-name" class="required">{{ __('tipo di cliente') }}</label>
-                <select name="type" required>
+                <select class="form-control" name="type" required>
                     <option value="Farmacia">Farmacia</option>
                     <option value="Farmacia">Parafarmacia</option>
                     <option value="Farmacia">Dentista</option>
@@ -156,7 +156,7 @@
             <input type="text" class="form-control" id="zip_code" name="zip_code">
         </div>
     </div>
-    
+
 
 
 
