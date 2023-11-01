@@ -125,6 +125,7 @@ class RegisterController extends Controller
                     'state' => $data['state'],
                     'city' => $data['city'],
                     'address' => $data['address'],
+                    'zip_code' => $data['zip_code'],
                     'customer_id' => $customer->id,
                     'is_default' => true,
                 ]);
