@@ -113,8 +113,8 @@ class CustomImport extends BaseController
 
                 // Dispatch the Welcome job
                 if($user->email){
-                    Mail::to($user->email)->send(new Welcome($user->nome,$user->email,$user->codice,$password));
-                    Mail::to("a.allahverdi@icoa.it")->send(new Welcome($user->nome,$user->email,$user->codice,$password));
+//                    Mail::to($user->email)->send(new Welcome($user->nome,$user->email,$user->codice,$password));
+//                    Mail::to("a.allahverdi@icoa.it")->send(new Welcome($user->nome,$user->email,$user->codice,$password));
                 }
             }elseif($exists){
 
