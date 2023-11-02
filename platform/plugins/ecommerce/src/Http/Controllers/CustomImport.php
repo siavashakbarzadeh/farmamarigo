@@ -82,6 +82,7 @@ class CustomImport extends BaseController
                     'id'=>$user->pk_cliente_id,
                     'codice' => $user->codice,
                     'name' => $user->nome,
+                    'status' => 'activated',
                     'type' => $typeName,
                     'codice_fiscale' => $user->codice_fiscale,
                     'piva' => $user->piva,
