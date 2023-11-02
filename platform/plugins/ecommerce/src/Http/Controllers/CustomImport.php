@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\DB;
 class CustomImport extends BaseController
 {
     public function users() {
-        dd('ok');
+//        dd('ok');
 //        $this->agents();
 
         $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN ( 30,31, 32, 33,34,) and email IS NOT NULL');
