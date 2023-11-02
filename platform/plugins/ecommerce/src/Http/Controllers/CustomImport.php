@@ -24,6 +24,32 @@ use Illuminate\Support\Facades\Mail;
 
 class CustomImport extends BaseController
 {
+    private function generateRandomString($length=8){
+        $lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $numbers = '0123456789';
+        $specialChars = '!@#$%^&*()_-+=<>?';  // You can modify this to include/exclude any special characters
+
+        // Ensure one character from each set
+        $password = [
+            $lowercase[rand(0, strlen($lowercase) - 1)],
+            $uppercase[rand(0, strlen($uppercase) - 1)],
+            $numbers[rand(0, strlen($numbers) - 1)],
+            $specialChars[rand(0, strlen($specialChars) - 1)]
+        ];
+
+        // All combined characters
+        $allChars = $lowercase . $uppercase . $numbers . $specialChars;
+
+        // Fill the rest
+        for ($i = 4; $i < $length; $i++) {
+            $password[] = $allChars[rand(0, strlen($allChars) - 1)];
+        }
+
+        // Shuffle and convert the array of characters back into a string
+        shuffle($password);
+        return implode('', $password);
+    }
     public function users() {
 //        dd('ok');
 //        $this->agents();
