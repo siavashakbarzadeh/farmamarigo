@@ -50,6 +50,17 @@ class CustomImport extends BaseController
         shuffle($password);
         return implode('', $password);
     }
+    function getCustomerTypeName($tipologia) {
+        $customerTypes = [
+            30 => 'Farmacia',
+            31 => 'Parafarmacia',
+            32 => 'Dentista',
+            33 => 'Studio Medico',
+            34 => 'Altro Pharma'
+        ];
+
+        return $customerTypes[$tipologia] ?? null;
+    }
     public function users() {
 //        dd('ok');
 //        $this->agents();
@@ -58,6 +69,8 @@ class CustomImport extends BaseController
         $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN (30,31, 32, 33,34) and email IS NOT NULL');
 
         dd($users);
+//        $tipologia=
+//        $typeName = getCustomerTypeName($tipologia);
         foreach($users as $user) {
             $exists = DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->exists();
 
