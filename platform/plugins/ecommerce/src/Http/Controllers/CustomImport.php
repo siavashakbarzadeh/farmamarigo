@@ -20,6 +20,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class CustomImport extends BaseController
 {
@@ -27,7 +28,9 @@ class CustomImport extends BaseController
 //        dd('ok');
 //        $this->agents();
 
-        $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN ( 30,31, 32, 33,34,) ');
+//        $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN ( 30,31, 32, 33,34,) and email IS NOT NULL');
+        $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN (30,31, 32, 33,34) and email IS NOT NULL');
+
         dd($users);
         foreach($users as $user) {
             $exists = DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->exists();
