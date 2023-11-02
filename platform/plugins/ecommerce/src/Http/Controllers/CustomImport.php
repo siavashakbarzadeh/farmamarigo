@@ -69,10 +69,10 @@ class CustomImport extends BaseController
         $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN (30,31, 32, 33,34) and email IS NOT NULL');
 
 //        dd($users);
-        
+
         foreach($users as $user) {
             $tipologia=$user->tipologia;
-            $typeName = getCustomerTypeName($tipologia);
+            $typeName = $this->getCustomerTypeName($tipologia);
             $exists = DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->exists();
 
             if (!$exists && $user->email) {
