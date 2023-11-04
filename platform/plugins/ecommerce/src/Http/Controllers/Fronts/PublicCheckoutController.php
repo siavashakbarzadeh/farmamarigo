@@ -435,8 +435,10 @@ class PublicCheckoutController
             ]);
 
             $order = $this->orderRepository->getFirstBy(compact('token'));
+            
 
             $order = $this->createOrderFromData($request->input(), $order);
+            
 
             $sessionData['created_order'] = true;
             $sessionData['created_order_id'] = $order->id;
@@ -685,7 +687,7 @@ class PublicCheckoutController
             'sub_total' => Cart::instance('cart')->rawSubTotal(),
             'coupon_code' => session()->get('applied_coupon_code'),
             'discount_amount' => $promotionDiscountAmount + $couponDiscountAmount,
-            'status' => OrderStatusEnum::PENDING,
+            'status' => OrderStatusEnum::COMPLETED,
             'token' => $token,
         ]);
 
