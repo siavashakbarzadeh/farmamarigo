@@ -430,7 +430,7 @@ class PublicCheckoutController
                 'coupon_code' => session()->get('applied_coupon_code'),
                 'discount_amount' => 0,
                 'status' => OrderStatusEnum::COMPLETED,
-                'is_finished' => false,
+                'is_finished' => true,
                 'token' => $token,
             ]);
 
