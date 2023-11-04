@@ -967,7 +967,7 @@ class PublicCheckoutController
 
     protected function createOrderFromData(array $data, ?Order $order): Order|null|false
     {
-        $data['is_finished'] = false;
+        $data['is_finished'] = true;
 
         if ($order) {
             $order->fill($data);
