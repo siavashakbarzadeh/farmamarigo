@@ -429,7 +429,7 @@ class PublicCheckoutController
                 'sub_total' => Cart::instance('cart')->rawSubTotal(),
                 'coupon_code' => session()->get('applied_coupon_code'),
                 'discount_amount' => 0,
-                'status' => OrderStatusEnum::PENDING,
+                'status' => OrderStatusEnum::COMPLETED,
                 'is_finished' => false,
                 'token' => $token,
             ]);
