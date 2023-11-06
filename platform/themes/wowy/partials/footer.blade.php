@@ -16,9 +16,11 @@
             <div class="col-lg-6">
                 <p class="float-md-left font-sm text-muted mb-0">{{ theme_option('copyright') }}</p>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-3"><a href="/cookie-policy">Politica Sui Cookie E Sulla Privacy</a></div>
+            <div class="col-lg-3">
                 <p class="text-lg-end text-start font-sm text-muted mb-0">
                     {{ __('All rights reserved.') }}
+
                 </p>
             </div>
         </div>
