@@ -1,6 +1,6 @@
 
 
-<div class="container-fluid percent-texture" style="position: relative;overflow:hidden" id="linee">
+<div class="container-fluid percent-texture mt-5" style="position: relative;overflow:hidden" id="linee">
     <div class="row row-10">
 
             <div class="col" style="margin:0 !important;height:fit-content;background-color:rgb(81, 180, 72);display:flex;align-items:center;justify-content:center;color:white;min-height:120px;padding:20px">
