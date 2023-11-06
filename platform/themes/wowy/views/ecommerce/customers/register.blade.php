@@ -67,13 +67,14 @@
                 </div>
             @endif
             <!-- Is Default -->
-            <div class="form-group">
-                <label for="is_default">Is Default?</label>
-                <select class="form-control" id="is_default" name="is_default">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
+        <input type="hidden" id="is_default" name="is_default" value="Yes">
+{{--            <div class="form-group">--}}
+{{--                <label for="is_default">Is Default?</label>--}}
+{{--                <select class="form-control" id="is_default" name="is_default" type="hid">--}}
+{{--                    <option value="0">No</option>--}}
+{{--                    <option value="1">Yes</option>--}}
+{{--                </select>--}}
+{{--            </div>--}}
             <div class="form-group">
                 <label for="txt-name" class="required">{{ __('tipo di cliente') }}</label>
                 <select class="form-control" name="type" required>
