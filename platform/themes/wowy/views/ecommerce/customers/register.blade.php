@@ -18,20 +18,8 @@
                             @csrf
 <div class="row">
     <div class="col-lg-6">
-        <!-- Customer ID -->
-        <div class="form-group">
-            {{--            <label for="customer_id">Customer ID</label>--}}
-            <input type="hidden" class="form-control" id="customer_id" name="customer_id" required>
-        </div>
-
-
-
-
-
-
-
-
-
+                <input type="hidden" class="form-control" id="customer_id" name="customer_id" required>
+        <input type="hidden" id="is_default" name="is_default" value="Yes" required>
             <div class="form-group">
                 <label for="txt-name" class="required">{{ __('Name') }}</label>
                 <input class="form-control" name="name" id="txt-name" type="text" value="{{ old('name') }}" placeholder="{{ __('Please enter your name') }}">
@@ -67,7 +55,7 @@
                 </div>
             @endif
             <!-- Is Default -->
-        <input type="hidden" id="is_default" name="is_default" value="Yes">
+
 {{--            <div class="form-group">--}}
 {{--                <label for="is_default">Is Default?</label>--}}
 {{--                <select class="form-control" id="is_default" name="is_default" type="hid">--}}
