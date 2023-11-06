@@ -27,7 +27,22 @@ app()->booted(function () {
     shortcode()->setAdminConfig('site-features', function ($attributes) {
         return Theme::partial('shortcodes.site-features-admin-config', compact('attributes'));
     });
+    add_shortcode('CouponBanner', __('CouponBanner'), __('CouponBanner'), function ($shortcode) {
+        return Theme::partial('shortcodes.CouponBanner', compact('shortcode'));
+    });
 
+    shortcode()->setAdminConfig('CouponBanner', function ($attributes) {
+        return Theme::partial('shortcodes.CouponBanner-admin-config', compact('attributes'));
+    });
+    add_shortcode('title', __('Title'), __('Title'), function ($shortcode) {
+        return Theme::partial('shortcodes.title', [
+            'title' => $shortcode->title
+        ]);
+    });
+
+    shortcode()->setAdminConfig('title', function ($attributes) {
+        return Theme::partial('shortcodes.title-admin-config', compact('attributes'));
+    });
     add_shortcode('leftadsproduct', __('leftads product'), __('leftads product'), function ($shortcode) {
         $category = app(ProductCategoryInterface::class)->getFirstBy([
             'status' => BaseStatusEnum::PUBLISHED,
