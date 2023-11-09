@@ -42,22 +42,22 @@
                                 <td>
                                     @if( $order->status=='completed' & $order->shipment->status =='delivering')
 
-                                        <lable>Spedito</lable>
+                                        <label class="btn-success p-1 rounded small" >Completato</label>
 
                                     @endif
                                     @if( $order->status=='pending')
 
-                                        <lable>Modificabile</lable>
+                                            <label class="btn-warning p-1 rounded small">Modificabile</label>
 
                                     @endif
                                     @if( $order->status=='completed' && $order->shipment->status =='pending')
 
-                                        <lable>In lavorazione</lable>
+                                            <label class="btn-primary p-1 rounded small">In lavorazione</label>
 
                                     @endif
                                     @if( $order->status=='canceled')
 
-                                        <lable>Cancellato</lable>
+                                            <label class="btn-danger p-1 rounded small">Annullato</label>
 
                                     @endif
 
