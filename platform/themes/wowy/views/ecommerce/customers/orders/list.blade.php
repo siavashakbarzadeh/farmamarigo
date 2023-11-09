@@ -18,7 +18,7 @@
                                     <div class="row">
                                         <div class="col-1"></div>
                                         <div class="col-10 row" style="display: flex;
-                                        flex-basis: content;margin-left: 18px;
+                                        flex-basis: content;margin-left: 28px;
                                         font-size: smaller;">
 {{--                                            <div class="col">Modifica</div>--}}
                                             <div class="col">Stampa</div>
