@@ -69,7 +69,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-5 col-lg-4">
+                        <div class="col-xl-2 col-lg-4">
                             <div class="text-center">
                                 @if (theme_option('header_messages'))
                                     <div id="news-flash" class="d-inline-block">
@@ -101,7 +101,7 @@
                         @php $currencies = is_plugin_active('ecommerce') ? get_all_currencies() : []; @endphp
 
                         @if (is_plugin_active('ecommerce') || is_plugin_active('language'))
-                            <div class="d-flex justify-content-end align-items-center col-4 float-end bg-danger">
+                            <div class="d-flex justify-content-end align-items-center col-2 float-end bg-danger">
                                 <div class="header-info header-info-right">
                                         <ul>
                                             @if (is_plugin_active('language'))
