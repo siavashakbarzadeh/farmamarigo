@@ -52,8 +52,8 @@
         <header class="header-area header-height-2 {{ $headerStyle }}">
             <div class="header header-top-ptb-1 d-none d-lg-block">
                 <div class="container">
-                    <div class="row align-items-center bg-primary">
-                        <div class="col-xl-8 col-lg-8 col-md-8 bg-danger">
+                    <div class="row align-items-center ">
+                        <div class="col-xl-8 col-lg-8 col-md-8 ">
                             <div class="header-info">
                                 <ul>
                                     @if (theme_option('hotline'))
@@ -101,7 +101,7 @@
                         @php $currencies = is_plugin_active('ecommerce') ? get_all_currencies() : []; @endphp
 
                         @if (is_plugin_active('ecommerce') || is_plugin_active('language'))
-                            <div class="d-flex justify-content-end align-items-center col-lg-3 col-xl-3 col-md-3 float-end bg-danger">
+                            <div class="d-flex justify-content-end align-items-center col-lg-3 col-xl-3 col-md-3 float-end ">
                                 <div class="header-info header-info-right">
                                         <ul>
                                             @if (is_plugin_active('language'))
