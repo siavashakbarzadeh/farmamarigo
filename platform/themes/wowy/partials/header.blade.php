@@ -52,7 +52,7 @@
         <header class="header-area header-height-2 {{ $headerStyle }}">
             <div class="header header-top-ptb-1 d-none d-lg-block">
                 <div class="container">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center bg-primary">
                         <div class="col-xl-8 col-lg-8">
                             <div class="header-info">
                                 <ul>
