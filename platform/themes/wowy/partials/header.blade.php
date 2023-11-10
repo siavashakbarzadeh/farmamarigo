@@ -69,7 +69,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-5 col-lg-4">
+                        <div class="col-xl-4 col-lg-4">
                             <div class="text-center">
                                 @if (theme_option('header_messages'))
                                     <div id="news-flash" class="d-inline-block">
