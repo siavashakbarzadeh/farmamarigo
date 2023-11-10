@@ -101,7 +101,7 @@
                         @php $currencies = is_plugin_active('ecommerce') ? get_all_currencies() : []; @endphp
 
                         @if (is_plugin_active('ecommerce') || is_plugin_active('language'))
-                            <div class="d-flex justify-content-end align-items-center w-25 bg-danger">
+                            <div class="d-flex justify-content-end align-items-center col-4 float-end bg-danger">
                                 <div class="header-info header-info-right">
                                         <ul>
                                             @if (is_plugin_active('language'))
