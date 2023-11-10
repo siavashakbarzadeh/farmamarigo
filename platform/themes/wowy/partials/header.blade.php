@@ -53,7 +53,7 @@
             <div class="header header-top-ptb-1 d-none d-lg-block">
                 <div class="container">
                     <div class="row align-items-center bg-primary">
-                        <div class="col-xl-8 col-lg-4">
+                        <div class="col-xl-8 col-lg-4 bg-danger">
                             <div class="header-info">
                                 <ul>
                                     @if (theme_option('hotline'))
