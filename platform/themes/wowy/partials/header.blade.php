@@ -53,7 +53,7 @@
             <div class="header header-top-ptb-1 d-none d-lg-block">
                 <div class="container">
                     <div class="row align-items-center bg-primary">
-                        <div class="col-xl-8 col-lg-8">
+                        <div class="col-xl-8 col-lg-4">
                             <div class="header-info">
                                 <ul>
                                     @if (theme_option('hotline'))
@@ -101,7 +101,7 @@
                         @php $currencies = is_plugin_active('ecommerce') ? get_all_currencies() : []; @endphp
 
                         @if (is_plugin_active('ecommerce') || is_plugin_active('language'))
-                            <div class="d-flex justify-content-end align-items-center col-2 float-end bg-danger">
+                            <div class="d-flex justify-content-end align-items-center col-lg-4 col-xl-2 float-end bg-danger">
                                 <div class="header-info header-info-right">
                                         <ul>
                                             @if (is_plugin_active('language'))
