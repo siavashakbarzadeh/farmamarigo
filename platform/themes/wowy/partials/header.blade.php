@@ -53,7 +53,7 @@
             <div class="header header-top-ptb-1 d-none d-lg-block">
                 <div class="container">
                     <div class="row align-items-center bg-primary">
-                        <div class="col-xl-8 col-lg-4 col-md-8 bg-danger">
+                        <div class="col-xl-8 col-lg-8 col-md-12 bg-danger">
                             <div class="header-info">
                                 <ul>
                                     @if (theme_option('hotline'))
@@ -69,7 +69,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-1 col-lg-1">
+                        <div class="col-xl-1 col-lg-1 col-md-1">
                             <div class="text-center">
                                 @if (theme_option('header_messages'))
                                     <div id="news-flash" class="d-inline-block">
