@@ -69,7 +69,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-4 col-lg-4 bg-danger">
+                        <div class="col-xl-5 col-lg-4 bg-danger">
                             <div class="text-center">
                                 @if (theme_option('header_messages'))
                                     <div id="news-flash" class="d-inline-block">
@@ -132,43 +132,11 @@
                                                                 <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/wishlist">Desideri</a></li>
                                                                 <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/change-password">Password</a></li>
                                                                 <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a></li>
-{{--                                                                <li>  <a class="bg-light item-profile-wrap" style="margin-bottom:0 !important" href="https://marigopharma.marigo.collaudo.biz/customer/overview">IL TUO ACCOUNT</a></li>--}}
-
 
                                                             </ul>
                                                         </li>
 
-{{--                                                        <li>--}}
-{{--                                                            <i class="fa fa-user mr-5"></i>--}}
-{{--                                                            <a class="profile-action-2" href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a>--}}
-{{--                                                            <div class="profile-dropdown-wrap profile-dropdown-hm2">--}}
-{{--                                                                <div class="row" style="width: 100%">--}}
-{{--                                                                    <a class=" item-profile-wrap"> Benvenuto, {{ auth('customer')->user()->name }} </a>--}}
-{{--                                                                </div>--}}
 
-
-{{--                                                                <div class="row" style="width: 100%">--}}
-{{--                                                                    <a class="bg-primary text-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div class="row" style="width: 100%">--}}
-
-{{--                                                                </div>--}}
-{{--                                                                <div class="row" style="width: 100%">--}}
-
-{{--                                                                </div>--}}
-{{--                                                                <div class="row" style="width: 100%">--}}
-
-{{--                                                                </div>--}}
-{{--                                                                <div class="row" style="width: 100%">--}}
-
-{{--                                                                </div>--}}
-{{--                                                                <div class="row" style="width: 100%">--}}
-
-{{--                                                                </div>--}}
-
-
-{{--                                                            </div>--}}
-{{--                                                        </li>--}}
                                                 @else
                                                     <li><a href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a></li>
                                                 @endif
