@@ -751,7 +751,7 @@ class PublicCheckoutController
         $request->merge([
             'order_id' => $order->id,
         ]);
-        Mail::to($order->user->email)->send(new OrderSubmitted($order));
+        Mail::to($order->user->email)->send(new OrderConfirmed($order));
 
         OrderShippingAmount::create(
             ['shippingAmount' => session()->get('shippingAmount'),
