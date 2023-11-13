@@ -124,7 +124,7 @@
         <!-- State -->
         <div class="form-group">
             <label for="state">Regione</label>
-            <input type="text" class="form-control" id="state" name="state">
+{{--            <input type="text" class="form-control" id="state" name="state">--}}
             <select id="state" name="state" class="form-control">
                 <option value="abruzzo">Abruzzo</option>
                 <option value="basilicata">Basilicata</option>
