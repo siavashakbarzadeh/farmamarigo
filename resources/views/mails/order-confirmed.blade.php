@@ -76,7 +76,7 @@
             @endforeach
             </tbody>
         </table>
-        <a href="https://marigopharma.marigo.collaudo.biz//customer/orders/view/{{$order->id}}" style='display: block;margin-block-end: 1em' class="btn btn-primary">Vedere
+        <a href="https://marigopharma.marigo.collaudo.biz/customer/orders/view/{{$order->id}}" style='display: block;margin-block-end: 1em' class="btn btn-primary">Vedere
             ordine</a>
         <br>
     </div>
