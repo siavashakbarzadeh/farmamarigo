@@ -20,13 +20,12 @@ class BreadcrumbsServiceProvider extends ServiceProvider
         /**
          * Register breadcrumbs based on menu stored in session
          */
-
+dd(dashboard_menu()->getAll());
         Breadcrumbs::register('main', function (BreadcrumbsGenerator $breadcrumbs, $defaultTitle = null) {
             $prefix = '/' . ltrim($this->app->make('request')->route()->getPrefix(), '/');
             $url = URL::current();
             $siteTitle = setting('admin_title', config('core.base.general.base_name'));
             $arMenu = dashboard_menu()->getAll();
-            dd($arMenu);
 
             if (Route::currentRouteName() != 'dashboard.index') {
                 $breadcrumbs->parent('dashboard.index');
