@@ -20,83 +20,41 @@ class BreadcrumbsServiceProvider extends ServiceProvider
         /**
          * Register breadcrumbs based on menu stored in session
          */
-//        Breadcrumbs::register('main', function (BreadcrumbsGenerator $breadcrumbs, $defaultTitle = null) {
-//            $prefix = '/' . ltrim($this->app->make('request')->route()->getPrefix(), '/');
-//            $url = URL::current();
-//            $arMenu = dashboard_menu()->getAll();
-//
-//            if (Route::currentRouteName() != 'dashboard.index') {
-//                $breadcrumbs->parent('dashboard.index');
-//            }
-//
-//
-//            $found = false;
-//            foreach ($arMenu as $menuCategory) {
-//                // Check the top-level categories...
-//                if ($found) {
-//                    break;
-//                }
-//
-//                if (! count($menuCategory['children'])) {
-//                    continue;
-//                }
-//
-//                foreach ($menuCategory['children'] as $menuItem) {
-//                    // Your logic for matching the URLs...
-//                    if ($found) {
-//                        $breadcrumbs->push(trans($menuCategory['name']), $menuCategory['url']);
-//                        $breadcrumbs->push(trans($menuItem['name']), $menuItem['url']);
-//                        if ($defaultTitle != trans($menuItem['name']) && $defaultTitle != $siteTitle) {
-//                            $breadcrumbs->push($defaultTitle, $menuItem['url']);
-//                        }
-//                        break 2; // Breaks both loops
-//                    }
-//                }
-//            }
-//
-//            if (! $found) {
-//                $breadcrumbs->push($defaultTitle, $url);
-//            }
-//        });
-        dd($arMenu=dashboard_menu()->getAll());
-
         Breadcrumbs::register('main', function (BreadcrumbsGenerator $breadcrumbs, $defaultTitle = null) {
-            $prefix = '/' . ltrim(request()->route()->getPrefix(), '/');
+            $prefix = '/' . ltrim($this->app->make('request')->route()->getPrefix(), '/');
             $url = URL::current();
-            $siteTitle = setting('admin_title', config('core.base.general.base_name'));
-            $arMenu = dashboard_menu()->getAll(); // Assuming dashboard_menu() is a helper function that returns the menu array
+            $arMenu = dashboard_menu()->getAll();
 
             if (Route::currentRouteName() != 'dashboard.index') {
                 $breadcrumbs->parent('dashboard.index');
             }
 
+
             $found = false;
             foreach ($arMenu as $menuCategory) {
-                if ($url == $menuCategory['url'] || (Str::contains($menuCategory['url'], $prefix) && $prefix != '//')) {
-                    $found = true;
-                    $breadcrumbs->push(trans($menuCategory['name']), $menuCategory['url']);
-                    if ($defaultTitle && $defaultTitle != trans($menuCategory['name']) && $defaultTitle != $siteTitle) {
-                        $breadcrumbs->push($defaultTitle, $menuCategory['url']);
-                    }
+                // Check the top-level categories...
+                if ($found) {
                     break;
                 }
 
-                if (!$found && count($menuCategory['children'])) {
-                    foreach ($menuCategory['children'] as $menuItem) {
-                        if ($url == $menuItem['url'] || (Str::contains($menuItem['url'], $prefix) && $prefix != '//')) {
-                            $found = true;
-                            $breadcrumbs->push(trans($menuCategory['name']), $menuCategory['url']);
-                            $breadcrumbs->push(trans($menuItem['name']), $menuItem['url']);
-                            if ($defaultTitle && $defaultTitle != trans($menuItem['name']) && $defaultTitle != $siteTitle) {
-                                $breadcrumbs->push($defaultTitle, $menuItem['url']);
-                            }
-                            break 2; // Breaks both the child and parent loops
+                if (! count($menuCategory['children'])) {
+                    continue;
+                }
+
+                foreach ($menuCategory['children'] as $menuItem) {
+                    // Your logic for matching the URLs...
+                    if ($found) {
+                        $breadcrumbs->push(trans($menuCategory['name']), $menuCategory['url']);
+                        $breadcrumbs->push(trans($menuItem['name']), $menuItem['url']);
+                        if ($defaultTitle != trans($menuItem['name']) && $defaultTitle != $siteTitle) {
+                            $breadcrumbs->push($defaultTitle, $menuItem['url']);
                         }
+                        break 2; // Breaks both loops
                     }
                 }
             }
 
-            if (!$found && $defaultTitle) {
+            if (! $found) {
                 $breadcrumbs->push($defaultTitle, $url);
             }
         });
