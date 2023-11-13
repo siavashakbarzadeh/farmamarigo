@@ -20,6 +20,8 @@
     <div class="col-lg-6">
                 <input type="hidden" class="form-control" id="customer_id" name="customer_id" required>
         <input type="hidden" id="is_default" name="is_default" value="Yes" required>
+        <input type="hidden" class="form-control" id="country" name="country" value="IT">
+
             <div class="form-group">
                 <label for="txt-name" class="required">{{ __('Name') }}</label>
                 <input class="form-control" name="name" id="txt-name" type="text" value="{{ old('name') }}" placeholder="{{ __('Please enter your name') }}">
@@ -117,16 +119,35 @@
             <input type="text" class="form-control" id="phone" name="phone">
         </div>
 
-        <!-- Country -->
-        <div class="form-group">
-            <label for="country">Country</label>
-            <input type="text" class="form-control" id="country" name="country">
-        </div>
+
 
         <!-- State -->
         <div class="form-group">
-            <label for="state">State</label>
+            <label for="state">Regione</label>
             <input type="text" class="form-control" id="state" name="state">
+            <select id="state" name="state" class="form-control">
+                <option value="abruzzo">Abruzzo</option>
+                <option value="basilicata">Basilicata</option>
+                <option value="calabria">Calabria</option>
+                <option value="campania">Campania</option>
+                <option value="emiliaRomagna">Emilia-Romagna</option>
+                <option value="friuliVeneziaGiulia">Friuli Venezia Giulia</option>
+                <option value="lazio">Lazio</option>
+                <option value="liguria">Liguria</option>
+                <option value="lombardia">Lombardia</option>
+                <option value="marche">Marche</option>
+                <option value="molise">Molise</option>
+                <option value="piemonte">Piemonte</option>
+                <option value="puglia">Puglia</option>
+                <option value="sardegna">Sardegna</option>
+                <option value="sicilia">Sicilia</option>
+                <option value="toscana">Toscana</option>
+                <option value="trentinoAltoAdige">Trentino-Alto Adige</option>
+                <option value="umbria">Umbria</option>
+                <option value="valleDAosta">Valle d'Aosta</option>
+                <option value="veneto">Veneto</option>
+            </select>
+
         </div>
 
         <!-- City -->
