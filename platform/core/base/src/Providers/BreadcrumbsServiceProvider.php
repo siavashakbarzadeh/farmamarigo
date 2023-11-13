@@ -20,6 +20,8 @@ class BreadcrumbsServiceProvider extends ServiceProvider
         /**
          * Register breadcrumbs based on menu stored in session
          */
+        dd($arMenu=dashboard_menu()->getAll());
+
         Breadcrumbs::register('main', function (BreadcrumbsGenerator $breadcrumbs, $defaultTitle = null) {
             $prefix = '/' . ltrim($this->app->make('request')->route()->getPrefix(), '/');
             $url = URL::current();
@@ -58,5 +60,6 @@ class BreadcrumbsServiceProvider extends ServiceProvider
                 $breadcrumbs->push($defaultTitle, $url);
             }
         });
+
     }
 }
