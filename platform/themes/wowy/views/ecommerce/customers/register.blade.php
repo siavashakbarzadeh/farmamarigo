@@ -115,7 +115,7 @@
 
         <!-- Phone -->
         <div class="form-group">
-            <label for="phone">Phone</label>
+            <label for="phone">Telefono</label>
             <input type="text" class="form-control" id="phone" name="phone">
         </div>
 
@@ -152,18 +152,18 @@
 
         <!-- City -->
         <div class="form-group">
-            <label for="city">City</label>
+            <label for="city">Città</label>
             <input type="text" class="form-control" id="city" name="city">
         </div>
 
         <!-- Address -->
         <div class="form-group">
-            <label for="address">Address</label>
+            <label for="address">Indirizzo</label>
             <input type="text" class="form-control" id="address" name="address" required>
         </div>
         <!-- Zip Code -->
         <div class="form-group">
-            <label for="zip_code">Zip Code</label>
+            <label for="zip_code">CAP</label>
             <input type="text" class="form-control" id="zip_code" name="zip_code">
         </div>
     </div>
