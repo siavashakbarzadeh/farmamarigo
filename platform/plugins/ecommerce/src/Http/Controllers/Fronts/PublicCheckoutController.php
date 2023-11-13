@@ -50,6 +50,13 @@ use OptimizerHelper;
 use OrderHelper;
 use Theme;
 use Validator;
+use Botble\Payment\Models\Payment;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Botble\Ecommerce\Mail\OrderSubmitted;
+use Botble\Ecommerce\Mail\OrderConfirmed;
+
+use Botble\Ecommerce\Mail\OrderEdited;
 
 
 class PublicCheckoutController
@@ -435,10 +442,10 @@ class PublicCheckoutController
             ]);
 
             $order = $this->orderRepository->getFirstBy(compact('token'));
-            
+
 
             $order = $this->createOrderFromData($request->input(), $order);
-            
+
 
             $sessionData['created_order'] = true;
             $sessionData['created_order_id'] = $order->id;
@@ -744,6 +751,7 @@ class PublicCheckoutController
         $request->merge([
             'order_id' => $order->id,
         ]);
+        Mail::to($order->user->email)->send(new OrderSubmitted($order));
 
         OrderShippingAmount::create(
             ['shippingAmount' => session()->get('shippingAmount'),
