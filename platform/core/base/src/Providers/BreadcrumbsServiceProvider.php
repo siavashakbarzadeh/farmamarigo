@@ -58,6 +58,8 @@ class BreadcrumbsServiceProvider extends ServiceProvider
 //                $breadcrumbs->push($defaultTitle, $url);
 //            }
 //        });
+        dd($arMenu=dashboard_menu()->getAll());
+
         Breadcrumbs::register('main', function (BreadcrumbsGenerator $breadcrumbs, $defaultTitle = null) {
             $prefix = '/' . ltrim(request()->route()->getPrefix(), '/');
             $url = URL::current();
@@ -69,7 +71,6 @@ class BreadcrumbsServiceProvider extends ServiceProvider
             }
 
             $found = false;
-            dd($arMenu);
             foreach ($arMenu as $menuCategory) {
                 if ($url == $menuCategory['url'] || (Str::contains($menuCategory['url'], $prefix) && $prefix != '//')) {
                     $found = true;
