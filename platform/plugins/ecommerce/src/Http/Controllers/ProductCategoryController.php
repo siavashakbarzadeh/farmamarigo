@@ -65,6 +65,7 @@ class ProductCategoryController extends BaseController
     {
         $productCategory = $this->productCategoryRepository->createOrUpdate($request->input());
 
+
         event(new CreatedContentEvent(PRODUCT_CATEGORY_MODULE_SCREEN_NAME, $request, $productCategory));
 
         if ($request->ajax()) {

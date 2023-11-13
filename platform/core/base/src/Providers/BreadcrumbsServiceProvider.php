@@ -69,6 +69,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
             }
 
             $found = false;
+            dd($arMenu);
             foreach ($arMenu as $menuCategory) {
                 if ($url == $menuCategory['url'] || (Str::contains($menuCategory['url'], $prefix) && $prefix != '//')) {
                     $found = true;
