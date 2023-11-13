@@ -68,34 +68,16 @@ class BreadcrumbsServiceProvider extends ServiceProvider
                 $breadcrumbs->parent('dashboard.index');
             }
 
-            $found = false;
             foreach ($arMenu as $menuCategory) {
-                if ($url == $menuCategory['url'] || (Str::contains($menuCategory['url'], $prefix) && $prefix != '//')) {
-                    $found = true;
-                    $breadcrumbs->push(trans($menuCategory['name']), $menuCategory['url']);
-                    if ($defaultTitle && $defaultTitle != trans($menuCategory['name']) && $defaultTitle != $siteTitle) {
-                        $breadcrumbs->push($defaultTitle, $menuCategory['url']);
-                    }
-                    break;
-                }
+                $breadcrumbs->push(trans($menuCategory['name']), $menuCategory['url']);
 
-                if (!$found && count($menuCategory['children'])) {
-                    foreach ($menuCategory['children'] as $menuItem) {
-                        if ($url == $menuItem['url'] || (Str::contains($menuItem['url'], $prefix) && $prefix != '//')) {
-                            $found = true;
-                            $breadcrumbs->push(trans($menuCategory['name']), $menuCategory['url']);
-                            $breadcrumbs->push(trans($menuItem['name']), $menuItem['url']);
-                            if ($defaultTitle && $defaultTitle != trans($menuItem['name']) && $defaultTitle != $siteTitle) {
-                                $breadcrumbs->push($defaultTitle, $menuItem['url']);
-                            }
-                            break 2; // Breaks both the child and parent loops
-                        }
-                    }
+                foreach ($menuCategory['children'] as $menuItem) {
+                    $breadcrumbs->push(trans($menuItem['name']), $menuItem['url']);
                 }
             }
 
-            if (!$found && $defaultTitle) {
-                $breadcrumbs->push($defaultTitle, $url);
+            if ($defaultTitle && $defaultTitle != $siteTitle) {
+                $breadcrumbs->push($defaultTitle);
             }
         });
     }
