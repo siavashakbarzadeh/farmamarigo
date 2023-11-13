@@ -76,11 +76,11 @@
             @endforeach
             </tbody>
         </table>
-        <a href="https://dev.marigo.collaudo.biz/customer/orders/view/{{$order->id}}" style='display: block;margin-block-end: 1em' class="btn btn-primary">Vedere
+        <a href="https://marigopharma.marigo.collaudo.biz//customer/orders/view/{{$order->id}}" style='display: block;margin-block-end: 1em' class="btn btn-primary">Vedere
             ordine</a>
         <br>
     </div>
-    <div class="card-footer text-body-secondary"> Per qualsiasi informazione, ci contatti via <a href='https://dev.marigo.collaudo.biz/contact'>Pagina dei contatti</a>
+    <div class="card-footer text-body-secondary"> Per qualsiasi informazione, ci contatti via <a href='https://marigopharma.marigo.collaudo.biz/contact'>Pagina dei contatti</a>
     </div>
     <div class="row m-0">
         <div class="col-lg-12">
