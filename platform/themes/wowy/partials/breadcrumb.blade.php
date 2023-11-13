@@ -1,7 +1,8 @@
 <div class="page-header breadcrumb-wrap">
     <div class="container">
         <div class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
-            @dd($crumbs)
+            @dd($crumbs = Theme::breadcrumb()->getCrumbs())
+)
             @foreach ($crumbs = Theme::breadcrumb()->getCrumbs() as $i => $crumb)
                 @if ($i != (count($crumbs) - 1))
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item d-inline-block">
