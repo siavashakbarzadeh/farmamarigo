@@ -9,7 +9,7 @@
 
 
    $menu['id']=='cms-plugins-location'||
-   $menu['id']=='cms-core-platform-administration'
+
 
 
 
