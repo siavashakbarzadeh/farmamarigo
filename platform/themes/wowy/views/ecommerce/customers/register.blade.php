@@ -186,21 +186,29 @@
             <label for="zip_code">CAP</label>
             <input type="text" class="form-control" id="zip_code" name="zip_code">
         </div>
+
         <div class="form-group">
             <label for="txt-password" class="required">{{ __('Somma') }}</label>
-            <div class="row">
-                <div class="col-12 captcha">
-                    <div class="captcha-value">
-                        <img src="{{ $dataUri }}"/>
-                    </div>
-                    <div class="form__password">
-                        <input type="text" name='captcha' id="captcha" placeholder="Scrivi il risultato della somma a fianco">
-                    </div>
-                    <span class="text-danger captcha-error"></span>
 
-                </div>
-            </div>
+            <img src="{{ $dataUri }}"/>
+            <input type="text" name='captcha' id="captcha" placeholder="Scrivi il risultato della somma a fianco">
+            <span class="text-danger captcha-error"></span>
         </div>
+{{--        <div class="form-group">--}}
+{{--            <label for="txt-password" class="required">{{ __('Somma') }}</label>--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-12 captcha">--}}
+{{--                    <div class="captcha-value">--}}
+{{--                        <img src="{{ $dataUri }}"/>--}}
+{{--                    </div>--}}
+{{--                    <div class="form__password">--}}
+{{--                        <input type="text" name='captcha' id="captcha" placeholder="Scrivi il risultato della somma a fianco">--}}
+{{--                    </div>--}}
+{{--                    <span class="text-danger captcha-error"></span>--}}
+
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
 
 
