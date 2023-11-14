@@ -85,10 +85,10 @@
                                                                 <tbody style='border:0;'>
                                                                 <tr style="border:0;">
                                                                     <td style="border:0;padding:15px;border-collapse:collapse; height: 70px; line-height: 70px">
-                                                                        <a href="https://marigolab.it" style="color: #fff; text-decoration: none !important;"
+                                                                        <a href="https://marigopharma.marigo.collaudo.biz/" style="color: #fff; text-decoration: none !important;"
                                                                            target="_blank">
                                                                             <img title="Logo"
-                                                                                 src="https://marigolab.it/storage/logo.jpg"
+                                                                                 src="https://marigopharma.marigo.collaudo.biz/storage/logo.jpg"
                                                                                  height="70"
                                                                                  style="max-width: 107px;display: block !important;height: auto !important;"
                                                                                  border="0"
@@ -244,7 +244,7 @@
                                                 </div>
                                             @endif
                                             <br>
-                                            <a href="https://marigolab.it/customer/orders/view/{{$order->id}}" style='display: block;margin-block-end: 1em' class="btn btn-primary">Vedi il tuo
+                                            <a href="https://marigopharma.marigo.collaudo.biz/customer/orders/view/{{$order->id}}" style='display: block;margin-block-end: 1em' class="btn btn-primary">Vedi il tuo
                                                 ordine</a>
                                             <br>
                                         </div>
@@ -330,9 +330,9 @@
                                                                             </tr>
                                                                             <tr style='border:0;'>
                                                                                 <td valign="top" align="center" style=" display:block;border:0;font-size: 13px;line-height: 15px; text-align: center; font-family: Arial,Tahoma, Helvetica, sans-serif;color: #a7a9ac;font-weight: normal;border-collapse: collapse;">
-                                                                                    <a href='https://www.instagram.com/marigo_pharma/' ><img src='https://marigolab.it/public/storage/instagram-3-2.png' style='margin:10px;' width='20' height='20'></a>
-                                                                                    <a href='https://www.facebook.com/marigopharma/' ><img src='https://marigolab.it/public/storage/facebook-3.png' style='margin:10px;' width='20' height='20' ></a>
-                                                                                    <a href='https://www.linkedin.com/company/marigo-italia'  ><img src='https://marigolab.it/public/storage/linkedin-3.png' style='margin:10px;' width='20' height='20' ></a>
+                                                                                    <a href='https://www.instagram.com/marigo_pharma/' ><img src='https://marigopharma.marigo.collaudo.biz/public/storage/instagram-3-2.png' style='margin:10px;' width='20' height='20'></a>
+                                                                                    <a href='https://www.facebook.com/marigopharma/' ><img src='https://marigopharma.marigo.collaudo.biz/public/storage/facebook-3.png' style='margin:10px;' width='20' height='20' ></a>
+                                                                                    <a href='https://www.linkedin.com/company/marigo-italia'  ><img src='https://marigopharma.marigo.collaudo.biz/public/storage/linkedin-3.png' style='margin:10px;' width='20' height='20' ></a>
                                                                                 </td>
                                                                             </tr>
                                                                             </tbody>
