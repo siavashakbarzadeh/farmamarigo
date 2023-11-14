@@ -248,7 +248,7 @@
                                                 ordine</a>
                                             <br>
                                         </div>
-                                        <div class="card-footer text-body-secondary"> Per qualsiasi informazione, contattaci compilando <a href='https://marigolab.it/contact'>il modulo richiesta informazioni </a>sul nostro sito web
+                                        <div class="card-footer text-body-secondary"> Per qualsiasi informazione, contattaci compilando <a href='https://marigopharma.marigo.collaudo.biz/contact'>il modulo richiesta informazioni </a>sul nostro sito web
                                         </div>
 
                                     </div>
