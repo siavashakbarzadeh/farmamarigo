@@ -1,7 +1,27 @@
 @php
     Theme::layout('full-width');
 @endphp
+@php
 
+    use Illuminate\Support\Facades\Crypt;
+
+        $number1 = mt_rand(1, 9);
+        $number2 = mt_rand(1, 9);
+        $image = imagecreatetruecolor(60, 30);
+        $background = imagecolorallocate($image, 255, 255, 255);
+        $textColor = imagecolorallocate($image, 0, 0, 0);
+        imagefill($image, 0, 0, $background);
+        imagestring($image, 5, 5, 5, "$number1 + $number2", $textColor);
+        ob_start();
+        imagepng($image);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $dataUri = "data:image/png;base64," . base64_encode($contents);
+        imagedestroy($image);
+        $encryptedAnswer = Crypt::encryptString($number1 + $number2);
+        session(['segnal_form_captcha_answer' => $encryptedAnswer]);
+
+@endphp
 <section class="pt-100 pb-100">
     <div class="container">
         <div class="row">
@@ -165,6 +185,21 @@
         <div class="form-group">
             <label for="zip_code">CAP</label>
             <input type="text" class="form-control" id="zip_code" name="zip_code">
+        </div>
+        <div class="form-group">
+            <label for="txt-password" class="required">{{ __('Somma') }}</label>
+            <div class="row">
+                <div class="col-12 captcha">
+                    <div class="captcha-value">
+                        <img src="{{ $dataUri }}"/>
+                    </div>
+                    <div class="form__password">
+                        <input type="text" name='captcha' id="captcha" placeholder="Scrivi il risultato della somma a fianco">
+                    </div>
+                    <span class="text-danger captcha-error"></span>
+
+                </div>
+            </div>
         </div>
     </div>
 
