@@ -222,7 +222,7 @@
             .then(response => {
                 if(response.data.valid && allValid){
                     // If CAPTCHA and all other validations are passed, submit the form
-                    $('.form--auth').submit();
+                    $('form').submit();
                 } else {
                     // Handle CAPTCHA validation failure
                     $('.captcha-error').html('Invalid CAPTCHA');
