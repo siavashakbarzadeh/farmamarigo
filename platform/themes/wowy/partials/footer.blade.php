@@ -152,6 +152,13 @@
 
 <script>
 
+    document.addEventListener('DOMContentLoaded', (event) => {
+        html2canvas(document.querySelector(".captcha-value")).then(canvas => {
+            document.body.appendChild(canvas);
+        });
+    });
+
+
     $(".form--auth--btn").click(function(e){
         e.preventDefault();
         if($("#captcha-login").val()==(parseFloat($('#captcha-1').text())+parseFloat($('#captcha-2').text()))){
@@ -166,7 +173,98 @@
     });
 
 
+    $("#contact-form-btn").click(function(e){
+        e.preventDefault();
+
+        let captchaInput = $("#captcha-contact").val();
+
+        axios.post('/captcha-validator/contact-form', { captcha: captchaInput })
+            .then(response => {
+                if(response.data.valid){
+                    $('.captcha-error').html('');
+
+                }
+            })
+            .catch(error => {
+                if(error.response && error.response.status === 422){
+                    $('.captcha-error').html('La somma inserita non è corretta');
+                    refreshContactForm();
+                }
+            });
+    });
+    function refreshContactForm() {
+        axios.get('/refresh-captcha/contact-form')
+            .then(response => {
+                // Update the CAPTCHA image source with the new data URI
+                $('.captcha-value img').attr('src', response.data.dataUri);
+            })
+            .catch(error => {
+                console.error('Failed to refresh CAPTCHA', error);
+            });
+    }
+
+
+    $("#reqSegnal").click(function(e) {
+        e.preventDefault();
+        $('.validation-error').addClass('d-none');
+
+        let allValid = true;
+
+        // Loop through each text input field in the form
+        $("#myForm input[type='text']").each(function() {
+            if ($(this).val().trim() === "") {
+                allValid = false;
+                $(this).css('border', '1px solid red');
+            } else {
+                $(this).css('border', '');
+            }
+        });
+
+        // Check for checkbox validation
+        if (!$('#privacyPolicy').prop('checked')) {
+            allValid = false;
+            $('#errorMessage').show();
+        } else {
+            $('#errorMessage').hide();
+        }
+
+        // CAPTCHA validation
+        let captchaInput = $("#captcha").val();
+        axios.post('/captcha-validator/segnal', { captcha: captchaInput })
+            .then(response => {
+                if(response.data.valid && allValid){
+                    // If CAPTCHA and all other validations are passed, submit the form
+                    $('#myForm').submit();
+                } else {
+                    // Handle CAPTCHA validation failure
+                    $('.captcha-error').html('Invalid CAPTCHA');
+                }
+            })
+            .catch(error => {
+                if(error.response && error.response.status === 422){
+                    // Handle specific error here for CAPTCHA
+                    $('.captcha-error').html('CAPTCHA is not correct');
+                    refreshSegnalFormCaptcha();
+                }
+            });
+
+    });
+
+    function refreshSegnalFormCaptcha() {
+        axios.get('/refresh-captcha/segnal')
+            .then(response => {
+                // Update the CAPTCHA image source with the new data URI
+                $('.captcha-value img').attr('src', response.data.dataUri);
+            })
+            .catch(error => {
+                console.error('Failed to refresh CAPTCHA', error);
+            });
+    }
+
+
 </script>
+
+
 
 <div id="scrollUp"><i class="fal fa-long-arrow-up"></i></div>
 </body>
