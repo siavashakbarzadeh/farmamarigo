@@ -161,15 +161,23 @@
 
     $(".form--auth--btn").click(function(e){
         e.preventDefault();
-        if($("#captcha-login").val()==(parseFloat($('#captcha-1').text())+parseFloat($('#captcha-2').text()))){
-            $(".form--auth").submit();
-        }else{
-            $('.captcha-error').html('La somma inserita non è corretta');
+        let captchaInput = $("#captcha-login").val();
 
-            $('#captcha-1').html(Math.floor(Math.random()*9)+1);
-            $('#captcha-2').html(Math.floor(Math.random()*9)+1);
+        axios.post('/captcha-validator/login', { captcha: captchaInput })
+        .then(response => {
+            if(response.data.valid){
+                $('.captcha-error').html('');
+                $(".form--auth").submit();
 
-        }
+            }
+        })
+        .catch(error => {
+            if(error.response && error.response.status === 422){
+                $('.captcha-error').html('La somma inserita non è corretta');
+                refreshLoginForm();
+            }
+        });
+
     });
 
 
@@ -192,6 +200,7 @@
                 }
             });
     });
+    
     function refreshContactForm() {
         axios.get('/refresh-captcha/contact-form')
             .then(response => {

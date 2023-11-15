@@ -71,21 +71,10 @@ public function refreshContactForm()
 
 // SEGNALARSI VALIDATION
 
-public static function validateSegnalForm1($captcha){
-    $userCaptchaResponse = intval($captcha);
-    $decryptedAnswer = intval(Crypt::decryptString(session('segnal_form_captcha_answer')));
-
-    if ($userCaptchaResponse === $decryptedAnswer) {
-        return true;
-    } else {
-        // Optionally, you could add more information here to help debug the issue
-        return false;
-    }
-}
-public function validateSegnalForm(Request $request)
+public function validateRegisterForm(Request $request)
 {
     $userCaptchaResponse = intval($request->input('captcha'));
-    $decryptedAnswer = intval(Crypt::decryptString(session('segnal_form_captcha_answer')));
+    $decryptedAnswer = intval(Crypt::decryptString(session('register_form_captcha_answer')));
 
     if ($userCaptchaResponse === $decryptedAnswer) {
         return response()->json(['valid' => true]);
@@ -99,7 +88,7 @@ public function validateSegnalForm(Request $request)
     }
 }
 
-public function refreshSegnalForm()
+public function refreshRegisterForm()
 {
     $number1 = mt_rand(1, 9);
     $number2 = mt_rand(1, 9);
@@ -115,7 +104,7 @@ public function refreshSegnalForm()
     $dataUri = "data:image/png;base64," . base64_encode($contents);
     imagedestroy($image);
     $encryptedAnswer = Crypt::encryptString($number1 + $number2);
-    session(['segnal_form_captcha_answer' => $encryptedAnswer]);
+    session(['register_form_captcha_answer' => $encryptedAnswer]);
     return response()->json(['dataUri' => $dataUri]);
 }
 
@@ -126,18 +115,6 @@ public function refreshSegnalForm()
 
 // Login VALIDATION
 
-
-public static function validateLoginForm1($captcha){
-    $userCaptchaResponse = intval($captcha);
-    $decryptedAnswer = intval(Crypt::decryptString(session('login_form_captcha_answer')));
-
-    if ($userCaptchaResponse === $decryptedAnswer) {
-        return true;
-    } else {
-        // Optionally, you could add more information here to help debug the issue
-        return false;
-    }
-}
 public function validateLoginForm(Request $request)
 {
     $userCaptchaResponse = intval($request->input('captcha'));

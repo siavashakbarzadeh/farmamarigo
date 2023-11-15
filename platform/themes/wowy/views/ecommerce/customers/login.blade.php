@@ -1,6 +1,25 @@
 @php
+use Illuminate\Support\Facades\Crypt;
+
     Theme::layout('full-width');
+    $number1 = mt_rand(1, 9);
+    $number2 = mt_rand(1, 9);
+    $image = imagecreatetruecolor(60, 30);
+    $background = imagecolorallocate($image, 255, 255, 255);
+    $textColor = imagecolorallocate($image, 0, 0, 0);
+    imagefill($image, 0, 0, $background);
+    imagestring($image, 5, 5, 5, "$number1 + $number2", $textColor);
+    ob_start();
+    imagepng($image);
+    $contents = ob_get_contents();
+    ob_end_clean();
+    $dataUri = "data:image/png;base64," . base64_encode($contents);
+    imagedestroy($image);
+    $encryptedAnswer = Crypt::encryptString($number1 + $number2);
+    session(['login_form_captcha_answer' => $encryptedAnswer]);
 @endphp
+
+
 
 <section class="pt-100 pb-100">
     <div class="container">
@@ -49,14 +68,7 @@
                                             font-weight: bold;
                                             border-radius: 42px;
                                             font-size: 13pt;">
-                                                <span id="captcha-1">
-                                                    {{ mt_rand(1,9) }}
-                                                </span>
-                                                +
-                                                <span id="captcha-2">
-
-                                                    {{ mt_rand(1,9) }}
-                                                </span>
+                                            <img src={{$dataUri}}>
                                             </div>
                                             <div class="form__password">
                                                 <input type="text" id="captcha-login" placeholder="{{ __('Risultato della somma') }}">

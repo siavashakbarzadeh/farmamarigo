@@ -134,3 +134,24 @@ Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
 
 
         });
+
+        Route::prefix('/captcha-validator')->group(function (Router $router) {
+    
+            $router->post('/contact-form', [CaptchaHandler::class, 'validateContactForm'])->name('validateContactForm');
+            $router->post('/register', [CaptchaHandler::class, 'validateRegisterForm'])->name('validateRegisterForm');
+            $router->post('/login', [CaptchaHandler::class, 'validateLoginForm'])->name('validateLoginForm');
+        
+        
+        
+        });
+        
+        Route::prefix('/refresh-captcha')->group(function (Router $router) {
+        
+            $router->get('/contact-form', [CaptchaHandler::class, 'refreshContactForm'])->name('refreshContactForm');
+            $router->get('/segnal', [CaptchaHandler::class, 'refreshRegisterForm'])->name('refreshRegisterForm');
+            $router->get('/login', [CaptchaHandler::class, 'refreshLoginForm'])->name('refreshLoginForm');
+        
+        
+        
+        });
+        
