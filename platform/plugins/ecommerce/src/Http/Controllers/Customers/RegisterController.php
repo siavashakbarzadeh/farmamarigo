@@ -76,6 +76,7 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
+        dd( $data);
         $rules = [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:ec_customers',
@@ -110,7 +111,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-//        dd( $data);
+//
         try {
             return DB::transaction(function () use ($data) {
                 $customer = $this->customerRepository->create([
