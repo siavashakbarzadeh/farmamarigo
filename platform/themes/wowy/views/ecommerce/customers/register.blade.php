@@ -19,7 +19,7 @@
         $dataUri = "data:image/png;base64," . base64_encode($contents);
         imagedestroy($image);
         $encryptedAnswer = Crypt::encryptString($number1 + $number2);
-        session(['segnal_form_captcha_answer' => $encryptedAnswer]);
+        session(['register_form_captcha_answer' => $encryptedAnswer]);
 
 @endphp
 <section class="pt-100 pb-100">
@@ -119,16 +119,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-fill-out btn-block hover-up">{{ __('Register') }}</button>
-            </div>
 
-            <br>
-            <p>{{ __('Have an account already?') }} <a href="{{ route('customer.login') }}" class="d-inline-block">{{ __('Login') }}</a></p>
-
-            <div class="text-left">
-                {!! apply_filters(BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM, null, \Botble\Ecommerce\Models\Customer::class) !!}
-            </div>
 
     </div>
     <div class="col-lg-6">
@@ -188,12 +179,36 @@
         </div>
 
         <div class="form-group">
-            <label for="txt-password" class="required">{{ __('Somma') }}</label>
-
-            <img src="{{ $dataUri }}"/>
-            <input type="text" name='captcha' id="captcha" placeholder="Scrivi il risultato della somma a fianco">
-            <span class="text-danger captcha-error"></span>
+        <label for="txt-password" class="required">{{ __('Captcha') }}</label>
+        <div class="row">
+            <div class="col-12 captcha" style="position: relative">
+                <div class="captcha-value" style="position: absolute;
+                top: 1%;
+                right: 2%;
+                background: white;
+                padding: 11px 20px;
+                font-weight: bold;
+                border-radius: 42px;
+                font-size: 13pt;">
+                <img src={{$dataUri}}>
+                </div>
+                <div class="form__password">
+                    <input type="text" id="captcha-login" placeholder="{{ __('Risultato della somma') }}">
+                </div>
+                <span class="text-danger captcha-error"></span>
+            </div>
         </div>
+        <div class="form-group">
+            <button type="submit" class="register--btn--submit btn btn-fill-out btn-block hover-up">{{ __('Register') }}</button>
+        </div>
+
+        <br>
+        <p>{{ __('Have an account already?') }} <a href="{{ route('customer.login') }}" class="d-inline-block">{{ __('Login') }}</a></p>
+
+        <div class="text-left">
+            {!! apply_filters(BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM, null, \Botble\Ecommerce\Models\Customer::class) !!}
+        </div>
+    </div>
 {{--        <div class="form-group">--}}
 {{--            <label for="txt-password" class="required">{{ __('Somma') }}</label>--}}
 {{--            <div class="row">--}}

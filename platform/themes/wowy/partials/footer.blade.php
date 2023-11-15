@@ -213,37 +213,16 @@
     }
 
 
-    $("#reqSegnal").click(function(e) {
+    $(".register--btn--submit").click(function(e) {
         e.preventDefault();
-        $('.validation-error').addClass('d-none');
-
-        let allValid = true;
-
-        // Loop through each text input field in the form
-        $("#myForm input[type='text']").each(function() {
-            if ($(this).val().trim() === "") {
-                allValid = false;
-                $(this).css('border', '1px solid red');
-            } else {
-                $(this).css('border', '');
-            }
-        });
-
-        // Check for checkbox validation
-        if (!$('#privacyPolicy').prop('checked')) {
-            allValid = false;
-            $('#errorMessage').show();
-        } else {
-            $('#errorMessage').hide();
-        }
-
+    
         // CAPTCHA validation
         let captchaInput = $("#captcha").val();
-        axios.post('/captcha-validator/segnal', { captcha: captchaInput })
+        axios.post('/captcha-validator/register', { captcha: captchaInput })
             .then(response => {
                 if(response.data.valid && allValid){
                     // If CAPTCHA and all other validations are passed, submit the form
-                    $('#myForm').submit();
+                    $('.form--auth').submit();
                 } else {
                     // Handle CAPTCHA validation failure
                     $('.captcha-error').html('Invalid CAPTCHA');
@@ -253,14 +232,14 @@
                 if(error.response && error.response.status === 422){
                     // Handle specific error here for CAPTCHA
                     $('.captcha-error').html('CAPTCHA is not correct');
-                    refreshSegnalFormCaptcha();
+                    refreshRegisterFormCaptcha();
                 }
             });
-
+    
     });
-
-    function refreshSegnalFormCaptcha() {
-        axios.get('/refresh-captcha/segnal')
+    
+    function refreshRegisterFormCaptcha() {
+        axios.get('/refresh-captcha/register')
             .then(response => {
                 // Update the CAPTCHA image source with the new data URI
                 $('.captcha-value img').attr('src', response.data.dataUri);
