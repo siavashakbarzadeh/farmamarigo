@@ -217,7 +217,7 @@
         e.preventDefault();
     
         // CAPTCHA validation
-        let captchaInput = $("#captcha").val();
+        let captchaInput = $("#captcha-register").val();
         axios.post('/captcha-validator/register', { captcha: captchaInput })
             .then(response => {
                 if(response.data.valid && allValid){

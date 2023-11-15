@@ -179,7 +179,7 @@
         </div>
 
         <div class="form-group">
-        <label for="txt-password" class="required">{{ __('Captcha') }}</label>
+        <label for="txt-password" class="required">Captcha</label>
         <div class="row">
             <div class="col-12 captcha" style="position: relative">
                 <div class="captcha-value" style="position: absolute;
@@ -193,12 +193,12 @@
                 <img src={{$dataUri}}>
                 </div>
                 <div class="form__password">
-                    <input type="text" id="captcha-login" placeholder="{{ __('Risultato della somma') }}">
+                    <input type="text" id="captcha-register" placeholder="{{ __('Risultato della somma') }}">
                 </div>
                 <span class="text-danger captcha-error"></span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mt-2">
             <button type="submit" class="register--btn--submit btn btn-fill-out btn-block hover-up">{{ __('Register') }}</button>
         </div>
 
