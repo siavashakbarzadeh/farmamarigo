@@ -102,7 +102,7 @@ use Illuminate\Support\Facades\Crypt;
 
                                 <div class="form-group mt-10">
                                     <div class="row">
-                                        <div class="col-12 captcha">
+                                        <div class="col-12 captcha" style="position: relative">
                                             <div class="captcha-value" style="position: absolute;
                                             top: 1%;
                                             right: 2%;
