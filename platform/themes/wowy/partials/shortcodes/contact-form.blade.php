@@ -103,7 +103,14 @@ use Illuminate\Support\Facades\Crypt;
                                 <div class="form-group mt-10">
                                     <div class="row">
                                         <div class="col-12 captcha">
-                                            <div class="captcha-value">
+                                            <div class="captcha-value" style="position: absolute;
+                                            top: 1%;
+                                            right: 2%;
+                                            background: white;
+                                            padding: 11px 20px;
+                                            font-weight: bold;
+                                            border-radius: 42px;
+                                            font-size: 13pt;">
                                                 <img src="{{ $dataUri }}"/>
                                             </div>
                                             <div class="form__password">
