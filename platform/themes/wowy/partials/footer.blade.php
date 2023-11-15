@@ -152,13 +152,6 @@
 
 <script>
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        html2canvas(document.querySelector(".captcha-value")).then(canvas => {
-            document.body.appendChild(canvas);
-        });
-    });
-
-
     $(".form--auth--btn").click(function(e){
         e.preventDefault();
         let captchaInput = $("#captcha-login").val();
@@ -220,7 +213,7 @@
         let captchaInput = $("#captcha-register").val();
         axios.post('/captcha-validator/register', { captcha: captchaInput })
             .then(response => {
-                if(response.data.valid && allValid){
+                if(response.data.valid){
                     // If CAPTCHA and all other validations are passed, submit the form
                     $('form').submit();
                 } else {
