@@ -150,7 +150,7 @@ Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
         Route::prefix('/refresh-captcha')->group(function (Router $router) {
         
             $router->get('/contact-form', [CaptchaHandler::class, 'refreshContactForm'])->name('refreshContactForm');
-            $router->get('/segnal', [CaptchaHandler::class, 'refreshRegisterForm'])->name('refreshRegisterForm');
+            $router->get('/register', [CaptchaHandler::class, 'refreshRegisterForm'])->name('refreshRegisterForm');
             $router->get('/login', [CaptchaHandler::class, 'refreshLoginForm'])->name('refreshLoginForm');
         
         
