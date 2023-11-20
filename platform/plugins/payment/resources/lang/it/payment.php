@@ -30,7 +30,7 @@ return [
     'payment_id' => 'Payment ID',
     'payment_methods' => 'Modalità di pagamento',
     'transactions' => 'transazioni',
-    'payment_methods_description' => 'Setup payment methods for website',
+    'payment_methods_description' => 'Imposta i metodi di pagamento per il sito web',
     'paypal_description' => 'Customer can buy product and pay directly via PayPal',
     'use' => 'Use',
     'stripe_description' => 'Customer can buy product and pay directly using Visa, Credit card via Stripe',
