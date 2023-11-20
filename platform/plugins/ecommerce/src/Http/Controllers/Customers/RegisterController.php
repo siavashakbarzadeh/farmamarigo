@@ -3,6 +3,7 @@
 namespace Botble\Ecommerce\Http\Controllers\Customers;
 
 use App\Http\Controllers\Controller;
+use Botble\Ecommerce\Mail\OrderConfirmed;
 use Botble\Ecommerce\Models\Address;
 use Botble\ACL\Traits\RegistersUsers;
 use Botble\Base\Http\Responses\BaseHttpResponse;
@@ -17,6 +18,7 @@ use Theme;
 use SeoHelper;
 use BaseHelper;
 use EcommerceHelper;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -76,7 +78,7 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
-        dd( $data);
+//        dd( $data);
         $rules = [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:ec_customers',
@@ -136,6 +138,7 @@ class RegisterController extends Controller
         } catch (\Throwable $e) {
             dd($e);
         }
+//        Mail::to($order->user->email)->send(new OrderConfirmed($order));
     }
 
     protected function guard()

@@ -152,26 +152,26 @@
 
 <script>
 
-    $(".form--auth--btn").click(function(e){
-        e.preventDefault();
-        let captchaInput = $("#captcha-login").val();
-
-        axios.post('/captcha-validator/login', { captcha: captchaInput })
-        .then(response => {
-            if(response.data.valid){
-                $('.captcha-error').html('');
-                $(".form--auth").submit();
-
-            }
-        })
-        .catch(error => {
-            if(error.response && error.response.status === 422){
-                $('.captcha-error').html('La somma inserita non è corretta');
-                refreshLoginForm();
-            }
-        });
-
-    });
+    // $(".form--auth--btn").click(function(e){
+    //     e.preventDefault();
+    //     let captchaInput = $("#captcha-login").val();
+    //
+    //     axios.post('/captcha-validator/login', { captcha: captchaInput })
+    //     .then(response => {
+    //         if(response.data.valid){
+    //             $('.captcha-error').html('');
+    //             $(".form--auth").submit();
+    //
+    //         }
+    //     })
+    //     .catch(error => {
+    //         if(error.response && error.response.status === 422){
+    //             $('.captcha-error').html('La somma inserita non è corretta');
+    //             refreshLoginForm();
+    //         }
+    //     });
+    //
+    // });
 
 
     $("#contact-form-btn").click(function(e){
@@ -193,7 +193,7 @@
                 }
             });
     });
-    
+
     function refreshContactForm() {
         axios.get('/refresh-captcha/contact-form')
             .then(response => {
@@ -208,7 +208,7 @@
 
     $(".register--btn--submit").click(function(e) {
         e.preventDefault();
-    
+
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
         axios.post('/captcha-validator/register', { captcha: captchaInput })
@@ -228,9 +228,9 @@
                     refreshRegisterFormCaptcha();
                 }
             });
-    
+
     });
-    
+
     function refreshRegisterFormCaptcha() {
         axios.get('/refresh-captcha/register')
             .then(response => {
