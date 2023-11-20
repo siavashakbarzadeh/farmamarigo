@@ -72,6 +72,7 @@ class RegisterController extends Controller
 
         $customer->confirmed_at = Carbon::now();
         $this->customerRepository->createOrUpdate($customer);
+        Mail::to('s.akbarzadeh@m.icoa.it')->send(new RegisterReq($customer));
         $this->guard()->login($customer);
 
         return $response->setNextUrl($this->redirectPath())->setMessage(__('Registered successfully!'));
