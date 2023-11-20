@@ -20,7 +20,7 @@ use BaseHelper;
 use EcommerceHelper;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerificationAccountMail;
-
+use Botble\Ecommerce\Mail\RegisterReq;
 class RegisterController extends Controller
 {
     use RegistersUsers;
