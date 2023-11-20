@@ -2,7 +2,7 @@
 <script src="{{ Theme::asset()->url('plugins/lightGallery/js/lightgallery.min.js') }}"></script>
 
 <div class="row">
-    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-md-6 col-sm-12 col-xs-12">
         <div class="detail-gallery">
             <span class="zoom-icon"><i class="fi-rs-search"></i></span>
             <div class="product-image-slider">
