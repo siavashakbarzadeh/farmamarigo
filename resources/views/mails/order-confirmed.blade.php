@@ -225,20 +225,20 @@
                                                 </div>
                                                 @if ($order->discount_amount > 0)
                                                     <div class="row">
-                                                        <div class="col-12">
+                                                        <div class="col-6">
                                                             Sconto: <strong>{{ number_format($order->discount_amount, 2, ',', '.') }}€</strong>
                                                         </div>
                                                     </div>
                                                 @endif
 
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-6">
                                                         Totale ordine: <strong>{{ number_format($order->amount, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
                                                 @if ($order->description != NULL)
                                                     <div class="row">
-                                                        <div class="col-12">
+                                                        <div class="col-6">
                                                             Note: <strong>{{ $order->description }}</strong>
                                                         </div>
                                                     </div>
