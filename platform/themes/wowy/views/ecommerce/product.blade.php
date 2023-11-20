@@ -1,6 +1,6 @@
 @php
     $layout = MetaBox::getMetaData($product, 'layout', true);
-    $layout = ($layout && in_array($layout, array_keys(get_product_single_layouts()))) ? $layout : 'product-right-sidebar';
+    $layout = ($layout && in_array($layout, array_keys(get_product_single_layouts()))) ? $layout : 'product-full-width';
     Theme::layout($layout);
 
     Theme::asset()->usePath()->add('lightGallery-css', 'plugins/lightGallery/css/lightgallery.min.css');
