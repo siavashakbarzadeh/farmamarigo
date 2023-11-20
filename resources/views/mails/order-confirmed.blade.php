@@ -209,36 +209,36 @@
                                                 </table>
                                                 <br><br>
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         Subtotale: <strong>{{ number_format($order->sub_total, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-6 text-right">
+                                                    <div class="col-12 text-right">
                                                         Contributo per spedizione ed imballaggio: <strong>{{ number_format($order->shipping_amount, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         IVA: <strong>{{ number_format($order->tax_amount, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
                                                 @if ($order->discount_amount > 0)
                                                     <div class="row">
-                                                        <div class="col-6">
+                                                        <div class="col-12">
                                                             Sconto: <strong>{{ number_format($order->discount_amount, 2, ',', '.') }}€</strong>
                                                         </div>
                                                     </div>
                                                 @endif
 
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         Totale ordine: <strong>{{ number_format($order->amount, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
                                                 @if ($order->description != NULL)
                                                     <div class="row">
-                                                        <div class="col-6">
+                                                        <div class="col-12">
                                                             Note: <strong>{{ $order->description }}</strong>
                                                         </div>
                                                     </div>
