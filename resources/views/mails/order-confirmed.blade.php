@@ -85,10 +85,10 @@
                                                                 <tbody style='border:0;'>
                                                                 <tr style="border:0;">
                                                                     <td style="border:0;padding:15px;border-collapse:collapse; height: 70px; line-height: 70px">
-                                                                        <a href="https://marigopharma.marigo.collaudo.biz/" style="color: #fff; text-decoration: none !important;"
+                                                                        <a href="https://marigolab.it" style="color: #fff; text-decoration: none !important;"
                                                                            target="_blank">
                                                                             <img title="Logo"
-                                                                                 src="https://marigopharma.marigo.collaudo.biz/storage/logo.jpg"
+                                                                                 src="https://marigolab.it/storage/logo.jpg"
                                                                                  height="70"
                                                                                  style="max-width: 107px;display: block !important;height: auto !important;"
                                                                                  border="0"
@@ -140,120 +140,121 @@
                             <tr style='border:0;'>
                                 <td style="border:0;min-height: 400px; padding: 15px; font-size: 17px; ">
 
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h2>Ti ringraziamo per il tuo ordine!</h2>
-                                        </div>
-                                        <div class="card-body">
-                                            <p style='font-size:18px !important;' class="card-title">Gentile {{ $order->user->name }} ({{ $order->user->codice }})</p>
-                                            <p class="card-text">il tuo ordine #1000{{$order->id}} è confermato ed è pronto per la spedizione..</p>
-                                            <table class="table table-striped table-hover" style='border:0;width: 100%;'>
-                                                <thead style="border:0;">
-                                                <tr style="border:0;">
-                                                    <th style="border: 0;text-align:left">Codice</th>
-                                                    <th style="border: 0;text-align:left">{{ __('Product') }}</th>
-                                                    <th style="border: 0;text-align:right">Importo</th>
-                                                    <th style="border:0;width: 100px;text-align:center">{{ __('Amount') }}</th>
-                                                    <th style="border: 0;text-align:right" class="price text-right">{{ __('Total') }}</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody style="border:0;">
-                                                @foreach($order->products as $orderProduct)
-                                                    @php
-                                                        $product = get_products([
-                                                        'condition' => [
-                                                            'ec_products.id' => $orderProduct->product_id,
-                                                        ],
-                                                        'take'   => 1,
-                                                        'select' => [
-                                                            'ec_products.id',
-                                                            'ec_products.images',
-                                                            'ec_products.name',
-                                                            'ec_products.price',
-                                                            'ec_products.sale_price',
-                                                            'ec_products.sale_type',
-                                                            'ec_products.start_date',
-                                                            'ec_products.end_date',
-                                                            'ec_products.sku',
-                                                            'ec_products.is_variation',
-                                                            'ec_products.status',
-                                                            'ec_products.order',
-                                                            'ec_products.created_at',
-                                                        ],
-                                                    ]);
+                                    <div class="row">
+                                        <div class="card text-center">
+                                            <div class="card-body">
+                                                <p style='font-size:18px !important;' class="card-title">Gentile {{ $order->user->name }} ({{ $order->user->codice }})</p>
+                                                <p class="card-text">Abbiamo ricevuto il tuo ordine #1000{{ $order->id }}.</p>
+                                                <p class="card-text">Nel caso in cui tu ne avessi necessità, hai la possibilità di apportare modifiche al tuo ordine per i prossimi 30 minuti.</p>
 
-                                                    @endphp
-                                                    <tr style='border:0;text-align: center'>
-                                                        <td style="border: 0;text-align:left" class="align-middle">{{ $product->sku }}</td>
-                                                        <td style="border: 0;text-align:left" class="align-middle">
-                                                            {{ $orderProduct->product_name }}
-                                                            @if (!empty($orderProduct->options) && is_array($orderProduct->options))
-                                                                @foreach($orderProduct->options as $option)
-                                                                    @if (!empty($option['key']) && !empty($option['value']))
-                                                                        <p class="mb-0"><small>{{ $option['key'] }}:
-                                                                                <strong> {{ $option['value'] }}</strong></small></p>
-                                                                    @endif
-                                                                @endforeach
-                                                            @endif
-                                                        </td>
-                                                        <td style="border: 0;text-align:right" class="align-middle">{{ $orderProduct->amount_format }}</td>
-                                                        <td class="align-middle" style='text-align:right;border: 0;text-align: center'>{{ $orderProduct->qty }}</td>
-                                                        <td style="border: 0;text-align:right" class="money text-right align-middle">
-                                                            <strong>
-                                                                {{ $orderProduct->total_format }}
-                                                            </strong>
-                                                        </td>
+                                                <table class="table table-striped table-hover" style='border:0;width: 100%;'>
+                                                    <thead style="border: 0;">
+                                                    <tr style="border: 0;">
+                                                        <th style="border: 0;text-align:left">Codice</th>
+                                                        <th style="border: 0;text-align:left">{{ __('Product') }}</th>
+                                                        <th style="border: 0;text-align:right">Importo</th>
+                                                        <th style="border:0;width: 100px;text-align:center">{{ __('Amount') }}</th>
+                                                        <th style="border: 0;text-align:right" class="price text-right">{{ __('Total') }}</th>
                                                     </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
-                                            <br><br>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    Subtotale: <strong>{{ number_format($order->sub_total, 2, ',', '.') }}€</strong>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 text-right">
-                                                    Contributo per spedizione ed imballaggio: <strong>{{ number_format($order->shipping_amount, 2, ',', '.') }}€</strong>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    IVA: <strong>{{ number_format($order->tax_amount, 2, ',', '.') }}€</strong>
-                                                </div>
-                                            </div>
-                                            @if ($order->discount_amount > 0)
+                                                    </thead>
+                                                    <tbody style="border: 0;">
+                                                    @foreach($order->products as $orderProduct)
+                                                        @php
+                                                            $product = get_products([
+                                                            'condition' => [
+                                                                'ec_products.id' => $orderProduct->product_id,
+                                                            ],
+                                                            'take'   => 1,
+                                                            'select' => [
+                                                                'ec_products.id',
+                                                                'ec_products.images',
+                                                                'ec_products.name',
+                                                                'ec_products.price',
+                                                                'ec_products.sale_price',
+                                                                'ec_products.sale_type',
+                                                                'ec_products.start_date',
+                                                                'ec_products.end_date',
+                                                                'ec_products.sku',
+                                                                'ec_products.is_variation',
+                                                                'ec_products.status',
+                                                                'ec_products.order',
+                                                                'ec_products.created_at',
+                                                            ],
+                                                        ]);
+
+                                                        @endphp
+                                                        <tr style='border:0;text-align: center'>
+                                                            <td style="border: 0;text-align:left" class="align-middle">{{ $product->sku }}</td>
+                                                            <td style="border: 0;text-align:left" class="align-middle">
+                                                                {{ $orderProduct->product_name }}
+                                                                @if (!empty($orderProduct->options) && is_array($orderProduct->options))
+                                                                    @foreach($orderProduct->options as $option)
+                                                                        @if (!empty($option['key']) && !empty($option['value']))
+                                                                            <p class="mb-0"><small>{{ $option['key'] }}:
+                                                                                    <strong> {{ $option['value'] }}</strong></small></p>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endif
+                                                            </td>
+                                                            <td style="border: 0;text-align:right" class="align-middle">{{ $orderProduct->amount_format }}</td>
+                                                            <td class="align-middle" style='text-align:right;border: 0;text-align: center'>{{ $orderProduct->qty }}</td>
+                                                            <td style="border: 0;text-align:right" class="money text-right align-middle">
+                                                                <strong>
+                                                                    {{ $orderProduct->total_format }}
+                                                                </strong>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <br><br>
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        Sconto: <strong>{{ number_format($order->discount_amount, 2, ',', '.') }}€</strong>
+                                                        Subtotale: <strong>{{ number_format($order->sub_total, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
-                                            @endif
-
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    Totale ordine: <strong>{{ number_format($order->amount, 2, ',', '.') }}€</strong>
+                                                <div class="row">
+                                                    <div class="col-12 text-right">
+                                                        Contributo per spedizione ed imballaggio: <strong>{{ number_format($order->shipping_amount, 2, ',', '.') }}€</strong>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            @if ($order->description != NULL)
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        Note: <strong>{{ $order->description }}</strong>
+                                                        IVA: <strong>{{ number_format($order->tax_amount, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
-                                            @endif
-                                            <br>
-                                            <a href="https://marigopharma.marigo.collaudo.biz/customer/orders/view/{{$order->id}}" style='display: block;margin-block-end: 1em' class="btn btn-primary">Vedi il tuo
-                                                ordine</a>
-                                            <br>
-                                        </div>
-                                        <div class="card-footer text-body-secondary"> Per qualsiasi informazione, contattaci compilando <a href='https://marigopharma.marigo.collaudo.biz/contact'>il modulo richiesta informazioni </a>sul nostro sito web
-                                        </div>
+                                                @if ($order->discount_amount > 0)
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Sconto: <strong>{{ number_format($order->discount_amount, 2, ',', '.') }}€</strong>
+                                                        </div>
+                                                    </div>
+                                                @endif
 
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        Totale ordine: <strong>{{ number_format($order->amount, 2, ',', '.') }}€</strong>
+                                                    </div>
+                                                </div>
+                                                @if ($order->description != NULL)
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Note: <strong>{{ $order->description }}</strong>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <br>
+
+                                                <p class="card-text">Ricordiamo con l'occasione che è sempre possibile rivedere la storia dei tuoi ordini nella tua area riservata del nostro sito</p>
+                                                <a style='display:block;margin-block:1em !important' href="https://marigolab.it/customer/orders/{{$order->id}}/edit" class="btn btn-primary">Modifica ordine</a>
+                                                <br>
+                                            </div>
+                                        </div>
                                     </div>
-                                </td>
+                                    <div class="card-footer text-body-secondary"> Per qualsiasi informazione,contattaci compilando <a href='https://marigolab.it/contact'>il Modulo richiesta informazioni </a> sul nostro sito web<br>
+                                    </div>
 
+                                </td>
                             </tr>
                             <!--start space height -->
                             <tr style="border: 0;">
@@ -330,9 +331,9 @@
                                                                             </tr>
                                                                             <tr style='border:0;'>
                                                                                 <td valign="top" align="center" style=" display:block;border:0;font-size: 13px;line-height: 15px; text-align: center; font-family: Arial,Tahoma, Helvetica, sans-serif;color: #a7a9ac;font-weight: normal;border-collapse: collapse;">
-                                                                                    <a href='https://www.instagram.com/marigo_pharma/' ><img src='https://marigopharma.marigo.collaudo.biz/public/storage/instagram-3-2.png' style='margin:10px;' width='20' height='20'></a>
-                                                                                    <a href='https://www.facebook.com/marigopharma/' ><img src='https://marigopharma.marigo.collaudo.biz/public/storage/facebook-3.png' style='margin:10px;' width='20' height='20' ></a>
-                                                                                    <a href='https://www.linkedin.com/company/marigo-italia'  ><img src='https://marigopharma.marigo.collaudo.biz/public/storage/linkedin-3.png' style='margin:10px;' width='20' height='20' ></a>
+                                                                                    <a href='https://www.instagram.com/marigo_pharma/' ><img src='https://marigolab.it/public/storage/instagram-3-2.png' style='margin:10px;' width='20' height='20'></a>
+                                                                                    <a href='https://www.facebook.com/marigopharma/' ><img src='https://marigolab.it/public/storage/facebook-3.png' style='margin:10px;' width='20' height='20' ></a>
+                                                                                    <a href='https://www.linkedin.com/company/marigo-italia'  ><img src='https://marigolab.it/public/storage/linkedin-3.png' style='margin:10px;' width='20' height='20' ></a>
                                                                                 </td>
                                                                             </tr>
                                                                             </tbody>
