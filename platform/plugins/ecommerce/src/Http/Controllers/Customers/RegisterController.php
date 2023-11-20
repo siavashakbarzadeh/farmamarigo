@@ -19,6 +19,7 @@ use SeoHelper;
 use BaseHelper;
 use EcommerceHelper;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\VerificationAccountMail;
 
 class RegisterController extends Controller
 {

@@ -152,26 +152,26 @@
 
 <script>
 
-    // $(".form--auth--btn").click(function(e){
-    //     e.preventDefault();
-    //     let captchaInput = $("#captcha-login").val();
-    //
-    //     axios.post('/captcha-validator/login', { captcha: captchaInput })
-    //     .then(response => {
-    //         if(response.data.valid){
-    //             $('.captcha-error').html('');
-    //             $(".form--auth").submit();
-    //
-    //         }
-    //     })
-    //     .catch(error => {
-    //         if(error.response && error.response.status === 422){
-    //             $('.captcha-error').html('La somma inserita non è corretta');
-    //             refreshLoginForm();
-    //         }
-    //     });
-    //
-    // });
+    $(".form--auth--btn").click(function(e){
+        e.preventDefault();
+        let captchaInput = $("#captcha-login").val();
+
+        axios.post('/captcha-validator/login', { captcha: captchaInput })
+        .then(response => {
+            if(response.data.valid){
+                $('.captcha-error').html('');
+                $(".form--auth").submit();
+
+            }
+        })
+        .catch(error => {
+            if(error.response && error.response.status === 422){
+                $('.captcha-error').html('La somma inserita non è corretta');
+                refreshLoginForm();
+            }
+        });
+
+    });
 
 
     $("#contact-form-btn").click(function(e){
