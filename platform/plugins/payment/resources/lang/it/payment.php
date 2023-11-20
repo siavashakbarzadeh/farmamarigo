@@ -84,7 +84,7 @@ return [
     'payment_channel' => 'Payment Channel',
     'total' => 'Total',
     'status' => 'Status',
-    'default_payment_method' => 'Default payment method',
+    'default_payment_method' => 'Metodo di pagamento predefinito',
     'turn_off_success' => 'Turn off payment method successfully!',
     'saved_payment_method_success' => 'Saved payment method successfully!',
     'saved_payment_settings_success' => 'Saved payment settings successfully!',
