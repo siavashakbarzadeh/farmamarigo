@@ -76,7 +76,7 @@ return [
         'failed' => 'Failed',
     ],
     'payment_methods_instruction' => 'Guida i clienti a pagare direttamente. Puoi scegliere di pagare tramite consegna o bonifico bancario',
-    'payment_method_description' => 'Payment guide - (Displayed on the notice of successful purchase and payment page)',
+    'payment_method_description' => 'Guida al pagamento - (Visualizzato sulla pagina di avviso di acquisto e pagamento andato a buon fine)',
     'payment_via_cod' => 'Pagamento alla consegna',
     'payment_via_bank_transfer' => 'Bank transfer',
     'payment_pending' => 'Checkout successfully. Your payment is pending and will be checked by our staff.',
