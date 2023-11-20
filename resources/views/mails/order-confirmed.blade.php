@@ -209,17 +209,17 @@
                                                 </table>
                                                 <br><br>
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-6">
                                                         Subtotale: <strong>{{ number_format($order->sub_total, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-12 text-right">
+                                                    <div class="col-6 text-right">
                                                         Contributo per spedizione ed imballaggio: <strong>{{ number_format($order->shipping_amount, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-6">
                                                         IVA: <strong>{{ number_format($order->tax_amount, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
