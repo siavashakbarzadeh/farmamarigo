@@ -404,6 +404,8 @@
     "Password confirmation:": "Conferma password:",
     "Pay for your order at :site_title": "Paga il tuo ordine su :site_title",
     "Payment Type": "Modalità di pagamento",
+    "default_payment_method": "metodo di pagamento predefinito",
+    
     "Payment description": "Descrizione del pagamento",
     "Payment failed!": "Pagamento fallito!",
     "Payment method": "Metodo di pagamento",
