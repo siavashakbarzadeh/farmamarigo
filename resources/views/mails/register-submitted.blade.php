@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Registration of #10000{{$customer->id}}</title>
+{{--    <title>Registration of #10000{{$customer->id}}</title>--}}
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
@@ -148,52 +148,52 @@
                                             <p class="card-text">Hai ricevuto una nuova richiesta di registrazione al sito web, di seguito i dettagli del richiedente:</p>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    Ragione sociale: <strong>{{ $customer->ragione }}</strong>
+                                                    Ragione sociale: <strong>{{ $customer->name }}</strong>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 text-right">
-                                                    PIVA: <strong>{{ $customer->piva }}</strong>
+{{--                                                    PIVA: <strong>{{ $customer->piva }}</strong>--}}
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    CF: <strong>{{ $customer->cf }}</strong>
+{{--                                                    CF: <strong>{{ $customer->cf }}</strong>--}}
                                                 </div>
                                             </div>
                                               <div class="row">
                                                 <div class="col-12">
-                                                    Indirizzo: <strong>{{ $customer->indirizzo }}</strong>
+{{--                                                    Indirizzo: <strong>{{ $customer->indirizzo }}</strong>--}}
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    Cap: <strong>{{ $customer->cap }}</strong>
+{{--                                                    Cap: <strong>{{ $customer->cap }}</strong>--}}
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    Città: <strong>{{ $customer->citta }}</strong>
+{{--                                                    Città: <strong>{{ $customer->citta }}</strong>--}}
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    Provincia: <strong>{{ $customer->prov }}</strong>
+{{--                                                    Provincia: <strong>{{ $customer->prov }}</strong>--}}
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    Email: <strong>{{ $customer->email }}</strong>
+{{--                                                    Email: <strong>{{ $customer->email }}</strong>--}}
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    Phone: <strong>{{ $customer->phone }}</strong>
+{{--                                                    Phone: <strong>{{ $customer->phone }}</strong>--}}
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    Data di invio: <strong>{{ $customer->created_at }}</strong>
+{{--                                                    Data di invio: <strong>{{ $customer->created_at }}</strong>--}}
                                                 </div>
                                             </div>
                                             <br>
