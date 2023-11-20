@@ -214,7 +214,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-12 text-right">
+                                                    <div class="col-12 ">
                                                         Contributo per spedizione ed imballaggio: <strong>{{ number_format($order->shipping_amount, 2, ',', '.') }}€</strong>
                                                     </div>
                                                 </div>
