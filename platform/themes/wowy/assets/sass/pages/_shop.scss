@@ -49,7 +49,7 @@
     }
 
     .product-action-1 {
-        background-color: red;
+
         position: absolute;
         left: 50%;
         top: 50%;
@@ -813,7 +813,7 @@
                 -webkit-box-pack: justify;
                 -ms-flex-pack: justify;
                 justify-content: space-between;
-
+                background-color: red;
                 position: relative;
                 bottom: unset;
                 padding: 0 20px;
