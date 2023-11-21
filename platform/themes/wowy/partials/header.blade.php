@@ -177,14 +177,14 @@
                                             <img alt="{{ __('Sign In') }}" src="{{ Theme::asset()->url('images/icons/icon-user.svg') }}">
                                         </a>
                                     </div>
-                                    @if (EcommerceHelper::isWishlistEnabled())
-                                        <div class="header-action-icon-2">
-                                            <a href="{{ route('public.wishlist') }}" class="wishlist-count">
-                                                <img class="svgInject" alt="{{ __('Wishlist') }}" src="{{ Theme::asset()->url('images/icons/icon-heart.svg') }}">
-                                                <span class="pro-count blue">@if (auth('customer')->check())<span>{{ auth('customer')->user()->wishlist()->count() }}</span> @else <span>{{ Cart::instance('wishlist')->count() }}</span>@endif</span>
-                                            </a>
-                                        </div>
-                                    @endif
+{{--                                    @if (EcommerceHelper::isWishlistEnabled())--}}
+{{--                                        <div class="header-action-icon-2">--}}
+{{--                                            <a href="{{ route('public.wishlist') }}" class="wishlist-count">--}}
+{{--                                                <img class="svgInject" alt="{{ __('Wishlist') }}" src="{{ Theme::asset()->url('images/icons/icon-heart.svg') }}">--}}
+{{--                                                <span class="pro-count blue">@if (auth('customer')->check())<span>{{ auth('customer')->user()->wishlist()->count() }}</span> @else <span>{{ Cart::instance('wishlist')->count() }}</span>@endif</span>--}}
+{{--                                            </a>--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
                                     <div class="header-action-icon-2">
                                         <a class="mini-cart-icon" href="{{ route('public.cart') }}">
                                             <img alt="{{ __('Cart') }}" src="{{ Theme::asset()->url('images/icons/icon-cart.svg') }}">
@@ -194,14 +194,14 @@
                                             {!! Theme::partial('cart-panel') !!}
                                         </div>
                                     </div>
-                                    @if (EcommerceHelper::isCompareEnabled())
-                                        <div class="header-action-icon-2">
-                                            <a href="{{ route('public.compare') }}" class="compare-count">
-                                                <img class="svgInject" alt="{{ __('Compare') }}" src="{{ Theme::asset()->url('images/icons/icon-compare.svg') }}">
-                                                <span class="pro-count blue"><span>{{ Cart::instance('compare')->count() }}</span></span>
-                                            </a>
-                                        </div>
-                                    @endif
+{{--                                    @if (EcommerceHelper::isCompareEnabled())--}}
+{{--                                        <div class="header-action-icon-2">--}}
+{{--                                            <a href="{{ route('public.compare') }}" class="compare-count">--}}
+{{--                                                <img class="svgInject" alt="{{ __('Compare') }}" src="{{ Theme::asset()->url('images/icons/icon-compare.svg') }}">--}}
+{{--                                                <span class="pro-count blue"><span>{{ Cart::instance('compare')->count() }}</span></span>--}}
+{{--                                            </a>--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
 
 
 
