@@ -15,7 +15,7 @@
     <div class="row">
         @if (count($categories) > 0)
             <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item">
-                <h5 class="mb-20 widget__title" data-title="{{ __('Categories') }}">{{ __('By :name', ['name' => __('categories')]) }}</h5>
+                <h5 class="mb-20 widget__title" data-title="{{ __('Categories') }}">{{ __('categories') }}</h5>
                 <div class="custome-checkbox ps-custom-scrollbar">
                     @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.filter-product-category', ['categories' => $categories, 'indent' => null])
                 </div>
