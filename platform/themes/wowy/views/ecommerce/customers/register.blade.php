@@ -34,8 +34,8 @@
                             <p>{{ __('Please fill in the information below') }}</p>
                         </div>
 
-                        <form class="form--auth" method="POST" action="{{ route('customer.register.post') }}">
-                            @csrf
+<form class="form--auth" method="POST" action="{{ route('customer.register.post') }}">
+    @csrf
 <div class="row">
     <div class="col-lg-6">
                 <input type="hidden" class="form-control" id="customer_id" name="customer_id" required>

@@ -682,14 +682,14 @@ class PublicCheckoutController
         }
 
         $amount = Cart::instance('cart')->rawTotal() + (float)(session()->get('shippingAmount')) - $promotionDiscountAmount - $couponDiscountAmount;
-
+//        dd((float)$shippingAmount);
         $request->merge([
             'amount' => $amount ?: 0,
             'currency' => $request->input('currency', strtoupper(get_application_currency()->title)),
             'user_id' => $currentUserId,
             'shipping_method' => $isAvailableShipping ? $shippingMethodInput : '',
             'shipping_option' => $isAvailableShipping ? $request->input('shipping_option') : null,
-            'shipping_amount' => (float)$shippingAmount,
+            'shipping_amount' => (float)(session()->get('shippingAmount')),
             'tax_amount' => Cart::instance('cart')->rawTax(),
             'sub_total' => Cart::instance('cart')->rawSubTotal(),
             'coupon_code' => session()->get('applied_coupon_code'),

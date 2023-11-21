@@ -11,7 +11,7 @@
    $menu['id']=='cms-plugins-location'||
    $menu['id']=='cms-core-plugins'
    || $menu['id']=='cms-plugin-translation'
-
+|| $menu['id']=='cms-core-tools'
 
 
 
@@ -52,21 +52,21 @@
         <span class="title">Questionari</span>
     </a>
 </li>
-<li class="nav-item" id="3">
-    <a class="nav-link nav-toggle">
-        <i class="fas fa-shipping-fast" aria-hidden="true"></i>
-        <span class="title">Spedizione</span>
-        <span class="arrow "></span>
-    </a>
-    <ul class="sub-menu hidden-ul">
-        <li class="nav-item">
+{{--<li class="nav-item" id="3">--}}
+{{--    <a class="nav-link nav-toggle">--}}
+{{--        <i class="fas fa-shipping-fast" aria-hidden="true"></i>--}}
+{{--        <span class="title">Spedizione</span>--}}
+{{--        <span class="arrow "></span>--}}
+{{--    </a>--}}
+{{--    <ul class="sub-menu hidden-ul">--}}
+{{--        <li class="nav-item">--}}
 
-            <a href="{{ route('admin.ecommerce.spedizione.shipping.form') }}" class="nav-link">
-                <span class="title">Configurazione</span>
-            </a>
+{{--            <a href="{{ route('admin.ecommerce.spedizione.shipping.form') }}" class="nav-link">--}}
+{{--                <span class="title">Configurazione</span>--}}
+{{--            </a>--}}
 
 
-        </li>
+{{--        </li>--}}
 {{--        <li class="nav-item">--}}
 {{--            <a href="{{ route('admin.ecommerce.spedizione.create-offer') }}" class="nav-link">--}}
 {{--                <i class=""></i>--}}

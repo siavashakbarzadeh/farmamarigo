@@ -193,7 +193,7 @@
                 }
             });
     });
-    
+
     function refreshContactForm() {
         axios.get('/refresh-captcha/contact-form')
             .then(response => {
@@ -208,14 +208,14 @@
 
     $(".register--btn--submit").click(function(e) {
         e.preventDefault();
-    
+
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
         axios.post('/captcha-validator/register', { captcha: captchaInput })
             .then(response => {
                 if(response.data.valid){
                     // If CAPTCHA and all other validations are passed, submit the form
-                    $('form').submit();
+                    $('.form--auth').submit();
                 } else {
                     // Handle CAPTCHA validation failure
                     $('.captcha-error').html('Invalid CAPTCHA');
@@ -228,9 +228,9 @@
                     refreshRegisterFormCaptcha();
                 }
             });
-    
+
     });
-    
+
     function refreshRegisterFormCaptcha() {
         axios.get('/refresh-captcha/register')
             .then(response => {

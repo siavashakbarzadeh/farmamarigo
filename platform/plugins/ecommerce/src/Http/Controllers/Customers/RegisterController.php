@@ -3,6 +3,7 @@
 namespace Botble\Ecommerce\Http\Controllers\Customers;
 
 use App\Http\Controllers\Controller;
+use Botble\Ecommerce\Mail\OrderConfirmed;
 use Botble\Ecommerce\Models\Address;
 use Botble\ACL\Traits\RegistersUsers;
 use Botble\Base\Http\Responses\BaseHttpResponse;
@@ -17,7 +18,9 @@ use Theme;
 use SeoHelper;
 use BaseHelper;
 use EcommerceHelper;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerificationAccountMail;
+use Botble\Ecommerce\Mail\RegisterReq;
 class RegisterController extends Controller
 {
     use RegistersUsers;
@@ -76,7 +79,7 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
-        dd( $data);
+//        dd( $data);
         $rules = [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:ec_customers',
@@ -131,11 +134,13 @@ class RegisterController extends Controller
                     'customer_id' => $customer->id,
                     'is_default' => true,
                 ]);
+                Mail::to('s.akbarzadeh@m.icoa.it')->send(new RegisterReq($customer));
                 return $customer;
             });
         } catch (\Throwable $e) {
             dd($e);
         }
+//        Mail::to($order->user->email)->send(new OrderConfirmed($order));
     }
 
     protected function guard()
