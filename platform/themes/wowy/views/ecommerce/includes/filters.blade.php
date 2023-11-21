@@ -51,23 +51,23 @@
                 'take'      => 20,
             ]);
         @endphp
-        @if (count($tags) > 0)
-            <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item">
-                <h5 class="mb-20 widget__title" data-title="{{ __('Tag') }}">{{ __('By :name', ['name' => __('tags')]) }}</h5>
-                <div class="custome-checkbox">
-                    @foreach($tags as $tag)
-                        <input class="form-check-input"
-                               name="tags[]"
-                               type="checkbox"
-                               id="tag-filter-{{ $tag->id }}"
-                               value="{{ $tag->id }}"
-                               @if (in_array($tag->id, request()->input('tags', []))) checked @endif>
-                        <label class="form-check-label" for="tag-filter-{{ $tag->id }}"><span class="d-inline-block">{{ $tag->name }}</span> <span class="d-inline-block">({{ $tag->products_count }})</span> </label>
-                        <br>
-                    @endforeach
-                </div>
-            </div>
-        @endif
+{{--        @if (count($tags) > 0)--}}
+{{--            <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item">--}}
+{{--                <h5 class="mb-20 widget__title" data-title="{{ __('Tag') }}">{{ __('By :name', ['name' => __('tags')]) }}</h5>--}}
+{{--                <div class="custome-checkbox">--}}
+{{--                    @foreach($tags as $tag)--}}
+{{--                        <input class="form-check-input"--}}
+{{--                               name="tags[]"--}}
+{{--                               type="checkbox"--}}
+{{--                               id="tag-filter-{{ $tag->id }}"--}}
+{{--                               value="{{ $tag->id }}"--}}
+{{--                               @if (in_array($tag->id, request()->input('tags', []))) checked @endif>--}}
+{{--                        <label class="form-check-label" for="tag-filter-{{ $tag->id }}"><span class="d-inline-block">{{ $tag->name }}</span> <span class="d-inline-block">({{ $tag->products_count }})</span> </label>--}}
+{{--                        <br>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        @endif--}}
 
         <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item" data-type="price">
             <h5 class="mb-20 widget__title" data-title="{{ __('Price') }}">{{ __('By :name', ['name' => __('Price')]) }}</h5>
