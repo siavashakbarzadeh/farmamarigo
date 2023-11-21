@@ -49,9 +49,10 @@
     }
 
     .product-action-1 {
+        background-color: red;
         position: absolute;
         left: 50%;
-        top: 90%;
+        top: 50%;
         transform: translateX(-50%) translateY(-50%);
         opacity: 0;
         visibility: hidden;
