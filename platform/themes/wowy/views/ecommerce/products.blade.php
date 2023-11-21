@@ -18,7 +18,7 @@
 
 <div class="col-lg-12">
     <a class="shop-filter-toogle" href="#">
-        <span class="fal fa-4x bg-danger fa-filter mr-5  ml-0"></span>
+        <span class="fal fa-2x bg-danger fa-filter mr-5  ml-0"></span>
         <span class="title">{{ __('Filters') }}</span>
         <i class="far fa-angle-up fa-xl angle-down"></i>
         <i class="far fa-angle-down  fa-xl angle-up"></i>
