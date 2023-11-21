@@ -25,23 +25,23 @@
         @php
             $brands = get_all_brands(['status' => \Botble\Base\Enums\BaseStatusEnum::PUBLISHED], [], ['products']);
         @endphp
-        @if (count($brands) > 0)
-            <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item">
-                <h5 class="mb-20 widget__title" data-title="{{ __('Brand') }}">{{ __('By :name', ['name' => __('Brands')]) }}</h5>
-                <div class="custome-checkbox ps-custom-scrollbar">
-                    @foreach($brands as $brand)
-                        <input class="form-check-input"
-                               name="brands[]"
-                               type="checkbox"
-                               id="brand-filter-{{ $brand->id }}"
-                               value="{{ $brand->id }}"
-                               @if (in_array($brand->id, request()->input('brands', []))) checked @endif>
-                        <label class="form-check-label" for="brand-filter-{{ $brand->id }}"><span class="d-inline-block">{{ $brand->name }}</span> <span class="d-inline-block">({{ $brand->products_count }})</span> </label>
-                        <br>
-                    @endforeach
-                </div>
-            </div>
-        @endif
+{{--        @if (count($brands) > 0)--}}
+{{--            <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item">--}}
+{{--                <h5 class="mb-20 widget__title" data-title="{{ __('Brand') }}">{{ __('By :name', ['name' => __('Brands')]) }}</h5>--}}
+{{--                <div class="custome-checkbox ps-custom-scrollbar">--}}
+{{--                    @foreach($brands as $brand)--}}
+{{--                        <input class="form-check-input"--}}
+{{--                               name="brands[]"--}}
+{{--                               type="checkbox"--}}
+{{--                               id="brand-filter-{{ $brand->id }}"--}}
+{{--                               value="{{ $brand->id }}"--}}
+{{--                               @if (in_array($brand->id, request()->input('brands', []))) checked @endif>--}}
+{{--                        <label class="form-check-label" for="brand-filter-{{ $brand->id }}"><span class="d-inline-block">{{ $brand->name }}</span> <span class="d-inline-block">({{ $brand->products_count }})</span> </label>--}}
+{{--                        <br>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        @endif--}}
 
         @php
             $tags = app(\Botble\Ecommerce\Repositories\Interfaces\ProductTagInterface::class)->advancedGet([
