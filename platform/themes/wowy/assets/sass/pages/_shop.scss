@@ -813,7 +813,7 @@
                 -webkit-box-pack: justify;
                 -ms-flex-pack: justify;
                 justify-content: space-between;
-                background-color: red;
+                //background-color: red;
                 position: relative;
                 bottom: unset;
                 padding: 0 20px;
@@ -823,7 +823,8 @@
                     border: none;
                     width: auto;
                     border-radius: 50px;
-                    background-color: $color-brand;
+                    //background-color: $color-brand;
+                    background-color: red;
                     color: #fff;
                     text-align: center;
                     margin-right: 0;
