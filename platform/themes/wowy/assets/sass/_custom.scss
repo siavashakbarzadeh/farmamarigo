@@ -560,7 +560,7 @@ body.show-admin-bar {
 .product-cart-wrap {
     .product-action-1 {
         text-align: center;
-
+        border: solid 1px red;
         a.action-btn, button {
             &.button-loading {
                 background-color: $color-primary !important;
