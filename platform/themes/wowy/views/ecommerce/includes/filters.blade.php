@@ -70,7 +70,7 @@
 {{--        @endif--}}
 
         <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item" data-type="price">
-            <h5 class="mb-20 widget__title" data-title="{{ __('Price') }}">{{ __('By :name', ['name' => __('Price')]) }}</h5>
+            <h5 class="mb-20 widget__title" data-title="{{ __('Price') }}">{{ __('Price') }}</h5>
             <div class="price-filter range">
                 <div class="price-filter-inner">
                     <div class="slider-range"></div>
