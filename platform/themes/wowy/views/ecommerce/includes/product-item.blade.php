@@ -14,9 +14,9 @@
                 @if (EcommerceHelper::isWishlistEnabled())
                     <a aria-label="{{ __('Add To Wishlist') }}" href="#" class="action-btn hover-up js-add-to-wishlist-button" data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="far fa-heart"></i></a>
                 @endif
-                @if (EcommerceHelper::isCompareEnabled())
-                    <a aria-label="{{ __('Add To Compare') }}" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}"><i class="far fa-exchange-alt"></i></a>
-                @endif
+{{--                @if (EcommerceHelper::isCompareEnabled())--}}
+{{--                    <a aria-label="{{ __('Add To Compare') }}" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}"><i class="far fa-exchange-alt"></i></a>--}}
+{{--                @endif--}}
             </div>
             <div class="product-badges product-badges-position product-badges-mrg">
                 @if ($product->isOutOfStock())
