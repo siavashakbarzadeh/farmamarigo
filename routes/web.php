@@ -62,6 +62,9 @@ Route::get('/importBrand', function () {
 Route::get('/importTax', function () {
     return view('importtaxes');
 });
+Route::get('/marchi', function () {
+    return view('Brands.show');
+});
 // Route::prefix('/admin/ecommerce/questionnaires')
 //     ->name('admin.ecommerce.questionnaires.')
 //     ->middleware('auth')
@@ -138,22 +141,21 @@ Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
         });
 
         Route::prefix('/captcha-validator')->group(function (Router $router) {
-    
+
             $router->post('/contact-form', [CaptchaHandler::class, 'validateContactForm'])->name('validateContactForm');
             $router->post('/register', [CaptchaHandler::class, 'validateRegisterForm'])->name('validateRegisterForm');
             $router->post('/login', [CaptchaHandler::class, 'validateLoginForm'])->name('validateLoginForm');
-        
-        
-        
+
+
+
         });
-        
+
         Route::prefix('/refresh-captcha')->group(function (Router $router) {
-        
+
             $router->get('/contact-form', [CaptchaHandler::class, 'refreshContactForm'])->name('refreshContactForm');
             $router->get('/register', [CaptchaHandler::class, 'refreshRegisterForm'])->name('refreshRegisterForm');
             $router->get('/login', [CaptchaHandler::class, 'refreshLoginForm'])->name('refreshLoginForm');
-        
-        
-        
+
+
+
         });
-        
