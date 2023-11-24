@@ -35,6 +35,8 @@ class MarchiController extends BaseController
         $cards = [
             ['image' => 'image1.jpg', 'title' => 'Card 1', 'description' => 'Description for card 1'],
             ['image' => 'image2.jpg', 'title' => 'Card 2', 'description' => 'Description for card 2'],
+            ['image' => 'image2.jpg', 'title' => 'Card 3', 'description' => 'Description for card 3'],
+            ['image' => 'image2.jpg', 'title' => 'Card 4', 'description' => 'Description for card 4'],
             // Add more cards as needed
         ];
 
