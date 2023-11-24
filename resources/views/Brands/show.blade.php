@@ -1,3 +1,7 @@
+@php
+    SeoHelper::setTitle(__('Questionnaire'));
+    Theme::fireEventGlobalAssets();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
