@@ -9,7 +9,7 @@
                 </a>
             </div>
 {{--            --}}
-            <div class=" product-action-1">
+            <div class=" product-action-1 smalli">
                 <a aria-label="{{ __('Quick View') }}" href="#" class="action-btn hover-up js-quick-view-button" data-url="{{ route('public.ajax.quick-view', $product->id) }}"><i class="far fa-eye"></i></a>
                 @if (EcommerceHelper::isWishlistEnabled())
                     <a aria-label="{{ __('Add To Wishlist') }}" href="#" class="action-btn hover-up js-add-to-wishlist-button" data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="far fa-heart"></i></a>
@@ -63,7 +63,7 @@
             {!! apply_filters('ecommerce_after_product_price_in_listing', null, $product) !!}
 
             @if (EcommerceHelper::isCartEnabled())
-                <div class="product-action-1 show bg-danger" @if (!EcommerceHelper::isReviewEnabled()) style="bottom: 10px;" @endif>
+                <div class="product-action-1 show " @if (!EcommerceHelper::isReviewEnabled()) style="bottom: 10px;" @endif>
                     <a aria-label="{{ __('Add To Cart') }}" class="action-btn hover-up add-to-cart-button" data-id="{{ $product->id }}" data-url="{{ route('public.cart.add-to-cart') }}" href="#"><i class="far fa-shopping-bag"></i></a>
                 </div>
             @endif
