@@ -1,4 +1,4 @@
-@extends(BaseHelper::getAdminMasterLayoutTemplate())
+
 
 @php
 
