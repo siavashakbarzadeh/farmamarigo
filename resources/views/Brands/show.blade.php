@@ -13,8 +13,6 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -26,11 +24,13 @@
                     <img src="{{ asset('images/' . $card['image']) }}" class="card-img-top" alt="{{ $card['title'] }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ $card['title'] }}</h5>
+                        <hr>
 {{--                        <p class="card-text">{{ $card['description'] }}</p>--}}
                         <a href="https://www.marigopharma.it/wp-content/uploads/2018/02/Cat_ProntoLeggo_2023_WEB.pdf" target="_blank" class="custom-link btn btn-md btn-accent btn-outline btn-icon-left btn-block">SCARICA IL CATALOGO <i class="fa fa-download"></i></a>
                         <a href="https://www.marigopharma.it/richiesta-informazioni-prodotti-per-farmacie-e-parafarmacie/" tabindex="-1" class="pushed custom-link btn btn-md btn-accent btn-outline btn-icon-left btn-block">RICHIEDI INFORMAZIONI <i class="fa fa-envelope"></i></a>
-                        <a href="#" class="btn btn-primary">SCARICA IL CATALOGO</a>
-                        <a href="#" class="btn btn-secondary">RICHIEDI INFORMAZIONI</a>
+
+{{--                        <a href="#" class="btn btn-primary">SCARICA IL CATALOGO</a>--}}
+{{--                        <a href="#" class="btn btn-secondary">RICHIEDI INFORMAZIONI</a>--}}
                     </div>
                 </div>
             </div>
