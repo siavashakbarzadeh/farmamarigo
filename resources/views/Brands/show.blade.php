@@ -21,6 +21,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $card['title'] }}</h5>
 {{--                        <p class="card-text">{{ $card['description'] }}</p>--}}
+                        <a href="https://www.marigopharma.it/wp-content/uploads/2018/02/Cat_ProntoLeggo_2023_WEB.pdf" target="_blank" class="custom-link btn btn-md btn-accent btn-outline btn-icon-left btn-block">SCARICA IL CATALOGO <i class="fa fa-download"></i></a>
                         <a href="#" class="btn btn-primary">SCARICA IL CATALOGO</a>
                         <a href="#" class="btn btn-secondary">RICHIEDI INFORMAZIONI</a>
                     </div>
