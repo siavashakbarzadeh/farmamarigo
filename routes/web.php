@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\MarchiController;
 use Botble\Ecommerce\Jobs\OrderSubmittedJob;
 use Botble\Ecommerce\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
@@ -62,9 +63,10 @@ Route::get('/importBrand', function () {
 Route::get('/importTax', function () {
     return view('importtaxes');
 });
-Route::get('/marchi', function () {
-    return view('Brands.show');
-});
+//Route::get('/marchi', function () {
+//    return view('Brands.show');
+//});
+Route::get('/marchi', [MarchiController::class, 'index']);
 // Route::prefix('/admin/ecommerce/questionnaires')
 //     ->name('admin.ecommerce.questionnaires.')
 //     ->middleware('auth')
