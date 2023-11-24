@@ -33,7 +33,7 @@ class MarchiController extends BaseController
     public function index()
     {
         $cards = [
-            ['image' => 'image1.jpg', 'title' => 'Card 1', 'description' => 'Description for card 1'],
+            ['image' => 'image1.jpg', 'title' => 'Prontoleggo – Occhiali da lettura', ],
             ['image' => 'image2.jpg', 'title' => 'Card 2', 'description' => 'Description for card 2'],
             ['image' => 'image3.jpg', 'title' => 'Card 3', 'description' => 'Description for card 3'],
             ['image' => 'image4.jpg', 'title' => 'Card 4', 'description' => 'Description for card 4'],
