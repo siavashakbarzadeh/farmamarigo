@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container mt-5">
+<div class="container-fluid mt-5">
     <div class="row">
         @foreach ($cards as $card)
             <div class="col-md-3 mb-4">
