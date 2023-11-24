@@ -1,9 +1,7 @@
 @extends(BaseHelper::getAdminMasterLayoutTemplate())
 
 @php
-//    $layout = MetaBox::getMetaData($post, 'layout', true);
-    $layout = ($layout && in_array($layout, array_keys(get_blog_single_layouts()))) ? $layout : 'blog-right-sidebar';
-    Theme::layout($layout);
+
 @endphp
 <!DOCTYPE html>
 <html lang="en">
