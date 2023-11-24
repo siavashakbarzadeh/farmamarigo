@@ -35,8 +35,23 @@ class MarchiController extends BaseController
         $cards = [
             ['image' => 'image1.jpg', 'title' => 'Card 1', 'description' => 'Description for card 1'],
             ['image' => 'image2.jpg', 'title' => 'Card 2', 'description' => 'Description for card 2'],
-            ['image' => 'image2.jpg', 'title' => 'Card 3', 'description' => 'Description for card 3'],
-            ['image' => 'image2.jpg', 'title' => 'Card 4', 'description' => 'Description for card 4'],
+            ['image' => 'image3.jpg', 'title' => 'Card 3', 'description' => 'Description for card 3'],
+            ['image' => 'image4.jpg', 'title' => 'Card 4', 'description' => 'Description for card 4'],
+            ['image' => 'image5.jpg', 'title' => 'Card 5', 'description' => 'Description for card 4'],
+            ['image' => 'image6.jpg', 'title' => 'Card 6', 'description' => 'Description for card 4'],
+            ['image' => 'image2.jpg', 'title' => 'Card 7', 'description' => 'Description for card 4'],
+            ['image' => 'image2.jpg', 'title' => 'Card 8', 'description' => 'Description for card 4'],
+            ['image' => 'image2.jpg', 'title' => 'Card 9', 'description' => 'Description for card 4'],
+            ['image' => 'image2.jpg', 'title' => 'Card 10', 'description' => 'Description for card 4'],
+            ['image' => 'image11.jpg', 'title' => 'Card 11', 'description' => 'Description for card 11'],
+            ['image' => 'image11.jpg', 'title' => 'Card 11', 'description' => 'Description for card 11'],
+            ['image' => 'image12.jpg', 'title' => 'Card 11', 'description' => 'Description for card 11'],
+            ['image' => 'image13.jpg', 'title' => 'Card 11', 'description' => 'Description for card 11'],
+            ['image' => 'image14.jpg', 'title' => 'Card 11', 'description' => 'Description for card 11'],
+            ['image' => 'image15.jpg', 'title' => 'Card 11', 'description' => 'Description for card 11'],
+            ['image' => 'image16.jpg', 'title' => 'Card 11', 'description' => 'Description for card 11'],
+            ['image' => 'image17.jpg', 'title' => 'Card 11', 'description' => 'Description for card 11'],
+            ['image' => 'image18.jpg', 'title' => 'Card 11', 'description' => 'Description for card 11'],
             // Add more cards as needed
         ];
 
