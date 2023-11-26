@@ -1,4 +1,4 @@
-@extends('core/base::layouts.base')
+
 
 
 
