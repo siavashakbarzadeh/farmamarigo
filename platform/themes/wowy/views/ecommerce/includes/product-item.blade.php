@@ -9,15 +9,15 @@
                 </a>
             </div>
 {{--            --}}
-            <div class=" product-action-1 smalli">
-                <a aria-label="{{ __('Quick View') }}" href="#" class="action-btn hover-up js-quick-view-button" data-url="{{ route('public.ajax.quick-view', $product->id) }}"><i class="far fa-eye"></i></a>
-                @if (EcommerceHelper::isWishlistEnabled())
-                    <a aria-label="{{ __('Add To Wishlist') }}" href="#" class="action-btn hover-up js-add-to-wishlist-button" data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="far fa-heart"></i></a>
-                @endif
+{{--            <div class=" product-action-1 smalli">--}}
+{{--                <a aria-label="{{ __('Quick View') }}" href="#" class="action-btn hover-up js-quick-view-button" data-url="{{ route('public.ajax.quick-view', $product->id) }}"><i class="far fa-eye"></i></a>--}}
+{{--                @if (EcommerceHelper::isWishlistEnabled())--}}
+{{--                    <a aria-label="{{ __('Add To Wishlist') }}" href="#" class="action-btn hover-up js-add-to-wishlist-button" data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="far fa-heart"></i></a>--}}
+{{--                @endif--}}
 {{--                @if (EcommerceHelper::isCompareEnabled())--}}
 {{--                    <a aria-label="{{ __('Add To Compare') }}" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}"><i class="far fa-exchange-alt"></i></a>--}}
 {{--                @endif--}}
-            </div>
+{{--            </div>--}}
             <div class="product-badges product-badges-position product-badges-mrg">
                 @if ($product->isOutOfStock())
                     <span style="background-color: #000; font-size: 11px;">{{ __('Out Of Stock') }}</span>
