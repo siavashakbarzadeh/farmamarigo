@@ -148,7 +148,7 @@ class WowyController extends PublicController
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/cat-lime.jpg', 'title' => 'Beautytime – Lime personalizzate', 'catalog' => 'Description for card 11'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-pasante-1.jpg', 'title' => 'Pasante – Profilattici', 'catalog' => 'https://marigopharma.marigo.collaudo.biz/storage/pasante.pdf'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/rowo-compresse-caldo-freddo.jpg', 'title' => 'Röwo – Compresse caldo freddo', 'catalog' => 'Description for card 11'],
-            ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-prontoleggo-sunglasses.jpg', 'title' => 'Prontoleggo – Sunglasses', 'catalog' => 'Description for card 11'],
+            ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-prontoleggo-sunglasses.jpg', 'title' => 'Prontoleggo – Sunglasses', 'catalog' => 'https://marigopharma.marigo.collaudo.biz/storage/cat-prontoleggo-2023-settembre.pdf'],
 
             // Add more cards as needed
         ];
