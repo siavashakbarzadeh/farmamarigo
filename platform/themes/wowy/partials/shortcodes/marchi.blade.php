@@ -20,7 +20,7 @@
 {{--    </div>--}}
 {{--</section>--}}
 
-<div class="container-fluid mt-5">
+<div class="container mt-5">
     <div class="row">
         @foreach ($brands as $card)
             <div class="col-md-3 mb-4">
