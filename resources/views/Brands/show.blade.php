@@ -43,7 +43,7 @@
 {{--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>--}}
 {{--</body>--}}
 {{--</html>--}}
-{!! Theme::partial('header') !!}
+{{--{!! Theme::partial('header') !!}--}}
 
 <main class="main" id="main-section">
     @if (Theme::get('hasBreadcrumb', true))

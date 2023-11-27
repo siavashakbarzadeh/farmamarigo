@@ -18,6 +18,7 @@ use Botble\Ecommerce\Models\Offers;
 use Botble\Ecommerce\Models\OffersDetail;
 use Botble\Ecommerce\Models\offerType;
 use Botble\Ecommerce\Models\PriceList;
+use Botble\Ecommerce\Models\ProductCategory;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use App\Jobs\OfferDeactivationJob;
