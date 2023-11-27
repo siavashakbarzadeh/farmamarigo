@@ -22,7 +22,7 @@
 
 <div class="container-fluid mt-5">
     <div class="row">
-        @foreach ($cards as $card)
+        @foreach ($brands as $card)
             <div class="col-md-3 mb-4">
                 <div class="card">
                     <img src="{{ $card['image'] }}" class="card-img-top" alt="{{ $card['title'] }}">
