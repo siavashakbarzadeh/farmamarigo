@@ -66,7 +66,7 @@ Route::get('/importTax', function () {
 //Route::get('/marchi', function () {
 //    return view('Brands.show');
 //});
-Route::get('/marchi', [MarchiController::class, 'index']);
+//Route::get('/marchi', [MarchiController::class, 'index']);
 // Route::prefix('/admin/ecommerce/questionnaires')
 //     ->name('admin.ecommerce.questionnaires.')
 //     ->middleware('auth')
