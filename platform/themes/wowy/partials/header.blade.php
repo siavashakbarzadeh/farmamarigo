@@ -36,6 +36,7 @@
 
         @php
             $headerStyle = theme_option('header_style') ?: '';
+            dd($headerStyle);
             $page = Theme::get('page');
             if ($page) {
                 $headerStyle = $page->getMetaData('header_style', true) ?: $headerStyle;
