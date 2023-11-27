@@ -31,7 +31,7 @@
                 --color-body: {{ theme_option('color_body', '#4f5d77') }};
             }
         </style>
-        @dd(Theme::header())
+{{--        @dd(Theme::header())--}}
         {!! Theme::header() !!}
 
         @php
