@@ -245,7 +245,18 @@ a,button,h4,img,input,span{transition:all .3s ease 0s}@keyframes slideleft{10%{o
     width: 100% !important;
 }
 
-
+.btn-marchi{
+    border: 1px solid red; !important;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 54px;
+    text-transform: uppercase;
+    transition: all .3s linear 0s;
+}
 
 #homepageimages a:hover {letter-spacing: 0.1rem;font-size:1rem;padding: 1rem 1.5rem;background: #005cbe;color: #E52728;animation: box 2s infinite;}
 
