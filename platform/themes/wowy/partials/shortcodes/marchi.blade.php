@@ -35,7 +35,7 @@
 
                                                 <a  href="{{ $card['catalog'] }}" style='
     /* background: var(--color-brand); */
-    border: 1px solid red;
+    border: 1px solid red; !important;
     border-radius: 4px;
     color: #fff;
     cursor: pointer;
