@@ -156,7 +156,7 @@
                                 <a href="{{ route('public.index') }}"><img src="{{ RvMedia::getImageUrl(theme_option('logo')) }}" alt="{{ theme_option('site_title') }}"></a>
                             </div>
                         @endif
-                        @if (is_plugin_active('ecommerce'))
+                        @if (is_plugin_active('ecommerce')&& isset($categories))
                             <div class="search-style-2">
                                 <form action="{{ route('public.products') }}" method="get">
                                     <div class="form-group--icon">

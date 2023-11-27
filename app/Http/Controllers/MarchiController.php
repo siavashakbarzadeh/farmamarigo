@@ -56,7 +56,7 @@ class MarchiController extends BaseController
             // Add more cards as needed
         ];
 
-        $categories = \Botble\Ecommerce\Models\ProductCategory::all();
-        return view('Brands.show', compact('cards','categories'));
+//        $categories = \Botble\Ecommerce\Models\ProductCategory::all();
+        return view('Brands.show', compact('cards',));
     }
 }
