@@ -33,7 +33,7 @@ class MarchiController extends BaseController
     public function index()
     {
         $cards = [
-            ['image' => 'image1.jpg', 'title' => 'Prontoleggo – Occhiali da lettura', ],
+            ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-prontoleggo.jpg', 'title' => 'Prontoleggo – Occhiali da lettura', ],
             ['image' => 'image2.jpg', 'title' => 'Brand Italia – Linea antizanzare, maschere viso e linea arnica', 'description' => 'Description for card 2'],
             ['image' => 'image3.jpg', 'title' => 'Nuvita – Puericultura Leggera', 'description' => 'Description for card 3'],
             ['image' => 'image4.jpg', 'title' => 'Petformance – Articoli per la salute, il benessere e l’igiene di cani e gatti', 'description' => 'Description for card 4'],

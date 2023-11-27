@@ -22,7 +22,7 @@
         @foreach ($cards as $card)
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img src="{{ asset('images/' . $card['image']) }}" class="card-img-top" alt="{{ $card['title'] }}">
+                    <img src="{{ asset($card['image']) }}" class="card-img-top" alt="{{ $card['title'] }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ $card['title'] }}</h5>
                         <hr>
