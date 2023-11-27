@@ -131,7 +131,7 @@ class WowyController extends PublicController
     public static function ajaxGetMarchi()
     {
         $cards = [
-            ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-prontoleggo.jpg', 'title' => 'Prontoleggo – Occhiali da lettura','catalog' => 'Description for card 11' ],
+            ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-prontoleggo.jpg', 'title' => 'Prontoleggo – Occhiali da lettura','catalog' => 'https://marigopharma.marigo.collaudo.biz/storage/cat-prontoleggo-2023-settembre.pdf' ],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/evi-brand-italia.jpg', 'title' => 'Brand Italia – Linea antizanzare, maschere viso e linea arnica', 'catalog' => 'Description for card 2'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/nuvita.jpg', 'title' => 'Nuvita – Puericultura Leggera', 'catalog' => 'Description for card 3'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/evi-petformance.jpg', 'title' => 'Petformance – Articoli per la salute, il benessere e l’igiene di cani e gatti', 'catalog' => 'https://marigopharma.marigo.collaudo.biz/storage/pet-formance.pdf'],
@@ -148,7 +148,7 @@ class WowyController extends PublicController
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/cat-lime.jpg', 'title' => 'Beautytime – Lime personalizzate', 'catalog' => 'Description for card 11'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-pasante-1.jpg', 'title' => 'Pasante – Profilattici', 'catalog' => 'https://marigopharma.marigo.collaudo.biz/storage/pasante.pdf'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/rowo-compresse-caldo-freddo.jpg', 'title' => 'Röwo – Compresse caldo freddo', 'catalog' => 'Description for card 11'],
-            ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-prontoleggo-sunglasses.jpg', 'title' => 'Prontoleggo – Sunglasses', 'catalog' => 'https://marigopharma.marigo.collaudo.biz/storage/cat-prontoleggo-2023-settembre.pdf'],
+            ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-prontoleggo-sunglasses.jpg', 'title' => 'Prontoleggo – Sunglasses', 'catalog' => ''],
 
             // Add more cards as needed
         ];
