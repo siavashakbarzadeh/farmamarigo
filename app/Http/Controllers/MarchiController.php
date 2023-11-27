@@ -51,7 +51,7 @@ class MarchiController extends BaseController
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-pasante-1.jpg', 'title' => 'Pasante – Profilattici', 'description' => 'Description for card 11'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/rowo-compresse-caldo-freddo.jpg', 'title' => 'Röwo – Compresse caldo freddo', 'description' => 'Description for card 11'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/copertina-prontoleggo-sunglasses.jpg', 'title' => 'Prontoleggo – Sunglasses', 'description' => 'Description for card 11'],
-           
+
             // Add more cards as needed
         ];
 
