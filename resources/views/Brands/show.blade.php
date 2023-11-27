@@ -43,14 +43,11 @@
 {{--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>--}}
 {{--</body>--}}
 {{--</html>--}}
-@php Theme::layout('default'); @endphp
+@php
+use Theme;
+Theme::layout('default');
+@endphp
 
-{!! Theme::partial('header') !!}
-
-<main class="main" id="main-section">
-    @if (Theme::get('hasBreadcrumb', true))
-        {!! Theme::partial('breadcrumb') !!}
-    @endif
 
         <div class="container-fluid mt-5">
             <div class="row">
@@ -73,6 +70,5 @@
                 @endforeach
             </div>
         </div>
-</main>
 
-{!! Theme::partial('footer') !!}
+
