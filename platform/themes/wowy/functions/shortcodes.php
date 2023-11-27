@@ -34,6 +34,13 @@ app()->booted(function () {
     shortcode()->setAdminConfig('CouponBanner', function ($attributes) {
         return Theme::partial('shortcodes.CouponBanner-admin-config', compact('attributes'));
     });
+    add_shortcode('Marchi', __('Marchi'), __('Marchi'), function ($shortcode) {
+        return Theme::partial('shortcodes.Marchi', compact('shortcode'));
+    });
+
+    shortcode()->setAdminConfig('Marchi', function ($attributes) {
+        return Theme::partial('shortcodes.Marchi-admin-config', compact('attributes'));
+    });
     add_shortcode('title', __('Title'), __('Title'), function ($shortcode) {
         return Theme::partial('shortcodes.title', [
             'title' => $shortcode->title
