@@ -45,7 +45,7 @@
     padding: 12px 54px;
     text-transform: uppercase;
     transition: all .3s linear 0s;
-'class=" btn btn-md mt-1">SCARICA IL CATALOGO <i class="fa fa-download"></i></a>
+'class="btn btn-md mt-1">SCARICA IL CATALOGO <i class="fa fa-download"></i></a>
                                                 <a href="https://marigopharma.marigo.collaudo.biz/contact" class="btn  btn-md mt-1">RICHIEDI INFORMAZIONI <i class="fa fa-envelope"></i></a>
                     </div>
                 </div>
