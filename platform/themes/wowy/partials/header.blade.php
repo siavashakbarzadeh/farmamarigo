@@ -186,10 +186,10 @@
 {{--                                        </div>--}}
 {{--                                    @endif--}}
                                     <div class="header-action-icon-2">
-                                        <a class="mini-cart-icon" @if(auth('customer')): href="{{ route('public.cart') }}"@else: href="{{ route('customer.login') }}"@endif
+                                       
+                                            <a class="mini-cart-icon" href="@if(auth('customer')) {{ route('public.cart') }} @else {{ route('customer.login') }} @endif">
 
-
-                                        >
+                                            </a>
                                             <img alt="{{ __('Cart') }}" src="{{ Theme::asset()->url('images/icons/icon-cart.svg') }}">
                                             <span class="pro-count blue">{{ Cart::instance('cart')->count() }}</span>
                                         </a>
