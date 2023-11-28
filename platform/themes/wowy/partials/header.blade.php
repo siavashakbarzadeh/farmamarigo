@@ -186,11 +186,8 @@
 {{--                                        </div>--}}
 {{--                                    @endif--}}
                                     <div class="header-action-icon-2">
-                                        <a class="mini-cart-icon" @if(auth('customer')){ href="{{ route('public.cart') }}"
-                                           }
-                                           @else{
-                                           href="{{ route('customer.login') }}"
-                                           }
+                                        <a class="mini-cart-icon" @if(auth('customer')): href="{{ route('public.cart') }}"@else: href="{{ route('customer.login') }}"@endif
+
 
                                         >
                                             <img alt="{{ __('Cart') }}" src="{{ Theme::asset()->url('images/icons/icon-cart.svg') }}">
