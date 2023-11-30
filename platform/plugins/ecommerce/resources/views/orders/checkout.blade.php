@@ -13,6 +13,7 @@
             <div class="container" id="main-checkout-product-info">
                 <div class="row">
 
+
                     <div class="col-lg-12 col-md-6 ">
                         <div class="d-none d-sm-block">
                             @include('plugins/ecommerce::orders.partials.logo')
@@ -28,8 +29,47 @@
                                 </div>
                             </div>
 
-                            {!! apply_filters(RENDER_PRODUCTS_IN_CHECKOUT_PAGE, $products) !!}
-
+                            <h5 class="checkout-payment-title">{{ __('Riepilogo Ordine') }}</h5>
+                            <h6>Verifica il tuo ordine in basso e poi clicca su “Invia l’ordine” per inviarlo.</h6>
+                            <div id="cart-item" class="position-relative">
+    
+                                <div class="payment-info-loading" style="display: none;">
+                                    <div class="payment-info-loading-content">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    </div>
+                                </div>
+    
+                                {{-- {!! apply_filters(RENDER_PRODUCTS_IN_CHECKOUT_PAGE, $products) !!} --}}
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Codice</th>
+                                            <th>Nome</th>
+                                            <th>Prezzo</th>
+                                            <th>Quantita</th>
+                                            <th>Totale parziale</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                @foreach ($products as $product)
+                                        @php
+                                        $userid=request()->user('customer')->id;
+                                        $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+                                        @endphp
+                                <tr>
+                                    <td>{{  $product->sku }}</td>
+                                    <td>{{ $product->cartItem->name }}</td>
+                                    <td>
+                                        @if(!isEmpty($pricelist))
+                                        {{ format_price($pricelist->final_price)}}
+                                        @endif
+                                        {{ format_price($product->cartItem->price)}}
+                                    </td>
+                                    <td>{{ $product->cartItem->qty }}</td>
+                                </tr>
+                                @endforeach
+                                    </tbody>
+                                </table>
                             <div class="mt-2 p-2">
                                 <div class="row">
                                     <div class="col-6">

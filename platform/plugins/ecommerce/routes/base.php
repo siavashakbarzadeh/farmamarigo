@@ -299,6 +299,11 @@ Route::group(['namespace' => 'Botble\Ecommerce\Http\Controllers', 'middleware' =
                 'uses' => 'CustomImport@users',
             ]);
 
+            Route::get('/pricelist', [
+                'as' => 'pricelist',
+                'uses' => 'CustomImport@pricelist',
+                ]); 
+
             Route::get('/user-tags', [
                 'as' => 'user-tags',
                 'uses' => 'CustomImport@user-tags',

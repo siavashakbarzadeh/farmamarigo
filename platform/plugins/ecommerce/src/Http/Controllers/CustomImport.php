@@ -38,6 +38,9 @@ class CustomImport extends BaseController
             $specialChars[rand(0, strlen($specialChars) - 1)]
         ];
 
+
+
+
         // All combined characters
         $allChars = $lowercase . $uppercase . $numbers . $specialChars;
 
@@ -422,6 +425,38 @@ class CustomImport extends BaseController
             dd($e);
         }
         return redirect()->back()->withSuccess('IT WORKS!');
+    }
+
+    public function pricelist(){
+        set_time_limit(600);  // sets maximum execution time to 10 minutes (600 seconds)
+
+        $oldRows = DB::connection('mysql2')->select('select * from cli_scontistica');
+        $pricelist = [];
+        DB::connection('mysql')->table('ec_pricelist')->where('customer_id', '!=', 1289419242)->delete();
+
+
+        foreach($oldRows as $oldRow) {
+            $pricelist[] = [
+                'customer_id' => $oldRow->fk_cliente_id,
+                'product_id'  => $oldRow->fk_articolo_id,
+                'final_price' => $oldRow->prezzo,
+            ];
+
+            // If the size of the pricelist reaches, say, 5000 records, insert them
+            if (count($pricelist) == 5000) {
+                DB::connection('mysql')->table('ec_pricelist')->insert($pricelist);
+                $pricelist = [];  // Reset the pricelist
+            }
+        }
+
+        // Insert any remaining records in the pricelist
+        if (count($pricelist) > 0) {
+            DB::connection('mysql')->table('ec_pricelist')->insert($pricelist);
+        }
+
+        return view('plugins/ecommerce::customImport.foreign-keys', compact('pricelist'));
+
+
     }
 
     private function _generateProduct($product_name,$product,$price,$brands,$taxId)
