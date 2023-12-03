@@ -33,6 +33,7 @@ class PublicCartController extends Controller
         }
 
         $product = $this->productRepository->findById($request->input('id'));
+        $product_price= $request->input('product_price');
 
         if (! $product) {
             return $response
@@ -110,9 +111,11 @@ class PublicCartController extends Controller
                 ->setError()
                 ->setMessage(__('Product :product is out of stock!', ['product' => $product->original_product->name ?: $product->name]));
         }
-
+        $product->price=$product_price;
+        if($request->input('final_price')){
+            $product->sale_price=$request->input('final_price');
+        }
         $cartItems = OrderHelper::handleAddCart($product, $request);
-
         $response
             ->setMessage(__(
                 'Added product :product to cart successfully!',
@@ -137,6 +140,7 @@ class PublicCartController extends Controller
             return $response
                 ->setNextUrl($nextUrl);
         }
+
 
         return $response
             ->setData([
