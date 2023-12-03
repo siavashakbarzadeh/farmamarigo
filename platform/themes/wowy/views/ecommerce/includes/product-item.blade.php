@@ -56,7 +56,7 @@
             <div class="product-price">
                 <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
                 @php
-                dd(auth()->user());
+                dd(request()->user());
                 if(auth()->user('customer')!==NULL){
                     dd(auth()->user('customer')->id);
                     $userid=request()->user('customer')->id;
