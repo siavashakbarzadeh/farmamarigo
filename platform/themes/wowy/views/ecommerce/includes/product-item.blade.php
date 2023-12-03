@@ -62,6 +62,7 @@
                     if(isset($pricelist[0])){
                         $reserved_price=$pricelist[0]['final_price'];
                     }
+                    dd($reserved_price);
                 }
                 @endphp
                 @if(isset($reserved_price))
