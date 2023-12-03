@@ -57,7 +57,7 @@
                 <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
                 @php
                 if(request()->user()!==NULL){
-                    $userid=request()->user()->id;
+                    $userid=request()->user('customer')->id;
                     dd($userid);
                     $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
                     if(isset($pricelist[0])){
