@@ -65,8 +65,9 @@
                 @endphp
                 @if(isset($reserved_price))
                     @if ($reserved_price !== $product->price)
+                    <span>{{ format_price($reserved_price) }}</span>
+
                         <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
-                        <span>{{ format_price($reserved_price) }}</span>
                     @endif
                 @else
                 <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
