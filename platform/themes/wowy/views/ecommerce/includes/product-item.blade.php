@@ -60,6 +60,7 @@
                     $userid=request()->user()->id;
                     $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
                     if(isset($pricelist[0])){
+                        dd($pricelist[0]);
                         $reserved_price=$pricelist[0]['final_price'];
                     }
                     dd($reserved_price);
