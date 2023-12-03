@@ -43,6 +43,8 @@ class PublicCartController extends Controller
             }else{
                 $product_price=$product->price;
             }
+        }else{
+            $product_price=$product->price;
         }
         if (! $product) {
             return $response
