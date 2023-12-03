@@ -33,8 +33,15 @@ class PublicCartController extends Controller
         }
 
         $product = $this->productRepository->findById($request->input('id'));
-        $product_price= $request->input('product_price');
-
+        if(auth('customer')->user()!==NULL){
+            $userid=auth('customer')->user()->id;
+            $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+            if(isset($pricelist[0])){
+                $product_price=$pricelist[0]->final_price;
+            }else{
+                $product_price=$product->price;
+            }
+        }
         if (! $product) {
             return $response
                 ->setError()

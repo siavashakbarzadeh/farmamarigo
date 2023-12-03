@@ -449,7 +449,7 @@
 
             let $form = _self.closest('form');
             let data = $form.serializeArray();
-            data.push({name: 'checkout', value: _self.prop('name') === 'checkout' ? 1 : 0});
+            data.push({ name: 'checkout', value: _self.prop('name') === 'checkout' ? 1 : 0 });
 
             $.ajax({
                 type: 'POST',
@@ -611,7 +611,7 @@
                 }
                 for (let j = filesAmount - 1; j >= 0; j--) {
                     let reader = new FileReader();
-                    reader.onload = function(event) {
+                    reader.onload = function (event) {
                         viewerList
                             .find('.image-viewer__item[data-id=' + j + ']')
                             .find('img')
@@ -628,7 +628,7 @@
             let input = this;
             let $input = $(input);
             let maxSize = $input.data('max-size');
-            Object.keys(input.files).map(function(i) {
+            Object.keys(input.files).map(function (i) {
                 if (maxSize && (input.files[i].size / 1024) > maxSize) {
                     let message = $input.data('max-size-message')
                         .replace('__attribute__', input.files[i].name)
@@ -1156,7 +1156,7 @@
                 $inputs.map(function (i, el) {
                     const $input = $(el);
                     if ($input.val()) {
-                        data.push({name: $input.attr('name'), value: $input.val()});
+                        data.push({ name: $input.attr('name'), value: $input.val() });
 
                     }
                 });
@@ -1169,7 +1169,7 @@
                 const nextHref = $form.attr('action') + (uriData && uriData.length ? ('?' + uriData.join('&')) : '');
 
                 // add to params get to popstate not show json
-                data.push({name: 's', value: 1});
+                data.push({ name: 's', value: 1 });
 
                 $.ajax({
                     url: $form.attr('action'),
