@@ -15,6 +15,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use OrderHelper;
 use SeoHelper;
+use Illuminate\Support\Facades\DB;
+
 use Theme;
 
 class PublicCartController extends Controller
