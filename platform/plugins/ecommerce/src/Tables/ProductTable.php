@@ -254,6 +254,14 @@ class ProductTable extends TableAbstract
                             'class' => 'ms-1',
                         ])->toHtml(),
                     ],
+                    [
+                        'className' => 'action-item',
+                        'text' =>  Html::tag('span', 'Pricelist', [
+                            'data-action' => 'pricelist',
+                            'data-href' => route('ecommerce.customImport.pricelist'),
+                            'class' => 'ms-1',
+                        ])->toHtml(),
+                    ],
                 ],
             ];
         }
