@@ -58,6 +58,7 @@
                 @php
                 if(request()->user()!==NULL){
                     $userid=request()->user()->id;
+                    dd($userid);
                     $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
                     if(isset($pricelist[0])){
                         dd($pricelist[0]);
