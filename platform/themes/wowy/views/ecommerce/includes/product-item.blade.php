@@ -51,18 +51,26 @@
                 </div>
             @endif
 
-            {!! apply_filters('ecommerce_before_product_price_in_listing', null, $product) !!}
+            <!-- {!! apply_filters('ecommerce_before_product_price_in_listing', null, $product) !!} -->
 
             <div class="product-price">
                 <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
                 @php
                 dd(request()->user());
-                $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
-
+                if(isset(request()->user())){
+                    $userid=request()->user()->id;
+                    $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+                    if(isset($pricelist[0])){
+                        $reserved_price=$pricelist[0]['final_price'];
+                    }
+                }
                 @endphp
-                @if ($product->front_sale_price !== $product->price)
-                    <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                @if(isset($reserved_price))
+                    @if ($reserved_price !== $product->price)
+                        <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                    @endif
                 @endif
+
             </div>
 
             {!! apply_filters('ecommerce_after_product_price_in_listing', null, $product) !!}
