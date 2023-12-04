@@ -63,11 +63,35 @@
                 </div>
                 <div class="clearfix product-price-cover">
                     <div class="product-price primary-color float-left">
-                        <ins><span class="text-brand">{{ format_price($product->front_sale_price_with_taxes) }}</span></ins>
-                        @if ($product->front_sale_price !== $product->price)
-                            <ins><span class="old-price font-md ml-15">{{ format_price($product->price_with_taxes) }}</span></ins>
-                            <span class="save-price font-md color3 ml-15"><span class="percentage-off d-inline-block">{{ get_sale_percentage($product->price, $product->front_sale_price) }}</span> <span class="d-inline-block">{{ __('Off') }}</span></span>
+                        @php
+                        if(auth('customer')->user()!==NULL){
+                            $userid=auth('customer')->user()->id;
+                            $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+                            if(isset($pricelist[0])){
+                                $reserved_price=$pricelist[0]->final_price;
+                            }
+                        }
+                        @endphp
+                        <ins><span class="text-brand">
+                            @if(isset($reserved_price))
+                                @if ($reserved_price !== $product->price)
+                                        {{ format_price($reserved_price) }}
+                                    @else
+                                        {{ format_price($product->front_sale_price_with_taxes) }}
+                                @endif
+                            @else
+                            {{ format_price($product->front_sale_price_with_taxes) }}
+
+                            @endif
+                        </span></ins>
+
+                        @if(isset($reserved_price))
+                            @if ($reserved_price !== $product->price)
+                                <ins><span class="old-price font-md ml-15">{{ format_price($product->price_with_taxes) }}</span></ins>
+                                <span class="save-price font-md color3 ml-15"><span class="percentage-off d-inline-block">{{ get_sale_percentage($product->price, $reserved_price) }}</span> <span class="d-inline-block">{{ __('Discount') }}</span></span>
+                            @endif
                         @endif
+
                     </div>
                 </div>
                 <div class="bt-1 border-color-1 mt-15 mb-15"></div>
