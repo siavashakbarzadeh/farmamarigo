@@ -63,7 +63,6 @@
                 </div>
                 <div class="clearfix product-price-cover">
                     <div class="product-price primary-color float-left">
-                        <ins><span class="text-brand">{{ format_price($product->front_sale_price_with_taxes) }}</span></ins>
                         @php
                         if(auth('customer')->user()!==NULL){
                             $userid=auth('customer')->user()->id;
@@ -73,10 +72,23 @@
                             }
                         }
                         @endphp
-                @if(isset($reserved_price))
-                    @if ($reserved_price !== $product->price)
+                        <ins><span class="text-brand">
+                            @if(isset($reserved_price))
+                                @if ($reserved_price !== $product->price)
+                                        {{ format_price($reserved_price) }}
+                                    @else
+                                        {{ format_price($product->front_sale_price_with_taxes) }}
+                                @endif
+                            @else
+                            {{ format_price($product->front_sale_price_with_taxes) }}
+
+                            @endif
+                        </span></ins>
+
+                        @if(isset($reserved_price))
+                            @if ($reserved_price !== $product->price)
                                 <ins><span class="old-price font-md ml-15">{{ format_price($product->price_with_taxes) }}</span></ins>
-                                <span class="save-price font-md color3 ml-15"><span class="percentage-off d-inline-block">{{ get_sale_percentage($product->price, $reserved_price) }}</span> <span class="d-inline-block">{{ __('Off') }}</span></span>
+                                <span class="save-price font-md color3 ml-15"><span class="percentage-off d-inline-block">{{ get_sale_percentage($product->price, $reserved_price) }}</span> <span class="d-inline-block">{{ __('Discount') }}</span></span>
                             @endif
                         @endif
 
