@@ -73,10 +73,13 @@
                             }
                         }
                         @endphp
-                        @if ($reserved_price !== $product->price)
-                            <ins><span class="old-price font-md ml-15">{{ format_price($product->price_with_taxes) }}</span></ins>
-                            <span class="save-price font-md color3 ml-15"><span class="percentage-off d-inline-block">{{ get_sale_percentage($product->price, $reserved_price) }}</span> <span class="d-inline-block">{{ __('Off') }}</span></span>
+                @if(isset($reserved_price))
+                    @if ($reserved_price !== $product->price)
+                                <ins><span class="old-price font-md ml-15">{{ format_price($product->price_with_taxes) }}</span></ins>
+                                <span class="save-price font-md color3 ml-15"><span class="percentage-off d-inline-block">{{ get_sale_percentage($product->price, $reserved_price) }}</span> <span class="d-inline-block">{{ __('Off') }}</span></span>
+                            @endif
                         @endif
+
                     </div>
                 </div>
                 <div class="bt-1 border-color-1 mt-15 mb-15"></div>
