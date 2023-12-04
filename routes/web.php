@@ -166,3 +166,4 @@ Route::get('/pricelist', [\App\Http\Controllers\PricelistController::class, 'pri
     ->middleware(['check.auth.customer'])
     ->name('pricelist.index');
 Route::get('/checksession', [QuestionnaireController::class, 'checksession']);
+

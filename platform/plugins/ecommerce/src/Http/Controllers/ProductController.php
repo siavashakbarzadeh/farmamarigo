@@ -21,7 +21,6 @@ use Botble\Ecommerce\Traits\ProductActionsTrait;
 use EcommerceHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class ProductController extends BaseController
 {
@@ -207,6 +206,4 @@ class ProductController extends BaseController
             ->setPreviousUrl(route('products.index'))
             ->setMessage(trans('core/base::notices.update_success_message'));
     }
-
-
 }
