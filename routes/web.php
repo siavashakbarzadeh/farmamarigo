@@ -161,3 +161,5 @@ Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
 
 
         });
+
+        Route::get('/checksession', [QuestionnaireController::class, 'checksession']);
