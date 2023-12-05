@@ -292,7 +292,7 @@ class CustomImport extends BaseController
                     $price = $productsWithoutVariant['prezzo'];
                     $taxId = $productsWithoutVariant['fk_codice_iva_id'];
                     $sku=$productsWithoutVariant['codice'];
-                    $id=$product['pk_articolo_id'];
+                    $id=$productsWithoutVariant['pk_articolo_id'];
                     if (in_array($product_name, $items)) {
                         $productItem = \Botble\Ecommerce\Models\Product::query()->where('name', $product_name)->first();
                         $productItem->update([
