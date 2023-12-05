@@ -458,17 +458,19 @@ class CustomImport extends BaseController
 
     private function _generateProduct($productId,$product_name,$product,$price,$brands,$taxId,$sku)
     {
-        $productItem= \Botble\Ecommerce\Models\Product::query()->create([
-            'id'=>$productId,
+        $productItem = new \Botble\Ecommerce\Models\Product([
             'name' => str_replace('&', 'and', trim($product_name)),
             'description' => 'Description',
             'price' => $price,
             'tax_id' => $taxId,
             'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
             'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
-            'sku'=>$sku,
+            'sku' => $sku,
         ]);
-        dd($productId,$productItem->id);
+        
+        $productItem->id = $productId; // Manually setting the ID
+        $productItem->save();
+        
         $tax = Tax::find($taxId);
         if ($tax){
             DB::table('ec_tax_products')->insert([
