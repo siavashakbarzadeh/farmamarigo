@@ -147,7 +147,7 @@ class LoginController extends Controller
                 ]);
             }
 
-            
+            SaveCartController::addSessionToCart(NULL);
             SaveCartController::reCalculateCart($customer->id);
             SaveCartController::saveCart(session('cart'),$customer->id);
 
