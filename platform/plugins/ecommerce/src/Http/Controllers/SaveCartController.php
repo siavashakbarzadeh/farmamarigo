@@ -138,7 +138,7 @@ public static function reCalculateCart($user_id=null) {
 
 }
 
-public static function logut($userId){
+public static function logout($userId){
     if($user_id!==null){
         $cartRecord = SaveCart::where('user_id', $user_id)->first();
 
@@ -147,7 +147,7 @@ public static function logut($userId){
     
             // Clear the current cart instance before re-adding items
             Cart::instance('cart')->destroy();
-            
+
             if (isset($cart->cart)) {
                 foreach ($cart->cart as $item) {
 
