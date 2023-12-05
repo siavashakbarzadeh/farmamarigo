@@ -166,36 +166,7 @@ public static function addSessionToCart($user_id = null) {
     }
 }
 
-private static function addOrUpdateSavedCart($item, $user_id) {
-    // Retrieve the saved cart for the user
-    $cartRecord = SaveCart::where('user_id', $user_id)->first();
 
-    if ($cartRecord) {
-        // If there's an existing cart, decode its contents
-        $savedCart = json_decode($cartRecord->cart, true);
-
-        // Update or add the item to the saved cart
-        $savedCart[$item->id] = [
-            'qty' => $item->qty,
-            'price' => $item->price,
-            // Add other item details as needed
-        ];
-
-        // Save the updated cart
-        $cartRecord->cart = json_encode($savedCart);
-        $cartRecord->save();
-    } else {
-        // If there's no existing cart, create a new one
-        SaveCart::create([
-            'id' => self::generateRandomID(10),
-            'user_id' => $user_id,
-            'cart' => json_encode([$item->id => ['qty' => $item->qty, 'price' => $item->price]]),
-            'expired' => false,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-    }
-}
 
 
 }
