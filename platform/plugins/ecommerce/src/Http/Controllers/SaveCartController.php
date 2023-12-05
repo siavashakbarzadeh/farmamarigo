@@ -86,85 +86,93 @@ public static function deleteSavedCart(){
     }
 }
 
-public static function reCalculateCart($user_id) {
-    $cartRecord = SaveCart::where('user_id', $user_id)->first();
+public static function reCalculateCart($user_id=null) {
+    if($user_id!==null){
+        $cartRecord = SaveCart::where('user_id', $user_id)->first();
 
-    if ($cartRecord != null) {
-        $cart = json_decode($cartRecord->cart);
-
-        // Clear the current cart instance before re-adding items
-        Cart::instance('cart')->destroy();
-
-        if (isset($cart->cart)) {
-            foreach ($cart->cart as $item) {
-                $pricelist = DB::connection('mysql')->table('ec_pricelist')
-                ->where('customer_id', $user_id)
-                ->where('product_id', $item->id)
-                ->first();
-
-                if($pricelist!==null){
-                    $price=$pricelist->final_price;
-                }else{
-                    $price=$item->price;
+        if ($cartRecord != null) {
+            $cart = json_decode($cartRecord->cart);
+    
+            // Clear the current cart instance before re-adding items
+            Cart::instance('cart')->destroy();
+    
+            if (isset($cart->cart)) {
+                foreach ($cart->cart as $item) {
+                    $pricelist = DB::connection('mysql')->table('ec_pricelist')
+                    ->where('customer_id', $user_id)
+                    ->where('product_id', $item->id)
+                    ->first();
+    
+                    if($pricelist!==null){
+                        $price=$pricelist->final_price;
+                    }else{
+                        $price=$item->price;
+                    }
+    
+                    if ($price !== null) {
+                        Cart::instance('cart')->add(
+                            $item->id,
+                            BaseHelper::clean($item->name),
+                            $item->qty,
+                            floatval($price),
+                            [
+                                'image' => RvMedia::getImageUrl($item->options->image, 'thumb', false, RvMedia::getDefaultImage()),
+                                'attributes' => '',
+                                'taxRate' => $item->options->taxRate,
+                                "options" => [],
+                                "extras" => []
+                            ]
+                        );
+                    }
                 }
-
-                if ($price !== null) {
-                    Cart::instance('cart')->add(
-                        $item->id,
-                        BaseHelper::clean($item->name),
-                        $item->qty,
-                        floatval($price),
-                        [
-                            'image' => RvMedia::getImageUrl($item->options->image, 'thumb', false, RvMedia::getDefaultImage()),
-                            'attributes' => '',
-                            'taxRate' => $item->options->taxRate,
-                            "options" => [],
-                            "extras" => []
-                        ]
-                    );
-                }
+    
+                return true; // Or some other success response
+            } else {
+                return false; // No items in the saved cart
             }
-
-            // Apply discounts and offers
-            foreach (Cart::instance('cart')->content() as $key => $cartItem) {
-                // ... Your existing logic for applying discounts and offers ...
-            }
-
-            return true; // Or some other success response
         } else {
-            return false; // No items in the saved cart
+            return false; // No saved cart record found
         }
-    } else {
-        return false; // No saved cart record found
+    }else{
+
+    
+            // Clear the current cart instance before re-adding items
+            dd(Cart::instance('cart')->cart);
+    
+            if (isset($cart->cart)) {
+                foreach ($cart->cart as $item) {
+
+                    $product=Product::find($item->id);
+                    $price=$product->price;
+                        Cart::instance('cart')->add(
+                            $item->id,
+                            BaseHelper::clean($item->name),
+                            $item->qty,
+                            floatval($price),
+                            [
+                                'image' => RvMedia::getImageUrl($item->options->image, 'thumb', false, RvMedia::getDefaultImage()),
+                                'attributes' => '',
+                                'taxRate' => $item->options->taxRate,
+                                "options" => [],
+                                "extras" => []
+                            ]
+                        );
+                }
+    
+                return true; // Or some other success response
+            }else {
+                return false; // No saved cart record found
+            }
+
+
+
+
+        // go back to normal price
+
     }
+
 }
 
-public static function addSessionToCart($user_id = null) {
-    // Check if the user is logged in. If not, use a default or guest user ID.
-    if ($user_id === null) {
-        $user_id = auth('customer')->check() ? auth('customer')->user()->id : 'guest';
-    }
-
-    // Assuming you have a method to get the current cart (e.g., from session)
-    $currentCart = Cart::instance('cart')->content();
-
-    // Loop through the items in the current cart
-    foreach ($currentCart as $item) {
-        // Check if the product ID exists in the price lists and update the price if necessary
-        $pricelist = DB::connection('mysql')->table('ec_pricelist')
-                        ->where('customer_id', $user_id)
-                        ->where('product_id', $item->id)
-                        ->first();
-
-        if ($pricelist) {
-            // Update the price in the current item
-            $item->price = $pricelist->final_price;
-        }
-
-        // Now, add or update this item in the saved cart
-        self::addOrUpdateSavedCart($item, $user_id);
-    }
-}
 
 
 
