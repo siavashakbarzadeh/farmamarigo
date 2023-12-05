@@ -20,6 +20,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
 use OrderHelper;
 use SeoHelper;
+use Illuminate\Support\Facades\DB;
 use Theme;
 
 class PublicCartController extends Controller
@@ -50,7 +51,7 @@ class PublicCartController extends Controller
         }else{
             $product_price=$product->price;
         }
-        
+
         if (! $product) {
             return $response
                 ->setError()
