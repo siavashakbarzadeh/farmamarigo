@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
 use SeoHelper;
 use Theme;
+use Botble\Ecommerce\Http\Controllers\SaveCartController;
+
 
 class LoginController extends Controller
 {
@@ -144,6 +146,22 @@ class LoginController extends Controller
                     ],
                 ]);
             }
+
+            
+            SaveCartController::reCalculateCart($customer->id);
+            SaveCartController::saveCart(session('cart'),$customer->id);
+
+            // Check for first successful login
+            if (is_null($customer->first_access)) {
+                // It's the customer's first login
+                $customer->first_access = now();
+                $customer->last_access = now();
+            } else {
+                // It's a subsequent login
+                $customer->last_access = now();
+            }
+            $customer->save(); // Save the changes
+
 
             return $this->baseAttemptLogin($request);
         }

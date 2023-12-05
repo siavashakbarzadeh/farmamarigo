@@ -153,10 +153,62 @@ public static function reCalculateCart($user_id) {
     }
 }
 
-public static function addSessionToCart($user_id) {
+public static function addSessionToCart($user_id = null) {
+    // Check if the user is logged in. If not, use a default or guest user ID.
+    if ($user_id === null) {
+        $user_id = auth('customer')->check() ? auth('customer')->user()->id : 'guest';
+    }
 
+    // Assuming you have a method to get the current cart (e.g., from session)
+    $currentCart = Cart::instance('cart')->content();
 
+    // Loop through the items in the current cart
+    foreach ($currentCart as $item) {
+        // Check if the product ID exists in the price lists and update the price if necessary
+        $pricelist = DB::connection('mysql')->table('ec_pricelist')
+                        ->where('customer_id', $user_id)
+                        ->where('product_id', $item->id)
+                        ->first();
 
+        if ($pricelist) {
+            // Update the price in the current item
+            $item->price = $pricelist->final_price;
+        }
+
+        // Now, add or update this item in the saved cart
+        self::addOrUpdateSavedCart($item, $user_id);
+    }
+}
+
+private static function addOrUpdateSavedCart($item, $user_id) {
+    // Retrieve the saved cart for the user
+    $cartRecord = SaveCart::where('user_id', $user_id)->first();
+
+    if ($cartRecord) {
+        // If there's an existing cart, decode its contents
+        $savedCart = json_decode($cartRecord->cart, true);
+
+        // Update or add the item to the saved cart
+        $savedCart[$item->id] = [
+            'qty' => $item->qty,
+            'price' => $item->price,
+            // Add other item details as needed
+        ];
+
+        // Save the updated cart
+        $cartRecord->cart = json_encode($savedCart);
+        $cartRecord->save();
+    } else {
+        // If there's no existing cart, create a new one
+        SaveCart::create([
+            'id' => self::generateRandomID(10),
+            'user_id' => $user_id,
+            'cart' => json_encode([$item->id => ['qty' => $item->qty, 'price' => $item->price]]),
+            'expired' => false,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+    }
 }
 
 

@@ -762,6 +762,8 @@ class PublicCheckoutController
         session()->forget('cart');
         session()->forget('note');
 
+        SaveCartController::deleteSavedCart();
+
         return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
     }
 
