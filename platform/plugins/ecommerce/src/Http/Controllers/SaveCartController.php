@@ -133,6 +133,46 @@ public static function reCalculateCart($user_id=null) {
         } else {
             return false; // No saved cart record found
         }
+
+}
+
+}
+
+public static function logut($userId){
+    if($user_id!==null){
+        $cartRecord = SaveCart::where('user_id', $user_id)->first();
+
+        if ($cartRecord != null) {
+            $cart = json_decode($cartRecord->cart);
+    
+            // Clear the current cart instance before re-adding items
+            Cart::instance('cart')->destroy();
+            
+            if (isset($cart->cart)) {
+                foreach ($cart->cart as $item) {
+
+                    $product=Product::find($item->id);
+                    $price=$product->price;
+                        Cart::instance('cart')->add(
+                            $item->id,
+                            BaseHelper::clean($item->name),
+                            $item->qty,
+                            floatval($price),
+                            [
+                                'image' => RvMedia::getImageUrl($item->options->image, 'thumb', false, RvMedia::getDefaultImage()),
+                                'attributes' => '',
+                                'taxRate' => $item->options->taxRate,
+                                "options" => [],
+                                "extras" => []
+                            ]
+                        );
+                }
+    
+                return true; // Or some other success response
+            }else {
+                return false; // No saved cart record found
+            }
+        }
     }
 }
 

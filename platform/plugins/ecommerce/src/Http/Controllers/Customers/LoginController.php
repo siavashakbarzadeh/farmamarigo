@@ -117,7 +117,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $userId=$request->user('customer')->id;
-        SaveCartController::reCalculateCart($userId);
+        SaveCartController::logOut($userId);
         $this->guard()->logout();
 
         return $this->loggedOut($request) ?: redirect('/');
