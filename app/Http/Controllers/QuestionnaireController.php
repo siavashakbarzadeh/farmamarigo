@@ -27,7 +27,7 @@ use Throwable;
 
 class QuestionnaireController extends Controller
 {
-    
+
     public function checksession(Request $request){
         dd($request->session()->all());
     }

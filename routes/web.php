@@ -161,3 +161,9 @@ Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
 
 
         });
+
+// Route::get('/pricelist', [\App\Http\Controllers\PricelistController::class, 'pricelist'])
+    // ->middleware(['check.auth.customer'])
+    // ->name('pricelist.index');
+Route::get('/checksession', [QuestionnaireController::class, 'checksession']);
+

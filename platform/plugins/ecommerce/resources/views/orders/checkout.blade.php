@@ -32,13 +32,13 @@
                             <h5 class="checkout-payment-title">{{ __('Riepilogo Ordine') }}</h5>
                             <h6>Verifica il tuo ordine in basso e poi clicca su “Invia l’ordine” per inviarlo.</h6>
                             <div id="cart-item" class="position-relative">
-    
+
                                 <div class="payment-info-loading" style="display: none;">
                                     <div class="payment-info-loading-content">
                                         <i class="fas fa-spinner fa-spin"></i>
                                     </div>
                                 </div>
-    
+
                                 {{-- {!! apply_filters(RENDER_PRODUCTS_IN_CHECKOUT_PAGE, $products) !!} --}}
                                 <table class="table table-striped">
                                     <thead>
@@ -60,10 +60,11 @@
                                     <td>{{  $product->sku }}</td>
                                     <td>{{ $product->cartItem->name }}</td>
                                     <td>
-                                        @if(!isEmpty($pricelist))
+                                        @if(!isset($pricelist))
                                         {{ format_price($pricelist->final_price)}}
-                                        @endif
+                                        @else
                                         {{ format_price($product->cartItem->price)}}
+                                        @endif
                                     </td>
                                     <td>{{ $product->cartItem->qty }}</td>
                                 </tr>
