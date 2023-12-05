@@ -36,7 +36,7 @@ class PricelistController extends BaseController
 
     public function pricelist()
     {
-        $customer_id = auth('customer')->user()->id();
+        $customer_id = auth('customer')->user()->id;
 
         $productIds = DB::table('ec_pricelist')
             ->where('customer_id', $customer_id)
