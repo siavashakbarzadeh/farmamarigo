@@ -97,12 +97,17 @@ public static function reCalculateCart($user_id) {
 
         if (isset($cart->cart)) {
             foreach ($cart->cart as $item) {
-                $offerDetail = OffersDetail::where('product_id', $item->id)
-                                           ->where('customer_id', $user_id)
-                                           ->where('status', 'active')
-                                           ->first();
+                dd($item);
+                $pricelist = DB::connection('mysql')->table('ec_pricelist')
+                ->where('customer_id', $user_id)
+                ->where('product_id', $item->id)
+                ->first();
 
-                $price = null;
+                // if($pricelist!==null){
+                //     $price=$pricelist->final_price;
+                // }else{
+                //     $price=
+                // }
 
                 if ($offerDetail) {
                     $offer = Offers::find($offerDetail->offer_id);
