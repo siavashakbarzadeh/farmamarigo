@@ -138,7 +138,7 @@ public static function reCalculateCart($user_id=null) {
 
 }
 
-public static function logout($userId){
+public static function logout($user_id){
     if($user_id!==null){
         $cartRecord = SaveCart::where('user_id', $user_id)->first();
 
