@@ -468,6 +468,7 @@ class CustomImport extends BaseController
             'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
             'sku'=>$sku,
         ]);
+        dd($productItem->id);
         $tax = Tax::find($taxId);
         if ($tax){
             DB::table('ec_tax_products')->insert([
