@@ -280,14 +280,6 @@ class CustomImport extends BaseController
                     ], [
                         'name' => $brand
                     ]);
-//                if (!\Illuminate\Support\Facades\DB::table('')->where('lang_code',"en_US")->where('ec_brands_id')->count()){
-//                    \Illuminate\Support\Facades\DB::table('ec_brands_translations')->insert([
-//                        'lang_code'=>"en_US",
-//                        'ec_brands_id'=>$brandItem->id,
-//                        'name'=>$brand,
-//                    ]);
-//                }
-
                     \Botble\Slug\Models\Slug::create([
                         'key' => $brand,
                         'reference_id' => $brandItem->id,
@@ -300,6 +292,7 @@ class CustomImport extends BaseController
                     $price = $productsWithoutVariant['prezzo'];
                     $taxId = $productsWithoutVariant['fk_codice_iva_id'];
                     $sku=$productsWithoutVariant['codice'];
+                    $id=$product['pk_articolo_id'];
                     if (in_array($product_name, $items)) {
                         $productItem = \Botble\Ecommerce\Models\Product::query()->where('name', $product_name)->first();
                         $productItem->update([
@@ -310,7 +303,7 @@ class CustomImport extends BaseController
                             'sku'=>$sku,
                         ]);
                     }else{
-                        $productItem = $this->_generateProduct($product_name,$productsWithoutVariant,$price,$brands,$taxId,$sku);
+                        $productItem = $this->_generateProduct($id,$product_name,$productsWithoutVariant,$price,$brands,$taxId,$sku);
                         // product_id va tax_id be table ec_tax_products ezafe shavad
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
@@ -365,6 +358,7 @@ class CustomImport extends BaseController
                     $price = $product ? $product['prezzo'] : 0;
                     $taxId= $product['fk_codice_iva_id'];
                     $sku=$product['codice'];
+                    $id=$product['pk_articolo_id'];
                     if (in_array(str_replace('&', 'and', trim($product_name)), $items)) {
                         $productItem = \Botble\Ecommerce\Models\Product::query()->where('name', str_replace('&', 'and', trim($product_name)))->first();
                         $productItem->update([
@@ -374,7 +368,7 @@ class CustomImport extends BaseController
                             'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
                         ]);
                     } else {
-                        $productItem = $this->_generateProduct($product_name,$product,$price,$brands,$taxId,$sku);
+                        $productItem = $this->_generateProduct($id,$product_name,$product,$price,$brands,$taxId,$sku);
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
                         if ($variationItems->count()) {
@@ -462,9 +456,10 @@ class CustomImport extends BaseController
 
     }
 
-    private function _generateProduct($product_name,$product,$price,$brands,$taxId,$sku)
+    private function _generateProduct($productId,$product_name,$product,$price,$brands,$taxId,$sku)
     {
         $productItem= \Botble\Ecommerce\Models\Product::query()->create([
+            'id'=>$product_id,
             'name' => str_replace('&', 'and', trim($product_name)),
             'description' => 'Description',
             'price' => $price,
