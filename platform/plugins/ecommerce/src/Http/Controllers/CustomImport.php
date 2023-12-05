@@ -459,7 +459,7 @@ class CustomImport extends BaseController
     private function _generateProduct($productId,$product_name,$product,$price,$brands,$taxId,$sku)
     {
         $productItem= \Botble\Ecommerce\Models\Product::query()->create([
-            'id'=>$product_id,
+            'id'=>$productId,
             'name' => str_replace('&', 'and', trim($product_name)),
             'description' => 'Description',
             'price' => $price,
