@@ -137,7 +137,7 @@ public static function reCalculateCart($user_id=null) {
 
     
             // Clear the current cart instance before re-adding items
-            dd(Cart::instance('cart')->cart);
+            dd(Cart::instance('cart'));
     
             if (isset($cart->cart)) {
                 foreach ($cart->cart as $item) {
