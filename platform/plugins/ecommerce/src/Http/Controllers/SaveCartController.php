@@ -97,7 +97,6 @@ public static function reCalculateCart($user_id) {
 
         if (isset($cart->cart)) {
             foreach ($cart->cart as $item) {
-                dd($item);
                 $pricelist = DB::connection('mysql')->table('ec_pricelist')
                 ->where('customer_id', $user_id)
                 ->where('product_id', $item->id)
@@ -108,7 +107,7 @@ public static function reCalculateCart($user_id) {
                 }else{
                     $price=$item->price;
                 }
-                
+
                 if ($price !== null) {
                     Cart::instance('cart')->add(
                         $item->id,
