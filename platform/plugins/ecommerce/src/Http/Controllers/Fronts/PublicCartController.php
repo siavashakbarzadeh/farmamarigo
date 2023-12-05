@@ -5,18 +5,21 @@ namespace Botble\Ecommerce\Http\Controllers\Fronts;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Ecommerce\Http\Requests\CartRequest;
 use Botble\Ecommerce\Http\Requests\UpdateCartRequest;
+use Botble\Ecommerce\Repositories\Eloquent\OrderRepository;
+use Botble\Ecommerce\Repositories\Interfaces\OrderInterface;
 use Botble\Ecommerce\Repositories\Interfaces\ProductInterface;
 use Botble\Ecommerce\Services\HandleApplyPromotionsService;
-use Illuminate\Support\Facades\Session;
+use Botble\Ecommerce\Http\Controllers\SaveCartController;
 use Cart;
 use EcommerceHelper;
 use Exception;
+use GPBMetadata\Google\Api\Auth;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Session;
 use OrderHelper;
 use SeoHelper;
-use Illuminate\Support\Facades\DB;
-
 use Theme;
 
 class PublicCartController extends Controller
@@ -35,17 +38,8 @@ class PublicCartController extends Controller
         }
 
         $product = $this->productRepository->findById($request->input('id'));
-        if(auth('customer')->user()!==NULL){
-            $userid=auth('customer')->user()->id;
-            $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
-            if(isset($pricelist[0])){
-                $product_price=$pricelist[0]->final_price;
-            }else{
-                $product_price=$product->price;
-            }
-        }else{
-            $product_price=$product->price;
-        }
+        $product_price= $request->input('product_price');
+
         if (! $product) {
             return $response
                 ->setError()
@@ -152,7 +146,11 @@ class PublicCartController extends Controller
                 ->setNextUrl($nextUrl);
         }
 
+        if(auth('customer')->user()!==null){
 
+            SaveCartController::saveCart(session('cart'));
+
+        }
         return $response
             ->setData([
                 'status' => true,
@@ -164,45 +162,57 @@ class PublicCartController extends Controller
 
     public function getView(HandleApplyPromotionsService $applyPromotionsService)
     {
-        if (! EcommerceHelper::isCartEnabled()) {
-            abort(404);
-        }
-
-        Theme::asset()
-            ->container('footer')
-            ->add('ecommerce-checkout-js', 'vendor/core/plugins/ecommerce/js/checkout.js', ['jquery']);
-
-        $promotionDiscountAmount = 0;
-        $couponDiscountAmount = 0;
-
-        $products = [];
-        $crossSellProducts = collect();
-
-        if (Cart::instance('cart')->count() > 0) {
-            $products = Cart::instance('cart')->products();
-
-            $promotionDiscountAmount = $applyPromotionsService->execute();
-
-            $sessionData = OrderHelper::getOrderSessionData();
-
-            if (session()->has('applied_coupon_code')) {
-                $couponDiscountAmount = Arr::get($sessionData, 'coupon_discount_amount', 0);
+        if(request()->user('customer')){
+            if (! EcommerceHelper::isCartEnabled()) {
+                abort(404);
             }
 
-            $parentIds = $products->pluck('original_product.id')->toArray();
+            Theme::asset()
+                ->container('footer')
+                ->add('ecommerce-checkout-js', 'vendor/core/plugins/ecommerce/js/checkout.js', ['jquery']);
 
-            $crossSellProducts = get_cart_cross_sale_products($parentIds, theme_option('number_of_cross_sale_product', 4));
+            $promotionDiscountAmount = 0;
+            $couponDiscountAmount = 0;
+
+            $products = [];
+            $crossSellProducts = collect();
+
+            if (Cart::instance('cart')->count() > 0) {
+                $products = Cart::instance('cart')->products();
+
+                $promotionDiscountAmount = $applyPromotionsService->execute();
+
+                $sessionData = OrderHelper::getOrderSessionData();
+
+
+                if (session()->has('applied_coupon_code')) {
+                    $couponDiscountAmount = Arr::get($sessionData, 'coupon_discount_amount', 0);
+                }
+
+
+                $parentIds = $products->pluck('original_product.id')->toArray();
+
+                $crossSellProducts = get_cart_cross_sale_products($parentIds, theme_option('number_of_cross_sale_product', 4));
+            }
+
+            SeoHelper::setTitle(__('Shopping Cart'));
+
+            Theme::breadcrumb()->add(__('Home'), route('public.index'))->add(__('Shopping Cart'), route('public.cart'));
+
+            $order=null;
+            if (Session::get('cart_order')){
+                $order = resolve(OrderInterface::class)->findOrFail(Session::get('cart_order'));
+            }
+
+            return Theme::scope(
+                'ecommerce.cart',
+                compact('promotionDiscountAmount','order', 'couponDiscountAmount', 'products', 'crossSellProducts'),
+                'plugins/ecommerce::themes.cart'
+            )->render();
+        }else{
+            return Theme::scope('ecommerce.customers.login', [], 'plugins/ecommerce::themes.customers.login')->render();
         }
 
-        SeoHelper::setTitle(__('Shopping Cart'));
-
-        Theme::breadcrumb()->add(__('Home'), route('public.index'))->add(__('Shopping Cart'), route('public.cart'));
-
-        return Theme::scope(
-            'ecommerce.cart',
-            compact('promotionDiscountAmount', 'couponDiscountAmount', 'products', 'crossSellProducts'),
-            'plugins/ecommerce::themes.cart'
-        )->render();
     }
 
     public function postUpdate(UpdateCartRequest $request, BaseHttpResponse $response)
@@ -261,6 +271,12 @@ class PublicCartController extends Controller
                 ->setMessage(__('One or all products are not enough quantity so cannot update!'));
         }
 
+        if(auth('customer')->user()!==null){
+
+            SaveCartController::saveCart(session('cart'));
+
+        }
+
         return $response
             ->setData([
                 'count' => Cart::instance('cart')->count(),
@@ -277,9 +293,18 @@ class PublicCartController extends Controller
         }
 
         try {
+            if (Cart::instance('cart')->count() == 1 && Session::get('cart_order')){
+                Session::forget('cart_order');
+            }
             Cart::instance('cart')->remove($id);
         } catch (Exception) {
             return $response->setError()->setMessage(__('Cart item is not existed!'));
+        }
+
+        if(auth('customer')->user()!==null){
+
+            SaveCartController::saveCart(session('cart'));
+
         }
 
         return $response

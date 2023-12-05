@@ -64,12 +64,7 @@ public static function saveCart($cart,$user_id=null)
             'updated_at'=>Carbon::now()
         ]);
     }
-    // $data=json_decode($cart);
-    // if (isset($data->cart)) {
-    //     foreach ($data->cart as $item) {
-    //         dd($price = $item->price);
-    //     }
-    // }}
+
 }
 
 private static function generateRandomID($length = 10) {
@@ -156,6 +151,12 @@ public static function reCalculateCart($user_id) {
     } else {
         return false; // No saved cart record found
     }
+}
+
+public static function addSessionToCart($user_id) {
+
+
+
 }
 
 
