@@ -133,44 +133,7 @@ public static function reCalculateCart($user_id=null) {
         } else {
             return false; // No saved cart record found
         }
-    }else{
-
-    
-            // Clear the current cart instance before re-adding items
-            dd(Cart::instance('cart'));
-    
-            if (isset($cart->cart)) {
-                foreach ($cart->cart as $item) {
-
-                    $product=Product::find($item->id);
-                    $price=$product->price;
-                        Cart::instance('cart')->add(
-                            $item->id,
-                            BaseHelper::clean($item->name),
-                            $item->qty,
-                            floatval($price),
-                            [
-                                'image' => RvMedia::getImageUrl($item->options->image, 'thumb', false, RvMedia::getDefaultImage()),
-                                'attributes' => '',
-                                'taxRate' => $item->options->taxRate,
-                                "options" => [],
-                                "extras" => []
-                            ]
-                        );
-                }
-    
-                return true; // Or some other success response
-            }else {
-                return false; // No saved cart record found
-            }
-
-
-
-
-        // go back to normal price
-
     }
-
 }
 
 
