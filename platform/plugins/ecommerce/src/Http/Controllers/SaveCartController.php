@@ -103,30 +103,12 @@ public static function reCalculateCart($user_id) {
                 ->where('product_id', $item->id)
                 ->first();
 
-                // if($pricelist!==null){
-                //     $price=$pricelist->final_price;
-                // }else{
-                //     $price=
-                // }
-
-                if ($offerDetail) {
-                    $offer = Offers::find($offerDetail->offer_id);
-                    if ($offer && in_array($offer->offer_type, [1, 2, 3])) {
-                        $price = $offerDetail->product_price;
-                    }
+                if($pricelist!==null){
+                    $price=$pricelist->final_price;
+                }else{
+                    $price=$item->price;
                 }
-
-                if ($price === null) {
-                    $pricelist = DB::connection('mysql')->table('ec_pricelist')
-                                    ->where('customer_id', $user_id)
-                                    ->where('product_id', $item->id)
-                                    ->first();
-
-                    if ($pricelist) {
-                        $price = $pricelist->final_price;
-                    }
-                }
-
+                
                 if ($price !== null) {
                     Cart::instance('cart')->add(
                         $item->id,
