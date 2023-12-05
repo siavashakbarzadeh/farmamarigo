@@ -38,6 +38,13 @@ app()->booted(function () {
         return Theme::partial('shortcodes.marchi', compact('shortcode'));
     });
 
+    shortcode()->setAdminConfig('Pricelist', function ($attributes) {
+        return Theme::partial('pricelist-product-collections-admin-config.blade', compact('attributes'));
+    });
+    add_shortcode('Pricelist', __('Pricelist'), __('Pricelist'), function ($shortcode) {
+        return Theme::partial('shortcodes.pricelist-product-collections', compact('shortcode'));
+    });
+
     shortcode()->setAdminConfig('marchi', function ($attributes) {
         return Theme::partial('shortcodes.marchi-admin-config', compact('attributes'));
     });
