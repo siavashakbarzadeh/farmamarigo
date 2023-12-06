@@ -28,14 +28,14 @@ use App\Http\Controllers\PricelistController;
                             </div>
 {{--                            <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>--}}
                             <h2><a href="">{{ $product->name }}</a></h2>
-                            @if (EcommerceHelper::isReviewEnabled())
-                                <div class="rating_wrap">
-                                    <div class="rating">
-                                        <div class="product_rate" style="width: {{ $product->reviews_avg * 20 }}%"></div>
-                                    </div>
-                                    <span class="rating_num">({{ $product->reviews_count }})</span>
-                                </div>
-                                @endif
+{{--                            @if (EcommerceHelper::isReviewEnabled())--}}
+{{--                                <div class="rating_wrap">--}}
+{{--                                    <div class="rating">--}}
+{{--                                        <div class="product_rate" style="width: {{ $product->reviews_avg * 20 }}%"></div>--}}
+{{--                                    </div>--}}
+{{--                                    <span class="rating_num">({{ $product->reviews_count }})</span>--}}
+{{--                                </div>--}}
+{{--                                @endif--}}
 
                             <div class="product-price">
                                 <span>{{ format_price($product->price) }}</span>
