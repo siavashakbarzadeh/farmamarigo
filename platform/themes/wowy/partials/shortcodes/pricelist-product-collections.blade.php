@@ -14,7 +14,7 @@ use App\Http\Controllers\PricelistController;
                                 <a href="">
 
                                     <img class="default-img" src="{{ $list->image }}" alt="Clic Clac Baby">
-                                    <img class="hover-img" src="{{ $list->image }}" alt="Clic Clac Baby">
+{{--                                    <img class="hover-img" src="{{ $list->image }}" alt="Clic Clac Baby">--}}
                                 </a>
                             </div>
 
