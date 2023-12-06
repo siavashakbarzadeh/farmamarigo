@@ -1,5 +1,6 @@
 @php
-    $lists = PricelistController:: pricelist($products);
+use App\Http\Controllers\PricelistController;
+    $lists = PricelistController:: pricelist($pricelist);
 @endphp
 {{--@if (auth('customer'))--}}
 {{--<section class="product-tabs pt-40 pb-30 wow fadeIn animated">--}}
@@ -11,10 +12,10 @@
     <div class="card-deck">
         @foreach($lists as $list)
             <div class="card">
-                <img class="card-img-top" src="{{ $list->image }}" alt="Card image cap">
+{{--                <img class="card-img-top" src="{{ $list->image }}" alt="Card image cap">--}}
                 <div class="card-body">
-                    <h5 class="card-title">{{ $list->title }}</h5>
-                    <p class="card-text">{{ $list->description }}</p>
+                    <h5 class="card-title">{{ $list->name }}</h5>
+{{--                    <p class="card-text">{{ $list->description }}</p>--}}
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">Last updated 3 mins ago</small>
