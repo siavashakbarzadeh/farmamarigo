@@ -29,6 +29,7 @@ use App\Http\Controllers\PricelistController;
                         <div class="card-footer">
                             <div class="product-price">
                                 <span>{{ $list->price }}</span>
+                                <span>{{ format_price($list->price) }}</span>
 
 
 
