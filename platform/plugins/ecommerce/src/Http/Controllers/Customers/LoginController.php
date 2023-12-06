@@ -149,8 +149,8 @@ class LoginController extends Controller
                 ]);
             }
 
-            SaveCartController::saveCart(session('cart'),$customer->id);
             SaveCartController::reCalculateCart($customer->id);
+            SaveCartController::saveCart(session('cart'),$customer->id);
 
             // Check for first successful login
             if (is_null($customer->first_access)) {
