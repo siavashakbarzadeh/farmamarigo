@@ -31,6 +31,10 @@ use App\Http\Controllers\PricelistController;
 
 
                         </div>
+                        <div class="product-action-1 show ">
+                            <a aria-label="Aggiungi" class="action-btn hover-up add-to-cart-button" data-id="10755" data-url="" href="#"><i class="far fa-shopping-bag"></i></a>
+
+                        </div>
                         <div class="card-footer">
                             <small class="text-muted">Last updated 3 mins ago</small>
                         </div>
