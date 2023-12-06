@@ -12,7 +12,8 @@ use App\Http\Controllers\PricelistController;
                     <div class="product-cart-wrap mb-30">
                         <div class="product-img-action-wrap">
                             <div class="product-img product-img-zoom">
-                                <a href="{{ $product->url }}">
+{{--                                <a href="{{ $product->url }}">--}}
+                                <a href="">
                                     <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="default-img">
                                     <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="hover-img">
                                 </a>
@@ -25,7 +26,8 @@ use App\Http\Controllers\PricelistController;
                             <div class="product-category">
                                 {{--                            <a href="https://marigopharma.marigo.collaudo.biz">infanzia</a>--}}
                             </div>
-                            <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>
+{{--                            <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>--}}
+                            <h2><a href="">{{ $product->name }}</a></h2>
                             @if (EcommerceHelper::isReviewEnabled())
                                 <div class="rating_wrap">
                                     <div class="rating">
