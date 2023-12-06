@@ -3,7 +3,7 @@ use App\Http\Controllers\PricelistController;
     $lists = PricelistController:: pricelist();
 @endphp
 @if($lists !== false)
-    <div class="container">
+    <div class="container mb-4">
 
         <div class="card-deck">
             <div class="col-lg-3">
