@@ -12,7 +12,7 @@ use App\Http\Controllers\PricelistController;
                         {{--                <img class="card-img-top" src="{{ $list->image }}" alt="Card image cap">--}}
                         <div class="card-body">
                             <h5 class="card-title">{{ $list->name }}</h5>
-                                                <p class="card-text">{{ $list->description }}</p>
+                                                <p class="card-text">{{ $list->price }}</p>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">Last updated 3 mins ago</small>
