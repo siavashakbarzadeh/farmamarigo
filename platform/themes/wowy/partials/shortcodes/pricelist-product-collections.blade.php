@@ -19,8 +19,8 @@ use App\Http\Controllers\PricelistController;
             @endforeach
         </div>
     </div>
-@else
-    {{-- Handle the case where $lists is false --}}
-    <p>No data available.</p>    
+{{--@else--}}
+{{--    --}}{{-- Handle the case where $lists is false --}}
+{{--    <p>No data available.</p>    --}}
 @endif
 
