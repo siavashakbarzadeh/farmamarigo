@@ -41,7 +41,12 @@ class PricelistController extends BaseController
         $productIds = DB::table('ec_pricelist')
             ->where('customer_id', $customer_id)
             ->pluck('product_id');
-        dd($productIds);
+
+        $products = DB::table('ec_products')
+            ->whereIn('id', $productIds)
+            ->get();
+
+        return $products;
     }
 
 
