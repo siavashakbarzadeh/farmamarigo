@@ -37,7 +37,7 @@
             @php $category = $product->categories->sortByDesc('id')->first(); @endphp
             @if ($category)
                 <div class="product-category">
-                    <a href="{{ $category->url }}">{{ $category->name }}</a>
+{{--                    <a href="{{ $category->url }}">{{ $category->name }}</a>--}}
                 </div>
             @endif
             <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>
