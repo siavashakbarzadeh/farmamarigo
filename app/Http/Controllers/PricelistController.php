@@ -36,17 +36,24 @@ class PricelistController extends BaseController
 
     public static function pricelist()
     {
-        $customer_id = auth('customer')->user()->id;
+        // Check if the customer is authenticated
+        if (auth('customer')->check()) {
+            $customer_id = auth('customer')->user()->id;
 
-        $productIds = DB::table('ec_pricelist')
-            ->where('customer_id', $customer_id)
-            ->pluck('product_id');
+            $productIds = DB::table('ec_pricelist')
+                ->where('customer_id', $customer_id)
+                ->pluck('product_id');
 
-        $products = DB::table('ec_products')
-            ->whereIn('id', $productIds)
-            ->get();
+            $products = DB::table('ec_products')
+                ->whereIn('id', $productIds)
+                ->get();
 
-        return $products;
+            return $products;
+        } else {
+            // Handle the case where no customer is authenticated
+            // You might want to return an empty collection or null
+            return false; // or 'return null;'
+        }
     }
 
 

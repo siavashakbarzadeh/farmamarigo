@@ -2,7 +2,7 @@
 use App\Http\Controllers\PricelistController;
     $lists = PricelistController:: pricelist();
 @endphp
-@if (auth('customer'))
+@if($lists !== false)
     <div class="container">
         <div class="card-deck">
             @foreach($lists as $list)
@@ -19,5 +19,8 @@ use App\Http\Controllers\PricelistController;
             @endforeach
         </div>
     </div>
+@else
+    {{-- Handle the case where $lists is false --}}
+    <p>No data available.</p>    
 @endif
 
