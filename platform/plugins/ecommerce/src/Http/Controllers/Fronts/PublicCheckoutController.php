@@ -753,11 +753,14 @@ class PublicCheckoutController
         ]);
         Mail::to($order->user->email)->send(new OrderConfirmed($order));
 
+        $this->deleteDuplicateOrders($order->token);
+
         OrderShippingAmount::create(
             ['shippingAmount' => session()->get('shippingAmount'),
                 'order_id' => $order->id
             ]
         );
+
         session()->forget('shippingAmount');
         session()->forget('cart');
         session()->forget('note');
@@ -765,6 +768,16 @@ class PublicCheckoutController
         SaveCartController::deleteSavedCart();
 
         return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
+    }
+    
+    private function deleteDuplicateOrders($token)
+    {
+            // 1. Get all orders with is_finished=2.
+            $order = Order::where('status',OrderStatusEnum::RETURNED)->where('token',$token)->first();
+            if($order!=null){
+                $order->delete();
+            }
+
     }
 
     public function getCheckoutSuccess(string $token, BaseHttpResponse $response)
