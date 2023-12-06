@@ -34,7 +34,7 @@ use Throwable;
 class PricelistController extends BaseController
 {
 
-    public static function pricelist($pricelist)
+    public static function pricelist()
     {
         $customer_id = auth('customer')->user()->id;
 

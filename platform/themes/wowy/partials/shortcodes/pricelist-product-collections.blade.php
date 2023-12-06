@@ -1,6 +1,6 @@
 @php
 use App\Http\Controllers\PricelistController;
-    $lists = PricelistController:: pricelist($pricelist);
+    $lists = PricelistController:: pricelist();
 @endphp
 {{--@if (auth('customer'))--}}
 {{--<section class="product-tabs pt-40 pb-30 wow fadeIn animated">--}}
