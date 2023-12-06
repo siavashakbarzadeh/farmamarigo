@@ -11,7 +11,7 @@ use App\Http\Controllers\PricelistController;
                     <div class="card">
                         <div class="product-img-action-wrap">
                             <div class="product-img product-img-zoom">
-                                <a href="https://marigopharma.marigo.collaudo.biz/products/clic-clac-baby">
+                                <a href="">
 
                                     <img class="default-img" src="{{ $list->image }}" alt="Clic Clac Baby">
                                     <img class="hover-img" src="{{ $list->image }}" alt="Clic Clac Baby">
