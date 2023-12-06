@@ -19,37 +19,7 @@ use App\Http\Controllers\PricelistController;
                                class="btn btn-info">{{ __('Add to cart') }}</a>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="product-img-action-wrap">
-                            <div class="product-img product-img-zoom">
-                                <a href="">
-
-                                    <img class="default-img" src="{{ $product->image }}" alt="Clic Clac Baby">
-{{--                                    <img class="hover-img" src="{{ $product->image }}" alt="Clic Clac Baby">--}}
-                                </a>
-                            </div>
-
-
-                        </div>
-                        {{--                <img class="card-img-top" src="{{ $product->image }}" alt="Card image cap">--}}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $product->name }}</h5>
-
-                        </div>
-
-                        <div class="card-footer">
-                            <div class="product-price">
-
-                                <span>{{ format_price($product->price) }}</span>
-
-
-
-                            </div>
-                            <button id="btn-add-cart" class="btn btn-lg btn-black"><i class="fa fa-shopping-bag"
-                                                                                      aria-hidden="true"></i>{{ __('Add to cart') }}
-                            </button>
-                        </div>
-                    </div>
+                   
                 @endforeach
             </div>
         </div>
