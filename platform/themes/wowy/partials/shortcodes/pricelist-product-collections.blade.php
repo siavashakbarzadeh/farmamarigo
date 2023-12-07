@@ -72,7 +72,7 @@ use App\Http\Controllers\PricelistController;
             <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
         @endif
     @else
-        <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
+{{--        <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>--}}
 
     @endif
 
