@@ -69,7 +69,7 @@ use App\Http\Controllers\PricelistController;
         @if ($reserved_price !== $product->price)
             <span>{{ format_price($reserved_price) }}</span>
             <input type="hidden" name="product_price" class="hidden-product-id" value="{{ $reserved_price }}"/>
-            <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+{{--            <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>--}}
         @endif
     @else
 {{--        <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>--}}
