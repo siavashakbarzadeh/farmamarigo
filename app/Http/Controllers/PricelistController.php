@@ -44,8 +44,7 @@ class PricelistController extends BaseController
                 ->where('customer_id', $customer_id)
                 ->pluck('product_id');
             if($productIds->count()>0){
-                $products = Product::whereIn('id', $productIds)->get();
-
+                $products = Product::whereIn('id', $productIds->take(6))->get();
                 return $products;
             }else{
                 return false;
