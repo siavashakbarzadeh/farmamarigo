@@ -61,7 +61,6 @@ use App\Http\Controllers\PricelistController;
             </div>
         </div>
     </div>
-@else
 
 @endif
 
