@@ -24,7 +24,6 @@ use App\Http\Controllers\PricelistController;
                         </div>
                         <div class="product-content-wrap">
                             <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>
-
                             <div class="product-price">
                                 @php
                                     if(auth('customer')->user()!==NULL){
