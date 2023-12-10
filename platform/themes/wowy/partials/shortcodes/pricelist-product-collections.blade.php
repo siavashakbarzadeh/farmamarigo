@@ -23,19 +23,30 @@ use App\Http\Controllers\PricelistController;
                             </div>
                         </div>
                         <div class="product-content-wrap">
-                            <div class="product-category">
-                                {{--                            <a href="https://marigopharma.marigo.collaudo.biz">infanzia</a>--}}
-                            </div>
-{{--                            <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>--}}
-                            <h2><a href="">{{ $product->name }}</a></h2>
-
-                                <div class="rating_wrap">
-
-                                </div>
-
+                            <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>
 
                             <div class="product-price">
-                                <span>{{ format_price($product->price) }}</span>
+                                @php
+                                    if(auth('customer')->user()!==NULL){
+                                        $userid=auth('customer')->user()->id;
+                                        $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+                                        if(isset($pricelist[0])){
+                                            $reserved_price=$pricelist[0]->final_price;
+                                        }
+                                    }
+                                @endphp
+                                @if(isset($reserved_price))
+                                    @if ($reserved_price !== $product->price)
+                                    <span>{{ format_price($reserved_price) }}</span>
+                                    <input type="hidden" name="product_price" class="hidden-product-id" value="{{ $reserved_price }}"/>
+                                        <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                                    @endif
+                                @else
+                                <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
+
+                                @endif
+
+
                             </div>
                             @if (EcommerceHelper::isCartEnabled())
                                 <div class="product-action-1 show " @if (!EcommerceHelper::isReviewEnabled()) style="bottom: 10px;" @endif>
