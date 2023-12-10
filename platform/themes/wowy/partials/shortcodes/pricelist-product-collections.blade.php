@@ -12,8 +12,7 @@ use App\Http\Controllers\PricelistController;
                     <div class="product-cart-wrap mb-30">
                         <div class="product-img-action-wrap">
                             <div class="product-img product-img-zoom">
-{{--                                <a href="{{ $product->url }}">--}}
-                                <a href="">
+                                <a href="{{ $product->url }}">
                                     <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="default-img">
                                     <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="hover-img">
                                 </a>
