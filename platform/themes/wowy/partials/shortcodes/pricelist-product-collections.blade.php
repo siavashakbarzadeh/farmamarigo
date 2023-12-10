@@ -62,8 +62,7 @@ use App\Http\Controllers\PricelistController;
         </div>
     </div>
 @else
-Handle the case where $products is false
-<p>No data available.</p>
+
 @endif
 
 
