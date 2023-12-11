@@ -58,6 +58,7 @@ use Botble\Ecommerce\Mail\OrderConfirmed;
 use Botble\Ecommerce\Http\Controllers\SaveCartController;
 use Botble\Ecommerce\Mail\OrderEdited;
 use Botble\Ecommerce\Models\Invoice;
+use Illuminate\Support\Facades\DB;
 
 
 
