@@ -4,7 +4,7 @@ $products=Botble\Ecommerce\Models\Product::all();
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="banner-img wow fadeIn animated ">
                 <img class="border-radius-10" src="{{ RvMedia::getImageUrl($shortcode->icon) }}" alt="">
                 <div class="banner-text">
