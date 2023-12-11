@@ -78,27 +78,6 @@
                         @endif
                     </div>
 
-                    <h4 class="mt-3 mb-1">{{ __('Customer') }}</h4>
-                    <div>
-                        <div>
-                            <span class="d-inline-block">{{ __('Full Name') }}:</span>
-                            <strong class="order-detail-value">{{ $order->address->name }} </strong>
-                        </div>
-                        <div>
-                            <span class="d-inline-block">{{ __('Phone') }}:</span>
-                            <strong class="order-detail-value">{{ $order->address->phone }} </strong>
-                        </div>
-                        <div>
-                            <span class="d-inline-block">{{ __('Email') }}:</span>
-                            <strong class="order-detail-value">{{ $order->address->email }} </strong>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <span class="d-inline-block">{{ __('Address') }}:</span>
-                                <span class="order-detail-value"> {{ $order->full_address }} </span>&nbsp;
-                            </div>
-                        </div>
-                    </div>
 
                     <h4 class="mt-3 mb-1">{{ __('Products') }}</h4>
                     <div class="table-responsive">
