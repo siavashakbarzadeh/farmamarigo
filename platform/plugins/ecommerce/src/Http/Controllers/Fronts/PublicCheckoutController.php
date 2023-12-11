@@ -1034,14 +1034,14 @@ class PublicCheckoutController
                     return [$key => $item];
                 })->toArray();
             DB::connection('mysql2')
-                ->table('ec_orders')
+                ->table('fa_ec_orders')
                 ->updateOrInsert([
                     'u_id' => $item['u_id'],
                 ], $item);
             if ($orderProducts->count()){
                 foreach ($orderProducts as $orderProduct) {
                     DB::connection('mysql2')
-                        ->table('ec_order_product')
+                        ->table('fa_ec_order_product')
                         ->updateOrInsert([
                             'u_id'=>$orderProduct->id,
                         ], collect($orderProduct)
