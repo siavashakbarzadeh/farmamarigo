@@ -982,7 +982,6 @@ class PublicCheckoutController
 
     private function generateInvoice($order){
 
-        $order = $this->orderRepository->findOrFail($request->orderId);
         $date = time();
 
         // Set the locale to Italian
