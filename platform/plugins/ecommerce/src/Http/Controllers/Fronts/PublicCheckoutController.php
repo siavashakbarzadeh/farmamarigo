@@ -817,46 +817,58 @@ class PublicCheckoutController
     }
     
         // Set up the payment details
-        $paymentData = [
-            'intent' => 'sale',
-            'redirect_urls' => [
-                'return_url' => 'http://example.com/return',
-                'cancel_url' => 'http://example.com/cancel'
-            ],
-            'payer' => [
-                'payment_method' => 'paypal'
-            ],
-            'transactions' => [[
+        $orderTotal = number_format($order->total, 2, '.', ''); // Format to a decimal string
+
+    // Set up the payment details
+    $paymentData = [
+        'intent' => 'sale',
+        'redirect_urls' => [
+            'return_url' => 'http://example.com/return',
+            'cancel_url' => 'http://example.com/cancel'
+        ],
+        'payer' => [
+            'payment_method' => 'paypal'
+        ],
+        'transactions' => [
+            [
                 'amount' => [
-                    'total' => $order->total, // Set this to your order total
-                    'currency' => 'EUR'       // Set this to your currency
+                    'total' => $orderTotal, // Make sure this is a correctly formatted string
+                    'currency' => 'EUR'
                 ],
-                'description' => 'Purchase from My Store' // Add a suitable description
-            ]]
-        ];
-    
-        // Send the payment creation request to PayPal
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.paypal.com/v1/payments/payment');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($paymentData));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer ' . $accessToken,
-            'Content-Type: application/json'
-        ]);
-    
-        $response = curl_exec($ch);
+                'description' => 'Purchase from My Store'
+            ]
+        ]
+    ];
+
+    // Send the payment creation request to PayPal
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://api.sandbox.paypal.com/v1/payments/payment'); // Make sure to use the sandbox URL
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($paymentData));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . $accessToken,
+        'Content-Type: application/json'
+    ]);
+
+    $response = curl_exec($ch);
     if (curl_errno($ch)) {
-        // Log CURL error details
         error_log('CURL Error: ' . curl_error($ch));
+        curl_close($ch);
         return null;
     }
     curl_close($ch);
 
     $responseArray = json_decode($response, true);
 
-    if (!isset($responseArray['id'])) {
+    if (isset($responseArray['id'])) {
+        // If the payment is created successfully
+        foreach ($responseArray['links'] as $link) {
+            if ($link['rel'] == 'approval_url') {
+                return $link['href']; // Return the approval URL
+            }
+        }
+    } else {
         // Log PayPal response for failed requests
         error_log('PayPal Error: ' . $response);
         return null;
