@@ -96,11 +96,11 @@
                 </div>
             </div>
         </div>
-            <div class="row">
-                {!! render_product_swatches_filter([
-                    'view' => Theme::getThemeNamespace() . '::views.ecommerce.attributes.attributes-filter-renderer'
-                ]) !!}
-            </div>
+{{--            <div class="row">--}}
+{{--                {!! render_product_swatches_filter([--}}
+{{--                    'view' => Theme::getThemeNamespace() . '::views.ecommerce.attributes.attributes-filter-renderer'--}}
+{{--                ]) !!}--}}
+{{--            </div>--}}
     </div>
 
 {{--    <a class="show-advanced-filters" href="#">--}}
