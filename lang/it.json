@@ -437,7 +437,7 @@
     "Preloader image (if it is not set, preloader image will be site favicon)": "Immagine del precaricatore (se non è impostata, l'immagine del precaricatore sarà la favicon del sito)",
     "Preview": "Anteprima",
     "Price": "Prezzo",
-    "Price: high to low": "Prezzo: dal più alto al più basso",
+    "Price: high to low": "Prezzo: decrescente",
     "Price: low to high": "Prezzo: crescente",
     "Primary color": "Colore primario",
     "Print invoice": "Stampa fattura",
