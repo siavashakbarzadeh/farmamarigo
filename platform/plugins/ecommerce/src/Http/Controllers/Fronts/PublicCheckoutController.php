@@ -986,6 +986,7 @@ class PublicCheckoutController
     private function generateInvoice($order){
 
         $date = time();
+        dd($date);
 
         // Set the locale to Italian
         setlocale(LC_TIME, 'it_IT.UTF-8');
@@ -1009,6 +1010,8 @@ class PublicCheckoutController
             'status' => "COMPLETED",
             'paid_at' => $order->created_at,
             'completed_at'=>$formatted_date,
+            'created_at'=>$formatted_date,
+            'updated_at'=>$formatted_date,
             'tax_amount' => $order->tax_amount,
             'shipping_amount' => $order->shippingAmount->shippingAmount,
             'discount_amount' => $order->discount_amount,
