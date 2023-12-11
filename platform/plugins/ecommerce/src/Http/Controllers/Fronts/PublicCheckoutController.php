@@ -815,10 +815,8 @@ class PublicCheckoutController
         dd('Failed to retrieve PayPal access token');
         return null;
     }
-    dd($order);
         // Set up the payment details
-        $orderTotal = number_format($order->total, 2, '.', ''); // Format to a decimal string
-dd($orderTotal);
+        $orderTotal = number_format($order->amount, 2, '.', ''); // Format to a decimal string
     // Set up the payment details
     $paymentData = [
         'intent' => 'sale',
