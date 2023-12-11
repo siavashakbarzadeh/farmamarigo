@@ -822,7 +822,7 @@ class PublicCheckoutController
     $paymentData = [
         'intent' => 'sale',
         'redirect_urls' => [
-            'return_url' => 'https://marigopharma.marigo.collaudo.biz/return', //controller
+            'return_url' => "https://marigopharma.marigo.collaudo.biz/return?orderId=$order->id", //controller
             'cancel_url' => 'https://marigopharma.marigo.collaudo.biz/cancel' //just the view
         ],
         'payer' => [
