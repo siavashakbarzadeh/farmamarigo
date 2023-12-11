@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-9">
             @if ($category)
 {{--                <section class="bg-grey-9 ">--}}
                     <product-category-products-component :category="{{ json_encode($category) }}"  url="{{ route('public.ajax.product-category-products') }}" all="{{ $category->url }}"></product-category-products-component>
@@ -21,7 +21,7 @@
             {{--            </div>--}}
 
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="banner-img wow fadeIn animated ">
                 <img class="border-radius-10" src="{{ RvMedia::getImageUrl($shortcode->icon) }}" alt="">
                 <div class="banner-text">
