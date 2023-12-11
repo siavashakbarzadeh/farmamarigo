@@ -818,7 +818,7 @@ class PublicCheckoutController
     
         // Set up the payment details
         $orderTotal = number_format($order->total, 2, '.', ''); // Format to a decimal string
-
+dd($orderTotal);
     // Set up the payment details
     $paymentData = [
         'intent' => 'sale',
