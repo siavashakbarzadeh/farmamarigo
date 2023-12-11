@@ -848,26 +848,21 @@ class PublicCheckoutController
         ]);
     
         $response = curl_exec($ch);
-        if (curl_errno($ch)) {
-            // Handle CURL error
-            return null;
-        }
-        curl_close($ch);
-    
-        $responseArray = json_decode($response, true);
-    
-        // Check if the payment was created successfully
-        if (isset($responseArray['id'])) {
-            // Redirect user to PayPal approval URL
-            foreach ($responseArray['links'] as $link) {
-                if ($link['rel'] == 'approval_url') {
-                    return $link['href'];
-                }
-            }
-        }
-    
-        // Handle failure
+    if (curl_errno($ch)) {
+        // Log CURL error details
+        error_log('CURL Error: ' . curl_error($ch));
         return null;
+    }
+    curl_close($ch);
+
+    $responseArray = json_decode($response, true);
+
+    if (!isset($responseArray['id'])) {
+        // Log PayPal response for failed requests
+        error_log('PayPal Error: ' . $response);
+        return null;
+    }
+    
     }
     
     private function getPaypalAccessToken($clientId, $clientSecret) {
