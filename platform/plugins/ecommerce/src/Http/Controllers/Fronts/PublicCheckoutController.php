@@ -805,17 +805,16 @@ class PublicCheckoutController
 
 
     private function initiatePaypalPayment($order, $request) {
-        $clientId = 'sb-43ynzd28544276@business.example.com';
-        $clientSecret = 'access_token$sandbox$79kb338gqzbqmxyj$9f91e15a50d1d33ba9e4ebba039c3542';
-    
-        // Get an access token from PayPal
-        $accessToken = $this->getPaypalAccessToken($clientId, $clientSecret);
-    
-        dd($accessToken);
-        if (!$accessToken) {
-            // Handle error - could not get access token
-            return null;
-        }
+        $clientId = 'sb-43ynzd28544276@business.example.com'; // Your Sandbox Client ID
+    $clientSecret = 'access_token$sandbox$79kb338gqzbqmxyj$9f91e15a50d1d33ba9e4ebba039c3542'; // Your Sandbox Secret
+
+    // Get an access token from PayPal
+    $accessToken = $this->getPaypalAccessToken($clientId, $clientSecret);
+
+    if (!$accessToken) {
+        error_log('Failed to retrieve PayPal access token');
+        return null;
+    }
     
         // Set up the payment details
         $paymentData = [
