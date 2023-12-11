@@ -251,12 +251,12 @@ class EcommerceHelper
             'name_desc' => __('Name : Z-A'),
         ];
 
-        if ($this->isReviewEnabled()) {
-            $sort += [
-                'rating_asc' => __('Rating: low to high'),
-                'rating_desc' => __('Rating: high to low'),
-            ];
-        }
+//        if ($this->isReviewEnabled()) {
+//            $sort += [
+//                'rating_asc' => __('Rating: low to high'),
+//                'rating_desc' => __('Rating: high to low'),
+//            ];
+//        }
 
         return $sort;
     }
