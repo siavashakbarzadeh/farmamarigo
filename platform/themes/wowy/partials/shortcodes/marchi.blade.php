@@ -1,6 +1,5 @@
 @php
     $brands = Theme\Wowy\Http\Controllers\WowyController::ajaxGetMarchi();
-    dd($brands);
 @endphp
 {{--<section class="section-padding-60">--}}
 {{--    <div class="container">--}}
