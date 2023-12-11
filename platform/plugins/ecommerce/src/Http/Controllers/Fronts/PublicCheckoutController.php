@@ -720,7 +720,7 @@ class PublicCheckoutController
 
             if ($paymentMethod == 'paypal') {
                 $paypalPayment = $this->initiatePaypalPayment($order, $request);
-
+                dd($paypalPayment);
                 // Check if $paypalPayment is not null
                 if ($paypalPayment && $paypalPayment->isRedirect()) {
                     // Redirect user to PayPal for payment authorization
@@ -862,7 +862,7 @@ class PublicCheckoutController
         error_log('PayPal Error: ' . $response);
         return null;
     }
-    
+
     }
     
     private function getPaypalAccessToken($clientId, $clientSecret) {
