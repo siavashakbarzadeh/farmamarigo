@@ -57,6 +57,9 @@ use Botble\Ecommerce\Mail\OrderSubmitted;
 use Botble\Ecommerce\Mail\OrderConfirmed;
 use Botble\Ecommerce\Http\Controllers\SaveCartController;
 use Botble\Ecommerce\Mail\OrderEdited;
+use Botble\Ecommerce\Models\Invoice;
+use Illuminate\Support\Facades\DB;
+
 
 
 class PublicCheckoutController
@@ -965,6 +968,7 @@ class PublicCheckoutController
     
             SaveCartController::deleteSavedCart();
             $products=$order->products;
+            $this->generateInvoice($order);
     
             return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
 
@@ -978,6 +982,133 @@ class PublicCheckoutController
 
     }
 
+
+    private function generateInvoice($order){
+
+        $date = time();
+
+        // Set the locale to Italian
+        setlocale(LC_TIME, 'it_IT.UTF-8');
+
+        // Format the date
+        $formatted_date = strftime('%d %B %Y', $date);
+
+
+        $order->shippingAmount->shippingAmount=(float)$order->shippingAmount->shippingAmount;
+        $order->shippingAmount->save();
+        $invoice = new Invoice([
+            'reference_id' => $order->id,
+            'reference_type' => Order::class,
+            'customer_name' => $order->user->name,
+            'company_name' => $order->user->codice,
+            'company_logo' => null,
+            'customer_email' => $order->address->email ?: $order->user->email,
+            'customer_phone' => $order->user->phone,
+            'customer_address' => $order->user->address,
+            'customer_tax_id' => null,
+            'payment_id' => $order->payment->id,
+            'status' => "COMPLETED",
+            'paid_at' => $order->created_at,
+            'completed_at'=>$formatted_date,
+            'created_at'=>$formatted_date,
+            'updated_at'=>$formatted_date,
+            'tax_amount' => $order->tax_amount,
+            'shipping_amount' => $order->shippingAmount->shippingAmount,
+            'discount_amount' => $order->discount_amount,
+            'sub_total' => $order->sub_total + ($order->tax_amount),
+            'amount' => $order->amount,
+            'shipping_method' => $order->shipping_method,
+            'shipping_option' => $order->shipping_option,
+            'coupon_code' => $order->coupon_code,
+            'discount_description' => $order->discount_description,
+            "formatted_date"=> $formatted_date,
+            'description' => $order->description,
+        ]);
+        $invoice->save();
+
+
+            $orderProducts = $order->products;
+            $item = collect($order)
+                ->put('u_id', $order->id)
+                ->forget(['id','products'])
+                ->mapWithKeys(function ($item, $key) {
+                    if (str_ends_with($key, '_at')) {
+                        $item = date('Y-m-d H:i:s', strtotime($item));
+                    } elseif (is_object($item) && method_exists($item, 'getValue')) {
+                        $item = $item->getValue();
+                    } elseif (is_array($item)) {
+                        $item = collect($item)->toJson();
+                    }
+                    return [$key => $item];
+                })->toArray();
+            DB::connection('mysql2')
+                ->table('fa_ec_orders')
+                ->updateOrInsert([
+                    'u_id' => $item['u_id'],
+                ], $item);
+            if ($orderProducts->count()){
+                foreach ($orderProducts as $orderProduct) {
+                    DB::connection('mysql2')
+                        ->table('fa_ec_order_product')
+                        ->updateOrInsert([
+                            'u_id'=>$orderProduct->id,
+                        ], collect($orderProduct)
+                            ->put('u_id',$orderProduct->id)
+                            ->forget(['id','product'])
+                            ->put('options',collect($orderProduct['options'])->toJson())
+                            ->mapWithKeys(function ($item, $key){
+                                if (str_ends_with($key, '_at')) {
+                                    $item = date('Y-m-d H:i:s', strtotime($item));
+                                } elseif (is_object($item) && method_exists($item, 'getValue')) {
+                                    $item = $item->getValue();
+                                }
+                                return [$key => $item];
+                            })->toArray());
+
+                    $product = get_products([
+                        'condition' => [
+                            'ec_products.id' => $orderProduct->product_id,
+                        ],
+                        'take'   => 1,
+                        'select' => [
+                            'ec_products.id',
+                            'ec_products.images',
+                            'ec_products.name',
+                            'ec_products.price',
+                            'ec_products.sale_price',
+                            'ec_products.sale_type',
+                            'ec_products.start_date',
+                            'ec_products.end_date',
+                            'ec_products.sku',
+                            'ec_products.is_variation',
+                            'ec_products.status',
+                            'ec_products.order',
+                            'ec_products.created_at',
+                        ],
+                    ]);
+                    $invoice->items()->create([
+                        'reference_id' => $orderProduct->product_id,
+                        'reference_type' => Product::class,
+                        'name' => $orderProduct->product_name,
+                        'sku'=>$product->sku,
+                        'description' => null,
+                        'image' => $orderProduct->product_image,
+                        'qty' => $orderProduct->qty,
+                        'sub_total' => $orderProduct->price,
+                        'tax_amount' => $orderProduct->tax_amount,
+                        'discount_amount' => 0,
+                        'amount' => $orderProduct->price * $orderProduct->qty,
+                        'options' => json_encode($orderProduct->options),
+                    ]);
+
+                }
+            }
+
+
+
+
+
+    }
 
 
 
