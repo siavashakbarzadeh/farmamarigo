@@ -885,8 +885,6 @@ class PublicCheckoutController
         curl_close($ch);
         $jsonResponse = json_decode($response, true);
     
-        // Log the response for debugging
-        dd('PayPal response: ' . $response);
     
         return $jsonResponse['access_token'] ?? null;
     }
