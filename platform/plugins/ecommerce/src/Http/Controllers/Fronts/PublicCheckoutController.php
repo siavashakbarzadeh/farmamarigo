@@ -822,8 +822,8 @@ class PublicCheckoutController
     $paymentData = [
         'intent' => 'sale',
         'redirect_urls' => [
-            'return_url' => 'https://marigopharma.marigo.collaudo.biz/return',
-            'cancel_url' => 'https://marigopharma.marigo.collaudo.biz/cancel'
+            'return_url' => 'https://marigopharma.marigo.collaudo.biz/return', //controller
+            'cancel_url' => 'https://marigopharma.marigo.collaudo.biz/cancel' //just the view
         ],
         'payer' => [
             'payment_method' => 'paypal'
