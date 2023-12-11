@@ -96,21 +96,26 @@
                 </div>
             </div>
         </div>
+            <div class="row">
+                {!! render_product_swatches_filter([
+                    'view' => Theme::getThemeNamespace() . '::views.ecommerce.attributes.attributes-filter-renderer'
+                ]) !!}
+            </div>
     </div>
 
-    <a class="show-advanced-filters" href="#">
-        <span class="title">{{ __('Advanced filters') }}</span>
-        <i class="far fa-angle-up angle-down"></i>
-        <i class="far fa-angle-down angle-up"></i>
-    </a>
+{{--    <a class="show-advanced-filters" href="#">--}}
+{{--        <span class="title">{{ __('Advanced filters') }}</span>--}}
+{{--        <i class="far fa-angle-up angle-down"></i>--}}
+{{--        <i class="far fa-angle-down angle-up"></i>--}}
+{{--    </a>--}}
 
-    <div class="advanced-search-widgets" style="display: none">
-        <div class="row">
-            {!! render_product_swatches_filter([
-                'view' => Theme::getThemeNamespace() . '::views.ecommerce.attributes.attributes-filter-renderer'
-            ]) !!}
-        </div>
-    </div>
+{{--    <div class="advanced-search-widgets" style="display: none">--}}
+{{--        <div class="row">--}}
+{{--            {!! render_product_swatches_filter([--}}
+{{--                'view' => Theme::getThemeNamespace() . '::views.ecommerce.attributes.attributes-filter-renderer'--}}
+{{--            ]) !!}--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     <div class="widget">
         <a class="clear_filter dib clear_all_filter" href="{{ URL::current() }}">{{ __('Clear All Filter') }}</a>
