@@ -963,6 +963,7 @@ class PublicCheckoutController
             session()->forget('note');
     
             SaveCartController::deleteSavedCart();
+            $products=$order->products;
     
             return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
 
