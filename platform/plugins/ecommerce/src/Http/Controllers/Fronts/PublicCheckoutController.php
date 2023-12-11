@@ -993,6 +993,7 @@ class PublicCheckoutController
         // Format the date
         $formatted_date = strftime('%d %B %Y', $date);
 
+        $shippingAmount=(float)$order->shippingAmount->shippingAmount;
         $invoice = new Invoice([
             'reference_id' => $order->id,
             'reference_type' => Order::class,
@@ -1007,7 +1008,7 @@ class PublicCheckoutController
             'status' => "COMPLETED",
             'paid_at' => $order->created_at,
             'tax_amount' => $order->tax_amount,
-            'shipping_amount' => number_format((float)$order->shippingAmount->shippingAmount, 2, '.', ''),
+            'shipping_amount' => $shippingAmount,
             'discount_amount' => $order->discount_amount,
             'sub_total' => $order->sub_total + ($order->tax_amount),
             'amount' => $order->amount,
