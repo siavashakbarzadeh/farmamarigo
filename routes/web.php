@@ -19,6 +19,8 @@ use App\Http\Controllers\SPCController;
 use App\Http\Controllers\CreaSconto;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\CaptchaHandler;
+use Botble\Ecommerce\Http\Controllers\Fronts\PublicCheckoutController;
+
 
 
 
