@@ -920,8 +920,8 @@ class PublicCheckoutController
             $order->payment->status=PaymentStatusEnum::COMPLETED;
             $order->save();
 
-            $shippingData=null;
-            $shippingMethod=null;
+            $shippingData=[];
+            $shippingMethod=[];
                 app(ShipmentInterface::class)->createOrUpdate([
                     'order_id' => $order->id,
                     'user_id' => 0,
