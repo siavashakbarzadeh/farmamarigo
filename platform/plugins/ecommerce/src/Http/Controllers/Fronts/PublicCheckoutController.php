@@ -748,7 +748,7 @@ class PublicCheckoutController
             'order_id' => $order->id,
         ]);
 
-
+        if ($isAvailableShipping) {
             app(ShipmentInterface::class)->createOrUpdate([
                 'order_id' => $order->id,
                 'user_id' => 0,
@@ -762,7 +762,7 @@ class PublicCheckoutController
                 'shipment_id' => $shippingData ? Arr::get($shippingMethod, 'shipment_id', '') : '',
                 'shipping_company_name' => $shippingData ? Arr::get($shippingMethod, 'company_name', '') : '',
             ]);
-
+        }
 
         if ($appliedCouponCode = session()->get('applied_coupon_code')) {
             DiscountFacade::getFacadeRoot()->afterOrderPlaced($appliedCouponCode);
@@ -920,7 +920,6 @@ class PublicCheckoutController
             $order->payment->status=PaymentStatusEnum::COMPLETED;
             $order->save();
 
-            if ($isAvailableShipping) {
                 app(ShipmentInterface::class)->createOrUpdate([
                     'order_id' => $order->id,
                     'user_id' => 0,
@@ -934,7 +933,7 @@ class PublicCheckoutController
                     'shipment_id' => $shippingData ? Arr::get($shippingMethod, 'shipment_id', '') : '',
                     'shipping_company_name' => $shippingData ? Arr::get($shippingMethod, 'company_name', '') : '',
                 ]);
-            }
+
     
             if ($appliedCouponCode = session()->get('applied_coupon_code')) {
                 DiscountFacade::getFacadeRoot()->afterOrderPlaced($appliedCouponCode);
