@@ -167,3 +167,4 @@ Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
      ->name('pricelist.index');
 Route::get('/checksession', [QuestionnaireController::class, 'checksession']);
 
+Route::get('/checksession', [PublicCheckoutController::class, 'paypalConfirmed']);
