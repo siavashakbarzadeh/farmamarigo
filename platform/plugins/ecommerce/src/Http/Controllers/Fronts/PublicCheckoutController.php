@@ -57,6 +57,8 @@ use Botble\Ecommerce\Mail\OrderSubmitted;
 use Botble\Ecommerce\Mail\OrderConfirmed;
 use Botble\Ecommerce\Http\Controllers\SaveCartController;
 use Botble\Ecommerce\Mail\OrderEdited;
+use Botble\Ecommerce\Models\Invoice;
+
 
 
 class PublicCheckoutController
