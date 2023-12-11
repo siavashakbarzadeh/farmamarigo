@@ -83,8 +83,8 @@
                     <input type="hidden"
                         class="min_price max-range"
                         name="max_price"
-                           value="{{ request()->input('max_price', (int)theme_option('max_filter_price', 100000) * get_current_exchange_rate()) }}"
-                           data-max="{{ (int)theme_option('max_filter_price', 100000) * get_current_exchange_rate() }}"
+                           value="{{ request()->input('max_price', (int)theme_option('max_filter_price', 10) * get_current_exchange_rate()) }}"
+                           data-max="{{ (int)theme_option('max_filter_price', 10) * get_current_exchange_rate() }}"
                         data-label="{{ __('Max price') }}"/>
                     <div class="price_slider_amount">
                         <div class="label-input">
@@ -117,7 +117,7 @@
 {{--        </div>--}}
 {{--    </div>--}}
 
-    <div class="widget">
+    <div class="widget mt-10">
         <a class="clear_filter dib clear_all_filter" href="{{ URL::current() }}">{{ __('Clear All Filter') }}</a>
 
         <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-filter mr-5 ml-0"></i> {{ __('Filter') }}</button>
