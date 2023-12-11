@@ -992,7 +992,6 @@ class PublicCheckoutController
 
         // Format the date
         $formatted_date = strftime('%d %B %Y', $date);
-        dd($formatted_date);
 
 
         $order->shippingAmount->shippingAmount=(float)$order->shippingAmount->shippingAmount;
