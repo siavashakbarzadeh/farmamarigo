@@ -715,6 +715,7 @@ class PublicCheckoutController
             ]);
             // EditOrderJob::dispatch($order);
         }else {
+            $order = $this->createOrderFromData($request->input(),null);
             $paymentMethod = $request->input('payment_method', session('selected_payment_method'));
 
             if ($paymentMethod == 'paypal') {
