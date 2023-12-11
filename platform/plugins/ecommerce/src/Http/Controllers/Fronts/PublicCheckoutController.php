@@ -867,26 +867,25 @@ class PublicCheckoutController
     
     private function getPaypalAccessToken($clientId, $clientSecret) {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.paypal.com/v1/oauth2/token');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_USERPWD, $clientId . ':' . $clientSecret);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Accept: application/json',
-            'Accept-Language: en_US'
-        ]);
+        curl_setopt($ch, CURLOPT_URL, 'https://api.sandbox.paypal.com/v1/oauth2/token');
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        curl_setopt($ch, CURLOPT_USERPWD, $clientId . ":" . $clientSecret);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
     
         $response = curl_exec($ch);
-        if (curl_errno($ch)) {
-            // Handle CURL error
+    
+        if (!$response) {
+            error_log('CURL Error: ' . curl_error($ch));
+            curl_close($ch);
             return null;
         }
+    
         curl_close($ch);
-    
-        $responseArray = json_decode($response, true);
-    
-        return $responseArray['access_token'] ?? null;
+        $jsonResponse = json_decode($response, true);
+        return $jsonResponse['access_token'] ?? null;
     }
 
 
