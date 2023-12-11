@@ -789,6 +789,8 @@ class PublicCheckoutController
         session()->forget('shippingAmount');
         session()->forget('cart');
         session()->forget('note');
+        $this->generateInvoice($order);
+
 
         SaveCartController::deleteSavedCart();
 
