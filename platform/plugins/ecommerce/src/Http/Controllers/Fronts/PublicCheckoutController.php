@@ -715,19 +715,22 @@ class PublicCheckoutController
             ]);
             // EditOrderJob::dispatch($order);
         }else {
-            $order = $this->createOrderFromData($request->input(),null);
             $paymentMethod = $request->input('payment_method', session('selected_payment_method'));
-            if ($paymentMethod=='paypal') {
+
+            if ($paymentMethod == 'paypal') {
                 $paypalPayment = $this->initiatePaypalPayment($order, $request);
-                if ($paypalPayment->isRedirect()) {
+
+                // Check if $paypalPayment is not null
+                if ($paypalPayment && $paypalPayment->isRedirect()) {
                     // Redirect user to PayPal for payment authorization
                     return $paypalPayment->getRedirectUrl();
                 } else {
-                    // Handle error in initiating payment
+                    // Handle error in initiating payment or null response
                     return $response->setError()->setMessage(__('Error initiating PayPal payment'));
                 }
-            }else{
-
+            } else {
+                // Handle other payment methods
+                // ...
             }
             $order->update([
                 'is_confirmed' => true,
