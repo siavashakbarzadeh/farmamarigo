@@ -616,12 +616,7 @@ class PublicCheckoutController
             }
         }
 
-        $paymentMethod = $request->input('payment_method', session('selected_payment_method'));
-        if ($paymentMethod) {
-            session()->put('selected_payment_method', $paymentMethod);
-        }
-
-        dd($paymentMethod);
+        
 
         if (is_plugin_active('marketplace')) {
             return apply_filters(
@@ -713,6 +708,19 @@ class PublicCheckoutController
             // EditOrderJob::dispatch($order);
         }else {
             $order = $this->createOrderFromData($request->input(),null);
+            $paymentMethod = $request->input('payment_method', session('selected_payment_method'));
+            if ($paymentMethod=='paypal') {
+                $paypalPayment = $this->initiatePaypalPayment($order, $request);
+                if ($paypalPayment->isRedirect()) {
+                    // Redirect user to PayPal for payment authorization
+                    return $paypalPayment->getRedirectUrl();
+                } else {
+                    // Handle error in initiating payment
+                    return $response->setError()->setMessage(__('Error initiating PayPal payment'));
+                }
+            }else{
+
+            }
             $order->update([
                 'is_confirmed' => true,
                 'status' => OrderStatusEnum::COMPLETED,
@@ -781,6 +789,112 @@ class PublicCheckoutController
             }
 
     }
+
+
+
+
+    private function initiatePaypalPayment($order, $request) {
+        $clientId = 'ASBmAoiN-ML8YpSOcxrpMyrG9Aa7V35LxHrBHCYmqdYRR-eWtLWZ3xyd3HpSOB7_q5Eogl8xXgAFSzot';
+        $clientSecret = 'ELAKp4zsYrVzRKakVO_hhNwS0ARd7wa9zz5N-KjEVn75P3T18n1GGXteuOUXMSrQmLv7wNo0S1bLMzrz';
+    
+        // Get an access token from PayPal
+        $accessToken = $this->getPaypalAccessToken($clientId, $clientSecret);
+    
+        if (!$accessToken) {
+            // Handle error - could not get access token
+            return null;
+        }
+    
+        // Set up the payment details
+        $paymentData = [
+            'intent' => 'sale',
+            'redirect_urls' => [
+                'return_url' => 'http://example.com/return',
+                'cancel_url' => 'http://example.com/cancel'
+            ],
+            'payer' => [
+                'payment_method' => 'paypal'
+            ],
+            'transactions' => [[
+                'amount' => [
+                    'total' => $order->total, // Set this to your order total
+                    'currency' => 'EUR'       // Set this to your currency
+                ],
+                'description' => 'Purchase from My Store' // Add a suitable description
+            ]]
+        ];
+    
+        // Send the payment creation request to PayPal
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.paypal.com/v1/payments/payment');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($paymentData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $accessToken,
+            'Content-Type: application/json'
+        ]);
+    
+        $response = curl_exec($ch);
+        if (curl_errno($ch)) {
+            // Handle CURL error
+            return null;
+        }
+        curl_close($ch);
+    
+        $responseArray = json_decode($response, true);
+    
+        // Check if the payment was created successfully
+        if (isset($responseArray['id'])) {
+            // Redirect user to PayPal approval URL
+            foreach ($responseArray['links'] as $link) {
+                if ($link['rel'] == 'approval_url') {
+                    return $link['href'];
+                }
+            }
+        }
+    
+        // Handle failure
+        return null;
+    }
+    
+    private function getPaypalAccessToken($clientId, $clientSecret) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.paypal.com/v1/oauth2/token');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_USERPWD, $clientId . ':' . $clientSecret);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Accept: application/json',
+            'Accept-Language: en_US'
+        ]);
+    
+        $response = curl_exec($ch);
+        if (curl_errno($ch)) {
+            // Handle CURL error
+            return null;
+        }
+        curl_close($ch);
+    
+        $responseArray = json_decode($response, true);
+    
+        return $responseArray['access_token'] ?? null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getCheckoutSuccess(string $token, BaseHttpResponse $response)
     {
