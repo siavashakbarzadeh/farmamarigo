@@ -719,13 +719,14 @@ class PublicCheckoutController
             $paymentMethod = $request->input('payment_method', session('selected_payment_method'));
 
             if ($paymentMethod == 'paypal') {
-                $paypalPayment = $this->initiatePaypalPayment($order, $request);
-                // Check if $paypalPayment is not null
-                if ($paypalPayment && $paypalPayment->isRedirect()) {
+                $paypalPaymentUrl = $this->initiatePaypalPayment($order, $request);
+
+                if (is_string($paypalPaymentUrl)) {
                     // Redirect user to PayPal for payment authorization
-                    return $paypalPayment->getRedirectUrl();
+                    return redirect()->to($paypalPaymentUrl);
                 } else {
-                    // Handle error in initiating payment or null response
+                    // Handle error in initiating payment
+                    // You might want to log this or show an error message
                     return $response->setError()->setMessage(__('Error initiating PayPal payment'));
                 }
             } else {
