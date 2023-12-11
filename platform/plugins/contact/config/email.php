@@ -7,7 +7,7 @@ return [
         'notice' => [
             'title' => 'plugins/contact::contact.settings.email.templates.notice_title',
             'description' => 'plugins/contact::contact.settings.email.templates.notice_description',
-            'subject' => 'Message sent via your contact form from {{ site_title }}',
+            'subject' => 'Messaggio inviato tramite il tuo modulo di contatto da {{ site_title }}',
             'can_off' => true,
             'variables' => [
                 'contact_name' => 'Contact name',
