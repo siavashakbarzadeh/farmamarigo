@@ -89,7 +89,7 @@
                                                                      <a href="https://marigolab.it" style="color: #fff; text-decoration: none !important;"
                                                                         target="_blank">
                                                                          <img title="Logo"
-                                                                              src="https://marigolab.it/storage/logo.jpg"
+                                                                              src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-2.png"
                                                                               height="70"
                                                                               style="max-width: 107px;display: block !important;height: auto !important;"
                                                                                border="0"

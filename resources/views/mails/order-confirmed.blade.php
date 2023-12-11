@@ -88,7 +88,7 @@
                                                                         <a href="https://marigolab.it" style="color: #fff; text-decoration: none !important;"
                                                                            target="_blank">
                                                                             <img title="Logo"
-                                                                                 src="https://marigolab.it/storage/logo.jpg"
+                                                                                 src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-2.png"
                                                                                  height="70"
                                                                                  style="max-width: 107px;display: block !important;height: auto !important;"
                                                                                  border="0"
@@ -145,8 +145,6 @@
                                             <div class="card-body">
                                                 <p style='font-size:18px !important;' class="card-title">Gentile {{ $order->user->name }} ({{ $order->user->codice }})</p>
                                                 <p class="card-text">Abbiamo ricevuto il tuo ordine #1000{{ $order->id }}.</p>
-                                                <p class="card-text">Nel caso in cui tu ne avessi necessità, hai la possibilità di apportare modifiche al tuo ordine per i prossimi 30 minuti.</p>
-
                                                 <table class="table table-striped table-hover" style='border:0;width: 100%;'>
                                                     <thead style="border: 0;">
                                                     <tr style="border: 0;">

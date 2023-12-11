@@ -81,7 +81,7 @@
                                                                         <a href="{{ site_url }}" style="color: #fff; text-decoration: none !important;"
                                                                            target="_blank">
                                                                             <img title="Logo"
-                                                                                 src="{{ site_logo }}"
+                                                                                 src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-2.png"
                                                                                  height="70"
                                                                                  style="max-width: 107px;display: block !important;height: auto !important;"
                                                                                  alt="Logo" border="0"

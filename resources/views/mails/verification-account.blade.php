@@ -29,7 +29,7 @@
                 <div class="col-4">
                     <div class="logo logo-width-1 wow fadeIn   animated" style="visibility: visible;">
                         <a href="{{ url('/') }}">
-                            <img src="{{ asset('storage/logo.jpg') }}" width="130" style="display:block;margin-block-start:2em;margin-block-end:-10px;" alt="Marigolab">
+                            <img src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-2.png" width="130" style="display:block;margin-block-start:2em;margin-block-end:-10px;" alt="Marigolab">
                         </a>
                     </div>
                 </div>
