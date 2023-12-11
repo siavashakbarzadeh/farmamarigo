@@ -1008,6 +1008,7 @@ class PublicCheckoutController
             'payment_id' => $order->payment->id,
             'status' => "COMPLETED",
             'paid_at' => $order->created_at,
+            'completed_at'=>$formatted_date,
             'tax_amount' => $order->tax_amount,
             'shipping_amount' => $order->shippingAmount->shippingAmount,
             'discount_amount' => $order->discount_amount,
