@@ -918,6 +918,7 @@ class PublicCheckoutController
                 'order_id' => $order->id,
             ]);
             $order->payment->status=PaymentStatusEnum::COMPLETED;
+            $order->payment->amount=$order->amount;
             $order->payment->save();
 
             $shippingData=[];
