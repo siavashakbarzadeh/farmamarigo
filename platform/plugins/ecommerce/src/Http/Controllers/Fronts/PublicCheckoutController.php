@@ -812,7 +812,7 @@ class PublicCheckoutController
     $accessToken = $this->getPaypalAccessToken($clientId, $clientSecret);
 
     if (!$accessToken) {
-        error_log('Failed to retrieve PayPal access token');
+        dd('Failed to retrieve PayPal access token');
         return null;
     }
     
