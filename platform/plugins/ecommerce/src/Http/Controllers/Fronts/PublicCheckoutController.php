@@ -993,7 +993,8 @@ class PublicCheckoutController
         // Format the date
         $formatted_date = strftime('%d %B %Y', $date);
 
-        $shippingAmount=(float)$order->shippingAmount->shippingAmount;
+        $order->shippingAmount->shippingAmount=(float)$order->shippingAmount->shippingAmount;
+        $order->shippingAmount->save();
         $invoice = new Invoice([
             'reference_id' => $order->id,
             'reference_type' => Order::class,
