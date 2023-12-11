@@ -812,6 +812,7 @@ class PublicCheckoutController
         // Get an access token from PayPal
         $accessToken = $this->getPaypalAccessToken($clientId, $clientSecret);
     
+        dd($accessToken);
         if (!$accessToken) {
             // Handle error - could not get access token
             return null;
