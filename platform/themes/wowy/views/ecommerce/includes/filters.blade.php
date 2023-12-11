@@ -117,7 +117,7 @@
 {{--        </div>--}}
 {{--    </div>--}}
 
-    <div class="widget mt-5">
+    <div class="widget mt-10">
         <a class="clear_filter dib clear_all_filter" href="{{ URL::current() }}">{{ __('Clear All Filter') }}</a>
 
         <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-filter mr-5 ml-0"></i> {{ __('Filter') }}</button>
