@@ -87,13 +87,7 @@
                                                                     <td style="border:0;padding:15px;border-collapse:collapse; height: 70px; line-height: 70px">
                                                                         <a href="https://marigolab.it" style="color: #fff; text-decoration: none !important;"
                                                                            target="_blank">
-                                                                            <img title="Logo"
-                                                                                 src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-2.png"
-                                                                                 height="70"
-                                                                                 style="max-width: 107px;display: block !important;height: auto !important;"
-                                                                                 border="0"
-                                                                                 hspace="0"
-                                                                                 vspace="0"></a>
+                                                                           <img title="Logo" src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-2.png" height="70" style="max-width: 107px; display: block !important; height: auto !important;" border="0" hspace="0" vspace="0">
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
