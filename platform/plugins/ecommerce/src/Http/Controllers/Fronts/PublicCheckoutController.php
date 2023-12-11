@@ -636,6 +636,14 @@ class PublicCheckoutController
         $promotionDiscountAmount = $handleApplyPromotionsService->execute($token);
         $couponDiscountAmount = Arr::get($sessionData, 'coupon_discount_amount');
 
+
+        $paymentMethod = $request->input('payment_method', session('selected_payment_method'));
+        if ($paymentMethod) {
+
+            session()->put('selected_payment_method', $paymentMethod);
+
+        
+        }
         $shippingAmount = 0;
 
         $shippingData = [];
