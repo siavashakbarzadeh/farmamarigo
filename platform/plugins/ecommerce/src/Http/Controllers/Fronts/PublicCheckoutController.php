@@ -986,13 +986,14 @@ class PublicCheckoutController
     private function generateInvoice($order){
 
         $date = time();
-        dd($date);
 
         // Set the locale to Italian
         setlocale(LC_TIME, 'it_IT.UTF-8');
 
         // Format the date
         $formatted_date = strftime('%d %B %Y', $date);
+        dd($formatted_date);
+
 
         $order->shippingAmount->shippingAmount=(float)$order->shippingAmount->shippingAmount;
         $order->shippingAmount->save();
