@@ -823,7 +823,7 @@ class PublicCheckoutController
         'intent' => 'sale',
         'redirect_urls' => [
             'return_url' => "https://marigopharma.marigo.collaudo.biz/return?orderId=$order->id", //controller
-            'cancel_url' => 'https://marigopharma.marigo.collaudo.biz/cancel' //just the view
+            'cancel_url' => 'https://marigopharma.marigo.collaudo.biz/cancel-paypal' //just the view
         ],
         'payer' => [
             'payment_method' => 'paypal'
