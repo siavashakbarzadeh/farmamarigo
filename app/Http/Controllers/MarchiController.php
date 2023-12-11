@@ -36,7 +36,7 @@ class MarchiController extends BaseController
         $cards = [
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/catalog/copertina-prontoleggo.jpg', 'title' => 'Prontoleggo – Occhiali da lettura', ],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/evi-brand-italia.jpg', 'title' => 'Brand Italia – Linea antizanzare, maschere viso e linea arnica', 'description' => 'Description for card 2'],
-            ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/nuvita.jpg', 'title' => 'Nuvita – Puericultura Leggera', 'description' => 'Description for card 3'],
+            ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/catalog/nuvita.jpg', 'title' => 'Nuvita – Puericultura Leggera', 'description' => 'Description for card 3'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/evi-petformance.jpg', 'title' => 'Petformance – Articoli per la salute, il benessere e l’igiene di cani e gatti', 'description' => 'Description for card 4'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/test-rapidi.jpg', 'title' => 'Test Rapidi Professionali e Self Test', 'description' => 'Description for card 4'],
             ['image' => 'https://marigopharma.marigo.collaudo.biz/storage/mix-mascherine.jpg', 'title' => 'Mascherine Protettive – FFP2 e Chirurgiche', 'description' => 'Description for card 4'],
