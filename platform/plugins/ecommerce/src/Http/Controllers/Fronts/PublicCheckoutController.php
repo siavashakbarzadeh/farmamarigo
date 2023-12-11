@@ -1007,7 +1007,7 @@ class PublicCheckoutController
             'status' => "COMPLETED",
             'paid_at' => $order->created_at,
             'tax_amount' => $order->tax_amount,
-            'shipping_amount' => $order->shippingAmount->shippingAmount,
+            'shipping_amount' => round_to_2dp($order->shippingAmount->shippingAmount),
             'discount_amount' => $order->discount_amount,
             'sub_total' => $order->sub_total + ($order->tax_amount),
             'amount' => $order->amount,
