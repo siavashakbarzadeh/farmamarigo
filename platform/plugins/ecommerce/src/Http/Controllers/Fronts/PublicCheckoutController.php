@@ -621,6 +621,8 @@ class PublicCheckoutController
             session()->put('selected_payment_method', $paymentMethod);
         }
 
+        dd($paymentMethod);
+
         if (is_plugin_active('marketplace')) {
             return apply_filters(
                 HANDLE_PROCESS_POST_CHECKOUT_ORDER_DATA_ECOMMERCE,
