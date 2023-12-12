@@ -20,6 +20,7 @@ use App\Http\Controllers\PricelistController;
                                     @else
                                         <img src="" alt="" class="default-img">
                                         <img src="" alt="" class="hover-img">
+                                    @endif
                                 </a>
                             </div>
                             <div class="product-badges product-badges-position product-badges-mrg">
