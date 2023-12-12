@@ -16,7 +16,7 @@ use App\Http\Controllers\PricelistController;
                                     @if(isset($product->image))
                                     <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="default-img">
                                     <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="hover-img">
-                                    
+
                                     @else
                                         <img src="" alt="" class="default-img">
                                         <img src="" alt="" class="hover-img">
