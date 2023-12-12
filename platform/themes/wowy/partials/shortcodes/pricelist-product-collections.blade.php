@@ -13,8 +13,13 @@ use App\Http\Controllers\PricelistController;
                         <div class="product-img-action-wrap">
                             <div class="product-img product-img-zoom">
                                 <a href="{{ $product->url }}">
+                                    @if(isset($product->image)){
                                     <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="default-img">
                                     <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="hover-img">
+                                    }
+                                    @else
+                                        <img src="" alt="" class="default-img">
+                                        <img src="" alt="" class="hover-img">
                                 </a>
                             </div>
                             <div class="product-badges product-badges-position product-badges-mrg">
