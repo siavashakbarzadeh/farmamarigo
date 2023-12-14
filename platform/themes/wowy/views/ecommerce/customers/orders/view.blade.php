@@ -29,10 +29,10 @@
             </div>
             <div class="row">
                 <div class="col-12 border-top pt-2">
-                    <h4>{{ __("Informazione dell'ordine") }}</h4>
+                    <h4>Informazione dell'ordine</h4>
                     <div>
                         <div>
-                            <span class="d-inline-block">{{ __('Lo stato dell'ordine') }}:</span>
+                            <span class="d-inline-block">Lo stato dell'ordine:</span>
                             <strong class="order-detail-value">{{ $order->status->label() }}</strong>
                         </div>
                         <div>
