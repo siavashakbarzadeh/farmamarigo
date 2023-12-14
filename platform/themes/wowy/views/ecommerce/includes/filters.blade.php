@@ -124,7 +124,7 @@
 
     <div class="widget mt-3 row">
         <div class="container">
-            <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="{{ '/products?categories='+$categories[0] }}">{{ __('Cancella filtri') }}</a>
+            <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="{{ '/products?categories='+$categories[0]->id }}">{{ __('Cancella filtri') }}</a>
         </div>
     </div>
 </div>
