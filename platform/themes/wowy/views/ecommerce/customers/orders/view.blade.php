@@ -29,27 +29,19 @@
             </div>
             <div class="row">
                 <div class="col-12 border-top pt-2">
-                    <h4>{{ __('Order information') }}</h4>
+                    <h4>{{ __('Informazione dell'ordine') }}</h4>
                     <div>
                         <div>
-                            <span class="d-inline-block">{{ __('Order status') }}:</span>
+                            <span class="d-inline-block">{{ __('Lo stato dell'ordine') }}:</span>
                             <strong class="order-detail-value">{{ $order->status->label() }}</strong>
                         </div>
                         <div>
-                            <span class="d-inline-block">{{ __('Payment method') }}:</span>
-                            <strong class="order-detail-value"> {{ $order->payment->payment_channel->label() }} </strong>
-                        </div>
-                        <div>
-                            <span class="d-inline-block">{{ __('Payment status') }}:</span>
-                            <strong class="order-detail-value">{{ $order->payment->status->label() }}</strong>
-                        </div>
-                        <div>
-                            <span class="d-inline-block">{{ __('Amount') }}:</span>
+                            <span class="d-inline-block">{{ __('Importo') }}:</span>
                             <strong class="order-detail-value"> {{ $order->amount_format }} </strong>
                         </div>
                         @if (EcommerceHelper::isTaxEnabled())
                             <div>
-                                <span class="d-inline-block">{{ __('Tax') }}:</span>
+                                <span class="d-inline-block">{{ __('IVA') }}:</span>
                                 <strong class="order-detail-value"> {{ format_price($order->tax_amount) }} </strong>
                             </div>
                         @endif
@@ -67,7 +59,7 @@
                             </strong>
                         </div>
                         <div>
-                            <span class="d-inline-block">{{ __('Shipping fee') }}:</span>
+                            <span class="d-inline-block">{{ __('Contributo per spedizione ed imballaggio') }}:</span>
                             <strong class="order-detail-value">{{ format_price($order->shipping_amount) }} </strong>
                         </div>
                         @if ($order->description)
