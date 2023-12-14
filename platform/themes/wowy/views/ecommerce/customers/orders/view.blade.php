@@ -151,30 +151,6 @@
                         </table>
                     </div>
 
-                    @if ($order->shipment)
-                        <br>
-                        <h5>{{ __('Shipping Information:') }}</h5>
-                        <p><span class="d-inline-block">{{ __('Shipping Status') }}</span>: <strong class="d-inline-block text-info">{!! BaseHelper::clean($order->shipment->status->toHtml()) !!}</strong></p>
-                        @if ($order->shipment->shipping_company_name)
-                            <p><span class="d-inline-block">{{ __('Shipping Company Name') }}</span>: <strong class="d-inline-block">{{ $order->shipment->shipping_company_name }}</strong></p>
-                        @endif
-                        @if ($order->shipment->tracking_id)
-                            <p><span class="d-inline-block">{{ __('Tracking ID') }}</span>: <strong class="d-inline-block">{{ $order->shipment->tracking_id }}</strong></p>
-                        @endif
-                        @if ($order->shipment->tracking_link)
-                            <p><span class="d-inline-block">{{ __('Tracking Link') }}</span>: <strong class="d-inline-block"><a
-                                        href="{{ $order->shipment->tracking_link }}" target="_blank">{{ $order->shipment->tracking_link }}</a></strong></p>
-                        @endif
-                        @if ($order->shipment->note)
-                            <p><span class="d-inline-block">{{ __('Delivery Notes') }}</span>: <strong class="d-inline-block">{{ $order->shipment->note }}</strong></p>
-                        @endif
-                        @if ($order->shipment->estimate_date_shipped)
-                            <p><span class="d-inline-block">{{ __('Estimate Date Shipped') }}</span>: <strong class="d-inline-block">{{ $order->shipment->estimate_date_shipped }}</strong></p>
-                        @endif
-                        @if ($order->shipment->date_shipped)
-                            <p><span class="d-inline-block">{{ __('Date Shipped') }}</span>: <strong class="d-inline-block">{{ $order->shipment->date_shipped }}</strong></p>
-                        @endif
-                    @endif
 
                     <div class="mt-2 row">
                         @if ($order->isInvoiceAvailable())
