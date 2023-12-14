@@ -124,7 +124,14 @@
 
     <div class="widget mt-3 row">
         <div class="container">
-            <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="{{ '/products?categories='.(string)$categories[0]->id }}">{{ __('Cancella filtri') }}</a>
+            @php
+            $currentUrl = url()->current();
+
+    $path = parse_url($currentUrl, PHP_URL_PATH);
+    $segments = explode('/', $path);
+    $category = $segments[1] ?? null;
+            @endphp
+            <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="{{ '/products?categories='.$category }}">{{ __('Cancella filtri') }}</a>
         </div>
     </div>
 </div>
