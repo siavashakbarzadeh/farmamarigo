@@ -69,7 +69,7 @@
 {{--            </div>--}}
 {{--        @endif--}}
 
-        <div class="col-lg-12 widget-filter-item" data-type="price">
+        <div class="col-lg-12 widget-filter-item mt-12" data-type="price">
             <h5 class="mb-20 widget__title" data-title="{{ __('Price') }}">{{ __('Price') }}</h5>
             <div class="price-filter range">
                 <div class="price-filter-inner">
