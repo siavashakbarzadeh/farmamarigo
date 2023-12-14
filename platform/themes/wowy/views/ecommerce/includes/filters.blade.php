@@ -127,7 +127,7 @@
             @php
             $category = $_GET['categories'][0] ?? null;
             @endphp
-            <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="https://marigopharma.marigo.collaudo.biz/products?categories=439">{{ __('Cancella filtri') }}</a>
+            <a class="clear_filter dib clear_all_filter" href="{{ URL::current() }}">{{ __('Cancella filtri') }}</a>
         </div>
     </div>
 </div>
