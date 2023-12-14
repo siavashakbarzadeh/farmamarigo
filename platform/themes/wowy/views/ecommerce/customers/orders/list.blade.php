@@ -69,12 +69,6 @@
 
 
                                     <div class="row list-order-action">
-                                        {{--<div class="col-3">
-                                            <form  @if($order->canEdit()) action="{{ route('customer.orders.edit',$order->id) }}" method="post" @endif >
-                                                @csrf
-                                                <button type="submit" class="btn btn-success btn-sm"  style="width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;"  @if( $order->status !='pending') disabled @endif> <i class="fa fa-pen"></i> </button>
-                                            </form>
-                                        </div>--}}
                                         <div class="col-3">
                                             <a @if($order->isInvoiceAvailable()) href="{{ route('customer.print-order', $order->id) }}" @endif
                                             class="btn btn-primary btn-sm"   style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;" @if(!$order->isInvoiceAvailable()) disabled @endif><i class="fa fa-print"></i></a>
@@ -82,7 +76,6 @@
                                         <div class="col-3">
                                             <a class="btn btn-info btn-sm"  style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;" href="{{ route('customer.orders.view', $order->id) }}"><i class="fa fa-eye"></i></a>
                                         </div>
-{{--                                        <form action="{{ route('customer.orders.repeat', $order->id) }}" method="post" class="col-3">--}}
                                         <form action="{{ route('customer.orders.reorder',$order->id) }}" method="post" class="col-3">
                                             @csrf
                                             <button type="submit" class="btn btn-info btn-sm" style="width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;"><i class="fa fa-repeat"></i></button>
