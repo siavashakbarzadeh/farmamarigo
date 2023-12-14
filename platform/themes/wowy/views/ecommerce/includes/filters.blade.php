@@ -129,7 +129,7 @@
 
     $path = parse_url($currentUrl, PHP_URL_PATH);
     $segments = explode('/', $path);
-    $category = $segments[1] ?? null;
+    $category = $segments[2] ?? null;
             @endphp
             <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="{{ '/products?categories='.$category }}">{{ __('Cancella filtri') }}</a>
         </div>
