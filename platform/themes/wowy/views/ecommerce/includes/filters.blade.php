@@ -119,12 +119,12 @@
 
     <div class="widget mt-3 row">
 
-        <button type="submit" class="btn btn-sm btn-default col-12"><i class="fa fa-filter mr-5 ml-0"></i> {{ __('Filter') }}</button>
+        <button type="submit" class="btn btn-sm btn-default col-12" style="font-size:small;border-radius:25px; text-transform:none;"><i class="fa fa-filter mr-5 ml-0"></i> {{ __('Filter') }}</button>
     </div>
-    +
+
     <div class="widget mt-3 row">
         <div class="container">
-            <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="https://marigolab.it/product-categories/prodotti-consumabili">{{ __('Cancella filtri') }}</a>
+            <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="{{ '/products?categories='+$categories[0] }}">{{ __('Cancella filtri') }}</a>
         </div>
     </div>
 </div>
