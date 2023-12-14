@@ -17,12 +17,12 @@
 @endphp
 
 <div class="col-lg-12">
-    <a class="shop-filter-toogle" href="#">
+    <!-- <a class="shop-filter-toogle" href="#">
         <span class="fal fa-2x  fa-filter mr-5  ml-0"></span>
         <span class="title fa-2x">{{ __('Filters') }}</span>
         <i class="far fa-2x fa-angle-up  angle-down"></i>
         <i class="far fa-2x fa-angle-down  fa-2x angle-up"></i>
-    </a>
+    </a> -->
     <form action="{{ URL::current() }}" method="GET" id="products-filter-ajax">
         @if ($layout != 'product-full-width')
             <input type="hidden" name="layout" value="{{ $layout }}">
@@ -31,6 +31,9 @@
     </form>
 </div>
 
-<div class="products-listing position-relative">
-    @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.product-items', compact('products'))
+<div class="col-lg-9 products-listing position-relative">
+    <div class="products-listing position-relative">
+        @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.product-items', compact('products'))
+    </div>
 </div>
+
