@@ -39,6 +39,10 @@
                             <span class="d-inline-block">{{ __('Importo') }}:</span>
                             <strong class="order-detail-value"> {{ $order->amount_format }} </strong>
                         </div>
+                        <div>
+                            <span class="d-inline-block">{{ __('Contributo per spedizione ed imballaggio') }}:</span>
+                            <strong class="order-detail-value">{{ format_price($order->shipping_amount) }} </strong>
+                        </div>
                         @if (EcommerceHelper::isTaxEnabled())
                             <div>
                                 <span class="d-inline-block">{{ __('IVA') }}:</span>
@@ -47,20 +51,16 @@
                         @endif
 
                         <div>
+                        @if ($order->discount_amount)
                             <span class="d-inline-block">{{ __('Discount') }}:</span>
-                            <strong class="order-detail-value"> {{ format_price($order->discount_amount) }}
-                                @if ($order->discount_amount)
+                                <strong class="order-detail-value"> {{ format_price($order->discount_amount) }}
                                     @if ($order->coupon_code)
                                         ({!! BaseHelper::html(__('Coupon code: ":code"', ['code' => Html::tag('strong', $order->coupon_code)->toHtml()])) !!})
                                     @elseif ($order->discount_description)
                                         ({{ $order->discount_description }})
                                     @endif
-                                @endif
-                            </strong>
-                        </div>
-                        <div>
-                            <span class="d-inline-block">{{ __('Contributo per spedizione ed imballaggio') }}:</span>
-                            <strong class="order-detail-value">{{ format_price($order->shipping_amount) }} </strong>
+                                </strong>
+                             @endif
                         </div>
                         @if ($order->description)
                             <div>
