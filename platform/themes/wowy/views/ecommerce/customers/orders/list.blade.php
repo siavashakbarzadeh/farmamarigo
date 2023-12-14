@@ -52,7 +52,7 @@
                                     @endif
                                     @if( $order->status=='completed' && $order->shipment->status =='pending')
 
-                                            <label class="btn-primary p-1 rounded small">In lavorazione</label>
+                                    <label class="btn-success p-1 rounded small" >Completato</label>
 
                                     @endif
                                     @if( $order->status=='canceled')
