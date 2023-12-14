@@ -23,7 +23,7 @@
                 <div class="col-auto">
                     <div class="order-meta">
                         <span class="d-inline-block">{{ __('Time') }}:</span>
-                        <strong class="order-detail-value">{{ $order->created_at->format('h:m d/m/Y') }}</strong>
+                        <strong class="order-detail-value">{{ $order->created_at->format('d/m/Y h:m') }}</strong>
                     </div>
                 </div>
             </div>
