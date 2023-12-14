@@ -71,7 +71,7 @@
                                     <div class="row list-order-action">
                                         <div class="col-3">
                                             @if($order->isInvoiceAvailable())
-                                            <a href="{{ route('customer.print-order', $order->id) }}" 
+                                            <a class='btn btn-primary btn-sm' href="{{ route('customer.print-order', $order->id) }}" 
                                                style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
                                                <i class="fa fa-print"></i>
                                             </a>
