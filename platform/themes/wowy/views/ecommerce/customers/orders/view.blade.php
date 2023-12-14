@@ -187,7 +187,7 @@
                     <div class="mt-2 row">
                         @if ($order->isInvoiceAvailable())
                             <div class="col-auto me-auto">
-                                <a href="{{ route('customer.print-order', $order->id) }}" class="btn btn-info btn-sm"><i class="fa fa-download"></i> {{ __('Download invoice') }}</a>
+                                <a href="{{ route('customer.print-order', $order->id) }}" class="btn btn-info btn-sm"><i class="fa fa-download"></i> {{ __('Scarica ordine') }}</a>
                             </div>
                         @endif
                         @if ($order->canBeCanceled())
