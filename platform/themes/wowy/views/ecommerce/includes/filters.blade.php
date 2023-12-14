@@ -127,7 +127,7 @@
             @php
             $category = $_GET['categories'][0] ?? null;
             @endphp
-            <a class="clear_filter dib clear_all_filter" href="{{ URL::current() }}">{{ __('Cancella filtri') }}</a>
+            <a class="btn btn-sm btn-danger clear_filter dib clear_all_filter" href="{{ URL::current() }}">{{ __('Cancella filtri') }}</a>
         </div>
     </div>
 </div>
