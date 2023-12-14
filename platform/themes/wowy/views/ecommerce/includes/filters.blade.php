@@ -14,7 +14,7 @@
 <div class="shop-product-filter-header">
     <div class="row">
         @if (count($categories) > 0)
-            <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item">
+            <div class="col-lg-12 widget-filter-item">
                 <h5 class="mb-20 widget__title" data-title="{{ __('Categories') }}">{{ __('categories') }}</h5>
                 <div class="custome-checkbox ps-custom-scrollbar">
                     @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.filter-product-category', ['categories' => $categories, 'indent' => null])
@@ -26,7 +26,7 @@
             $brands = get_all_brands(['status' => \Botble\Base\Enums\BaseStatusEnum::PUBLISHED], [], ['products']);
         @endphp
 {{--        @if (count($brands) > 0)--}}
-{{--            <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item">--}}
+{{--            <div class="col-lg-12 widget-filter-item">--}}
 {{--                <h5 class="mb-20 widget__title" data-title="{{ __('Brand') }}">{{ __('By :name', ['name' => __('Brands')]) }}</h5>--}}
 {{--                <div class="custome-checkbox ps-custom-scrollbar">--}}
 {{--                    @foreach($brands as $brand)--}}
@@ -69,7 +69,7 @@
 {{--            </div>--}}
 {{--        @endif--}}
 
-        <div class="col-lg-3 col-md-4 mb-lg-0 mb-md-5 mb-sm-5 widget-filter-item" data-type="price">
+        <div class="col-lg-12 widget-filter-item" data-type="price">
             <h5 class="mb-20 widget__title" data-title="{{ __('Price') }}">{{ __('Price') }}</h5>
             <div class="price-filter range">
                 <div class="price-filter-inner">
