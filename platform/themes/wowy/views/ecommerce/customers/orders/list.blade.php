@@ -76,8 +76,8 @@
                                             </form>
                                         </div>--}}
                                         <div class="col-3">
-                                            <a @if($order->isInvoiceAvailable()) href="{{ route('customer.print-order', $order->id) }}" @endif
-                                               style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;" @if(!$order->isInvoiceAvailable()) disabled @endif><i class="fa fa-print"></i></a>
+                                            <a @if($order->isInvoiceAvailable()) href="{{ route('customer.print-order', $order->id) }}" @else disabled @endif
+                                            class="btn btn-primary btn-sm"   style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;" @if(!$order->isInvoiceAvailable()) disabled @endif><i class="fa fa-print"></i></a>
                                         </div>
                                         <div class="col-3">
                                             <a class="btn btn-info btn-sm"  style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;" href="{{ route('customer.orders.view', $order->id) }}"><i class="fa fa-eye"></i></a>
