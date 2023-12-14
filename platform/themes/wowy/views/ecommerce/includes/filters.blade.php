@@ -127,7 +127,7 @@
             @php
             $category = $_GET['categories'][0] ?? null;
             @endphp
-            <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="{{ '/products?categories='.$category }}">{{ __('Cancella filtri') }}</a>
+            <a class="btn btn-danger col-12" style="font-size:small;border-radius:25px; text-transform:none;" href="{{ '/products?categories='.(string)$category }}">{{ __('Cancella filtri') }}</a>
         </div>
     </div>
 </div>
