@@ -70,8 +70,18 @@
 
                                     <div class="row list-order-action">
                                         <div class="col-3">
-                                            <a @if($order->isInvoiceAvailable()) href="{{ route('customer.print-order', $order->id) }}" @else disabled @endif
-                                            class="btn btn-primary btn-sm"   style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;"><i class="fa fa-print"></i></a>
+                                            @if($order->isInvoiceAvailable())
+                                            <a href="{{ route('customer.print-order', $order->id) }}" 
+                                               style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
+                                               <i class="fa fa-print"></i>
+                                            </a>
+                                            @else
+                                            <a disabled
+                                               style="width: 40px;height: 40px;background-color: #e3e3e3;border: none;border-radius: 50%;color: #a3a3a3 !important;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
+                                               <i class="fa fa-print"></i>
+                                            </a>
+                                            @endif
+                                            
                                         </div>
                                         <div class="col-3">
                                             <a class="btn btn-info btn-sm"  style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;" href="{{ route('customer.orders.view', $order->id) }}"><i class="fa fa-eye"></i></a>
