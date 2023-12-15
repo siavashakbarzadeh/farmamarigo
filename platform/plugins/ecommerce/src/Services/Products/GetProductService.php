@@ -174,7 +174,7 @@ class GetProductService
         } else {
             $sortedProducts = $products;
         }
-        
+        dd($sortedProducts);
         return $sortedProducts;
     }
 }
