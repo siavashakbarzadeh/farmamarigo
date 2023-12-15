@@ -18,9 +18,8 @@
                 <h5 class="mb-20 widget__title" data-title="{{ __('Categories') }}">{{ __('categories') }}</h5>
                 <div class="custome-checkbox ps-custom-scrollbar "style="overflow:hidden!important;">
                 @php
-                dd($categories);
                 $catgeories=$categories->sortBy('name');
-                dd($catgeories);
+                @endphp
                     @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.filter-product-category', ['categories' => $categories, 'indent' => null])
                 </div>
             </div>
