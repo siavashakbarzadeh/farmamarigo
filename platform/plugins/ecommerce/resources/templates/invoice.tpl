@@ -236,35 +236,28 @@
         </tr>
     {% endfor %}
 
-    <tr>
-        <td colspan="4" class="right">
-            {{ 'plugins/ecommerce::products.form.sub_total'|trans }}
-        </td>
-        <td class="bold">
-            {{ invoice.sub_total|price_format }}
-        </td>
-    </tr>
-
-    {% if is_tax_enabled %}
-        <tr>
-            <td colspan="4" class="right">
-                {{ 'plugins/ecommerce::products.form.tax'|trans }}
-            </td>
-            <td class="bold">
-                {{ invoice.tax_amount|price_format }}
-            </td>
-        </tr>
-    {% endif %}
     {% if invoice.shipping_amount %}
         <tr>
             <td colspan="4" class="right">
-                {{ 'plugins/ecommerce::products.form.shipping_fee'|trans }}
+                Contributo per spedizione ed imballaggio
             </td>
             <td class="bold">
                 {{ invoice.shipping_amount|price_format }}
             </td>
         </tr>
     {% endif %}
+
+    {% if is_tax_enabled %}
+        <tr>
+            <td colspan="4" class="right">
+                IVA
+            </td>
+            <td class="bold">
+                {{ invoice.tax_amount|price_format }}
+            </td>
+        </tr>
+    {% endif %}
+    
     {% if invoice.discount_amount %}
         <tr>
             <td colspan="4" class="right">
@@ -282,7 +275,7 @@
     <thead>
     <tr>
         <th>{{ 'plugins/ecommerce::order.payment_info'|trans }}</th>
-        <th>{{ 'plugins/ecommerce::order.total_amount'|trans }}</th>
+        <th>Totale IVA Inclusa</th>
     </tr>
     </thead>
     <tbody>
