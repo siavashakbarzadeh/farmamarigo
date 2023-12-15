@@ -296,7 +296,7 @@
 
             {% if payment_status %}
                 <div>
-                    {{ 'plugins/ecommerce::order.payment_status_label'|trans }}: <strong>{{ payment_status }}</strong>
+                    {{ 'plugins/ecommerce::order.payment_status_label'|trans }}: <strong>COMPLETATO</strong>
                 </div>
             {% endif %}
 
