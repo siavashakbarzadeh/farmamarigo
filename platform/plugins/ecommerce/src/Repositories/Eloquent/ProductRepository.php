@@ -460,9 +460,7 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
             '), function ($join) {
                 return $join->on('products_with_final_price.id', '=', 'ec_products.id');
             })
-            ->orderBy('sorting_order')
-            ->orderBy('final_price'); // or any other field you wish to order by after sorting_order
-        
+            ->orderBy('sorting_order');        
         }
         
         else{
