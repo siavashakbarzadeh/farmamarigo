@@ -127,7 +127,7 @@
             @php
             $category = $_GET['categories'][0] ?? null;
             @endphp
-            <a class="btn btn-sm col-12 clear_filter dib clear_all_filter" style="background-color:white !important;font-size: small; border-radius: 25px; text-transform: none;" href="{{ URL::current() }}">{{ __('Cancella filtri') }}</a>
+            <button class="btn btn-sm col-12 clear_filter dib clear_all_filter" style="background-color:white !important;font-size: small; border-radius: 25px; text-transform: none;" href="{{ URL::current() }}">{{ __('Cancella filtri') }}</button>
         </div>
     </div>
 </div>
