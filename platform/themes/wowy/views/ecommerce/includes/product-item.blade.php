@@ -1,5 +1,5 @@
 @if ($product)
-dd($product);
+@dd($product)
     <div class="product-cart-wrap mb-30">
         <div class="product-img-action-wrap">
             <div class="product-img product-img-zoom">
