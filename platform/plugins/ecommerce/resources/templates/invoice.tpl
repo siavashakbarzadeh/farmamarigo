@@ -150,7 +150,7 @@
         </span>
     {% else %}
         <span class="stamp {% if payment_status == 'completed' %} is-completed {% else %} is-failed {% endif %}">
-            {{ payment_status }}
+            COMPLETATO
         </span>
     {% endif %}
 {% endif %}
@@ -160,7 +160,7 @@
         <td>
             <div class="logo-container">
                 {% if logo %}
-                    <img src="{{ logo_full_path }}" style="width:100%; max-width:150px;" alt="{{ 'site_title' }}">
+                    <img src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-4.png" style="width:100%; max-width:150px;" alt="{{ 'site_title' }}">
                 {% endif %}
             </div>
         </td>
@@ -171,8 +171,8 @@
                 </p>
             {% endif %}
             <p>
-                <strong>{{ 'plugins/ecommerce::order.invoice'|trans }}</strong>
-                {{ invoice.code }}
+                <strong>Ordine</strong>
+                #100000{{ invoice.reference_id }}
             </p>
         </td>
     </tr>
@@ -181,22 +181,12 @@
 <table class="invoice-info-container">
     <tr>
         <td>
-            {% if get_ecommerce_setting('store_name') %}
-                <p>{{ get_ecommerce_setting('store_name') }}</p>
-            {% endif %}
-            <p>{{ get_ecommerce_setting('store_address') }}, {{ get_ecommerce_setting('store_city') }}, {{ get_ecommerce_setting('store_state') }}, {{ get_ecommerce_setting('store_country') }}</p>
+            <p>Marigo Italia S.R.L.</p>
 
-            {% if get_ecommerce_setting('store_phone') %}
-                <p>{{ get_ecommerce_setting('company_phone_for_invoicing') ?: get_ecommerce_setting('store_phone') }}</p>
-            {% endif %}
+            <p>Via Bagnulo, 168 – Piano di Sorrento (NA)</p>
 
-            {% if get_ecommerce_setting('store_email') %}
-                <p>{{ get_ecommerce_setting('store_email') }}</p>
-            {% endif %}
 
-            {% if get_ecommerce_setting('store_vat_number') %}
-                <p>{{ 'plugins/ecommerce::ecommerce.setting.vat_number'|trans }}: {{ get_ecommerce_setting('store_vat_number') }}</p>
-            {% endif %}
+            <p>Partita IVA: 07500660639</p>
         </td>
         <td>
             {% if invoice.customer_name %}
