@@ -19,6 +19,7 @@
                 <div class="custome-checkbox ps-custom-scrollbar "style="overflow:hidden!important;">
                 @php
                 $catgeories=$categories->sortBy('name');
+                dd($catgeories);
                     @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.filter-product-category', ['categories' => $categories, 'indent' => null])
                 </div>
             </div>
