@@ -18,7 +18,9 @@
                 <h5 class="mb-20 widget__title" data-title="{{ __('Categories') }}">{{ __('categories') }}</h5>
                 <div class="custome-checkbox ps-custom-scrollbar "style="overflow:hidden!important;">
                 @php
-                    $categories=sort($categories);
+                usort($categories, function ($a, $b) {
+                    return strcmp($a['name'], $b['name']);
+                });
                 @endphp
                     @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.filter-product-category', ['categories' => $categories, 'indent' => null])
                 </div>
