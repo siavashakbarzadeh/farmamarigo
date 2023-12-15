@@ -161,6 +161,7 @@ class GetProductService
             $products->setCollection(BaseHelper::sortSearchResults($products->getCollection(), $queryVar['keyword'], 'name'));
         }
 
+        dd($products);
         if(request()->user('customer')){
             $userId = request()->user('customer')->id;
             $productIds = DB::table('ec_pricelist')
