@@ -88,7 +88,7 @@
                         data-label="{{ __('Max price') }}"/>
                     <div class="price_slider_amount">
                         <div class="label-input">
-                            <span class="d-inline-block">{{ __('Range:') }} </span>
+                            <span class="d-inline-block"> Tra </span>
                             <span class="from d-inline-block"></span>
                             <span class="to d-inline-block"></span>
                         </div>
@@ -127,7 +127,7 @@
             @php
             $category = $_GET['categories'][0] ?? null;
             @endphp
-            <a class="btn btn-sm btn-danger clear_filter dib clear_all_filter" href="{{ URL::current() }}">{{ __('Cancella filtri') }}</a>
+            <a class="btn btn-sm col-12 clear_filter dib clear_all_filter" style="background-color:white !important;font-size: small; border-radius: 25px; text-transform: none;" href="{{ URL::current() }}">{{ __('Cancella filtri') }}</a>
         </div>
     </div>
 </div>
