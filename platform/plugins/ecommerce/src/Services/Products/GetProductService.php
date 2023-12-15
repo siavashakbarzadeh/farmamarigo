@@ -161,6 +161,20 @@ class GetProductService
             $products->setCollection(BaseHelper::sortSearchResults($products->getCollection(), $queryVar['keyword'], 'name'));
         }
 
-        return $products;
+        if(request()->user('customer')){
+            $userId = request()->user('customer')->id;
+            $productIds = DB::table('ec_pricelist')
+                            ->where('customer_id', $userId)
+                            ->pluck('product_id')->toArray();
+        
+            $sortedProducts = $products->sortBy(function($product) use ($productIds) {
+                $index = array_search($product->id, $productIds);
+                return $index === false ? 9999 : $index; // Products not in the list are placed at the end
+            });
+        } else {
+            $sortedProducts = $products;
+        }
+        
+        return $sortedProducts;
     }
 }
