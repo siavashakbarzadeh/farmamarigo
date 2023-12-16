@@ -153,8 +153,6 @@ class PublicController extends Controller
             ->add(__('Change Password'), route('customer.change-password'));
 
         return Theme::scope(
-            'ecommerce.customers.change-password',
-            [],
             'plugins/ecommerce::themes.customers.change-password'
         )->render();
     }
