@@ -144,6 +144,10 @@ if (defined('THEME_MODULE_SCREEN_NAME')) {
                 'uses' => 'PublicController@postEditAccount',
             ]);
 
+            Route::get('change-password', [
+                'as' => 'post.change-password',
+                'uses' => 'PublicController@getChangePassword',
+            ]);
 
 
             Route::post('change-password', [
