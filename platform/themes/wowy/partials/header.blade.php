@@ -130,7 +130,7 @@
                                                                 <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a></li>
                                                                 <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/orders">Ordini</a></li>
                                                                 <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/wishlist">Desideri</a></li>
-                                                                <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/change-password">Password</a></li>
+                                                                <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/change-password">Password</a></li>
                                                                 <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a></li>
 
                                                             </ul>
