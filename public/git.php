@@ -44,5 +44,5 @@
     header('HTTP/1.0 200 OK');
     echo "Success";
     //deployed successfully
-    //awox2
+    //awox2x2
 ?>
