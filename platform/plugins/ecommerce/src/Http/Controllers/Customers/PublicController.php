@@ -147,7 +147,6 @@ class PublicController extends Controller
 
     public function getChangePassword()
     {
-        dd();
         SeoHelper::setTitle(__('Change Password'));
 
         Theme::breadcrumb()->add(__('Home'), route('public.index'))
