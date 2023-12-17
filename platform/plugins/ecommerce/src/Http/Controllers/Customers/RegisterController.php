@@ -122,6 +122,7 @@ class RegisterController extends Controller
                     'email' => BaseHelper::clean($data['email']),
                     'password' => Hash::make($data['password']),
                     'type' => $data['type'],
+                    'first_access' => Carbon::now(), // Add this line
                 ]);
                 Address::create([
                     'name' => BaseHelper::clean($data['name']),
