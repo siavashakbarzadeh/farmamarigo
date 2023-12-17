@@ -17,7 +17,25 @@
                 @if (!empty($product))
                     <li>
                         <div class="shopping-cart-img">
-                            <a href="{{ $product->original_product->url }}"><img style="width:40px"  alt="{{ $product->name }}" src="{{ Arr::get($cartItem->options, 'image', $product->original_product->image) }}"></a>
+                            <a href="{{ $product->original_product->url }}">
+                                @php
+                        $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
+                        $productImgUrl =RvMedia::getImageUrl($product->original_product->image);
+                        $ch = curl_init($productImgUrl);
+                        curl_setopt($ch, CURLOPT_NOBODY, true);
+                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                        curl_exec($ch);
+                        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                        curl_close($ch);
+
+                        if($responseCode == 200){
+                            $Image=$productImgUrl;
+                        }else{
+                            $Image=$defaultImgUrl;
+                        }
+                    @endphp
+                                <img style="width:50px"  alt="{{ $product->name }}" src="{{ $Image }}">
+                            </a>
                         </div>
                         <div class="shopping-cart-title">
                             <h6><a href="{{ $product->original_product->url }}">{{ $product->name }}  @if ($product->isOutOfStock()) <span class="stock-status-label">({!! $product->stock_status_html !!})</span> @endif</a></h6>

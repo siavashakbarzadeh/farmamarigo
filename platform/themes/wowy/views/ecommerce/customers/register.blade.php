@@ -114,7 +114,7 @@
                     <div class="custome-checkbox">
                         <input type="hidden" name="agree_terms_and_policy" value="0">
                         <input class="form-check-input" type="checkbox" name="agree_terms_and_policy" id="agree-terms-and-policy" value="1" @if (old('agree_terms_and_policy') == 1) checked @endif>
-                        <label class="form-check-label" for="agree-terms-and-policy"><span>{{ __('I agree to terms & Policy.') }}</span></label>
+                        <label class="form-check-label" for="agree-terms-and-policy"><span>Accetto la <a href="/cookie-policy-1">Politica sulla Privacy.</a><span style="color:red;">*</span></span></label>
                     </div>
                 </div>
             </div>

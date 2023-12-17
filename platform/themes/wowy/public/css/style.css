@@ -67,16 +67,16 @@ a,button,h4,img,input,span{transition:all .3s ease 0s}@keyframes slideleft{10%{o
     align-items: center;
     min-width: 200px;
     opacity: 0;
-    background-color:#fff;
-    border-radius:5px;
-    box-shadow:0 10px 30px rgba(0,0,0,.12);
-    padding:30px 20px 27px;
-    position:absolute;
-    right:0;
-    top:calc(100% + 20px);
-    transition:all .25s cubic-bezier(.645,.045,.355,1);
-    visibility:hidden;
-    z-index:99
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    padding: 30px 20px 27px;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 20px);
+    transition: all .25s cubic-bezier(.645,.045,.355,1);
+    visibility: hidden;
+    z-index: 99;
 }
 .item-profile-wrap{
     width: 100%;

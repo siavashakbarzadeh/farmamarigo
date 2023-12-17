@@ -30,7 +30,25 @@
                                                     <td class="image product-thumbnail">
                                                         <input type="hidden" name="items[{{ $key }}][rowId]" value="{{ $cartItem->rowId }}">
                                                         <a href="{{ $product->original_product->url }}">
-                                                            <img src="{{ $cartItem->options['image'] }}" alt="{{ $product->name }}" />
+                                                            @php
+                                                                $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
+                                                                $productImgUrl =RvMedia::getImageUrl($cartItem->options['image']);
+                                                                $ch = curl_init($productImgUrl);
+                                                                curl_setopt($ch, CURLOPT_NOBODY, true);
+                                                                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                                                                curl_exec($ch);
+                                                                $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                                                                curl_close($ch);
+
+                                                                if($responseCode == 200){
+                                                                    $Image=$productImgUrl;
+                                                                }else{
+                                                                    $Image=$defaultImgUrl;
+                                                                }
+                                                            @endphp
+
+                    <img class="default-img" src="{{ $Image }}" alt="{{ $product->name }}">
+
                                                         </a>
                                                     </td>
                                                     <td class="product-des product-name">
@@ -108,12 +126,7 @@
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <tbody>
-                                                @if (EcommerceHelper::isTaxEnabled())
-                                                    <tr>
-                                                        <td class="cart_total_label">{{ __('Tax') }}</td>
-                                                        <td class="cart_total_amount"><span class="font-lg fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawTax()) }}</span></td>
-                                                    </tr>
-                                                @endif
+
                                                 @if ($couponDiscountAmount > 0 && session('applied_coupon_code'))
                                                     <tr>
                                                         <td class="cart_total_label">{{ __('Coupon code: :code', ['code' => session('applied_coupon_code')]) }} (<small><a class="btn-remove-coupon-code text-danger" data-url="{{ route('public.coupon.remove') }}" href="javascript:void(0)" data-processing-text="{{ __('Removing...') }}">{{ __('Remove') }}</a></small>)<span></td>
@@ -199,6 +212,12 @@ $orderAmount=Cart::instance('cart')->rawTotal();
                                                     <td class="cart_total_label">{{ __('Subtotale IVA esclusa') }} </td>
                                                     <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ format_price($subtotal)}}</span></strong></td>
                                                 </tr>
+                                                @if (EcommerceHelper::isTaxEnabled())
+                                                <tr>
+                                                    <td class="cart_total_label">{{ __('Tax') }}</td>
+                                                    <td class="cart_total_amount"><span class="font-lg fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawTax()) }}</span></td>
+                                                </tr>
+                                            @endif
                                                 <tr>
 
                                                     <td class="cart_total_label">{{ __('Contributo spese di spedizione e imballagio') }} </td>
