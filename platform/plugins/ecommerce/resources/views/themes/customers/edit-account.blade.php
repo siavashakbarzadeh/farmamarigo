@@ -14,12 +14,12 @@
                     <input id="name" type="text" class="form-control" name="name" value="{{ auth('customer')->user()->name }}">
                 </div>
                 {!! Form::error('name', $errors) !!}
-
-                <div class="input-group @if ($errors->has('dob')) has-error @endif">
-                    <span class="input-group-prepend">{{ __('Date of birth:') }}</span>
-                    <input id="date_of_birth" type="text" class="form-control" name="dob" value="{{ auth('customer')->user()->dob }}">
-                </div>
-                 {!! Form::error('dob', $errors) !!}
+            <input id="date_of_birth" type="hidden" class="form-control" name="dob" value="{{ auth('customer')->user()->dob }}">
+{{--                <div class="input-group @if ($errors->has('dob')) has-error @endif">--}}
+{{--                    <span class="input-group-prepend">{{ __('Date of birth:') }}</span>--}}
+{{--                    <input id="date_of_birth" type="text" class="form-control" name="dob" value="{{ auth('customer')->user()->dob }}">--}}
+{{--                </div>--}}
+{{--                 {!! Form::error('dob', $errors) !!}--}}
                 <div class="input-group @if ($errors->has('email')) has-error @endif">
                      <span class="input-group-prepend">{{ __('Email:') }}</span>
                     <input id="email" type="text" class="form-control" disabled="disabled" value="{{ auth('customer')->user()->email }}" name="email">
