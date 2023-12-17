@@ -407,21 +407,68 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
             $productIds = DB::table('ec_pricelist')
                             ->where('customer_id', $userId)
                             ->pluck('product_id')->toArray();
-        
-            $productIdsString = implode(',', $productIds);
+            if($productIds){
+                $productIdsString = implode(',', $productIds);
 
 
 
-            $this->model = $this->model
+                $this->model = $this->model
+                ->distinct()
+                ->join(DB::raw('
+                    (
+                        SELECT DISTINCT
+                            `ec_products`.id,
+                            CASE
+                                WHEN ec_products.id IN (' . $productIdsString . ') THEN 0
+                                ELSE 1
+                            END AS sorting_order,
+                            CASE
+                                WHEN (
+                                    ec_products.sale_type = 0 AND
+                                    ec_products.sale_price <> 0
+                                ) THEN ec_products.sale_price
+                                WHEN (
+                                    ec_products.sale_type = 0 AND
+                                    ec_products.sale_price = 0
+                                ) THEN ec_products.price
+                                WHEN (
+                                    ec_products.sale_type = 1 AND
+                                    (
+                                        ec_products.start_date > ' . esc_sql($now) . ' OR
+                                        ec_products.end_date < ' . esc_sql($now) . '
+                                    )
+                                ) THEN ec_products.price
+                                WHEN (
+                                    ec_products.sale_type = 1 AND
+                                    ec_products.start_date <= ' . esc_sql($now) . ' AND
+                                    ec_products.end_date >= ' . esc_sql($now) . '
+                                ) THEN ec_products.sale_price
+                                WHEN (
+                                    ec_products.sale_type = 1 AND
+                                    ec_products.start_date IS NULL AND
+                                    ec_products.end_date >= ' . esc_sql($now) . '
+                                ) THEN ec_products.sale_price
+                                WHEN (
+                                    ec_products.sale_type = 1 AND
+                                    ec_products.start_date <= ' . esc_sql($now) . ' AND
+                                    ec_products.end_date IS NULL
+                                ) THEN ec_products.sale_price
+                                ELSE ec_products.price
+                            END AS final_price
+                        FROM `ec_products`
+                    ) AS products_with_final_price
+                '), function ($join) {
+                    return $join->on('products_with_final_price.id', '=', 'ec_products.id');
+                })
+                ->orderBy('sorting_order');
+            }else{
+
+                $this->model = $this->model
             ->distinct()
             ->join(DB::raw('
                 (
                     SELECT DISTINCT
                         `ec_products`.id,
-                        CASE
-                            WHEN ec_products.id IN (' . $productIdsString . ') THEN 0
-                            ELSE 1
-                        END AS sorting_order,
                         CASE
                             WHEN (
                                 ec_products.sale_type = 0 AND
@@ -459,8 +506,11 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
                 ) AS products_with_final_price
             '), function ($join) {
                 return $join->on('products_with_final_price.id', '=', 'ec_products.id');
-            })
-            ->orderBy('sorting_order');        
+            });
+
+            }
+        
+                    
         }
         
         else{
