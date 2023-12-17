@@ -12,11 +12,16 @@
                         <input required class="form-control square" name="name" type="text" id="name" value="{{ auth('customer')->user()->name }}">
                         {!! Form::error('name', $errors) !!}
                     </div>
-                    <div class="form-group col-md-12 @if ($errors->has('dob')) has-error @endif">
-                        <label for="date_of_birth">{{ __('Date of birth') }}:</label>
-                        <input id="date_of_birth" type="text" class="form-control square" name="dob" placeholder="Y-m-d" value="{{ auth('customer')->user()->dob }}">
-                        {!! Form::error('name', $errors) !!}
-                    </div>
+
+                    <input id="date_of_birth" type="hidden" class="form-control square" name="dob" placeholder="Y-m-d" value="{{ auth('customer')->user()->dob }}">
+
+{{--                    <div class="form-group col-md-12 @if ($errors->has('dob')) has-error @endif">--}}
+{{--                        <label for="date_of_birth">{{ __('Date of birth') }}:</label>--}}
+{{--                        --}}
+{{--                        <input id="date_of_birth" type="text" class="form-control square" name="dob" placeholder="Y-m-d" value="{{ auth('customer')->user()->dob }}">--}}
+{{--                        --}}
+{{--                        {!! Form::error('name', $errors) !!}--}}
+{{--                    </div>--}}
                     <div class="form-group col-md-12">
                         <label for="email">{{ __('Email') }}:</label>
                         <input id="email" type="text" class="form-control" disabled="disabled" value="{{ auth('customer')->user()->email }}" name="email">
