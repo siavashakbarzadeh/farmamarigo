@@ -15,6 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+//        $schedule->command('queue:work --timeout=60 --tries=2 --once')
+//            ->everyMinute()
+//            ->withoutOverlapping();
         // $schedule->command('inspire')->hourly();
     }
 
