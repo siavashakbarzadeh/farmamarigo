@@ -127,11 +127,11 @@
                                                             <ul class="language-dropdown">
 
 
-                                                                <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a></li>
-                                                                <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/orders">Ordini</a></li>
-                                                                <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/wishlist">Desideri</a></li>
-                                                                <li> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/change-password">Password</a></li>
-                                                                <li><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a></li>
+                                                            <div class="row" style="width:100%"> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a></div>
+                                                                <div class="row" style="width:100%"><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/orders">Ordini</a></div>
+                                                                <div class="row" style="width:100%"><a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/wishlist">Desideri</a></div>
+                                                                <div class="row" style="width:100%"> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/change-password">Password</a></div>
+                                                                <div class="row" style="width:100%"><a class="bg-primary item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a></div>
 
                                                             </ul>
                                                         </li>
