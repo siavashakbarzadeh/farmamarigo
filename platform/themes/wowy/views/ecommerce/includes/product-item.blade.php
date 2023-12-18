@@ -4,11 +4,10 @@
             <div class="product-img product-img-zoom">
                 <a href="{{ $product->url }}">
                     @if ($product->images)
-                    <img class="default-img" src="{{ RvMedia::getImageUrl(RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}">
-                    @else
                     <img class="default-img" src="{{ RvMedia::getImageUrl($product->images[0]) }}" alt="{{ $product->name }}">
                     <img class="hover-img" src="{{ RvMedia::getImageUrl($product->images[1] ?? $product->image, 'product-thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}">
-
+                    @else
+                    <img class="default-img" src="{{ RvMedia::getImageUrl(RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}">
                     @endif
                 </a>
             </div>
