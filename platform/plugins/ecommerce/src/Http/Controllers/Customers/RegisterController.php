@@ -66,13 +66,13 @@ class RegisterController extends Controller
         if (EcommerceHelper::isEnableEmailVerification()) {
             return $this->registered($request, $customer)
                 ?: $response
-                    ->setNextUrl(route('customer.amir'))
+                    ->setNextUrl(route('customer.login'))
                     ->setMessage(__('We have sent you an email to verify your email. Please check and confirm your email address!'));
         }
 
         $customer->confirmed_at = Carbon::now();
         $this->customerRepository->createOrUpdate($customer);
-        $this->guard()->login($customer);
+        $this->guard()->login($customer); // dont login for the user and just redirect
 
         return $response->setNextUrl($this->redirectPath())->setMessage(__('Registered successfully!'));
     }
