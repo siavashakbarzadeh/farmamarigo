@@ -126,12 +126,7 @@
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <tbody>
-                                                @if (EcommerceHelper::isTaxEnabled())
-                                                    <tr>
-                                                        <td class="cart_total_label">{{ __('Tax') }}</td>
-                                                        <td class="cart_total_amount"><span class="font-lg fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawTax()) }}</span></td>
-                                                    </tr>
-                                                @endif
+
                                                 @if ($couponDiscountAmount > 0 && session('applied_coupon_code'))
                                                     <tr>
                                                         <td class="cart_total_label">{{ __('Coupon code: :code', ['code' => session('applied_coupon_code')]) }} (<small><a class="btn-remove-coupon-code text-danger" data-url="{{ route('public.coupon.remove') }}" href="javascript:void(0)" data-processing-text="{{ __('Removing...') }}">{{ __('Remove') }}</a></small>)<span></td>
@@ -217,6 +212,12 @@ $orderAmount=Cart::instance('cart')->rawTotal();
                                                     <td class="cart_total_label">{{ __('Subtotale IVA esclusa') }} </td>
                                                     <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">{{ format_price($subtotal)}}</span></strong></td>
                                                 </tr>
+                                                @if (EcommerceHelper::isTaxEnabled())
+                                                <tr>
+                                                    <td class="cart_total_label">{{ __('Tax') }}</td>
+                                                    <td class="cart_total_amount"><span class="font-lg fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawTax()) }}</span></td>
+                                                </tr>
+                                            @endif
                                                 <tr>
 
                                                     <td class="cart_total_label">{{ __('Contributo spese di spedizione e imballagio') }} </td>
