@@ -5,7 +5,7 @@
                 <a href="{{ $product->url }}">
                     @php
                         $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
-                        $productImgUrl = isset($product->images[0]) ? RvMedia::getImageUrl($product->images[0])
+                        $productImgUrl = isset($product->images[0]) ? RvMedia::getImageUrl($product->images[0]);
                         $ch = curl_init($productImgUrl);
                         curl_setopt($ch, CURLOPT_NOBODY, true);
                         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
