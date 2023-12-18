@@ -88,8 +88,8 @@
                     <input type="hidden"
                         class="min_price max-range"
                         name="max_price"
-                           value="{{ request()->input('max_price', (int)theme_option('max_filter_price', 10) * get_current_exchange_rate()) }}"
-                           data-max="{{ (int)theme_option('max_filter_price', 10) * get_current_exchange_rate() }}"
+                           value="{{ request()->input('max_price', (int)theme_option('max_filter_price', 5) * get_current_exchange_rate()) }}"
+                           data-max="{{ (int)theme_option('max_filter_price', 5) * get_current_exchange_rate() }}"
                         data-label="{{ __('Max price') }}"/>
                     <div class="price_slider_amount">
                         <div class="label-input">
