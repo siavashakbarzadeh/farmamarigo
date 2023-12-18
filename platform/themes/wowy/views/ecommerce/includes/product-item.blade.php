@@ -3,12 +3,24 @@
         <div class="product-img-action-wrap">
             <div class="product-img product-img-zoom">
                 <a href="{{ $product->url }}">
-                    @if ($product->images)
-                    <img class="default-img" src="{{ RvMedia::getImageUrl($product->images[0]) }}" alt="{{ $product->name }}">
-                    <img class="hover-img" src="{{ RvMedia::getImageUrl($product->images[1] ?? $product->image, 'product-thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}">
-                    @else
-                    <img class="default-img" src="{{ RvMedia::getImageUrl(RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}">
-                    @endif
+                    @php
+                        $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
+                        $productImgUrl = isset($product->images[0]) ? RvMedia::getImageUrl($product->images[0])
+                        $ch = curl_init($productImgUrl);
+                        curl_setopt($ch, CURLOPT_NOBODY, true);
+                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                        curl_execute($ch);
+                        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                        curl_close($ch);
+
+                        if($responseCode == 200){
+                            $Image=$productImgUrl;
+                        }else{
+                            $Image=defaultImgUrl;
+                        }
+                    @endphp
+                    <img class="default-img" src="{{ $Image }}" alt="{{ $product->name }}">
+
                 </a>
             </div>
 {{--            --}}
