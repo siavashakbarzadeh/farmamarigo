@@ -20,7 +20,7 @@
                             <a href="{{ $product->original_product->url }}">
                                 @php
                         $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
-                        $productImgUrl =RvMedia::getImageUrl($cartItem->options['image']);
+                        $productImgUrl =RvMedia::getImageUrl($product->original_product->image);
                         $ch = curl_init($productImgUrl);
                         curl_setopt($ch, CURLOPT_NOBODY, true);
                         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
