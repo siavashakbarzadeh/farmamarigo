@@ -9,7 +9,7 @@
                         $ch = curl_init($productImgUrl);
                         curl_setopt($ch, CURLOPT_NOBODY, true);
                         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-                        curl_execute($ch);
+                        curl_exec($ch);
                         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                         curl_close($ch);
 
