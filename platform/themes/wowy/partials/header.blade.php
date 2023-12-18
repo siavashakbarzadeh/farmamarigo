@@ -123,7 +123,7 @@
                                                 @endif
                                                 @if (auth('customer')->check())
                                                         <li>
-                                                            <i class="fa fa-user mr-5"></i>
+                                                            <i class="fa fa-user mr-5" style="color: rgb(0, 92, 158) !important"></i>
                                                             <a class="profile-action-2" href="{{ route('customer.overview') }}">Bentornato! {{ auth('customer')->user()->name }}</a>
                                                             <ul class="profile-dropdown-wrap profile-dropdown-hm2">
                                                             <div class="row" style="width:100%"> <a class="bg-light item-profile-wrap" href="https://marigopharma.marigo.collaudo.biz/customer/edit-account">Profilo</a></div>
