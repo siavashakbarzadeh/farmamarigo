@@ -66,7 +66,7 @@ class RegisterController extends Controller
         if (EcommerceHelper::isEnableEmailVerification()) {
             return $this->registered($request, $customer)
                 ?: $response
-                    ->setNextUrl(route('customer.login'))
+                    ->setNextUrl(route('customer.amir'))
                     ->setMessage(__('We have sent you an email to verify your email. Please check and confirm your email address!'));
         }
 
