@@ -16,7 +16,7 @@
                         if($responseCode == 200){
                             $Image=$productImgUrl;
                         }else{
-                            $Image=defaultImgUrl;
+                            $Image=$defaultImgUrl;
                         }
                     @endphp
                     <img class="default-img" src="{{ $Image }}" alt="{{ $product->name }}">
