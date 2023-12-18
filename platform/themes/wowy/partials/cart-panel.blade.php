@@ -34,9 +34,7 @@
                             $Image=$defaultImgUrl;
                         }
                     @endphp
-                    <img class="default-img" src="{{ $Image }}" alt="{{ $product->name }}">
-
-                                <img style="width:40px"  alt="{{ $product->name }}" src="{{ $Image }}">
+                                <img style="width:50px"  alt="{{ $product->name }}" src="{{ $Image }}">
                             </a>
                         </div>
                         <div class="shopping-cart-title">
