@@ -38,6 +38,7 @@ class LoginController extends Controller
         // if (is_null(auth('customer')->user())){
         //     return redirect('/login');
         // }
+        
         $email=request()->email;
         if($email){
 
