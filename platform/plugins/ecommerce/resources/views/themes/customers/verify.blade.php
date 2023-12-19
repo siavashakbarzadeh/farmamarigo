@@ -11,7 +11,6 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    @endif
 
                     Vai alla pagina di accesso ed effettua il login.
                         <a href="/login" class="btn btn-primary border-0 text-white text-sm">Accedi</a>
