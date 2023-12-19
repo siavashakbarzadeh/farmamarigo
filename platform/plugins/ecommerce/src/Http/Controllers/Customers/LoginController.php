@@ -35,13 +35,15 @@ class LoginController extends Controller
 
     public function verify()
     {
-        if (is_null(auth('customer')->user())){
-            return redirect('/login');
-        }
-        if (auth('customer')->user() && auth('customer')->user()->email_verified_at){
-            return redirect('/');
-        }
-        if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
+        // if (is_null(auth('customer')->user())){
+        //     return redirect('/login');
+        // }
+        $email=request()->email;
+        $customer=Customer::where('email',$email)->first();
+        if ($customer->email_verified_at){
+            return redirect('/login')->with('message', 'La tua verifica è stata completata. Devi attendere alcune ore perché l\'amministratore approvi la tua richiesta di registrazione!');
+        }        
+        else{
             $key = 'VERIFICATION_URL_CUSTOMER_'.auth('customer')->user()->id;
             if (!Cache::has($key)){
                 Cache::put($key,"generated",now()->addMinutes(5));
@@ -49,6 +51,7 @@ class LoginController extends Controller
                 Mail::to(auth('customer')->user()->email)->send(new VerificationAccountMail($url));
             }
         }
+            
         return Theme::scope('ecommerce.customers.verify', [], 'plugins/ecommerce::themes.customers.verify')->render();
     }
 
