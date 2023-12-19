@@ -242,6 +242,38 @@
             });
     }
 
+    
+$(document).ready(function() {
+
+
+const $passwordField = $("#txt-password");
+const $togglePasswordButton = $("#toggle-password");
+
+$togglePasswordButton.on("click", function () {
+  if ($passwordField.attr("type") === "password") {
+    $passwordField.attr("type", "text");
+    $togglePasswordButton.removeClass("fa-eye").addClass("fa-eye-slash");
+  } else {
+    $passwordField.attr("type", "password");
+    $togglePasswordButton.removeClass("fa-eye-slash").addClass("fa-eye");
+  }
+});
+
+
+    const $password_confirmation_Field = $("#txt-password-confirmation");
+    const $togglePassword_confirmation_Button = $("#toggle-password-confirmation");
+
+    $togglePassword_confirmation_Button.on("click", function () {
+      if ($password_confirmation_Field.attr("type") === "password") {
+        $password_confirmation_Field.attr("type", "text");
+        $togglePassword_confirmation_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+      } else {
+        $password_confirmation_Field.attr("type", "password");
+        $togglePassword_confirmation_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+      }
+    });
+});
+
 
 </script>
 

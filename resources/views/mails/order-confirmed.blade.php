@@ -87,7 +87,7 @@
                                                                     <td style="border:0;padding:15px;border-collapse:collapse; height: 70px; line-height: 70px">
                                                                         <a href="https://marigopharma.marigo.collaudo.biz" style="color: #fff; text-decoration: none !important;"
                                                                            target="_blank">
-                                                                           <img title="Logo" src="https://marigolab.it/public/storage/marigopharma-logo.png" height="70" style="max-width: 107px; display: block !important; height: auto !important;" border="0" hspace="0" vspace="0">
+                                                                           <img title="Logo" src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-4.png" height="70" style="max-width: 107px; display: block !important; height: auto !important;" border="0" hspace="0" vspace="0">
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -273,7 +273,7 @@
                 <tr style='border:0;'>
                     <td valign="top" style="border:0;border-collapse: collapse;">
                         <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width"
-                               bgcolor="#005ba1" style="border:0;border-spacing: 0;">
+                               bgcolor="#51B448" style="border:0;border-spacing: 0;">
                             <!--start space height -->
                             <tbody style='border:0;'>
                             <tr style='border:0;'>
@@ -323,9 +323,9 @@
                                                                             </tr>
                                                                             <tr style='border:0;'>
                                                                                 <td valign="top" align="center" style=" display:block;border:0;font-size: 13px;line-height: 15px; text-align: center; font-family: Arial,Tahoma, Helvetica, sans-serif;color: #a7a9ac;font-weight: normal;border-collapse: collapse;">
-                                                                                    <a href='https://www.instagram.com/marigo_pharma/' ><img src='https://marigolab.it/public/storage/instagram-3-2.png' style='margin:10px;' width='20' height='20'></a>
-                                                                                    <a href='https://www.facebook.com/marigopharma/' ><img src='https://marigolab.it/public/storage/facebook-3.png' style='margin:10px;' width='20' height='20' ></a>
-                                                                                    <a href='https://www.linkedin.com/company/marigo-italia'  ><img src='https://marigolab.it/public/storage/linkedin-3.png' style='margin:10px;' width='20' height='20' ></a>
+                                                                                    <a href='https://www.instagram.com/marigo_pharma/' ><img src='https://marigolab.it/public/storage/instagram-3-2.png' style='margin:10px;filter: invert(100%);' width='20' height='20'></a>
+                                                                                    <a href='https://www.facebook.com/marigopharma/' ><img src='https://marigolab.it/public/storage/facebook-3.png' style='margin:10px;filter: invert(100%);' width='20' height='20' ></a>
+                                                                                    <a href='https://www.linkedin.com/company/marigo-italia'  ><img src='https://marigolab.it/public/storage/linkedin-3.png' style='margin:10px;filter: invert(100%);' width='20' height='20' ></a>
                                                                                 </td>
                                                                             </tr>
                                                                             </tbody>
@@ -385,7 +385,7 @@
                                                         <!-- start COPY RIGHT content -->
                                                         <td valign="top" align="center"
                                                             style="border:0;font-size: 11px;line-height: 22px;font-family: Arial,Tahoma, Helvetica, sans-serif;color: #333;font-weight: normal;border-collapse: collapse;">
-                                                            L'email viene inviata da Marigo Lab.
+                                                            L'email viene inviata da Marigo Pharma.
                                                         </td>
                                                         <!-- end COPY RIGHT content -->
                                                     </tr>

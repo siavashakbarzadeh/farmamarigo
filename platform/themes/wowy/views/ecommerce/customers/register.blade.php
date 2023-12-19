@@ -56,9 +56,10 @@
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
             </div>
-            <div class="form-group">
+            <div class="form-group" style="position: relative">
                 <label for="txt-password" class="required">{{ __('Password') }}</label>
                 <input class="form-control" type="password" name="password" id="txt-password" placeholder="{{ __('Please enter your password') }}">
+                <i id="toggle-password" class="fas fa-eye" style="position: absolute;top:15px;right:15px;cursor: pointer;"></i>
                 @if ($errors->has('password'))
                     <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
@@ -67,6 +68,7 @@
             <div class="form-group">
                 <label for="txt-password-confirmation" class="required">{{ __('Password confirmation') }}</label>
                 <input class="form-control" type="password" name="password_confirmation" id="txt-password-confirmation" placeholder="{{ __('Please enter your password confirmation') }}">
+                <i id="toggle-password-confirmation" class="fas fa-eye" style="position: absolute;top:15px;right:15px;cursor: pointer;"></i>
                 @if ($errors->has('password_confirmation'))
                     <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
                 @endif

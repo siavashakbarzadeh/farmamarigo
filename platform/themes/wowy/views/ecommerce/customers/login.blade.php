@@ -54,8 +54,9 @@ use Illuminate\Support\Facades\Crypt;
                                 </div>
                                 <div class="form-group">
                                     <label for="txt-password" class="required">{{ __('Password') }}</label>
-                                    <div class="form__password">
+                                    <div class="form__password" style="position: relative">
                                         <input type="password" name="password" id="txt-password" placeholder="{{ __('Please enter your password') }}">
+                                        <i id="toggle-password" class="fas fa-eye" style="position: absolute;top:15px;right:15px;cursor: pointer;"></i>
                                     </div>
                                     @if ($errors->has('password'))
                                         <span class="text-danger">{{ $errors->first('password') }}</span>
