@@ -2,6 +2,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+                @if (session('message'))
+                    <div class="alert alert-info">
+                        {{ session('message') }}
+                    </div>
+                @endif
+
                 <div class="form-border-box">
 
                     <form method="POST" action="{{ route('customer.login.post') }}">
