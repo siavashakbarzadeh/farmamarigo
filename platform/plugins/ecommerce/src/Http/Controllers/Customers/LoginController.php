@@ -39,7 +39,9 @@ class LoginController extends Controller
         //     return redirect('/login');
         // }
         $email=request()->email;
-        $customer=Customer::where('email',$email)->first();
+        if($email){
+
+            $customer=Customer::where('email',$email)->first();
         if ($customer->email_verified_at){
             return redirect('/login?verify-message=true');
         }        
@@ -53,6 +55,12 @@ class LoginController extends Controller
             }
         }
         return Theme::scope('ecommerce.customers.verify', [], 'plugins/ecommerce::themes.customers.verify')->render();
+
+
+        }else{
+            redirect('/');
+        }
+        
     }
 
     public function userVerify($id)
