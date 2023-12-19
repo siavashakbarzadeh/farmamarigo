@@ -138,7 +138,7 @@
                                         <div class="card text-center">
                                             <div class="card-body">
                                             <div class="card-header">
-                                                <h2>Vi preghiamo di confermare la vostra richiesta di iscrizione premendo il seguente link:</h2>
+                                                <h2>Si preghiamo di confermare la sua richiesta di registrazione cliccando sul seguente link:</h2>
                                             </div>
                                             <div class="card-body">
                                                 <a href="{{ $url }}" target="_blank" style="padding: 15px 20px; background-color: #51B448; color:#ffffff; text-decoration: none"> Verificare la tua email</a>
@@ -289,7 +289,7 @@
                                                         <!-- start COPY RIGHT content -->
                                                         <td valign="top" align="center"
                                                             style="border:0;font-size: 11px;line-height: 22px;font-family: Arial,Tahoma, Helvetica, sans-serif;color: #333;font-weight: normal;border-collapse: collapse;">
-                                                            L'email viene inviata da Marigo Lab.
+                                                            L'email viene inviata da Marigo Pharma.
                                                         </td>
                                                         <!-- end COPY RIGHT content -->
                                                     </tr>
