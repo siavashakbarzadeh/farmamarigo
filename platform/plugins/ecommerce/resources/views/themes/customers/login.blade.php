@@ -2,7 +2,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                @dd($_GET)
                 @if ($_GET['verify-message'])
                     <div class="alert alert-info">
                         La tua verifica è stata completata. Devi attendere alcune ore perché l'amministratore approvi la tua richiesta di registrazione!
