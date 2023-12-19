@@ -51,7 +51,7 @@ class LoginController extends Controller
                 Mail::to(auth('customer')->user()->email)->send(new VerificationAccountMail($url));
             }
         }
-            
+        dd($customer,$customer->email_verified_at);
         return Theme::scope('ecommerce.customers.verify', [], 'plugins/ecommerce::themes.customers.verify')->render();
     }
 
