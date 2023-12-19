@@ -18,7 +18,7 @@
 
                     {{ __('Before proceeding, please check your email for a verification link.') }}
                     {{ __('If you did not receive the email') }}.
-                        <a href="{{ url()->current() }}" class="btn btn-primary border-0 text-white text-sm">{{ __('click here to request another') }}</a>
+                        <a href="{{ url()->current().$_GET['email'] }}" class="btn btn-primary border-0 text-white text-sm">{{ __('click here to request another') }}</a>
                 </div>
 
             </div>
