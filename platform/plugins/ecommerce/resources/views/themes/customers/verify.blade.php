@@ -2,6 +2,23 @@
     <div class="row justify-content-center">
         <div class="col-md-8 mt-20 mb-20">
             <div class="card">
+                @if(isset($already_active))
+                <div class="card-header">Il tuo account è già attivato.</div>
+
+                <div class="card-body">
+                    @if (session('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    @endif
+
+                    Vai alla pagina di accesso ed effettua il login.
+                        <a href="/login" class="btn btn-primary border-0 text-white text-sm">Accedi</a>
+                </div>
+
+                
+                @endif
                 <div class="card-header">{{ __('Verify Your Email Address') }}</div>
 
                 <div class="card-body">
