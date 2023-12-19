@@ -82,7 +82,7 @@ if (defined('THEME_MODULE_SCREEN_NAME')) {
             'as' => 'customer.',
         ], function () {
             Route::get('users/verify', 'LoginController@verify')->name('verify')
-                ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
+                // ->withoutMiddleware([\Botble\Ecommerce\Http\Middleware\CheckUserVerification::class]);
         });
 
         Route::group([
