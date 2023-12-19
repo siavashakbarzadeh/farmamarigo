@@ -138,7 +138,7 @@
                                         <div class="card text-center">
                                             <div class="card-body">
                                             <div class="card-header">
-                                                <h2>Si preghiamo di confermare la sua richiesta di registrazione cliccando sul seguente link:</h2>
+                                                <h4>Si preghiamo di confermare la sua richiesta di registrazione cliccando sul seguente link:</h4>
                                             </div>
                                             <div class="card-body">
                                                 <a href="{{ $url }}" target="_blank" style="padding: 15px 20px; background-color: #51B448; color:#ffffff; text-decoration: none"> Verificare la sua email</a>
@@ -147,8 +147,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer text-body-secondary"> Per qualsiasi informazione,contattaci compilando <a href='https://marigopharma.marigo.collaudo.biz/contact'>il Modulo richiesta informazioni </a> sul nostro sito web<br>
-                                    </div>
+                                    <div class="card-footer text-body-secondary"><p> Per qualsiasi informazione,contattaci compilando <a href='https://marigopharma.marigo.collaudo.biz/contact'>il Modulo richiesta informazioni </a> sul nostro sito web<br>
+                                    </p></div>
 
                                 </td>
                             </tr>
@@ -177,7 +177,7 @@
                 <tr style='border:0;'>
                     <td valign="top" style="border:0;border-collapse: collapse;">
                         <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width"
-                               bgcolor="#005ba1" style="border:0;border-spacing: 0;">
+                               bgcolor="#51B448" style="border:0;border-spacing: 0;">
                             <!--start space height -->
                             <tbody style='border:0;'>
                             <tr style='border:0;'>
