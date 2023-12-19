@@ -26,8 +26,8 @@
                                    placeholder="{{ __('Email') }}" size="30" aria-required="true" required type="email">
                             @if ($errors->has('email'))
                                 <span class="help-block">
-                                                <strong>{{ $errors->first('email') }}</strong>
-                                            </span>
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                             @endif
                         </div>
 
