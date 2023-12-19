@@ -141,7 +141,7 @@
                                                 <h2>Si preghiamo di confermare la sua richiesta di registrazione cliccando sul seguente link:</h2>
                                             </div>
                                             <div class="card-body">
-                                                <a href="{{ $url }}" target="_blank" style="padding: 15px 20px; background-color: #51B448; color:#ffffff; text-decoration: none"> Verificare la tua email</a>
+                                                <a href="{{ $url }}" target="_blank" style="padding: 15px 20px; background-color: #51B448; color:#ffffff; text-decoration: none"> Verificare la sua email</a>
                                             </div>
                                             <br>
                                             </div>
