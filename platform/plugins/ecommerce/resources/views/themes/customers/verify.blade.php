@@ -13,6 +13,7 @@
                     @endif
 
                     Vai alla pagina di accesso ed effettua il login.
+                    <br>
                         <a href="/login" class="btn btn-primary border-0 text-white text-sm">Accedi</a>
                 </div>
 
