@@ -2,9 +2,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                @if (session('message'))
+                @if ($_GET['message'])
                     <div class="alert alert-info">
-                        {{ session('message') }}
+                        La tua verifica è stata completata. Devi attendere alcune ore perché l'amministratore approvi la tua richiesta di registrazione!
                     </div>
                 @endif
 
