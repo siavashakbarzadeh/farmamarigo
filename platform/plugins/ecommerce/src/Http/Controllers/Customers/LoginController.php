@@ -38,13 +38,15 @@ class LoginController extends Controller
         // if (is_null(auth('customer')->user())){
         //     return redirect('/login');
         // }
-        
+
         $email=request()->email;
         if($email){
 
             $customer=Customer::where('email',$email)->first();
-        if ($customer->email_verified_at){
+        if ($customer->email_verified_at && $customer->status=='locked'){
             return redirect('/login?verify-message=true');
+        }else if($customer->email_verified_at && $customer->status=='activated'){ 
+            return Theme::scope('ecommerce.customers.verify', ['already_active' => true], 'plugins/ecommerce::themes.customers.verify')->render();
         }        
         else{
 
@@ -59,7 +61,7 @@ class LoginController extends Controller
 
 
         }else{
-            redirect('/');
+            return redirect('/');
         }
         
     }
