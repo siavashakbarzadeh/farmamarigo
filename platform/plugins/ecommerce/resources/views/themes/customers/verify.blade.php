@@ -16,8 +16,7 @@
                         <a href="/login" class="btn btn-primary border-0 text-white text-sm">Accedi</a>
                 </div>
 
-                
-                @endif
+                @else
                 <div class="card-header">{{ __('Verify Your Email Address') }}</div>
 
                 <div class="card-body">
@@ -36,6 +35,9 @@
                     {{ __('If you did not receive the email') }}.
                         <a href="{{ url()->current().'?email='.$_GET['email'] }}" class="btn btn-primary border-0 text-white text-sm">{{ __('click here to request another') }}</a>
                 </div>
+
+                @endif
+                
 
             </div>
         </div>
