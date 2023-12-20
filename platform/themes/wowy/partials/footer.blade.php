@@ -272,6 +272,52 @@ $togglePasswordButton.on("click", function () {
         $togglePassword_confirmation_Button.removeClass("fa-eye-slash").addClass("fa-eye");
       }
     });
+
+
+
+    //for the change password
+
+    const $password_old_Field = $("#old-password");
+    const $togglePassword_old_Button = $("#toggle-old-password");
+
+    $togglePassword_old_Button.on("click", function () {
+      if ($password_old_Field.attr("type") === "password") {
+        $password_old_Field.attr("type", "text");
+        $togglePassword_old_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+      } else {
+        $password_old_Field.attr("type", "password");
+        $togglePassword_old_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+      }
+    });
+
+
+    const $password_old_Field = $("#password");
+    const $togglePassword_old_Button = $("#toggle-password");
+
+    $togglePassword_old_Button.on("click", function () {
+      if ($password_old_Field.attr("type") === "password") {
+        $password_old_Field.attr("type", "text");
+        $togglePassword_old_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+      } else {
+        $password_old_Field.attr("type", "password");
+        $togglePassword_old_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+      }
+    });
+
+
+    const $password_old_Field = $("#password_confirmation");
+    const $togglePassword_old_Button = $("#toggle-confirmation-password");
+
+    $togglePassword_old_Button.on("click", function () {
+      if ($password_old_Field.attr("type") === "password") {
+        $password_old_Field.attr("type", "text");
+        $togglePassword_old_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+      } else {
+        $password_old_Field.attr("type", "password");
+        $togglePassword_old_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+      }
+    });
+
 });
 
 
@@ -295,7 +341,7 @@ $(document).on("keyup", "input[name='password']", function(e) {
 
         }
     })
-    
+
     $(document).on("blur", "input[name='password']", function(e) {
         e.preventDefault();
         var password = $(this).val();
