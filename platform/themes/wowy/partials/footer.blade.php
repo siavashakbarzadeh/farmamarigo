@@ -246,7 +246,7 @@
 $(document).ready(function() {
 
     console.log(window.location.pathname);
-if (!window.location.pathname.includes("/login")) {
+if (!window.location.pathname=="/login") {
 
 const $passwordField = $("#txt-password");
 const $togglePasswordButton = $("#toggle-password");
