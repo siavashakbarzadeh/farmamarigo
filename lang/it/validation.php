@@ -129,10 +129,7 @@ return [
     'url'                  => 'Il formato del campo :attribute non è valido.',
     'uuid'                 => ':attribute deve essere un UUID valido.',
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+    
         'phone' => [
             'accepted' => 'Il Telefono deve essere accettato.',
             'size'=> [
@@ -143,7 +140,7 @@ return [
             ],
             'regex' => 'Il formato del campo Telefono non è valido.',
 
-        ],
-    ],
+        ]
+
 ];
 
