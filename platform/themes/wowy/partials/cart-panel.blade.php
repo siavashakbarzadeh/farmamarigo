@@ -79,7 +79,7 @@
 {{--            @if(auth()->customer()use)--}}
 {{--            auth()->user()--}}
             @if(auth('customer')->user())
-                <a href="{{ route('public.cart') }}">{{ __('View cart') }}</a>
+                <a href="{{ route('public.cart') }}">Controlla e concludi l'ordine</a>
             @else
                 <a href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a></li>
 
