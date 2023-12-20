@@ -306,7 +306,7 @@ $togglePasswordButton.on("click", function () {
 
 
     const $password_confirmation1_Field = $("#password_confirmation");
-    const $togglePassword_confirmation1_Button = $("#toggle-confirmation-password");
+    const $togglePassword_confirmation1_Button = $("#toggle-password-confirmation");
 
     $togglePassword_confirmation1_Button.on("click", function () {
       if ($password_confirmation1_Field.attr("type") === "password") {
