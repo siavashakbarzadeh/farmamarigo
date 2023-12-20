@@ -14,12 +14,26 @@ use App\Http\Controllers\PricelistController;
                             <div class="product-img product-img-zoom">
                                 <a href="{{ $product->url }}">
                                     @if(isset($product->image))
-                                    <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="default-img">
-                                    <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="hover-img">
+                                    @php
+                                        $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
+                                        $productImgUrl =RvMedia::getImageUrl($product->images[0]);
+                                        $ch = curl_init($productImgUrl);
+                                        curl_setopt($ch, CURLOPT_NOBODY, true);
+                                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                                        curl_exec($ch);
+                                        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                                        curl_close($ch);
+
+                                        if($responseCode == 200){
+                                            $Image=$productImgUrl;
+                                        }else{
+                                            $Image=$defaultImgUrl;
+                                        }
+                                                @endphp
+                                    <img class="default-img" src="{{ $Image }}" alt="{{ $product->name }}">
 
                                     @else
-                                        <img src="" alt="" class="default-img">
-                                        <img src="" alt="" class="hover-img">
+                                    <img src="{{ RvMedia::getImageUrl($product->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" class="default-img">
                                     @endif
                                 </a>
                             </div>
