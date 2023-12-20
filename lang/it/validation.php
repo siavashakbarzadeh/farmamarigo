@@ -128,9 +128,14 @@ return [
     'uploaded'             => ':attribute non è stato caricato.',
     'url'                  => 'Il formato del campo :attribute non è valido.',
     'uuid'                 => ':attribute deve essere un UUID valido.',
-    'custom'               => [
+
+    'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'phone' => [
+            'accepted' => 'Il Telefono deve essere accettato.',
+        ],
     ],
 ];
+
