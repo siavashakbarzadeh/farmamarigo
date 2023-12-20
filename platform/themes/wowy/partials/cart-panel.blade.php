@@ -75,7 +75,7 @@
                 <h4><strong class="d-inline-block">{{ __('Sub Total') }}:</strong> <span>{{ format_price(Cart::instance('cart')->rawSubTotal()) }}</span></h4>
             @endif
         </div>
-        <div class="shopping-cart-button">
+        <div class="shopping-cart-button col-12">
 {{--            @if(auth()->customer()use)--}}
 {{--            auth()->user()--}}
             @if(auth('customer')->user())
