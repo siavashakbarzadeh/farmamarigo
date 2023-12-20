@@ -8,7 +8,7 @@
             {!! Form::open(['route' => 'customer.edit-account']) !!}
                 <div class="row">
                     <div class="form-group col-md-12 @if ($errors->has('name')) has-error @endif">
-                        <label class="required" for="name">{{ __('Full Name') }}:</label>
+                        <label class="required" for="name">Ragione sociale:</label>
                         <input required class="form-control square" name="name" type="text" id="name" value="{{ auth('customer')->user()->name }}">
                         {!! Form::error('name', $errors) !!}
                     </div>
