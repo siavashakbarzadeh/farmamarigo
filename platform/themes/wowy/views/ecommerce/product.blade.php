@@ -138,6 +138,7 @@
 {{--                                @if (EcommerceHelper::isQuickBuyButtonEnabled())--}}
 {{--                                    <button class="button button-buy-now ms-2 @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" name="checkout" @if ($product->isOutOfStock()) disabled @endif>{{ __('Buy Now') }}</button>--}}
 {{--                                @endif--}}
+<div id="wishlistAction">
                         @if (request()->user('customer'))
                             @php
                             $wishlist=Botble\Ecommerce\Models\Wishlist::where('customer_id',request()->user('customer')->id)->get();
@@ -156,6 +157,7 @@
                             @endif
                         @endif
                         @endif
+                            </div>
                             <!-- @if (EcommerceHelper::isCompareEnabled())
                                 <a aria-label="{{ __('Add To Compare') }}" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}"><i class="far fa-exchange-alt"></i></a>
                             @endif -->
