@@ -61,7 +61,7 @@
                 <input class="form-control" type="password" name="password" id="txt-password" placeholder="{{ __('Please enter your password') }}">
                 <i id="toggle-password" class="fas fa-eye" style="position: absolute;top:45px;right:15px;cursor: pointer;"></i>
                 @if ($errors->has('password'))
-                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                    <span class="text-danger password-error">{{ $errors->first('password') }}</span>
                 @endif
             </div>
 
