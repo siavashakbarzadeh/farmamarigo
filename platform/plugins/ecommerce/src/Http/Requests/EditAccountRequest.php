@@ -11,7 +11,7 @@ class EditAccountRequest extends Request
     {
         return [
             'name' => 'required|max:255',
-            'phone' => 'sometimes|' . BaseHelper::getPhoneValidationRule(),
+            'phone' => 'required|' . BaseHelper::getPhoneValidationRule(),
             'dob' => 'max:20|sometimes',
         ];
     }
