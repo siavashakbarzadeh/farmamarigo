@@ -245,6 +245,7 @@
     
 $(document).ready(function() {
 
+if (!window.location.pathname.includes("/login")) {
 
 const $passwordField = $("#txt-password");
 const $togglePasswordButton = $("#toggle-password");
@@ -258,6 +259,7 @@ $togglePasswordButton.on("click", function () {
     $togglePasswordButton.removeClass("fa-eye-slash").addClass("fa-eye");
   }
 });
+}
 
 
     const $password_confirmation_Field = $("#txt-password-confirmation");
