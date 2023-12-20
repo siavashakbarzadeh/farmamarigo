@@ -245,8 +245,6 @@
     
 $(document).ready(function() {
 
-    console.log(window.location.pathname);
-if (!window.location.pathname=="/login") {
 
 const $passwordField = $("#txt-password");
 const $togglePasswordButton = $("#toggle-password");
@@ -260,7 +258,7 @@ $togglePasswordButton.on("click", function () {
     $togglePasswordButton.removeClass("fa-eye-slash").addClass("fa-eye");
   }
 });
-}
+
 
 
     const $password_confirmation_Field = $("#txt-password-confirmation");
@@ -325,6 +323,8 @@ $togglePasswordButton.on("click", function () {
 
 
 $(document).on("keyup", "input[name='password']", function(e) {
+    if (!window.location.pathname.includes("/login")) {
+
         e.preventDefault();
         var password = $(this).val();
         var validationResult = validatePassword(password);
@@ -343,6 +343,7 @@ $(document).on("keyup", "input[name='password']", function(e) {
             $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' + validationResult + '</span>');
 
         }
+    }
     })
 
     $(document).on("blur", "input[name='password']", function(e) {
