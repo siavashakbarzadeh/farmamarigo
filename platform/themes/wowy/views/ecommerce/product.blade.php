@@ -138,14 +138,27 @@
 {{--                                @if (EcommerceHelper::isQuickBuyButtonEnabled())--}}
 {{--                                    <button class="button button-buy-now ms-2 @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" name="checkout" @if ($product->isOutOfStock()) disabled @endif>{{ __('Buy Now') }}</button>--}}
 {{--                                @endif--}}
+                        @if (request()->user('customer'))
+                            @php
+                            $wishlist=Botble\Ecommerce\Models\Wishlist::where('customer_id',request()->user('customer')->id)->get();
+                            $w_flag=false;
+                            foreach ($wishlist as $w) {
+                                    if($w->product_id==$product->id){
+                                        $w_flag=true;
+                                    }
+                                }
+                            $userid=request()->user('customer')->id;
+                            $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+                            @endphp
+                            @if($w_flag)
+                            <a aria-label="{{ __('Rimuovi') }}" href="#" class="action-btn hover-up js-remove-from-wishlist-button" data-url="{{ route('public.wishlist.remove', $product->id) }}"><i style="color:red" class="fas fa-heart"></i></a>
+                            @else
+                            <a aria-label="Aggiungi" href="#" class="action-btn hover-up js-add-to-wishlist-button" data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="far fa-heart"></i></a>
                             @endif
-
-                            @if (EcommerceHelper::isWishlistEnabled())
-                                <a aria-label="{{ __('Add To Wishlist') }}" class="action-btn hover-up js-add-to-wishlist-button" data-url="{{ route('public.wishlist.add', $product->id) }}" href="#"><i class="far fa-heart"></i></a>
-                            @endif
-                            @if (EcommerceHelper::isCompareEnabled())
+                        @endif
+                            <!-- @if (EcommerceHelper::isCompareEnabled())
                                 <a aria-label="{{ __('Add To Compare') }}" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}"><i class="far fa-exchange-alt"></i></a>
-                            @endif
+                            @endif -->
                         </div>
                     </div>
                 </form>
