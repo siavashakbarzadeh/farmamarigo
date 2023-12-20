@@ -79,9 +79,9 @@
 {{--            @if(auth()->customer()use)--}}
 {{--            auth()->user()--}}
             @if(auth('customer')->user())
-                <a style='padding:26px 26px;text-align:center;font-size:16px;font-weight:800;color:white' href="{{ route('public.cart') }}">Controlla e concludi l'ordine</a>
+                <a style='padding:26px 26px;text-align:center;font-size:16px;font-weight:800;color:white!important' href="{{ route('public.cart') }}">Controlla e concludi l'ordine</a>
             @else
-                <a style='padding:26px 26px;text-align:center;font-size:16px;font-weight:800;color:white' href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a></li>
+                <a style='padding:26px 26px;text-align:center;font-size:16px;font-weight:800;color:white!important' href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a></li>
 
             @endif
 
