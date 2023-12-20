@@ -20,6 +20,7 @@ class EditAccountRequest extends Request
     {
         return [
             'phone' => "Telefono",
+            'name'=>'Ragione sociale'
         ];
     }
 
