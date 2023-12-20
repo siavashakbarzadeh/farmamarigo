@@ -135,6 +135,14 @@ return [
         ],
         'phone' => [
             'accepted' => 'Il Telefono deve essere accettato.',
+            'size'=> [
+                'array'   => 'Il Telefono deve contenere :size elementi.',
+                'file'    => 'Il Telefono deve essere :size kilobyte.',
+                'numeric' => 'Il Telefono deve essere :size.',
+                'string'  => 'Il Telefono deve contenere :size caratteri.',
+            ],
+            'regex' => 'Il formato del campo Telefono non è valido.',
+
         ],
     ],
 ];
