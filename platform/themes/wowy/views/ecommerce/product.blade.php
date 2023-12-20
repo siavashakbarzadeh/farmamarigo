@@ -138,7 +138,7 @@
 {{--                                @if (EcommerceHelper::isQuickBuyButtonEnabled())--}}
 {{--                                    <button class="button button-buy-now ms-2 @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" name="checkout" @if ($product->isOutOfStock()) disabled @endif>{{ __('Buy Now') }}</button>--}}
 {{--                                @endif--}}
-<div id="wishlistAction">
+<div class='d-inline' id="wishlistAction">
                         @if (request()->user('customer'))
                             @php
                             $wishlist=Botble\Ecommerce\Models\Wishlist::where('customer_id',request()->user('customer')->id)->get();
