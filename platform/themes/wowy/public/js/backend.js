@@ -147,6 +147,16 @@
                 success: function (t) {
                     if (t.error) return a.removeClass("button-loading"), window.showAlert("alert-danger", t.message), !1;
                     window.showAlert("alert-success", t.message), e(".wishlist-count span").text(t.data.count), a.removeClass("button-loading"), a.closest("tr").remove(), a.removeClass("js-remove-from-wishlist-button").addClass("js-add-to-wishlist-button")
+                        if($(this).find(".fa-heart").hasClass('fas')){
+                            $(this).find(".fa-heart").removeClass('fas');
+                            $(this).find(".fa-heart").addClass('far');
+                            $(this).find(".fa-heart").css("color","#005BA1");
+                        }else{
+                            $(this).find(".fa-heart").removeClass('far');
+                            $(this).find(".fa-heart").addClass('fas');
+                            $(this).find(".fa-heart").css("color","red");
+                        }
+
                 },
                 error: function (e) {
                     a.removeClass("button-loading"), window.showAlert("alert-danger", e.message)
