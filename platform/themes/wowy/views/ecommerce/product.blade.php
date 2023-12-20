@@ -148,7 +148,6 @@
                                     }
                                 }
                             $userid=request()->user('customer')->id;
-                            $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
                             @endphp
                             @if($w_flag)
                             <a aria-label="{{ __('Rimuovi') }}" href="#" class="action-btn hover-up js-remove-from-wishlist-button" data-url="{{ route('public.wishlist.remove', $product->id) }}"><i style="color:red" class="fas fa-heart"></i></a>
