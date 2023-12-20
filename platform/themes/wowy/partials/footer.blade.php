@@ -277,7 +277,7 @@ $togglePasswordButton.on("click", function () {
 
     //for the change password
 
-    const $password_old1_Field = $("#old-password");
+    const $password_old1_Field = $("#old_password");
     const $togglePassword_old1_Button = $("#toggle-old-password");
 
     $togglePassword_old1_Button.on("click", function () {
