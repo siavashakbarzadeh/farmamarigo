@@ -15,7 +15,14 @@ class EditAccountRequest extends Request
             'dob' => 'max:20|sometimes',
         ];
     }
-    
+
+    public function attributes(): array
+    {
+        return [
+            'phone' => "Telefono",
+        ];
+    }
+
     public function messages()
     {
 
