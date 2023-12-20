@@ -277,44 +277,44 @@ $togglePasswordButton.on("click", function () {
 
     //for the change password
 
-    const $password_old_Field = $("#old-password");
-    const $togglePassword_old_Button = $("#toggle-old-password");
+    const $password_old1_Field = $("#old-password");
+    const $togglePassword_old1_Button = $("#toggle-old-password");
 
-    $togglePassword_old_Button.on("click", function () {
-      if ($password_old_Field.attr("type") === "password") {
-        $password_old_Field.attr("type", "text");
-        $togglePassword_old_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+    $togglePassword_old1_Button.on("click", function () {
+      if ($password_old1_Field.attr("type") === "password") {
+        $password_old1_Field.attr("type", "text");
+        $togglePassword_old1_Button.removeClass("fa-eye").addClass("fa-eye-slash");
       } else {
-        $password_old_Field.attr("type", "password");
-        $togglePassword_old_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+        $password_old1_Field.attr("type", "password");
+        $togglePassword_old1_Button.removeClass("fa-eye-slash").addClass("fa-eye");
       }
     });
 
 
-    const $password_Field = $("#password");
-    const $togglePassword_Button = $("#toggle-password");
+    const $password1_Field = $("#password");
+    const $togglePassword1_Button = $("#toggle-password");
 
-    $togglePassword_Button.on("click", function () {
-      if ($password_Field.attr("type") === "password") {
-        $password_Field.attr("type", "text");
-        $togglePassword_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+    $togglePassword1_Button.on("click", function () {
+      if ($password1_Field.attr("type") === "password") {
+        $password1_Field.attr("type", "text");
+        $togglePassword1_Button.removeClass("fa-eye").addClass("fa-eye-slash");
       } else {
-        $password_Field.attr("type", "password");
-        $togglePassword_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+        $password1_Field.attr("type", "password");
+        $togglePassword1_Button.removeClass("fa-eye-slash").addClass("fa-eye");
       }
     });
 
 
-    const $password_confirmation_Field = $("#password_confirmation");
-    const $togglePassword_confirmation_Button = $("#toggle-confirmation-password");
+    const $password_confirmation1_Field = $("#password_confirmation");
+    const $togglePassword_confirmation1_Button = $("#toggle-confirmation-password");
 
-    $togglePassword_confirmation_Button.on("click", function () {
-      if ($password_confirmation_Field.attr("type") === "password") {
-        $password_confirmation_Field.attr("type", "text");
-        $togglePassword_confirmation_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+    $togglePassword_confirmation1_Button.on("click", function () {
+      if ($password_confirmation1_Field.attr("type") === "password") {
+        $password_confirmation1_Field.attr("type", "text");
+        $togglePassword_confirmation1_Button.removeClass("fa-eye").addClass("fa-eye-slash");
       } else {
-        $password_confirmation_Field.attr("type", "password");
-        $togglePassword_confirmation_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+        $password_confirmation1_Field.attr("type", "password");
+        $togglePassword_confirmation1_Button.removeClass("fa-eye-slash").addClass("fa-eye");
       }
     });
 
