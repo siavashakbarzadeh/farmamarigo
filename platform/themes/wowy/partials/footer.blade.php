@@ -275,6 +275,85 @@ $togglePasswordButton.on("click", function () {
 });
 
 
+$(document).on("keyup", "input[name='password']", function(e) {
+        e.preventDefault();
+        var password = $(this).val();
+        var validationResult = validatePassword(password);
+
+        // Remove any existing error spans with class 'password-error'
+        $(this).next('#password-error').remove();
+        $(this).closest('div').find('#password-error').remove();
+
+        if(validationResult=="La password è forte."){
+            $(this).removeClass('is-invalid');
+            $(this).addClass('is-valid');
+            $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' + validationResult + '</span>');
+        }else{
+            $(this).removeClass('is-valid');
+            $(this).addClass('is-invalid');
+            $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' + validationResult + '</span>');
+
+        }
+    })
+    
+    $(document).on("blur", "input[name='password']", function(e) {
+        e.preventDefault();
+        var password = $(this).val();
+        var validationResult = validatePassword(password);
+
+        $(this).next('#password-error').remove();
+        $(this).closest('div').find('#password-error').remove();
+
+        // Remove any existing error spans with class 'password-error'
+
+        if(validationResult=="La password è forte."){
+            $(this).removeClass('is-invalid');
+            $(this).addClass('is-valid');
+            $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' + validationResult + '</span>');
+
+        }else{
+            $(this).removeClass('is-valid');
+            $(this).addClass('is-invalid');
+            $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' + validationResult + '</span>');
+
+        }
+
+    })
+
+
+
+
+function validatePassword(password) {
+        // At least 8 characters long
+        if (password.length < 6) {
+            return "password deve contenere almeno 6 caratteri.";
+        }
+
+        // Contains at least one uppercase letter
+        if (!/[A-Z]/.test(password)) {
+            return "La password deve contenere almeno una lettera maiuscola.";
+        }
+
+        // Contains at least one lowercase letter
+        if (!/[a-z]/.test(password)) {
+            return "La password deve contenere almeno una lettera minuscola.";
+        }
+
+        // Contains at least one number
+        if (!/[0-9]/.test(password)) {
+            return "La password deve contenere almeno un numero.";
+        }
+
+        // Contains at least one special character
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            return "La password deve contenere almeno un carattere speciale.";
+        }
+
+        // If all conditions are met, the password is strong
+        return "La password è forte.";
+    }
+
+
 </script>
 
 
