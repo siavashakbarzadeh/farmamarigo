@@ -113,35 +113,76 @@
             })
         })), e(document).on("change", ".switch-currency", (function () {
             e(this).closest("form").submit()
-        })), e(document).on("click", ".js-add-to-wishlist-button", (function (t) {
+        })), e(document).on("click", ".js-add-to-wishlist-button", function (t) {
             t.preventDefault();
             var a = e(this);
-            a.addClass("button-loading"), e.ajax({
+            var self = this; // Capture the context of 'this'
+
+            a.addClass("button-loading");
+
+            e.ajax({
                 url: a.data("url"),
                 method: "POST",
                 success: function (t) {
-                    if (t.error) return a.removeClass("button-loading"), window.showAlert("alert-danger", t.message), !1;
-                    window.showAlert("alert-success", t.message), e(".wishlist-count span").text(t.data.count), a.removeClass("button-loading"), a.toggleClass("wis_added"), a.removeClass("button-loading").removeClass("js-add-to-wishlist-button").addClass("js-remove-from-wishlist-button")
+                    if (t.error) {
+                        a.removeClass("button-loading");
+                        window.showAlert("alert-danger", t.message);
+                        return false;
+                    }
+
+                    window.showAlert("alert-success", t.message);
+                    e(".wishlist-count span").text(t.data.count);
+                    a.toggleClass("wis_added");
+                    a.removeClass("button-loading").removeClass("js-add-to-wishlist-button").addClass("js-remove-from-wishlist-button");
+
+                    // Use 'self' instead of 'this' to refer to the clicked button
+                    if (e(self).find(".fa-heart").hasClass('fas')) {
+                        e(self).find(".fa-heart").removeClass('fas').addClass('far').css("color", "#005BA1");
+                    } else {
+                        e(self).find(".fa-heart").removeClass('far').addClass('fas').css("color", "red");
+                    }
                 },
                 error: function (e) {
-                    a.removeClass("button-loading"), window.showAlert("alert-danger", e.message)
+                    a.removeClass("button-loading");
+                    window.showAlert("alert-danger", e.message);
                 }
-            })
-        })), e(document).on("click", ".js-remove-from-wishlist-button", (function (t) {
+            });
+        }), e(document).on("click", ".js-remove-from-wishlist-button", function (t) {
             t.preventDefault();
             var a = e(this);
-            a.addClass("button-loading"), e.ajax({
+            var self = this; // Capture the context of 'this'
+
+            a.addClass("button-loading");
+
+            e.ajax({
                 url: a.data("url"),
                 method: "DELETE",
                 success: function (t) {
-                    if (t.error) return a.removeClass("button-loading"), window.showAlert("alert-danger", t.message), !1;
-                    window.showAlert("alert-success", t.message), e(".wishlist-count span").text(t.data.count), a.removeClass("button-loading"), a.closest("tr").remove(), a.removeClass("js-remove-from-wishlist-button").addClass("js-add-to-wishlist-button")
+                    if (t.error) {
+                        a.removeClass("button-loading");
+                        window.showAlert("alert-danger", t.message);
+                        return false;
+                    }
+
+                    window.showAlert("alert-success", t.message);
+                    e(".wishlist-count span").text(t.data.count);
+                    a.removeClass("button-loading");
+                    a.closest("tr").remove();
+                    a.removeClass("js-remove-from-wishlist-button").addClass("js-add-to-wishlist-button");
+
+                    // Use 'self' instead of 'this' to refer to the clicked button
+                    if (e(self).find(".fa-heart").hasClass('fas')) {
+                        e(self).find(".fa-heart").removeClass('fas').addClass('far').css("color", "#005BA1");
+                    } else {
+                        e(self).find(".fa-heart").removeClass('far').addClass('fas').css("color", "red");
+                    }
                 },
                 error: function (e) {
-                    a.removeClass("button-loading"), window.showAlert("alert-danger", e.message)
+                    a.removeClass("button-loading");
+                    window.showAlert("alert-danger", e.message);
                 }
-            })
-        })), e(document).on("click", ".js-add-to-compare-button", (function (t) {
+            });
+        }), e(document).on("click", ".js-add-to-compare-button", (function (t) {
             t.preventDefault();
             var a = e(this);
             a.addClass("button-loading"), e.ajax({

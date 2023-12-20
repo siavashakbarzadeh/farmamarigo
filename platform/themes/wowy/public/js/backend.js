@@ -113,130 +113,120 @@
             })
         })), e(document).on("change", ".switch-currency", (function () {
             e(this).closest("form").submit()
-        })), e(document).on("click", ".js-add-to-wishlist-button", (function (t) {
+        })), e(document).on("click", ".js-add-to-wishlist-button", function (t) {
             t.preventDefault();
             var a = e(this);
-            a.addClass("button-loading"), e.ajax({
+            var self = this; // Capture the context of 'this'
+
+            a.addClass("button-loading");
+
+            e.ajax({
                 url: a.data("url"),
                 method: "POST",
                 success: function (t) {
-                    if (t.error) return a.removeClass("button-loading"), window.showAlert("alert-danger", t.message), !1;
-                    window.showAlert("alert-success", t.message), e(".wishlist-count span").text(t.data.count), a.removeClass("button-loading"), a.toggleClass("wis_added"), a.removeClass("button-loading").removeClass("js-add-to-wishlist-button").addClass("js-remove-from-wishlist-button")
-
-                    if ($(this).find(".fa-heart").hasClass('fas')) {
-                        $(this).find(".fa-heart").removeClass('fas');
-                        $(this).find(".fa-heart").addClass('far');
-                        $(this).find(".fa-heart").css("color", "#005BA1");
-                    } else {
-                        $(this).find(".fa-heart").removeClass('far');
-                        $(this).find(".fa-heart").addClass('fas');
-                        $(this).find(".fa-heart").css("color", "red");
+                    if (t.error) {
+                        a.removeClass("button-loading");
+                        window.showAlert("alert-danger", t.message);
+                        return false;
                     }
 
-                },
-                error: function (e) {
-                    a.removeClass("button-loading"), window.showAlert("alert-danger", e.message)
-                }
-            })
-        })), e(document).on("click", ".js-remove-from-wishlist-button", (function (t) {
-            t.preventDefault();
-            var a = e(this);
-            a.addClass("button-loading"), e.ajax({
-                url: a.data("url"),
-                method: "DELETE",
-                success: function (t) {
-                    if (t.error) return a.removeClass("button-loading"), window.showAlert("alert-danger", t.message), !1;
-                    window.showAlert("alert-success", t.message), e(".wishlist-count span").text(t.data.count), a.removeClass("button-loading"), a.closest("tr").remove(), a.removeClass("js-remove-from-wishlist-button").addClass("js-add-to-wishlist-button")
-                        if($(this).find(".fa-heart").hasClass('fas')){
-                            $(this).find(".fa-heart").removeClass('fas');
-                            $(this).find(".fa-heart").addClass('far');
-                            $(this).find(".fa-heart").css("color","#005BA1");
-                        }else{
-                            $(this).find(".fa-heart").removeClass('far');
-                            $(this).find(".fa-heart").addClass('fas');
-                            $(this).find(".fa-heart").css("color","red");
-                        }
+                    window.showAlert("alert-success", t.message);
+                    e(".wishlist-count span").text(t.data.count);
+                    a.toggleClass("wis_added");
+                    a.removeClass("button-loading").removeClass("js-add-to-wishlist-button").addClass("js-remove-from-wishlist-button");
 
+                    // Use 'self' instead of 'this' to refer to the clicked button
+                    if (e(self).find(".fa-heart").hasClass('fas')) {
+                        e(self).find(".fa-heart").removeClass('fas').addClass('far').css("color", "#005BA1");
+                    } else {
+                        e(self).find(".fa-heart").removeClass('far').addClass('fas').css("color", "red");
+                    }
                 },
                 error: function (e) {
-                    a.removeClass("button-loading"), window.showAlert("alert-danger", e.message)
+                    a.removeClass("button-loading");
+                    window.showAlert("alert-danger", e.message);
                 }
-            })
-        })), e(document).on("click", ".js-add-to-compare-button", (function (t) {
-            t.preventDefault();
-            var a = e(this);
-            a.addClass("button-loading"), e.ajax({
-                url: a.data("url"),
-                method: "POST",
-                success: function (t) {
-                    if (t.error) return a.removeClass("button-loading"), window.showAlert("alert-danger", t.message), !1;
-                    e(".compare-count span").text(t.data.count), window.showAlert("alert-success", t.message), a.removeClass("button-loading")
-                },
-                error: function (e) {
-                    a.removeClass("button-loading"), window.showAlert("alert-danger", e.message)
-                }
-            })
-        })), e(document).on("click", ".js-remove-from-compare-button", (function (t) {
-            t.preventDefault();
-            var a = e(this),
-                o = a.html();
-            a.html(o + "..."), e.ajax({
-                url: a.data("url"),
-                method: "DELETE",
-                success: function (t) {
-                    if (t.error) return a.text(o), window.showAlert("alert-danger", t.message), !1;
-                    e(".compare-count span").text(t.data.count), e(".table__compare").load(window.location.href + " .table__compare > *", (function () {
-                        window.showAlert("alert-success", t.message), a.html(o)
-                    }))
-                },
-                error: function (e) {
-                    a.removeClass("button-loading"), window.showAlert("alert-danger", e.message)
-                }
-            })
-        })), e(document).on("click", ".add-to-cart-button", (function (t) {
-            t.preventDefault();
-            var a = e(this);
-            a.prop("disabled", !0).addClass("button-loading"), e.ajax({
-                url: a.data("url"),
-                method: "POST",
-                data: {
-                    id: a.data("id")
-                },
-                dataType: "json",
-                success: function (t) {
-                    if (a.prop("disabled", !1).removeClass("button-loading").addClass("active"), t.error) return window.showAlert("alert-danger", t.message), void 0 !== t.data.next_url && (window.location.href = t.data.next_url), !1;
-                    window.showAlert("alert-success", t.message), void 0 !== t.data.next_url ? window.location.href = t.data.next_url : e.ajax({
-                        url: window.siteUrl + "/ajax/cart",
-                        method: "GET",
-                        success: function (t) {
-                            t.error || (e(".cart-dropdown-wrap").html(t.data.html), e(".mini-cart-icon span").text(t.data.count))
-                            if (window.location.href.indexOf('cart') > -1) {
-                                location.reload();
-                            }
-                        }
+            });
+        })
+            , e(document).on("click", ".js-remove-from-wishlist-button", function (t) {
+                t.preventDefault();
+                var a = e(this);
+                var self = this; // Capture the context of 'this'
 
-                    })
-                },
-                error: function (e) {
-                    a.prop("disabled", !1).removeClass("button-loading"), window.showAlert("alert-danger", e.message)
-                }
-            })
-        })), e(document).on("click", ".add-to-cart-form button[type=submit]", (function (t) {
-            t.preventDefault(), t.stopPropagation();
-            var a = e(this);
-            if (e(".hidden-product-id").val()) {
-                a.prop("disabled", !0).addClass("btn-disabled").addClass("button-loading");
-                var s = a.closest("form"),
-                    n = s.serializeArray();
-                n.push({
-                    name: "checkout",
-                    value: "checkout" === a.prop("name") ? 1 : 0
-                }), e.ajax({
-                    type: "POST",
-                    url: s.prop("action"),
-                    data: e.param(n),
+                a.addClass("button-loading");
+
+                e.ajax({
+                    url: a.data("url"),
+                    method: "DELETE",
                     success: function (t) {
-                        if (a.prop("disabled", !1).removeClass("btn-disabled").removeClass("button-loading"), t.error) return a.removeClass("button-loading"), window.showAlert("alert-danger", t.message), void 0 !== t.data.next_url && (window.location.href = t.data.next_url), !1;
+                        if (t.error) {
+                            a.removeClass("button-loading");
+                            window.showAlert("alert-danger", t.message);
+                            return false;
+                        }
+
+                        window.showAlert("alert-success", t.message);
+                        e(".wishlist-count span").text(t.data.count);
+                        a.removeClass("button-loading");
+                        a.closest("tr").remove();
+                        a.removeClass("js-remove-from-wishlist-button").addClass("js-add-to-wishlist-button");
+
+                        // Use 'self' instead of 'this' to refer to the clicked button
+                        if (e(self).find(".fa-heart").hasClass('fas')) {
+                            e(self).find(".fa-heart").removeClass('fas').addClass('far').css("color", "#005BA1");
+                        } else {
+                            e(self).find(".fa-heart").removeClass('far').addClass('fas').css("color", "red");
+                        }
+                    },
+                    error: function (e) {
+                        a.removeClass("button-loading");
+                        window.showAlert("alert-danger", e.message);
+                    }
+                });
+            })
+            , e(document).on("click", ".js-add-to-compare-button", (function (t) {
+                t.preventDefault();
+                var a = e(this);
+                a.addClass("button-loading"), e.ajax({
+                    url: a.data("url"),
+                    method: "POST",
+                    success: function (t) {
+                        if (t.error) return a.removeClass("button-loading"), window.showAlert("alert-danger", t.message), !1;
+                        e(".compare-count span").text(t.data.count), window.showAlert("alert-success", t.message), a.removeClass("button-loading")
+                    },
+                    error: function (e) {
+                        a.removeClass("button-loading"), window.showAlert("alert-danger", e.message)
+                    }
+                })
+            })), e(document).on("click", ".js-remove-from-compare-button", (function (t) {
+                t.preventDefault();
+                var a = e(this),
+                    o = a.html();
+                a.html(o + "..."), e.ajax({
+                    url: a.data("url"),
+                    method: "DELETE",
+                    success: function (t) {
+                        if (t.error) return a.text(o), window.showAlert("alert-danger", t.message), !1;
+                        e(".compare-count span").text(t.data.count), e(".table__compare").load(window.location.href + " .table__compare > *", (function () {
+                            window.showAlert("alert-success", t.message), a.html(o)
+                        }))
+                    },
+                    error: function (e) {
+                        a.removeClass("button-loading"), window.showAlert("alert-danger", e.message)
+                    }
+                })
+            })), e(document).on("click", ".add-to-cart-button", (function (t) {
+                t.preventDefault();
+                var a = e(this);
+                a.prop("disabled", !0).addClass("button-loading"), e.ajax({
+                    url: a.data("url"),
+                    method: "POST",
+                    data: {
+                        id: a.data("id")
+                    },
+                    dataType: "json",
+                    success: function (t) {
+                        if (a.prop("disabled", !1).removeClass("button-loading").addClass("active"), t.error) return window.showAlert("alert-danger", t.message), void 0 !== t.data.next_url && (window.location.href = t.data.next_url), !1;
                         window.showAlert("alert-success", t.message), void 0 !== t.data.next_url ? window.location.href = t.data.next_url : e.ajax({
                             url: window.siteUrl + "/ajax/cart",
                             method: "GET",
@@ -246,59 +236,91 @@
                                     location.reload();
                                 }
                             }
+
                         })
                     },
                     error: function (e) {
-                        a.prop("disabled", !1).removeClass("btn-disabled").removeClass("button-loading"), o(e, a.closest("form"))
+                        a.prop("disabled", !1).removeClass("button-loading"), window.showAlert("alert-danger", e.message)
                     }
                 })
-            } else a.prop("disabled", !0).addClass("btn-disabled")
-        })), e(document).on("click", ".remove-cart-item", (function (t) {
-            t.preventDefault();
-            var a = e(this);
-            a.closest("li").addClass("content-loading"), e.ajax({
-                url: a.data("url"),
-                method: "GET",
-                success: function (t) {
-                    if (a.closest("li").removeClass("content-loading"), t.error) return window.showAlert("alert-danger", t.message), !1;
-                    e.ajax({
-                        url: window.siteUrl + "/ajax/cart",
-                        method: "GET",
-                        success: function (a) {
-                            a.error || (e(".cart-dropdown-wrap").html(a.data.html), e(".mini-cart-icon span").text(a.data.count), window.showAlert("alert-success", t.message))
-                        }
-                    })
-                },
-                error: function (e) {
-                    a.closest("li").removeClass("content-loading"), window.showAlert("alert-danger", e.message)
-                }
-            })
-        })), e(document).on("click", ".remove-cart-button", (function (t) {
-
-            t.preventDefault();
-            var a = e(this);
-            a.closest(".table--cart").addClass("content-loading"), e.ajax({
-                url: a.data("url"),
-                method: "GET",
-                success: function (t) {
-                    if (t.error) return window.showAlert("alert-danger", t.message), a.closest(".table--cart").removeClass("content-loading"), !1;
-                    e(".section--shopping-cart").load(window.location.href + " .section--shopping-cart > *", (function () {
-                        a.closest(".table--cart").removeClass("content-loading"), window.showAlert("alert-success", t.message)
-                    })), e.ajax({
-                        url: window.siteUrl + "/ajax/cart",
-                        method: "GET",
+            })), e(document).on("click", ".add-to-cart-form button[type=submit]", (function (t) {
+                t.preventDefault(), t.stopPropagation();
+                var a = e(this);
+                if (e(".hidden-product-id").val()) {
+                    a.prop("disabled", !0).addClass("btn-disabled").addClass("button-loading");
+                    var s = a.closest("form"),
+                        n = s.serializeArray();
+                    n.push({
+                        name: "checkout",
+                        value: "checkout" === a.prop("name") ? 1 : 0
+                    }), e.ajax({
+                        type: "POST",
+                        url: s.prop("action"),
+                        data: e.param(n),
                         success: function (t) {
-                            t.error || (e(".cart-dropdown-wrap").html(t.data.html), e(".mini-cart-icon span").text(t.data.count))
+                            if (a.prop("disabled", !1).removeClass("btn-disabled").removeClass("button-loading"), t.error) return a.removeClass("button-loading"), window.showAlert("alert-danger", t.message), void 0 !== t.data.next_url && (window.location.href = t.data.next_url), !1;
+                            window.showAlert("alert-success", t.message), void 0 !== t.data.next_url ? window.location.href = t.data.next_url : e.ajax({
+                                url: window.siteUrl + "/ajax/cart",
+                                method: "GET",
+                                success: function (t) {
+                                    t.error || (e(".cart-dropdown-wrap").html(t.data.html), e(".mini-cart-icon span").text(t.data.count))
+                                    if (window.location.href.indexOf('cart') > -1) {
+                                        location.reload();
+                                    }
+                                }
+                            })
+                        },
+                        error: function (e) {
+                            a.prop("disabled", !1).removeClass("btn-disabled").removeClass("button-loading"), o(e, a.closest("form"))
                         }
                     })
-                },
-                error: function (e) {
-                    a.closest(".table--cart").removeClass("content-loading"), window.showAlert("alert-danger", e.message)
-                }
-            })
-        })), e(document).on("change", ".submit-form-on-change", (function () {
-            e(this).closest("form").submit()
-        }));
+                } else a.prop("disabled", !0).addClass("btn-disabled")
+            })), e(document).on("click", ".remove-cart-item", (function (t) {
+                t.preventDefault();
+                var a = e(this);
+                a.closest("li").addClass("content-loading"), e.ajax({
+                    url: a.data("url"),
+                    method: "GET",
+                    success: function (t) {
+                        if (a.closest("li").removeClass("content-loading"), t.error) return window.showAlert("alert-danger", t.message), !1;
+                        e.ajax({
+                            url: window.siteUrl + "/ajax/cart",
+                            method: "GET",
+                            success: function (a) {
+                                a.error || (e(".cart-dropdown-wrap").html(a.data.html), e(".mini-cart-icon span").text(a.data.count), window.showAlert("alert-success", t.message))
+                            }
+                        })
+                    },
+                    error: function (e) {
+                        a.closest("li").removeClass("content-loading"), window.showAlert("alert-danger", e.message)
+                    }
+                })
+            })), e(document).on("click", ".remove-cart-button", (function (t) {
+
+                t.preventDefault();
+                var a = e(this);
+                a.closest(".table--cart").addClass("content-loading"), e.ajax({
+                    url: a.data("url"),
+                    method: "GET",
+                    success: function (t) {
+                        if (t.error) return window.showAlert("alert-danger", t.message), a.closest(".table--cart").removeClass("content-loading"), !1;
+                        e(".section--shopping-cart").load(window.location.href + " .section--shopping-cart > *", (function () {
+                            a.closest(".table--cart").removeClass("content-loading"), window.showAlert("alert-success", t.message)
+                        })), e.ajax({
+                            url: window.siteUrl + "/ajax/cart",
+                            method: "GET",
+                            success: function (t) {
+                                t.error || (e(".cart-dropdown-wrap").html(t.data.html), e(".mini-cart-icon span").text(t.data.count))
+                            }
+                        })
+                    },
+                    error: function (e) {
+                        a.closest(".table--cart").removeClass("content-loading"), window.showAlert("alert-danger", e.message)
+                    }
+                })
+            })), e(document).on("change", ".submit-form-on-change", (function () {
+                e(this).closest("form").submit()
+            }));
         var s = [],
             r = function (e) {
                 for (var t = new ClipboardEvent("").clipboardData || new DataTransfer, a = 0, o = s; a < o.length; a++) {
