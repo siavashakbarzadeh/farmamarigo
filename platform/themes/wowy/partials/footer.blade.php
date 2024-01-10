@@ -208,22 +208,25 @@
 
     $(".register--btn--submit").click(function(e) {
         e.preventDefault();
-        var allFieldsValid = true; // Flag to track if all fields are valid
-
-        // Iterate over each input field
-        $('input', this).each(function() {
-            var input = $(this); // The current input field
-
-            // Check if the input field is empty
-            if (input.val().trim() === '') {
-                // Add the 'red-border' class if the field is empty
-                input.addClass('red-border');
-                allFieldsValid = false; // Set the flag to false if any field is empty
+        let allValid = true;
+                
+            // Loop through each text input field in the form
+            $("#myForm input[type='text']").each(function() {
+                if ($(this).val().trim() === "") {
+                    allValid = false;
+                    $(this).css('border', '1px solid red');
+                } else {
+                    $(this).css('border', '');
+                }
+            });
+        
+            // Check for checkbox validation
+            if (!$('#privacyPolicy').prop('checked')) {
+                allValid = false;
+                $('#errorMessage').show();
             } else {
-                // Remove the 'red-border' class if the field is not empty
-                input.removeClass('red-border');
+                $('#errorMessage').hide();
             }
-        });
 
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
