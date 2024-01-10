@@ -113,6 +113,9 @@ Route::prefix('/admin/ecommerce/questionnaires')
 Route::get('/questionindex', [QuestionnaireController::class, 'index'])
     ->middleware(['check.auth.customer'])
     ->name('questionary.index');
+
+Route::get('/checkEmailAlreadyexists', [QuestionnaireController::class, 'checkEmailAlreadyexists']);
+
 Route::get('/questionnaire/thank-you', [QuestionnaireController::class, 'thankYou'])
     ->middleware(['check.auth.customer'])
     ->name('questionnaire.thank-you');

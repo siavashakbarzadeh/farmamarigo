@@ -206,6 +206,36 @@
     }
 
 
+    $('.email-controll-registration').on('keyup', function() {
+        var email = $(this).val().trim();
+
+        // Only proceed if the email is not empty
+        if (email) {
+            // Send a request to your endpoint
+            axios.post('checkEmailAlreadyexists', { email: email })
+                .then(function(response) {
+                    // Handle the response here
+                    // For example, if email exists, show a message or change input style
+                    if(response.data.exists) {
+                        // Email exists - handle accordingly
+                        $('.email-controll-registration').addClass('red-border');
+                        $('#realtime-email-error').css('display','block');
+                        $('#realtime-email-error').html(response.msg);
+
+                    } else {
+                        // Email does not exist - handle accordingly
+                        $('.email-controll-registration').removeClass('red-border');
+                        $('#realtime-email-error').css('display','none');
+                    }
+                })
+                .catch(function(error) {
+                    // Handle errors here, if any
+                    console.error('Error checking email:', error);
+                });
+        }
+    });
+
+
     $(".register--btn--submit").click(function(e) {
         e.preventDefault();
         let allValid = true;

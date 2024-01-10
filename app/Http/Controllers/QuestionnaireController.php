@@ -32,6 +32,27 @@ class QuestionnaireController extends Controller
         dd($request->session()->all());
     }
 
+    public function checkEmailAlreadyExists(Request $request)
+    {
+        // Validate the email field
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = $request->input('email');
+
+        // Check if email exists in the database
+        $emailExists = Customer::where('email', $email)->exists();
+
+        if ($emailExists) {
+            // If email exists, return a JSON response
+            return response()->json(['exists' => true,'msg'=>'questa email esiste già']);
+        } else {
+            // If email does not exist, return a JSON response
+            return response()->json(['exists' => false]);
+        }
+    }
+
 
     public function index()
     {
