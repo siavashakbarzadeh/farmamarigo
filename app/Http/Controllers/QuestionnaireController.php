@@ -46,7 +46,7 @@ class QuestionnaireController extends Controller
 
         if ($emailExists) {
             // If email exists, return a JSON response
-            return response()->json(['exists' => true,'msg'=>'questa email esiste già']);
+            return response()->json(['exists' => true,'msg'=>'Questa email esiste già']);
         } else {
             // If email does not exist, return a JSON response
             return response()->json(['exists' => false]);

@@ -266,7 +266,9 @@
                     $(this).css('border', '');
                 }
             });
-        
+            if ($('#realtime-email-error').css('display') === 'block') {
+                allValid = false;
+            }
 
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
