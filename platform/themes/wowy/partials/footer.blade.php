@@ -208,17 +208,33 @@
 
     $(".register--btn--submit").click(function(e) {
         e.preventDefault();
+        var allFieldsValid = true; // Flag to track if all fields are valid
+        var inputs = this.querySelectorAll('input');
 
-        
+        // Iterate over each input field
+        inputs.forEach(function(input) {
+            // Check if the input field is empty
+            if (input.value.trim() === '') {
+                // Add the 'red-border' class if the field is empty
+                input.classList.add('red-border');
+                allFieldsValid = false; // Set the flag to false if any field is empty
 
+            } else {
+                // Remove the 'red-border' class if the field is not empty
+                input.classList.remove('red-border');
+            }
+        });
 
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
         axios.post('/captcha-validator/register', { captcha: captchaInput })
             .then(response => {
-                if(response.data.valid){
+                if(response.data.valid && allFieldsValid){
                     // If CAPTCHA and all other validations are passed, submit the form
                     $('.form--auth').submit();
+                }
+                elseif(response.data.valid && !allFieldsValid){
+
                 } else {
                     // Handle CAPTCHA validation failure
                     $('.captcha-error').html('Invalid CAPTCHA');
@@ -410,19 +426,7 @@ function validatePassword(password) {
     event.preventDefault(); // Prevents the form from submitting normally
 
     // Select all input fields in the form
-    var inputs = this.querySelectorAll('input');
 
-    // Iterate over each input field
-    inputs.forEach(function(input) {
-        // Check if the input field is empty
-        if (input.value.trim() === '') {
-            // Add the 'red-border' class if the field is empty
-            input.classList.add('red-border');
-        } else {
-            // Remove the 'red-border' class if the field is not empty
-            input.classList.remove('red-border');
-        }
-    });
 });
 
 
