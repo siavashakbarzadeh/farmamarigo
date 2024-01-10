@@ -52,8 +52,8 @@
             <div class="form-group">
                 <label for="txt-email" class="required">{{ __('Email Address') }}</label>
                 <input class="form-control email-controll-registration" name="email" id="txt-email" type="email" value="{{ old('email') }}" placeholder="{{ __('Please enter your email address') }}">
+                <span id='realtime-email-error'></span>
                 @if ($errors->has('email'))
-                    <span id='realtime-email-error'></span>
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
             </div>
