@@ -219,14 +219,23 @@
                     $(this).css('border', '');
                 }
             });
+            $("#registration-form input[type='email']").each(function() {
+                if ($(this).val().trim() === "") {
+                    allValid = false;
+                    $(this).css('border', '1px solid red');
+                } else {
+                    $(this).css('border', '');
+                }
+            });
+            $("#registration-form input[type='password']").each(function() {
+                if ($(this).val().trim() === "") {
+                    allValid = false;
+                    $(this).css('border', '1px solid red');
+                } else {
+                    $(this).css('border', '');
+                }
+            });
         
-            // Check for checkbox validation
-            if (!$('#privacyPolicy').prop('checked')) {
-                allValid = false;
-                $('#errorMessage').show();
-            } else {
-                $('#errorMessage').hide();
-            }
 
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
