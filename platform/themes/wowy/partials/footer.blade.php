@@ -211,7 +211,7 @@
         let allValid = true;
                 
             // Loop through each text input field in the form
-            $("#myForm input[type='text']").each(function() {
+            $("#registration-form input[type='text']").each(function() {
                 if ($(this).val().trim() === "") {
                     allValid = false;
                     $(this).css('border', '1px solid red');
