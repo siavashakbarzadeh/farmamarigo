@@ -220,6 +220,7 @@
                         // Email exists - handle accordingly
                         $('.email-controll-registration').addClass('red-border');
                         $('#realtime-email-error').css('display','block');
+                        console.log(response);
                         $('#realtime-email-error').html(response.msg);
 
                     } else {
