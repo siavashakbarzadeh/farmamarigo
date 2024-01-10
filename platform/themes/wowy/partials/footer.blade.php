@@ -233,7 +233,7 @@
                     // If CAPTCHA and all other validations are passed, submit the form
                     $('.form--auth').submit();
                 }
-                elseif(response.data.valid && !allFieldsValid){
+                else if(response.data.valid && !allFieldsValid){
 
                 } else {
                     // Handle CAPTCHA validation failure
