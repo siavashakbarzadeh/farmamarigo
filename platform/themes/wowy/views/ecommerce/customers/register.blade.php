@@ -34,7 +34,7 @@
                             <p>{{ __('Please fill in the information below') }}</p>
                         </div>
 
-<form class="form--auth" method="POST" action="{{ route('customer.register.post') }}">
+<form class="form--auth" id='registration-form' method="POST" action="{{ route('customer.register.post') }}">
     @csrf
 <div class="row">
     <div class="col-lg-6">
@@ -128,7 +128,7 @@
 
         <!-- Phone -->
         <div class="form-group">
-            <label for="phone">Telefono</label>
+            <label for="phone" class="required">Telefono</label>
             <input type="text" class="form-control" id="phone" name="phone">
         </div>
 
@@ -136,7 +136,7 @@
 
         <!-- State -->
         <div class="form-group">
-            <label for="state">Regione</label>
+            <label for="state" class="required">Regione</label>
 {{--            <input type="text" class="form-control" id="state" name="state">--}}
             <select id="state" name="state" class="form-control">
                 <option value="abruzzo">Abruzzo</option>
@@ -165,18 +165,18 @@
 
         <!-- City -->
         <div class="form-group">
-            <label for="city">Città</label>
+            <label for="city" class="required">Città</label>
             <input type="text" class="form-control" id="city" name="city">
         </div>
 
         <!-- Address -->
         <div class="form-group">
-            <label for="address">Indirizzo</label>
+            <label for="address" class="required">Indirizzo</label>
             <input type="text" class="form-control" id="address" name="address" required>
         </div>
         <!-- Zip Code -->
         <div class="form-group">
-            <label for="zip_code">CAP</label>
+            <label for="zip_code" class="required">CAP</label>
             <input type="text" class="form-control" id="zip_code" name="zip_code">
         </div>
 

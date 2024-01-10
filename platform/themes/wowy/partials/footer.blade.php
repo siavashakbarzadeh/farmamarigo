@@ -403,6 +403,25 @@ function validatePassword(password) {
         return "La password è forte.";
     }
 
+    document.getElementById('registration-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevents the form from submitting normally
+
+    // Select all input fields in the form
+    var inputs = this.querySelectorAll('input');
+
+    // Iterate over each input field
+    inputs.forEach(function(input) {
+        // Check if the input field is empty
+        if (input.value.trim() === '') {
+            // Add the 'red-border' class if the field is empty
+            input.classList.add('red-border');
+        } else {
+            // Remove the 'red-border' class if the field is not empty
+            input.classList.remove('red-border');
+        }
+    });
+});
+
 
 </script>
 
