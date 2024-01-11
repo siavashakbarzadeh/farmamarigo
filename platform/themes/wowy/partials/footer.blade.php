@@ -312,10 +312,10 @@ $(document).ready(function() {
 
 const $passwordField = $("#txt-password");
 const $togglePasswordButton = $("#toggle-password");
-
+if (window.location.href.includes('register')) {
 $togglePasswordButton.on("click", function () {
   // Check if the URL contains 'was'
-  if (window.location.href.includes('register')) {
+
     // Execute the toggle functionality only if the URL contains 'was'
     if ($passwordField.attr("type") === "password") {
       $passwordField.attr("type", "text");
@@ -324,9 +324,9 @@ $togglePasswordButton.on("click", function () {
       $passwordField.attr("type", "password");
       $togglePasswordButton.removeClass("fa-eye-slash").addClass("fa-eye");
     }
-  }
-});
 
+});
+}
 
 
     const $password_confirmation_Field = $("#txt-password-confirmation");
