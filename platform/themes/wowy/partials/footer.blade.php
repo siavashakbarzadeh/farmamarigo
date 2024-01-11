@@ -272,9 +272,9 @@
             let isCheckboxChecked = false;
             if($("#agree-terms-and-policy").is(':checked')) {
                     isCheckboxChecked = true;
-                    $(this).css('border', '1px solid red');
+                    $('.custome-checkbox').css('border', '1px solid red');
                 }else{
-                    $(this).css('border', '');
+                    $('.custome-checkbox').css('border', '');
                 };
 
         // CAPTCHA validation
