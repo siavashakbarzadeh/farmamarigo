@@ -106,7 +106,7 @@
                                                             <input class="font-medium coupon-code" type="text" name="coupon_code" value="{{ old('coupon_code') }}" placeholder="{{ __('Enter coupon code') }}">
                                                         </div>
                                                         <div class="form-group col-lg-6">
-                                                            <button class="btn btn-rounded btn-sm btn-apply-coupon-code" type="button" data-url="{{ route('public.coupon.apply') }}"><i class="far fa-bookmark mr-5"></i>{{ Applica Coupon }}</button>
+                                                            <button class="btn btn-rounded btn-sm btn-apply-coupon-code" type="button" data-url="{{ route('public.coupon.apply') }}"><i class="far fa-bookmark mr-5"></i>Applica Coupon</button>
                                                         </div>
                                                     </div>
                                                 </div>
