@@ -269,16 +269,30 @@
             if ($('#realtime-email-error').css('display') === 'block') {
                 allValid = false;
             }
+            let isCheckboxChecked = false;
+
+        $("#registration-form input[type='checkbox']").each(function() {
+            if ($(this).is(':checked')) {
+                isCheckboxChecked = true;
+                return false; // Break the loop as we found a checked checkbox
+            }
+        });
+
+        if (isCheckboxChecked) {
+            $('.custome-checkbox').css('border', ''); // Reset border if a checkbox is checked
+        } else {
+            $('.custome-checkbox').css('border', '1px solid red'); // Set red
+        }
 
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
         axios.post('/captcha-validator/register', { captcha: captchaInput })
             .then(response => {
-                if(response.data.valid && allFieldsValid){
+                if(response.data.valid && allValid && isCheckboxChecked){
                     // If CAPTCHA and all other validations are passed, submit the form
                     $('.form--auth').submit();
                 }
-                else if(response.data.valid && !allFieldsValid){
+                else if(response.data.valid && !allValid){
 
                 } else {
                     // Handle CAPTCHA validation failure
