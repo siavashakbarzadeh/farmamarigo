@@ -270,12 +270,19 @@
                 allValid = false;
             }
             let isCheckboxChecked = false;
-            if($("#registration-form input[type='checkbox']").is(':checked')) {
-                    isCheckboxChecked = true;
-                    $('.custome-checkbox').css('border', '1px solid red');
-                }else{
-                    $('.custome-checkbox').css('border', '');
-                };
+
+        $("#registration-form input[type='checkbox']").each(function() {
+            if ($(this).is(':checked')) {
+                isCheckboxChecked = true;
+                return false; // Break the loop as we found a checked checkbox
+            }
+        });
+
+        if (isCheckboxChecked) {
+            $('.custom-checkbox').css('border', ''); // Reset border if a checkbox is checked
+        } else {
+            $('.custom-checkbox').css('border', '1px solid red'); // Set red
+        }
 
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
