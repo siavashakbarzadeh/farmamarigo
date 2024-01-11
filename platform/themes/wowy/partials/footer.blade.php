@@ -274,11 +274,11 @@
         let captchaInput = $("#captcha-register").val();
         axios.post('/captcha-validator/register', { captcha: captchaInput })
             .then(response => {
-                if(response.data.valid && allFieldsValid){
+                if(response.data.valid && allValid){
                     // If CAPTCHA and all other validations are passed, submit the form
                     $('.form--auth').submit();
                 }
-                else if(response.data.valid && !allFieldsValid){
+                else if(response.data.valid && !allValid){
 
                 } else {
                     // Handle CAPTCHA validation failure
