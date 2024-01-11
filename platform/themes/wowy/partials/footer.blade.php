@@ -270,7 +270,7 @@
                 allValid = false;
             }
             let isCheckboxChecked = false;
-            if($("#agree-terms-and-policy").is(':checked')) {
+            if($("#registration-form input[type='checkbox']").is(':checked')) {
                     isCheckboxChecked = true;
                     $('.custome-checkbox').css('border', '1px solid red');
                 }else{
