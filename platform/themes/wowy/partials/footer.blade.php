@@ -279,9 +279,9 @@
         });
 
         if (isCheckboxChecked) {
-            $('.custom-checkbox').css('border', ''); // Reset border if a checkbox is checked
+            $('.custome-checkbox').css('border', ''); // Reset border if a checkbox is checked
         } else {
-            $('.custom-checkbox').css('border', '1px solid red'); // Set red
+            $('.custome-checkbox').css('border', '1px solid red'); // Set red
         }
 
         // CAPTCHA validation
