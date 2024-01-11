@@ -270,15 +270,12 @@
                 allValid = false;
             }
             let isCheckboxChecked = false;
-            $("#registration-form input[type='checkbox']").each(function() {
-                if ($(this).is(':checked')) {
+            if($("#agree-terms-and-policy").is(':checked')) {
                     isCheckboxChecked = true;
                     $(this).css('border', '1px solid red');
-                    return false; // break the loop
                 }else{
                     $(this).css('border', '');
-                }
-            });
+                };
 
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
