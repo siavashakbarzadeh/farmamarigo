@@ -414,29 +414,32 @@ $(document).on("keyup", "input[name='password']", function(e) {
     }
     })
 
-    // $(document).on("blur", "input[name='password']", function(e) {
-    //     e.preventDefault();
-    //     var password = $(this).val();
-    //     var validationResult = validatePassword(password);
 
-    //     $(this).next('#password-error').remove();
-    //     $(this).closest('div').find('#password-error').remove();
+    $(document).on("blur", "input[name='password']", function(e) {
+        e.preventDefault();
+        if (window.location.href.includes('register')) {
+        var password = $(this).val();
+        var validationResult = validatePassword(password);
 
-    //     // Remove any existing error spans with class 'password-error'
+        $(this).next('#password-error').remove();
+        $(this).closest('div').find('#password-error').remove();
 
-    //     if(validationResult=="La password è forte."){
-    //         $(this).removeClass('is-invalid');
-    //         $(this).addClass('is-valid');
-    //         $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' + validationResult + '</span>');
+        // Remove any existing error spans with class 'password-error'
 
-    //     }else{
-    //         $(this).removeClass('is-valid');
-    //         $(this).addClass('is-invalid');
-    //         $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' + validationResult + '</span>');
+        if(validationResult=="La password è forte."){
+            $(this).removeClass('is-invalid');
+            $(this).addClass('is-valid');
+            $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' + validationResult + '</span>');
 
-    //     }
+        }else{
+            $(this).removeClass('is-valid');
+            $(this).addClass('is-invalid');
+            $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' + validationResult + '</span>');
 
-    // })
+        }
+    }
+
+    })
 
 
 
