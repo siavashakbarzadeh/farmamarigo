@@ -414,29 +414,29 @@ $(document).on("keyup", "input[name='password']", function(e) {
     }
     })
 
-    $(document).on("blur", "input[name='password']", function(e) {
-        e.preventDefault();
-        var password = $(this).val();
-        var validationResult = validatePassword(password);
+    // $(document).on("blur", "input[name='password']", function(e) {
+    //     e.preventDefault();
+    //     var password = $(this).val();
+    //     var validationResult = validatePassword(password);
 
-        $(this).next('#password-error').remove();
-        $(this).closest('div').find('#password-error').remove();
+    //     $(this).next('#password-error').remove();
+    //     $(this).closest('div').find('#password-error').remove();
 
-        // Remove any existing error spans with class 'password-error'
+    //     // Remove any existing error spans with class 'password-error'
 
-        if(validationResult=="La password è forte."){
-            $(this).removeClass('is-invalid');
-            $(this).addClass('is-valid');
-            $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' + validationResult + '</span>');
+    //     if(validationResult=="La password è forte."){
+    //         $(this).removeClass('is-invalid');
+    //         $(this).addClass('is-valid');
+    //         $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' + validationResult + '</span>');
 
-        }else{
-            $(this).removeClass('is-valid');
-            $(this).addClass('is-invalid');
-            $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' + validationResult + '</span>');
+    //     }else{
+    //         $(this).removeClass('is-valid');
+    //         $(this).addClass('is-invalid');
+    //         $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' + validationResult + '</span>');
 
-        }
+    //     }
 
-    })
+    // })
 
 
 
@@ -471,12 +471,10 @@ function validatePassword(password) {
         return "La password è forte.";
     }
 
-    document.getElementById('registration-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevents the form from submitting normally
+
 
     // Select all input fields in the form
 
-});
 
 
 </script>
