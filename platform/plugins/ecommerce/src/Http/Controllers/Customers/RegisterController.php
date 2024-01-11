@@ -72,7 +72,7 @@ class RegisterController extends Controller
 
         $customer->confirmed_at = Carbon::now();
         $this->customerRepository->createOrUpdate($customer);
-        // $this->guard()->login($customer); // dont login for the user and just redirect
+        $this->guard()->login($customer); // dont login for the user and just redirect
 
         return $response->setNextUrl('users/verify?email='.$customer->email)
         ->setMessage(__('Registered successfully! Please verify your email.'));    }
