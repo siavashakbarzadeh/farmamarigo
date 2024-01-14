@@ -39,29 +39,19 @@
                                 <td>{{ \Carbon\Carbon::parse($order->created_at)}}</td>
                                 <td>{{ __(':price for :total item(s)', ['price' => $order->amount_format, 'total' => $order->products_count]) }}</td>
 {{--                                <td>{{ 'price' => $order->amount_format 'total' => $order->products_count }}</td>--}}
-                                <td>
+<td>
                                     @if( $order->status=='completed' & $order->shipment->status =='delivering')
-
-                                        <label class="btn-success p-1 rounded small" >Completato</label>
-
+                                       <label class="btn-success p-1 rounded small" >Completato</label>
                                     @endif
                                     @if( $order->status=='pending')
-
-                                            <label class="btn-warning p-1 rounded small">Modificabile</label>
-
+                                       <label class="btn-warning p-1 rounded small">Modificabile</label>
                                     @endif
                                     @if( $order->status=='completed' && $order->shipment->status =='pending')
-
-                                    <label class="btn-success p-1 rounded small" >Completato</label>
-
+                                       <label class="btn-success p-1 rounded small">Completato</label>
                                     @endif
                                     @if( $order->status=='canceled')
-
-                                            <label class="btn-danger p-1 rounded small">Annullato</label>
-
+                                       <label class="btn-danger p-1 rounded small">Annullato</label>
                                     @endif
-
-
                                 </td>
                                 <td style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
 
