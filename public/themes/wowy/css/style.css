@@ -6484,7 +6484,6 @@ header.header-area .sticky-bar:not(.stick) .main-categories-wrap>a.cant-close>i 
     border-radius: 0 50px 50px 0;
     font-size: 14px;
     padding: 0 30px;
-    background-color: rgb(0, 92, 158);
 }
 
 
@@ -16689,7 +16688,8 @@ header.header-area .sticky-bar:not(.stick) .main-categories-wrap>a.cant-close>i 
     border: 0;
     border-radius: 0 50px 50px 0;
     font-size: 14px;
-    padding: 0 30px
+    padding: 0 30px;
+    background-color: rgb(0, 92, 158);
 }
 
 .download-app {
