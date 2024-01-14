@@ -16692,6 +16692,10 @@ header.header-area .sticky-bar:not(.stick) .main-categories-wrap>a.cant-close>i 
     background-color: rgb(0, 92, 158) !important;
 }
 
+.newsletter .form-subcriber button:hover {
+    background-color: #51B448 !important
+}
+
 .download-app {
     display: flex;
     flex-wrap: wrap;
