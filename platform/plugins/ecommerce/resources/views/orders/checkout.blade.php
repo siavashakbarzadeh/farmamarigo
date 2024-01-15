@@ -67,14 +67,28 @@
                                         @endif
                                     </td>
                                     <td>{{ $product->cartItem->qty }}</td>
+                                    <td>
+                                        {{ format_price($product->cartItem->price)}}
+
+                                    </td>
                                 </tr>
                                 @endforeach
                                     </tbody>
                                 </table>
+                                <div class="mt-2 p-2">
+                                    @if (Session::get('note')!='')
+                                    <div class="form-group mb-3 @if ($errors->has('description')) has-error @endif">
+                                        <label for="description" class="control-label">{{ __('Order notes') }}</label>
+
+                                        <textarea disabled name="description" id="description" rows="3" class="form-control" placeholder="{{ __('Notes about your order, e.g. special notes for delivery.') }}">{{ Session::has('note') ? Session::get('note') : old('description') }}</textarea>
+                                        {!! Form::error('description', $errors) !!}
+                                    </div>
+                                @endif
+                                </div>
                             <div class="mt-2 p-2">
                                 <div class="row">
                                     <div class="col-6">
-                                        <p>{{ __('Subtotal') }}:</p>
+                                        <p>{{ __('Totale Parziale') }}:</p>
                                     </div>
                                     <div class="col-6">
                                         <p class="price-text sub-total-text text-end"> {{ format_price(Cart::instance('cart')->rawSubTotal()) }} </p>
@@ -113,7 +127,7 @@
                                 @if (!empty($shipping) && Arr::get($sessionCheckoutData, 'is_available_shipping', true))
                                     <div class="row">
                                         <div class="col-6">
-                                            <p>{{ __('Shipping fee') }}:</p>
+                                            <p>{{ __('Contributo spese di spedizione e imballaggio') }}:</p>
                                         </div>
                                         <div class="col-6 float-end">
                                             <p class="price-text shipping-price-text">{{ format_price(floatval(Session::get('shippingAmount'))) }}</p>
