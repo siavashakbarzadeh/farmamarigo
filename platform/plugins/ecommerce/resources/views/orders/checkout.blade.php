@@ -317,27 +317,25 @@ background-color: rgba(0,0,0,0.4);">
                             </div>
 
 
-                            <div class="form-group mb-3">
-                                <div class="col-md-6 checkout-button-group">
-                                    @if (EcommerceHelper::isValidToProcessCheckout())
-                                        <button type="submit" style='background-color: #005BA1;
-                                        border: none;
-                                        border-radius: 50px;
-                                        color: #fff;
-                                        font-size: 15px;
-                                        font-weight: 500;
-                                        padding: 12px 40px;'class="btn payment-checkout-btn payment-checkout-btn-step float-end" style="background:#005BA1" data-processing-text="{{ __('In lavorazione. attendere prego...') }}" data-error-header="{{ __('Error') }}">
-                                            {{ __("Invia l'ordine") }}
-                                        </button>
-                                    @else
-                                        <span class="btn payment-checkout-btn-step float-end disabled" style="background:#005BA1">
-                                            {{ __("Invia l'ordine") }}
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="d-block d-md-none back-to-cart-button-group">
-                                    <a class="text-info" href="{{ route('public.cart') }}"><i class="fas fa-long-arrow-alt-left"></i> <span class="d-inline-block">{{ __('Back to cart') }}</span></a>
-                                </div>
+                            <div class="col-md-6 d-none d-md-block" style="line-height: 53px">
+                                <a href="{{ route('public.cart') }}"><i style="color:#005BA1" class="fas fa-long-arrow-alt-left"></i> <span class="d-inline-block back-to-cart" style="color:#005BA1">{{ __('Back to cart') }}</span></a>
+                            </div>
+                            <div class="col-md-6 checkout-button-group">
+                                @if (EcommerceHelper::isValidToProcessCheckout())
+                                    <button type="submit" style='background-color: #005BA1;
+                                    border: none;
+                                    border-radius: 50px;
+                                    color: #fff;
+                                    font-size: 15px;
+                                    font-weight: 500;
+                                    padding: 12px 40px;'class="btn payment-checkout-btn payment-checkout-btn-step float-end" style="background:#005BA1" data-processing-text="{{ __('In lavorazione. attendere prego...') }}" data-error-header="{{ __('Error') }}">
+                                        {{ __("Invia l'ordine") }}
+                                    </button>
+                                @else
+                                    <span class="btn payment-checkout-btn-step float-end disabled" style="background:#005BA1">
+                                        {{ __("Invia l'ordine") }}
+                                    </span>
+                                @endif
                             </div>
 
                         </div>
