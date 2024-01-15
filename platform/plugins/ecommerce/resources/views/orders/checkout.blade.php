@@ -75,16 +75,7 @@
                                 @endforeach
                                     </tbody>
                                 </table>
-                                <div class="mt-2 p-2">
-                                    @if (Session::get('note')!='')
-                                    <div class="form-group mb-3 @if ($errors->has('description')) has-error @endif">
-                                        <label for="description" class="control-label">{{ __('Order notes') }}</label>
 
-                                        <textarea disabled name="description" id="description" rows="3" class="form-control" placeholder="{{ __('Notes about your order, e.g. special notes for delivery.') }}">{{ Session::has('note') ? Session::get('note') : old('description') }}</textarea>
-                                        {!! Form::error('description', $errors) !!}
-                                    </div>
-                                @endif
-                                </div>
                             <div class="mt-2 p-2">
                                 <div class="row">
                                     <div class="col-6">
@@ -282,12 +273,14 @@
 
                             <br>
 
-                            <div class="form-group mb-3 @if ($errors->has('description')) has-error @endif">
-                                <label for="description" class="control-label">{{ __('Order notes') }}</label>
-                                <br>
-                                <textarea name="description" id="description" rows="3" class="form-control" placeholder="{{ __('Notes about your order, e.g. special notes for delivery.') }}">{{ old('description') }}</textarea>
-                                {!! Form::error('description', $errors) !!}
-                            </div>
+                                @if (Session::get('note')!='')
+                                <div class="form-group mb-3 @if ($errors->has('description')) has-error @endif">
+                                    <label for="description" class="control-label">{{ __('Order notes') }}</label>
+
+                                    <textarea disabled name="description" id="description" rows="3" class="form-control" placeholder="{{ __('Notes about your order, e.g. special notes for delivery.') }}">{{ Session::has('note') ? Session::get('note') : old('description') }}</textarea>
+                                    {!! Form::error('description', $errors) !!}
+                                </div>
+                            @endif
 
                             @if (EcommerceHelper::getMinimumOrderAmount() > Cart::instance('cart')->rawSubTotal())
                                 <div class="alert alert-warning">
