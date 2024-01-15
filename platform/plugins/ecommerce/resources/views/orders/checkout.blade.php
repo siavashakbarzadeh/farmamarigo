@@ -3,6 +3,31 @@
     {{ __('Checkout') }}
 @stop
 @section('content')
+<div id="pdfModal" class="modal" style="  position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0,0,0,0.4);">
+    <div class="modal-content" style=" position: relative;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #fefefe;">
+      <span class="close" style="  color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;">&times;
+      </span>
+      <div id="pdf-container" style="display: flex;
+      flex-direction: column;
+      align-items: center;"></div>
+
+</div>
+  </div>
 
     @if (Cart::instance('cart')->count() > 0)
         @include('plugins/payment::partials.header')
