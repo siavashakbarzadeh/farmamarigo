@@ -180,7 +180,6 @@ background-color: rgba(0,0,0,0.4);">
                         <div class="form-checkout">
                             @if ($isShowAddressForm)
                                 <div>
-                                    <h5 class="checkout-payment-title">{{ __('Shipping information') }}</h5>
                                     <input type="hidden" value="{{ route('public.checkout.save-information', $token) }}" id="save-shipping-information-url">
                                     @include('plugins/ecommerce::orders.partials.address-form', compact('sessionCheckoutData'))
                                 </div>
