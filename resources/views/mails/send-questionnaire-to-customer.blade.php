@@ -140,209 +140,24 @@
                          <tr style='border:0;'>
                              <td style="border:0;min-height: 400px; padding: 15px; font-size: 17px; ">
 
-    <div class="card">
+    <div class="card text-center">
         <div class="card-header">
-            <h2>Ti ringraziamo per il tuo ordine!</h2>
+{{--            {{ $questionnaire->title }}--}}
         </div>
         <div class="card-body">
-            <p style='font-size:18px !important;' class="card-title">Gentile {{ $order->user->name }} ({{ $order->user->codice }})</p>
-            <p class="card-text">il tuo ordine #1000{{$order->id}} è confermato ed è pronto per la spedizione..</p>
-            <table class="table table-striped table-hover" style='border:0;width: 100%;'>
-                <thead style="border:0;">
-                <tr style="border:0;">
-                    <th style="border: 0;text-align:left">Codice</th>
-                    <th style="border: 0;text-align:left">{{ __('Product') }}</th>
-                    <th style="border: 0;text-align:right">Importo</th>
-                    <th style="border:0;width: 100px;text-align:center">{{ __('Amount') }}</th>
-                    <th style="border: 0;text-align:right" class="price text-right">{{ __('Total') }}</th>
-                </tr>
-                </thead>
-                <tbody style="border:0;">
-                @foreach($order->products as $orderProduct)
-                    @php
-                        $product = get_products([
-                        'condition' => [
-                            'ec_products.id' => $orderProduct->product_id,
-                        ],
-                        'take'   => 1,
-                        'select' => [
-                            'ec_products.id',
-                            'ec_products.images',
-                            'ec_products.name',
-                            'ec_products.price',
-                            'ec_products.sale_price',
-                            'ec_products.sale_type',
-                            'ec_products.start_date',
-                            'ec_products.end_date',
-                            'ec_products.sku',
-                            'ec_products.is_variation',
-                            'ec_products.status',
-                            'ec_products.order',
-                            'ec_products.created_at',
-                        ],
-                    ]);
+            <p class="">{!! nl2br(e($questionnaire->desc)) !!}</p>
+            <div>
+                <a href="{{ $url }}" style="padding: 15px 20px; background-color: #005cbe; color:#ffffff; text-decoration: none" >Compila il questionario </a>
+            </div>
 
-                    @endphp
-                    <tr style='border:0;text-align: center'>
-                        <td style="border: 0;text-align:left" class="align-middle">{{ $product->sku }}</td>
-                        <td style="border: 0;text-align:left" class="align-middle">
-                            {{ $orderProduct->product_name }}
-                            @if (!empty($orderProduct->options) && is_array($orderProduct->options))
-                                @foreach($orderProduct->options as $option)
-                                    @if (!empty($option['key']) && !empty($option['value']))
-                                        <p class="mb-0"><small>{{ $option['key'] }}:
-                                                <strong> {{ $option['value'] }}</strong></small></p>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </td>
-                        <td style="border: 0;text-align:right" class="align-middle">{{ $orderProduct->amount_format }}</td>
-                        <td class="align-middle" style='text-align:right;border: 0;text-align: center'>{{ $orderProduct->qty }}</td>
-                        <td style="border: 0;text-align:right" class="money text-right align-middle">
-                            <strong>
-                                {{ $orderProduct->total_format }}
-                            </strong>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-            <br><br>
-            <div class="row">
-                <div class="col-12">
-                    Subtotale: <strong>{{ number_format($order->sub_total, 2, ',', '.') }}€</strong>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 text-right">
-                    Contributo per spedizione ed imballaggio: <strong>{{ number_format($order->shipping_amount, 2, ',', '.') }}€</strong>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    IVA: <strong>{{ number_format($order->tax_amount, 2, ',', '.') }}€</strong>
-                </div>
-            </div>
-            @if ($order->discount_amount > 0)
-              <div class="row">
-                <div class="col-12">
-                    Sconto: <strong>{{ number_format($order->discount_amount, 2, ',', '.') }}€</strong>
-                </div>
-            </div>
-            @endif
-
-<<<<<<< Updated upstream
-                                    <div class="row">
-                                        <div class="card text-center">
-                                            <div class="card-body">
-                                                <p style='font-size:18px !important;' class="card-title">Gentile {{ $order->user->name }} ({{ $order->user->codice }})</p>
-                                                <p class="card-text">il tuo ordine #1000{{ $order->id }}  è confermato ed è pronto per la spedizione.</p>
-                                                <table class="table table-striped table-hover" style='border:0;width: 100%;'>
-                                                    <thead style="border: 0;">
-                                                    <tr style="border: 0;">
-                                                        <th style="border: 0;text-align:left">{{ __('Product') }}</th>
-                                                        <th style="border: 0;text-align:right">Importo</th>
-                                                        <th style="border:0;width: 100px;text-align:center">{{ __('Amount') }}</th>
-                                                        <th style="border: 0;text-align:right" class="price text-right">{{ __('Total') }}</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody style="border: 0;">
-                                                    @foreach($order->products as $orderProduct)
-                                                        @php
-                                                            $product = get_products([
-                                                            'condition' => [
-                                                                'ec_products.id' => $orderProduct->product_id,
-                                                            ],
-                                                            'take'   => 1,
-                                                            'select' => [
-                                                                'ec_products.id',
-                                                                'ec_products.images',
-                                                                'ec_products.name',
-                                                                'ec_products.price',
-                                                                'ec_products.sale_price',
-                                                                'ec_products.sale_type',
-                                                                'ec_products.start_date',
-                                                                'ec_products.end_date',
-                                                                'ec_products.sku',
-                                                                'ec_products.is_variation',
-                                                                'ec_products.status',
-                                                                'ec_products.order',
-                                                                'ec_products.created_at',
-                                                            ],
-                                                        ]);
-
-                                                        @endphp
-                                                        <tr style='border:0;text-align: center'>
-                                                            <td style="border: 0;text-align:left" class="align-middle">
-                                                                {{ $orderProduct->product_name }}
-                                                                @if (!empty($orderProduct->options) && is_array($orderProduct->options))
-                                                                    @foreach($orderProduct->options as $option)
-                                                                        @if (!empty($option['key']) && !empty($option['value']))
-                                                                            <p class="mb-0"><small>{{ $option['key'] }}:
-                                                                                    <strong> {{ $option['value'] }}</strong></small></p>
-                                                                        @endif
-                                                                    @endforeach
-                                                                @endif
-                                                            </td>
-                                                            <td style="border: 0;text-align:right" class="align-middle">{{ $orderProduct->amount_format }}</td>
-                                                            <td class="align-middle" style='text-align:right;border: 0;text-align: center'>{{ $orderProduct->qty }}</td>
-                                                            <td style="border: 0;text-align:right" class="money text-right align-middle">
-                                                                <strong>
-                                                                    {{ $orderProduct->total_format }}
-                                                                </strong>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                                <br><br>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Subtotale: <strong>{{ number_format($order->sub_total, 2, ',', '.') }}€</strong>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12 text-right">
-                                                        Contributo per spedizione ed imballaggio: <strong>{{ number_format($order->shipping_amount, 2, ',', '.') }}€</strong>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        IVA: <strong>{{ number_format($order->tax_amount, 2, ',', '.') }}€</strong>
-                                                    </div>
-                                                </div>
-                                                @if ($order->discount_amount > 0)
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            Sconto: <strong>{{ number_format($order->discount_amount, 2, ',', '.') }}€</strong>
-                                                        </div>
-                                                    </div>
-                                                @endif
-=======
-            <div class="row">
-                <div class="col-12">
-                    Totale ordine: <strong>{{ number_format($order->amount, 2, ',', '.') }}€</strong>
-                </div>
-            </div>
-            @if ($order->description != NULL)
-            <div class="row">
-                <div class="col-12">
-                    Note: <strong>{{ $order->description }}</strong>
-                </div>
-            </div>
-            @endif
-            <br>
-            <a href="https://marigolab.it/customer/orders/view/{{$order->id}}" style='display: block;margin-block-end: 1em' class="btn btn-primary">Vedi il tuo
-                ordine</a>
-            <br>
         </div>
-        <div class="card-footer text-body-secondary"> Per qualsiasi informazione, contattaci compilando <a href='https://marigolab.it/contact'>il modulo richiesta informazioni </a>sul nostro sito web
-        </div>
+    </div>
 
+    <br>
+
+    <div class="card-footer text-body-secondary">Per qualsiasi informazione, contattaci compilando <a href='https://marigolab.it/contact'>il modulo richiesta informazioni </a>sul nostro sito web
     </div>
 </td>
->>>>>>> Stashed changes
-
 </tr>
 <!--start space height -->
 <tr style="border: 0;">
@@ -407,7 +222,7 @@
                                                                                 style="border:0;border-collapse: collapse;">
                                                                             </td>
                                                                         </tr>
-
+                                                                        
                                                                         </tbody>
                                                                     </table>
                                                                     <table align="center" style='border:0;'>
@@ -425,7 +240,7 @@
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
-
+                        
                                                                     </table>
                                                                 </td>
                                                             </tr>
