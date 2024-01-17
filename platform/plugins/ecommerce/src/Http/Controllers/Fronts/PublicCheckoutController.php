@@ -778,7 +778,6 @@ class PublicCheckoutController
         ]);
         Mail::to($order->user->email)->send(new OrderConfirmed($order));
 
-        $this->deleteDuplicateOrders($order->token);
 
         OrderShippingAmount::create(
             ['shippingAmount' => session()->get('shippingAmount'),
@@ -791,6 +790,8 @@ class PublicCheckoutController
         session()->forget('note');
         $this->generateInvoice($order);
 
+        
+        $this->deleteDuplicateOrders($order->token);
 
         SaveCartController::deleteSavedCart();
 
