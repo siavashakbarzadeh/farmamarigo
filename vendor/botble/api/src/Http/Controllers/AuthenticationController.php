@@ -28,7 +28,7 @@ class AuthenticationController extends Controller
      * @response {
      * "error": false,
      * "data": null,
-     * "message": "Registered successfully! We emailed you to verify your account!"
+     * "message": "Registrato con successo! Ti abbiamo inviato un'e-mail per verificare il tuo account!"
      * }
      * @response 422 {
      * "message": "The given data was invalid.",
@@ -78,7 +78,7 @@ class AuthenticationController extends Controller
         $user->save();
 
         return $response
-            ->setMessage(__('Registered successfully! We emailed you to verify your account!'));
+            ->setMessage("Registrato con successo! Ti abbiamo inviato un'e-mail per verificare il tuo account!");
     }
 
     /**

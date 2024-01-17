@@ -3,6 +3,31 @@
     {{ __('Checkout') }}
 @stop
 @section('content')
+<div id="pdfModal" class="modal" style="  position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0,0,0,0.4);">
+    <div class="modal-content" style=" position: relative;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #fefefe;">
+      <span class="close" style="  color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;">&times;
+      </span>
+      <div id="pdf-container" style="display: flex;
+      flex-direction: column;
+      align-items: center;"></div>
+
+</div>
+  </div>
 
     @if (Cart::instance('cart')->count() > 0)
         @include('plugins/payment::partials.header')
@@ -67,14 +92,19 @@
                                         @endif
                                     </td>
                                     <td>{{ $product->cartItem->qty }}</td>
+                                    <td>
+                                        {{ format_price($product->cartItem->price)}}
+
+                                    </td>
                                 </tr>
                                 @endforeach
                                     </tbody>
                                 </table>
+
                             <div class="mt-2 p-2">
                                 <div class="row">
                                     <div class="col-6">
-                                        <p>{{ __('Subtotal') }}:</p>
+                                        <p>{{ __('Totale Parziale') }}:</p>
                                     </div>
                                     <div class="col-6">
                                         <p class="price-text sub-total-text text-end"> {{ format_price(Cart::instance('cart')->rawSubTotal()) }} </p>
@@ -113,7 +143,7 @@
                                 @if (!empty($shipping) && Arr::get($sessionCheckoutData, 'is_available_shipping', true))
                                     <div class="row">
                                         <div class="col-6">
-                                            <p>{{ __('Shipping fee') }}:</p>
+                                            <p>{{ __('Contributo spese di spedizione e imballaggio') }}:</p>
                                         </div>
                                         <div class="col-6 float-end">
                                             <p class="price-text shipping-price-text">{{ format_price(floatval(Session::get('shippingAmount'))) }}</p>
@@ -147,13 +177,9 @@
 
                         <hr>
 
-                        <div class="mt-3 mb-5">
-                            @include('plugins/ecommerce::themes.discounts.partials.form')
-                        </div>
                         <div class="form-checkout">
                             @if ($isShowAddressForm)
                                 <div>
-                                    <h5 class="checkout-payment-title">{{ __('Shipping information') }}</h5>
                                     <input type="hidden" value="{{ route('public.checkout.save-information', $token) }}" id="save-shipping-information-url">
                                     @include('plugins/ecommerce::orders.partials.address-form', compact('sessionCheckoutData'))
                                 </div>
@@ -268,12 +294,14 @@
 
                             <br>
 
-                            <div class="form-group mb-3 @if ($errors->has('description')) has-error @endif">
-                                <label for="description" class="control-label">{{ __('Order notes') }}</label>
-                                <br>
-                                <textarea name="description" id="description" rows="3" class="form-control" placeholder="{{ __('Notes about your order, e.g. special notes for delivery.') }}">{{ old('description') }}</textarea>
-                                {!! Form::error('description', $errors) !!}
-                            </div>
+                                @if (Session::get('note')!='')
+                                <div class="form-group mb-3 @if ($errors->has('description')) has-error @endif">
+                                    <label for="description" class="control-label">{{ __('Order notes') }}</label>
+
+                                    <textarea disabled name="description" id="description" rows="3" class="form-control" placeholder="{{ __('Notes about your order, e.g. special notes for delivery.') }}">{{ Session::has('note') ? Session::get('note') : old('description') }}</textarea>
+                                    {!! Form::error('description', $errors) !!}
+                                </div>
+                            @endif
 
                             @if (EcommerceHelper::getMinimumOrderAmount() > Cart::instance('cart')->rawSubTotal())
                                 <div class="alert alert-warning">
@@ -281,26 +309,32 @@
                                 </div>
                             @endif
 
-                            <div class="form-group mb-3">
-                                <div class="row">
-                                    <div class="col-md-6 d-none d-md-block" style="line-height: 53px">
-                                        <a class="text-info" href="{{ route('public.cart') }}"><i class="fas fa-long-arrow-alt-left"></i> <span class="d-inline-block back-to-cart">{{ __('Back to cart') }}</span></a>
-                                    </div>
-                                    <div class="col-md-6 checkout-button-group">
-                                        @if (EcommerceHelper::isValidToProcessCheckout())
-                                            <button type="submit" class="btn payment-checkout-btn payment-checkout-btn-step float-end" data-processing-text="{{ __('Processing. Please wait...') }}" data-error-header="{{ __('Error') }}">
-                                                {{ __('Checkout') }}
-                                            </button>
-                                        @else
-                                            <span class="btn payment-checkout-btn-step float-end disabled">
-                                                {{ __('Checkout') }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="d-block d-md-none back-to-cart-button-group">
-                                    <a class="text-info" href="{{ route('public.cart') }}"><i class="fas fa-long-arrow-alt-left"></i> <span class="d-inline-block">{{ __('Back to cart') }}</span></a>
-                                </div>
+                            <div class="col-12">
+                                <p>
+                                    inviando l'ordine si dichiara di aver letto, compreso e accettato integralmente le <span class="text-primary condizioni" style="cursor: pointer" onclick="openModal()">condizioni generali di vendita</span><br>
+                                </p>
+                            </div>
+
+
+                            <div class="col-md-6 d-none d-md-block" style="line-height: 53px">
+                                <a href="{{ route('public.cart') }}"><i style="color:#005BA1" class="fas fa-long-arrow-alt-left"></i> <span class="d-inline-block back-to-cart" style="color:#005BA1">{{ __('Back to cart') }}</span></a>
+                            </div>
+                            <div class="col-md-6 checkout-button-group">
+                                @if (EcommerceHelper::isValidToProcessCheckout())
+                                    <button type="submit" style='background-color: #005BA1;
+                                    border: none;
+                                    border-radius: 50px;
+                                    color: #fff;
+                                    font-size: 15px;
+                                    font-weight: 500;
+                                    padding: 12px 40px;'class="btn payment-checkout-btn payment-checkout-btn-step float-end" style="background:#005BA1" data-processing-text="{{ __('In lavorazione. attendere prego...') }}" data-error-header="{{ __('Error') }}">
+                                        {{ __("Invia l'ordine") }}
+                                    </button>
+                                @else
+                                    <span class="btn payment-checkout-btn-step float-end disabled" style="background:#005BA1">
+                                        {{ __("Invia l'ordine") }}
+                                    </span>
+                                @endif
                             </div>
 
                         </div>
@@ -324,10 +358,90 @@
 @stop
 
 @push('header')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+
     <link rel="stylesheet" href="{{ asset('vendor/core/core/base/libraries/intl-tel-input/css/intlTelInput.min.css') }}">
+    <style>#pdf-container canvas {
+        display: block;
+        margin-top: -30px;
+        padding: 0;
+      }</style>
 @endpush
 
 @push('footer')
+<script>// Get the modal
+    var modal = document.getElementById("pdfModal");
+
+    // Get the button that opens the modal
+    var btn = document.querySelector(".condizioni");
+
+    // Get the <span> element that closes the modal
+    var span = document.querySelector(".close");
+
+    // When the user clicks the button, open the modal
+    function openModal() {
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    var url = 'https://marigopharma.marigo.collaudo.biz/storage/2124-condizioni-generali-di-vendita-webview.pdf';
+
+var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+// The workerSrc property shall be specified.
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.worker.min.js';
+
+var pdfDoc = null,
+    scale = 1.5, // Adjust this value to zoom the PDF
+    container = document.getElementById('pdf-container');
+
+function renderPage(num) {
+    if (num > pdfDoc.numPages) {
+        return; // All pages rendered
+    }
+
+    // Get page
+    pdfDoc.getPage(num).then(function(page) {
+        var viewport = page.getViewport({ scale: scale });
+        var canvas = document.createElement('canvas');
+        container.appendChild(canvas);
+        var ctx = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        // Render the page into the canvas
+        var renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+        page.render(renderContext).promise.then(function() {
+            // Move to next page
+            renderPage(num + 1);
+        });
+    });
+}
+
+pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+    pdfDoc = pdfDoc_;
+    renderPage(1);
+});
+
+
+    </script>
+    {{-- <script>$(".payment-checkout-btn-step").trigger( "click" );</script> --}}
     <script src="{{ asset('vendor/core/core/base/libraries/intl-tel-input/js/intlTelInput.min.js') }}"></script>
     <script src="{{ asset('vendor/core/core/base/js/phone-number-field.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 @endpush

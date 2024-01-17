@@ -16,11 +16,16 @@ class CheckUserVerification
 {
     public function handle(Request $request, Closure $next)
     {
-//        auth()->user()->markEmailAsVerified();
-//        auth()->user()->unMarkEmailAsVerified();
+
+        // if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
+        //     if($request->is('users/verify')){
+        //         return $next($request);
+        //     }
+        //     return redirect('users/verify');
+        // }
         // if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
         //     return redirect('users/verify');
         // }
         return $next($request);
-    }
+}
 }

@@ -32,10 +32,10 @@ class ContactRequest extends Request
     public function messages(): array
     {
         return [
-            'name.required' => trans('plugins/contact::contact.form.name.required'),
-            'email.required' => trans('plugins/contact::contact.form.email.required'),
-            'email.email' => trans('plugins/contact::contact.form.email.email'),
-            'content.required' => trans('plugins/contact::contact.form.content.required'),
+            'name.required' => 'Il nome è obbligatorio.',
+            'email.required' => 'L\'email è obbligatoria.',
+            'email.email' => 'Inserisci un indirizzo email valido.',
+            'content.required' => "Il messaggio è obbligatorio.",
             'g-recaptcha-response.required' => __('Captcha Verification Failed!'),
             'g-recaptcha-response.captcha' => __('Captcha Verification Failed!'),
             'math-captcha.required' => __('Math function Verification Failed!'),
@@ -43,3 +43,4 @@ class ContactRequest extends Request
         ];
     }
 }
+

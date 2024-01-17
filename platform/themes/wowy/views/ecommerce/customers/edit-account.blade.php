@@ -29,7 +29,7 @@
                     <div class="form-group col-md-12 @if ($errors->has('phone')) has-error @endif">
                         <label for="phone">{{ __('Phone') }}:</label>
                         <input type="text" class="form-control square" name="phone" id="phone" placeholder="{{ __('Phone') }}" value="{{ auth('customer')->user()->phone }}">
-                        {!! Form::error('name', $errors) !!}
+                        {!! Form::error('phone', $errors) !!}
                     </div>
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-fill-out submit">{{ __('Update') }}</button>

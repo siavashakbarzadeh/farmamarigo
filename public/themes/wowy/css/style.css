@@ -5401,7 +5401,7 @@ header.header-area .sticky-bar:not(.stick) .main-categories-wrap>a.cant-close>i 
 
 .mobile-social-icon a {
     border-radius: 3px;
-    color: #fff;
+    color: #fff !important;
     display: inline-block;
     font-size: 14px;
     height: 34px;
@@ -6483,8 +6483,9 @@ header.header-area .sticky-bar:not(.stick) .main-categories-wrap>a.cant-close>i 
     border: 0;
     border-radius: 0 50px 50px 0;
     font-size: 14px;
-    padding: 0 30px
+    padding: 0 30px;
 }
+
 
 .download-app {
     display: flex;
@@ -16687,7 +16688,12 @@ header.header-area .sticky-bar:not(.stick) .main-categories-wrap>a.cant-close>i 
     border: 0;
     border-radius: 0 50px 50px 0;
     font-size: 14px;
-    padding: 0 30px
+    padding: 0 30px;
+    background-color: rgb(0, 92, 158) !important;
+}
+
+.newsletter .form-subcriber button:hover {
+    background-color: #51B448 !important
 }
 
 .download-app {

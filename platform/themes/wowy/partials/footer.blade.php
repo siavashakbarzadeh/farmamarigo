@@ -240,7 +240,7 @@
     $(".register--btn--submit").click(function(e) {
         e.preventDefault();
         let allValid = true;
-                
+
             // Loop through each text input field in the form
             $("#registration-form input[type='text']").each(function() {
                 if ($(this).val().trim() === "") {
@@ -320,7 +320,7 @@
             });
     }
 
-    
+
 $(document).ready(function() {
 
 
@@ -341,6 +341,26 @@ $togglePasswordButton.on("click", function () {
 
 });
 }
+
+
+const $passwordField1 = $("#txt-password1");
+const $togglePasswordButton1 = $("#toggle-password");
+if (window.location.href.includes('login')) {
+$togglePasswordButton.on("click", function () {
+  // Check if the URL contains 'was'
+
+    // Execute the toggle functionality only if the URL contains 'was'
+    if ($passwordField1.attr("type") === "password") {
+      $passwordField1.attr("type", "text");
+      $togglePasswordButton1.removeClass("fa-eye").addClass("fa-eye-slash");
+    } else {
+      $passwordField1.attr("type", "password");
+      $togglePasswordButton1.removeClass("fa-eye-slash").addClass("fa-eye");
+    }
+
+});
+}
+
 
 
     const $password_confirmation_Field = $("#txt-password-confirmation");
@@ -406,6 +426,7 @@ $togglePasswordButton.on("click", function () {
 
 $(document).on("keyup", "input[name='password']", function(e) {
     if (!window.location.pathname.includes("/login")) {
+        console.log('ow');
 
         e.preventDefault();
         var password = $(this).val();
