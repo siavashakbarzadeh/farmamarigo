@@ -147,7 +147,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer text-body-secondary"><p> Per qualsiasi informazione,contattaci compilando <a href='https://marigopharma.marigo.collaudo.biz/contact'>il Modulo richiesta informazioni </a> sul nostro sito web<br>
+                                    <div class="card-footer text-body-secondary"><p> Per qualsiasi informazione,ci può contattare compilando <a href='https://marigopharma.marigo.collaudo.biz/contact'>il Modulo richiesta informazioni </a> sul nostro sito web<br>
                                     </p></div>
 
                                 </td>

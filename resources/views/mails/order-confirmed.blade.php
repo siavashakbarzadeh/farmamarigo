@@ -138,11 +138,10 @@
                                         <div class="card text-center">
                                             <div class="card-body">
                                                 <p style='font-size:18px !important;' class="card-title">Gentile {{ $order->user->name }} ({{ $order->user->codice }})</p>
-                                                <p class="card-text">Abbiamo ricevuto il tuo ordine #1000{{ $order->id }}.</p>
+                                                <p class="card-text">il tuo ordine #1000{{ $order->id }}  è confermato ed è pronto per la spedizione.</p>
                                                 <table class="table table-striped table-hover" style='border:0;width: 100%;'>
                                                     <thead style="border: 0;">
                                                     <tr style="border: 0;">
-                                                        <th style="border: 0;text-align:left">Codice</th>
                                                         <th style="border: 0;text-align:left">{{ __('Product') }}</th>
                                                         <th style="border: 0;text-align:right">Importo</th>
                                                         <th style="border:0;width: 100px;text-align:center">{{ __('Amount') }}</th>
@@ -176,7 +175,6 @@
 
                                                         @endphp
                                                         <tr style='border:0;text-align: center'>
-                                                            <td style="border: 0;text-align:left" class="align-middle">{{ $product->sku }}</td>
                                                             <td style="border: 0;text-align:left" class="align-middle">
                                                                 {{ $orderProduct->product_name }}
                                                                 @if (!empty($orderProduct->options) && is_array($orderProduct->options))
