@@ -40,7 +40,7 @@
                     @endforeach
                     @else
                     <figure class="border-radius-10">
-                            <a href="{{ RvMedia::getImageUrl($img) }}">
+                            <a href="{{ $Image }}">
                                 <img src="{{ $Image }}" alt=" {{ $product->name  }}">
                             </a>
                         </figure>
