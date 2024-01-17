@@ -52,6 +52,12 @@
         <span class="title">Questionari</span>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('admin.ecommerce.mail-log.list') }}" class="nav-link nav-toggle">
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+        <span class="title">Mail Log</span>
+    </a>
+</li>
 {{--<li class="nav-item" id="3">--}}
 {{--    <a class="nav-link nav-toggle">--}}
 {{--        <i class="fas fa-shipping-fast" aria-hidden="true"></i>--}}
