@@ -16,11 +16,20 @@ class CheckUserVerification
 {
     public function handle(Request $request, Closure $next)
     {
-//        auth()->user()->markEmailAsVerified();
-//        auth()->user()->unMarkEmailAsVerified();
-        if (auth('customer')->user() && !auth('customer')->user()->email_verified_at ) {
-            return redirect('users/verify');
+        // Check if the current route is 'users/verify'
+        if ($request->is('users/verify')) {
+            // If it is, just continue with the request without redirecting
+            return $next($request);
         }
+
+        // Check if the user is a customer and if their email is not verified
+        if (auth('customer')->user() && !auth('customer')->user()->email_verified_at) {
+            // Redirect to 'users/verify' if the email is not verified
+            
+            return redirect('users/verify?'.auth('customer')->user()->email);
+        }
+
+        // Continue with the request if the user is verified
         return $next($request);
     }
 }
