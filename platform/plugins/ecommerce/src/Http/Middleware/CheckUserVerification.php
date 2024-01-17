@@ -17,7 +17,7 @@ class CheckUserVerification
     public function handle(Request $request, Closure $next)
     {
 
-        dd(auth('customer'));
+        dd(auth('customer')->user());
         // Check if the user is a customer, if their email is not verified, and they are not already on the 'users/verify' page
     if (auth('customer')->check() &&
         !auth('customer')->user()->email_verified_at &&
