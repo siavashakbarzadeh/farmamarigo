@@ -344,7 +344,7 @@ $togglePasswordButton.on("click", function () {
 
 
 const $passwordField1 = $("#txt-password1");
-const $togglePasswordButton1 = $("#toggle-password");
+const $togglePasswordButton1 = $("#toggle-password1");
 if (window.location.href.includes('login')) {
 $togglePasswordButton.on("click", function () {
   // Check if the URL contains 'was'
