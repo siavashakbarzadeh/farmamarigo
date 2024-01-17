@@ -344,7 +344,7 @@ $togglePasswordButton.on("click", function () {
 
 
 const $passwordField1 = $("#txt-password1");
-const $togglePasswordButton = $("#toggle-password");
+const $togglePasswordButton1 = $("#toggle-password");
 if (window.location.href.includes('login')) {
 $togglePasswordButton.on("click", function () {
   // Check if the URL contains 'was'
@@ -352,10 +352,10 @@ $togglePasswordButton.on("click", function () {
     // Execute the toggle functionality only if the URL contains 'was'
     if ($passwordField1.attr("type") === "password") {
       $passwordField1.attr("type", "text");
-      $togglePasswordButton.removeClass("fa-eye").addClass("fa-eye-slash");
+      $togglePasswordButton1.removeClass("fa-eye").addClass("fa-eye-slash");
     } else {
       $passwordField1.attr("type", "password");
-      $togglePasswordButton.removeClass("fa-eye-slash").addClass("fa-eye");
+      $togglePasswordButton1.removeClass("fa-eye-slash").addClass("fa-eye");
     }
 
 });
