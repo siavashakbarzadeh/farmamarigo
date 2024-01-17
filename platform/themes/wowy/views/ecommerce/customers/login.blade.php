@@ -90,7 +90,7 @@ use Illuminate\Support\Facades\Crypt;
                                             <label class="form-check-label" for="remember-me-checkbox"><span>{{ __('Remember me') }}</span></label>
                                         </div>
                                     </div>
-                                    <a class="text-muted" href="{{ route('customer.password.reset') }}">{{ __('Forgot password?') }}</a>
+                                    <a class="text-muted" href="{{ route('customer.password.reset') }}" style="color: #005BA1 !important">{{ __('Forgot password?') }}</a>
                                 </div>
                             </div>
                             <div class="form-group">
