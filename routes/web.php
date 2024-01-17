@@ -173,3 +173,13 @@ Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
 Route::get('/checksession', [QuestionnaireController::class, 'checksession']);
 
 Route::get('/return', [PublicCheckoutController::class, 'paypalConfirmed']);
+Route::prefix('/admin/ecommerce/mail-log')
+    ->name('admin.ecommerce.mail-log.')
+    ->group(function (Router $router) {
+
+        $router->get('/list', [MailLogController::class, 'list'])->name('list');
+        $router->get('/filter', [MailLogController::class, 'filter'])->name('filter');
+        $router->post('/delete', [MailLogController::class, 'delete'])->name('delete');
+        $router->post('/download', [MailLogController::class, 'download'])->name('download');
+
+    });
