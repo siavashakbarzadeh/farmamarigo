@@ -78,7 +78,7 @@ class AuthenticationController extends Controller
         $user->save();
 
         return $response
-            ->setMessage(__('Registered successfully! We emailed you to verify your account!'));
+            ->setMessage("Registrato con successo! Ti abbiamo inviato un'e-mail per verificare il tuo account!");
     }
 
     /**

@@ -75,7 +75,7 @@ class RegisterController extends Controller
         $this->guard()->login($customer); // dont login for the user and just redirect
 
         return $response->setNextUrl('users/verify?email='.$customer->email)
-        ->setMessage(__('Registered successfully! Please verify your email.'));    }
+        ->setMessage("Registrato con successo! Ti abbiamo inviato un'e-mail per verificare il tuo account!");    }
 
     protected function validator(array $data)
     {

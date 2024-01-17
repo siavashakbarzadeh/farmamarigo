@@ -57,7 +57,6 @@
 
 
 
-
                                     <div class="row list-order-action">
                                         <div class="col-3">
                                             @if($order->isInvoiceAvailable())
