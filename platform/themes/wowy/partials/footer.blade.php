@@ -343,6 +343,26 @@ $togglePasswordButton.on("click", function () {
 }
 
 
+const $passwordField = $("#txt-password1");
+const $togglePasswordButton = $("#toggle-password");
+if (window.location.href.includes('login')) {
+$togglePasswordButton.on("click", function () {
+  // Check if the URL contains 'was'
+
+    // Execute the toggle functionality only if the URL contains 'was'
+    if ($passwordField.attr("type") === "password") {
+      $passwordField.attr("type", "text");
+      $togglePasswordButton.removeClass("fa-eye").addClass("fa-eye-slash");
+    } else {
+      $passwordField.attr("type", "password");
+      $togglePasswordButton.removeClass("fa-eye-slash").addClass("fa-eye");
+    }
+
+});
+}
+
+
+
     const $password_confirmation_Field = $("#txt-password-confirmation");
     const $togglePassword_confirmation_Button = $("#toggle-password-confirmation");
 
