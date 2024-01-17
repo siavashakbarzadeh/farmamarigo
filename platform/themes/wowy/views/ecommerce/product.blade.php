@@ -15,6 +15,23 @@
             <div class="detail-gallery">
                 <!-- MAIN SLIDES -->
                 <div class="product-image-slider">
+                @php
+                        $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
+                        $productImgUrl =RvMedia::getImageUrl($productImages[0]);
+                        $ch = curl_init($productImgUrl);
+                        curl_setopt($ch, CURLOPT_NOBODY, true);
+                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                        curl_exec($ch);
+                        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                        curl_close($ch);
+
+                        if($responseCode == 200){
+                            $Image=$productImgUrl;
+                        }else{
+                            $Image=$defaultImgUrl;
+                        }
+                    @endphp
+                    @if($responseCode==200)
                     @foreach ($productImages as $img)
                         <figure class="border-radius-10">
                             <a href="{{ RvMedia::getImageUrl($img) }}">
@@ -22,7 +39,13 @@
                             </a>
                         </figure>
                     @endforeach
-                    
+                    @else
+                    <figure class="border-radius-10">
+                            <a href="{{ RvMedia::getImageUrl($img) }}">
+                                <img src="{{ $Image }}" alt=" {{ $product->name  }}">
+                            </a>
+                        </figure>
+                    @endif                    
                 </div>
                 <!-- THUMBNAILS -->
                 <div class="slider-nav-thumbnails pl-15 pr-15">
