@@ -240,7 +240,7 @@
     $(".register--btn--submit").click(function(e) {
         e.preventDefault();
         let allValid = true;
-                
+
             // Loop through each text input field in the form
             $("#registration-form input[type='text']").each(function() {
                 if ($(this).val().trim() === "") {
@@ -320,7 +320,7 @@
             });
     }
 
-    
+
 $(document).ready(function() {
 
 
@@ -406,6 +406,7 @@ $togglePasswordButton.on("click", function () {
 
 $(document).on("keyup", "input[name='password']", function(e) {
     if (!window.location.pathname.includes("/login")) {
+        console.log('ow');
 
         e.preventDefault();
         var password = $(this).val();

@@ -105,7 +105,7 @@
                                                         <div class="form-group col-lg-6">
                                                             <input class="font-medium coupon-code" type="text" name="coupon_code" value="{{ old('coupon_code') }}" placeholder="{{ __('Enter coupon code') }}">
                                                         </div>
-                                                        <div class="form-group col-lg-6">   
+                                                        <div class="form-group col-lg-6">
                                                             <button class="btn btn-rounded btn-sm btn-apply-coupon-code" type="button" data-url="{{ route('public.coupon.apply') }}"><i class="far fa-bookmark mr-5"></i>Applica Coupon</button>
                                                         </div>
                                                     </div>
@@ -231,6 +231,14 @@ $orderAmount=Cart::instance('cart')->rawTotal();
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <p style="font-size: 9.5pt !important;">Il contributo per le spese di spedizione ed imballaggio è calcolato sull'importo dell'ordine al netto di eventuali omaggi a cui si ha diritto. <br>
+                                            Questi ultimi saranno stornati dal totale, in fase di gestione dell'ordine.</p>
+                                            <p style='font-size: 11pt; color: black'><label for="comunicarci"><b>Hai qualcosa da comunicarci?</b></label></p>
+                                            <textarea id="comunicarci" name="note" rows="5" cols="37" style='min-height: unset!important' placeholder="Scrivi qui eventuali note per l'ordine">
+                                                @if (Session::get('note')!='')
+                                                    {{ Session::has('note') ? Session::get('note') : '' }}
+                                                @endif
+                                            </textarea>
 
                                     </div>
                                 </div>
