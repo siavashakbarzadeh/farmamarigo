@@ -19,24 +19,24 @@ class CheckUserVerification
 
         // Check if the user is a customer, if their email is not verified, and they are not already on the 'users/verify' page
     if (auth('customer')->check() &&
-    !auth('customer')->user()->email_verified_at &&
-    !$request->is('users/verify')) {
+        !auth('customer')->user()->email_verified_at &&
+        !$request->is('users/verify')) {
 
-    // Redirect to 'users/verify' with the email as a query parameter
-    // and add an additional parameter to indicate redirection
-    return redirect('users/verify')
-            ->with('redirected_for_verification', true)
-            ->with('email', auth('customer')->user()->email);
-}
-
-// If the user is on the 'users/verify' page and has been redirected for verification, do not redirect again
-if ($request->is('users/verify') && $request->session()->get('redirected_for_verification')) {
-    // Clear the redirection flag
-    $request->session()->forget('redirected_for_verification');
-    return $next($request);
-}
-
-// Continue with the request if the user is verified or if none of the above conditions met
-return $next($request);
+        // Redirect to 'users/verify' with the email as a query parameter
+        // and add an additional parameter to indicate redirection
+        return redirect('users/verify')
+                ->with('redirected_for_verification', true)
+                ->with('email', auth('customer')->user()->email);
     }
+
+    // If the user is on the 'users/verify' page and has been redirected for verification, do not redirect again
+    if ($request->is('users/verify') && $request->session()->get('redirected_for_verification')) {
+        // Clear the redirection flag
+        $request->session()->forget('redirected_for_verification');
+        return $next($request);
+    }
+
+    // Continue with the request if the user is verified or if none of the above conditions met
+    return $next($request);
+        }
 }
