@@ -16,8 +16,10 @@ class CheckUserVerification
 {
     public function handle(Request $request, Closure $next)
     {
+
         // Check if the current route is 'users/verify'
         if ($request->is('users/verify')) {
+            dd($request);
             // If it is, just continue with the request without redirecting
             return $next($request);
         }
