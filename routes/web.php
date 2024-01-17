@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\MailLogController;
 use App\Http\Controllers\MarchiController;
 use Botble\Ecommerce\Jobs\OrderSubmittedJob;
 use Botble\Ecommerce\Mail\OrderConfirmed;
