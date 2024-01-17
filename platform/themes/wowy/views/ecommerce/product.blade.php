@@ -40,8 +40,8 @@
                     @endforeach
                     @else
                     <figure class="border-radius-10">
-                            <a href="{{ $Image }}">
-                                <img src="{{ $Image }}" alt=" {{ $product->name  }}">
+                            <a href="{{ $Image }}" style='background-color: rgb(255, 255, 255); display: flex; justify-content: center; width: 100%; height: 100%; align-items: center; overflow: hidden;'>
+                                <img src="{{ $Image }}" alt=" {{ $product->name  }}" style='width: 100%; max-height: 100%; display: block; margin: auto;'>
                             </a>
                         </figure>
                     @endif                    
