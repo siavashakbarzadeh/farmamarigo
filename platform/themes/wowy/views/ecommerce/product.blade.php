@@ -8,6 +8,7 @@
         ->add('lightGallery-js', 'plugins/lightGallery/js/lightgallery.min.js', ['jquery']);
 @endphp
 
+@dd($productImages)
 <div class="product-detail accordion-detail">
     <div class="row mb-50">
         <div class="col-md-6 col-sm-12 col-xs-12">
@@ -21,6 +22,7 @@
                             </a>
                         </figure>
                     @endforeach
+                    
                 </div>
                 <!-- THUMBNAILS -->
                 <div class="slider-nav-thumbnails pl-15 pr-15">
