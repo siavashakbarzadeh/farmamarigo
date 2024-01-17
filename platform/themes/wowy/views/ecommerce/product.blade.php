@@ -33,8 +33,8 @@
                     @if($responseCode==200)
                     @foreach ($productImages as $img)
                         <figure class="border-radius-10">
-                            <a href="{{ RvMedia::getImageUrl($img) }}">
-                                <img src="{{ RvMedia::getImageUrl($img, 'medium') }}" alt="{{ $product->name }}">
+                            <a href="{{ RvMedia::getImageUrl($img) }}" style='background-color: rgb(255, 255, 255); display: flex; justify-content: center; width: 100%; height: 100%; align-items: center; overflow: hidden;'>
+                                <img src="{{ RvMedia::getImageUrl($img, 'medium') }}" alt="{{ $product->name }}" style='width: 100%; max-height: 100%; display: block; margin: auto;'>
                             </a>
                         </figure>
                     @endforeach
