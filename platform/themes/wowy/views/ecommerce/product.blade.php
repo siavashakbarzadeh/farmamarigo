@@ -47,11 +47,13 @@
                     @endif                    
                 </div>
                 <!-- THUMBNAILS -->
+                @if($responseCode==200)
                 <div class="slider-nav-thumbnails pl-15 pr-15">
                     @foreach ($productImages as $img)
                         <div><img src="{{ RvMedia::getImageUrl($img, 'thumb') }}" alt="{{ $product->name }}"></div>
                     @endforeach
                 </div>
+                @endif
             </div>
             <!-- End Gallery -->
             <div class="single-social-share clearfix mt-50 mb-15">
