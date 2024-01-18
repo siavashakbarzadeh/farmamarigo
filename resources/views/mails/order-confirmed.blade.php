@@ -137,7 +137,7 @@
                                     <div class="row">
                                         <div class="card text-center">
                                             <div class="card-body">
-                                                <p style='font-size:18px !important;' class="card-title">Gentile {{ $order->user->name }} ({{ $order->user->codice }})</p>
+                                                <p style='font-size:18px !important;' class="card-title">Gentile {{ $order->user->name }} @if($order->user->codice)({{ $order->user->codice }})@endif</p>
                                                 <p class="card-text">il tuo ordine #1000{{ $order->id }}  è confermato ed è pronto per la spedizione.</p>
                                                 <table class="table table-striped table-hover" style='border:0;width: 100%;'>
                                                     <thead style="border: 0;">
