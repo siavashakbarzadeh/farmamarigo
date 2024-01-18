@@ -41,4 +41,37 @@
 
 @push('footer')
     @routes
+    <script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        $(document).on('click', '.download-log', function (evt) {
+        var id =  $(this).closest('tr').data('id');
+        axios.post(`/admin/ecommerce/mail-log/download`, {id: id})
+            .then((response) => {
+                const blob = new Blob([response.data], {type: 'text/html'});
+                console.log(response.data, blob)
+                // Create a temporary URL for the Blob object
+                const url = URL.createObjectURL(blob);
+                // Create an anchor element and trigger the download
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = id+'_email.html';
+                document.body.appendChild(a);
+                a.click();
+                // Cleanup: Revoke the temporary URL and remove the anchor element
+                URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            }).catch(function(error) {
+                // Check if the status code is 404 and the message is as expected
+                if (error.response && error.response.status === 404 && error.response.data.message === "Offer not found for the given user ID") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: error.response.data.message,
+                    });
+                }
+            });
+
+    });
+    </script>
 @endpush
