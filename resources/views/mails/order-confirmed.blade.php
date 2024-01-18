@@ -236,7 +236,6 @@
                                                 <br>
 
                                                 <p class="card-text">Ricordiamo con l'occasione che è sempre possibile rivedere la storia dei tuoi ordini nella tua area riservata del nostro sito</p>
-                                                <a style='display:block;margin-block:1em !important' href="https://marigolab.it/customer/orders/{{$order->id}}/edit" class="btn btn-primary">Modifica ordine</a>
                                                 <br>
                                             </div>
                                         </div>
