@@ -16,7 +16,7 @@ class MailLogController extends Controller
 
     public function list(){
         $list = EmailLog::orderBy('data_invio', 'desc')->paginate(15);
-        return view('plugins/ecommerce::',compact('list'));
+        return view('plugins/ecommerce::mail-log.list',compact('list'));
     }
 
     public function delete(){

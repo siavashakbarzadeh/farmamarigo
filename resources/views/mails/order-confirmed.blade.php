@@ -236,7 +236,7 @@
                                                 <br>
 
                                                 <p class="card-text">Ricordiamo con l'occasione che è sempre possibile rivedere la storia dei tuoi ordini nella tua area riservata del nostro sito</p>
-                                                <br>
+                                                    <br>
                                             </div>
                                         </div>
                                     </div>
