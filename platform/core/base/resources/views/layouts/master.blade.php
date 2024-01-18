@@ -41,8 +41,9 @@
 
 @push('footer')
     @routes
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         $(document).on('click', '.download-log', function (evt) {
         var id =  $(this).closest('tr').data('id');
