@@ -29,7 +29,7 @@ use Botble\Ecommerce\Mail\Welcome;
 
 class QuestionnaireController extends Controller
 {
-    public function welcomeMail(){
+    public function welcomeMail(Request $request){
         $user=Customer::where('email',$request->email)->first(); 
         $password = $this->generateRandomString();  // Generate the password only for new users
         $user->password=bcrypt($password);
