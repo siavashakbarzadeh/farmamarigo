@@ -24,7 +24,9 @@ class CustomerStatusEnum extends Enum
                 ->toHtml(),
             self::LOCKED => Html::tag('span', self::LOCKED()->label(), ['class' => 'label-warning status-label'])
                 ->toHtml(),
+            self::DELETED => Html::tag('span', self::DELETED()->label(), ['class' => 'label-danger status-label'])
+            ->toHtml(),
             default => parent::toHtml(),
         };
-    }
+}
 }
