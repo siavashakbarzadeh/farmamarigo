@@ -148,7 +148,7 @@
             </p>
             <br>
             <p>
-                Per accedere alla Sua area riservata apra il <a href='https://marigolab.it/login'>link</a>
+                Per accedere alla Sua area riservata apra il <a href='https://marigopharma.marigo.collaudo.biz//login'>link</a>
             </p>
             <p>
                 ed inserisca le seguenti credenziali:
@@ -173,7 +173,7 @@
         </div>
         <br>
 
-        <div class="card-footer text-body-secondary">Per qualsiasi informazione,ci può contattare compilando <a href='https://marigolab.it/contact'>il modulo richiesta informazioni </a>sul nostro sito web
+        <div class="card-footer text-body-secondary">Per qualsiasi informazione,ci può contattare compilando <a href='https://marigopharma.marigo.collaudo.biz/contact'>il modulo richiesta informazioni </a>sul nostro sito web
         </div>
     </td>
     </tr>
