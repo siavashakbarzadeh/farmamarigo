@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Botble\Ecommerce\Mail\Welcome;
 
 class CustomImport extends BaseController
 {
