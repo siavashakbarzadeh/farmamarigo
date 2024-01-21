@@ -114,6 +114,7 @@ class CustomImport extends BaseController
                     'codice' => $user->codice,
                     'name' => $user->nome,
                     'type'=>$typeName,
+                    'status'=>'activated',
                     'codice_fiscale' => $user->codice_fiscale,
                     'piva' => $user->piva,
                     'password' => bcrypt($password),
