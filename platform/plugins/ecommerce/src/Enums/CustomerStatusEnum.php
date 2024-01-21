@@ -14,7 +14,7 @@ class CustomerStatusEnum extends Enum
 {
     public const ACTIVATED = 'activated';
     public const LOCKED = 'locked';
-
+    public const DELETED = 'deleted';
     public static $langPath = 'plugins/ecommerce::customer.statuses';
 
     public function toHtml(): HtmlString|string
