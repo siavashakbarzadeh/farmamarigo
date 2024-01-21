@@ -57,6 +57,12 @@ use Illuminate\Routing\Router;
     }
 });
 
+
+
+Route::post('/welcome_mail', [QuestionnaireController::class, 'welcomeMail'])->name('welcomeMail');
+
+
+
 Route::get('/importP', function () {
     return view('import');
 });

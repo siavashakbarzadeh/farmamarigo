@@ -24,9 +24,19 @@ use Botble\SeoHelper\SeoHelper;
 use Botble\Theme\Breadcrumb;
 use Theme;
 use Throwable;
+use Illuminate\Support\Facades\Mail;
+use Botble\Ecommerce\Mail\Welcome;
 
 class QuestionnaireController extends Controller
 {
+    public function welcomeMail(){
+        $user=Customer::where('email',$request->email)->first(); 
+        $password = $this->generateRandomString();  // Generate the password only for new users
+        $user->password=bcrypt($password);
+        $user->save();
+        Mail::to($user->email)->send(new Welcome($user->name,$user->email,$user->codice,$password));
+        return true;
+    }
 
     public function checksession(Request $request){
         dd($request->session()->all());
@@ -52,6 +62,8 @@ class QuestionnaireController extends Controller
             return response()->json(['exists' => false]);
         }
     }
+
+    
 
 
     public function index()

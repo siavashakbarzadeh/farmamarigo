@@ -74,5 +74,69 @@
             });
 
     });
+
+
+
+    $(document).on("click",".resetUserPass",function(){
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        var emailElement = $(this).closest('tr').children('.column-key-email');
+
+        // Assuming the email is a text inside the emailElement
+        var emailValue = emailElement.text().trim();
+        console.log(emailValue);
+        if (1) {
+        axios({
+            method: 'post',
+            url: "{{ route('customer.password.request') }}",
+            data: {
+                email:emailValue
+            },
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        }).then(function(response){
+            Swal.fire({
+                title: 'Success!',
+                text: "Una reimpostazione della password è stata inviata all'utente previsto",
+                icon: 'success'
+            });
+        })
+            .catch(function (error) {
+              console.log(error);
+              // Handle any errors
+            });
+        }
+    })
+
+    $(document).on("click",".welcomeMail",function(){
+
+        var emailElement = $(this).closest('tr').children('.column-key-email');
+
+        // Assuming the email is a text inside the emailElement
+        var emailValue = emailElement.text().trim();
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        axios({
+            method: 'post',
+            url: "/welcome_mail",
+            data: {
+                email:emailValue
+            },
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        }).then(function(response){
+            Swal.fire({
+                title: 'Success!',
+                text: "Il messaggio di benvenuto è stato inviato all'utente.",
+                icon: 'success'
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+
+    });
     </script>
 @endpush
