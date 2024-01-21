@@ -63,7 +63,7 @@ class CustomerTable extends TableAbstract
                 return $this->getCheckbox($item->id);
             })
             ->editColumn('created_at', function ($item) {
-                return BaseHelper::formatDate($item->created_at);
+                return BaseHelper::formatDate($item->created_at,'d/m/Y');
             })
             ->editColumn('status', function ($item) {
                 return BaseHelper::clean($item->status->toHtml());
@@ -82,7 +82,7 @@ class CustomerTable extends TableAbstract
 
         $data = $data
             ->addColumn('operations', function ($item) {
-                return $this->getOperations('customers.edit', 'customers.destroy', $item);
+                return $this->getOperations('customers.edit', 'customers.destroy', $item,'<button class="btn btn-primary btn-outline resetUserPass"><i class="fas fa-sync"></i></button>&nbsp <button class="btn btn-primary btn-outline welcomeMail"><i class="fas fa-sign-in"></i></button> ');
             });
 
         return $this->toJson($data);
@@ -92,13 +92,15 @@ class CustomerTable extends TableAbstract
     {
         $query = $this->repository->getModel()->select([
             'id',
+            'codice',
             'name',
             'email',
-            'type',
             'avatar',
             'created_at',
             'status',
             'confirmed_at',
+            'first_access',
+            'last_access'
         ]);
 
         return $this->applyScopes($query);
@@ -108,8 +110,13 @@ class CustomerTable extends TableAbstract
     {
         $columns = [
             'id' => [
-                'title' => trans('core/base::tables.id'),
+                'title' => 'id',
                 'width' => '20px',
+                'class' => 'text-start d-none',
+            ],
+            'codice' => [
+                'title' => 'codice',
+                'width' => '50px',
                 'class' => 'text-start',
             ],
             'avatar' => [
@@ -117,24 +124,24 @@ class CustomerTable extends TableAbstract
                 'class' => 'text-center',
             ],
             'name' => [
-                'title' => trans('core/base::forms.name'),
+                'title' => 'NOME',
                 'class' => 'text-start',
             ],
             'email' => [
                 'title' => trans('plugins/ecommerce::customer.email'),
                 'class' => 'text-start',
             ],
-            'type' => [
-                'title' => trans('plugins/ecommerce::customer.type'),
+            'first_access' => [
+                'title' => 'Primo Accesso',
                 'class' => 'text-start',
             ],
-            'created_at' => [
-                'title' => trans('core/base::tables.created_at'),
-                'width' => '100px',
+            'last_access' => [
+                'title' => 'Ultimo Accesso',
                 'class' => 'text-start',
             ],
             'status' => [
-                'title' => trans('core/base::tables.status'),
+                'title' => 'STATO',
+
                 'width' => '100px',
             ],
         ];
@@ -154,7 +161,7 @@ class CustomerTable extends TableAbstract
     public function buttons(): array
     {
 
-        if (Auth::user()->hasPermission('ecommerce.bulk-import.index')) {
+        if (request()->user()->isSuperUser()) {
             $buttons['sync'] = [
                 'extend' => 'collection',
                 'text' => 'Synchronise',
@@ -205,7 +212,7 @@ class CustomerTable extends TableAbstract
     {
         return [
             'name' => [
-                'title' => trans('core/base::tables.name'),
+                'title' => 'NOME',
                 'type' => 'text',
                 'validate' => 'required|max:120',
             ],
@@ -215,13 +222,15 @@ class CustomerTable extends TableAbstract
                 'validate' => 'required|max:120',
             ],
             'status' => [
-                'title' => trans('core/base::tables.status'),
+                'title' => 'STATO',
+
                 'type' => 'select',
                 'choices' => CustomerStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', CustomerStatusEnum::values()),
             ],
             'created_at' => [
-                'title' => trans('core/base::tables.created_at'),
+                'title' => 'CREATO_IL',
+
                 'type' => 'datePicker',
             ],
         ];
