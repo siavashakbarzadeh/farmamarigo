@@ -60,7 +60,8 @@ class CustomImport extends BaseController
             31 => 'Parafarmacia',
             32 => 'Dentista',
             33 => 'StudioMedico',
-            34 => 'AltroPharma'
+            34 => 'AltroPharma',
+            999=>'test'
         ];
 
         return $customerTypes[$tipologia] ?? null;
