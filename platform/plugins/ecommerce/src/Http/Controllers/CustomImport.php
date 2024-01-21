@@ -223,7 +223,8 @@ class CustomImport extends BaseController
         if (strpos($currentUrl, 'clientiImportSchedule') !== false) {
             echo'ok';
         }else{
-            return view('plugins/ecommerce::customImport.clienti-foreign-keys', compact('usersUpdatedCount'));
+            return 'ok';
+            // return view('plugins/ecommerce::customImport.clienti-foreign-keys', compact('usersUpdatedCount'));
         }
     }
 
