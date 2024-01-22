@@ -115,3 +115,22 @@
         </td>
     </tr>
     <!--END TOP NAVIGATION LAYOUT-->
+    <!-- START MAIN CONTENT-->
+    <tr>
+        <td align="center" valign="top" class="fix-box" style="border-collapse: collapse;">
+            <!-- start layout-7 container -->
+            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width"
+                   style="border-spacing: 0;">
+                <tbody>
+                <tr>
+                    <td valign="top" style="border-collapse: collapse;">
+                        <table width="800" align="center" border="0" cellspacing="0" cellpadding="0" class="container"
+                               bgcolor="#ffffff" style="background-color: #ffffff;border-spacing: 0;">
+                            <!--start space height -->
+                            <tbody>
+                            <tr>
+                                <td height="30" style="border-collapse: collapse;"></td>
+                            </tr>
+                            <!--end space height -->
+                            <tr>
+                                <td style="min-height: 400px; padding: 15px; font-size: 13px;">
