@@ -20679,3 +20679,7 @@ input,
 textarea {
     border: 2px solid #e3e3e3 !important;
 }
+
+input.qty-input[type=number] {
+    border: none !important;
+}
