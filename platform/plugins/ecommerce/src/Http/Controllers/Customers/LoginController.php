@@ -140,7 +140,10 @@ class LoginController extends Controller
 
     protected function attemptLogin(Request $request)
     {
-        if ($this->guard()->validate($this->credentials($request))) {
+        if ($this->guard()->validate([
+            filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'codice'=>$request->email,
+            'password'=>$request->password
+        ])) {
             $customer = $this->guard()->getLastAttempted();
 
             if (EcommerceHelper::isEnableEmailVerification() && empty($customer->confirmed_at)) {
