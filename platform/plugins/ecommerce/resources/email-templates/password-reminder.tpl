@@ -1,19 +1,27 @@
 {{ header }}
+<h2>Salve!</strong> <br /><br /></h2>
 
-<strong>Hello!</strong> <br /><br />
+<span style='font-size:17px;'>Le è stata inviata questa email perchè abbiamo ricevuto una richiesta per reimpostare la sua password. <br /><br /></span>
 
-You are receiving this email because we received a password reset request for your account. <br /><br />
 
-<a href="{{ reset_link }}">Reset password</a> <br /><br />
 
-If you did not request a password reset, no further action is required. <br /><br />
 
-Regards, <br />
+<a style='font-size:17px;' href="{{ reset_link }}">Reimposta password</a> <br/> <br/>
 
+<span style='font-size:17px;'>Nel caso in cui lei non abbia fatto richiesta per reimpostare la sua password, ignori questa email.</span>
+ <br /><br />
+
+<span style='font-size:17px;'>Se ha difficoltà a cliccare sul link "Reimposta password", copi il seguente indirizzo e lo incolli nel suo browser: {{ reset_link }}<br/>
+</span>
+<span style='font-size:17px;'>
+Cordiali saluti, <br />
+</span>
+
+<span style='font-size:17px;'>
 <strong>{{ site_title }}</strong>
+</span>
+
 
 <hr />
-
-If you’re having trouble clicking the "Reset Password" button, copy and paste the URL below into your web browser: {{ reset_link }}
 
 {{ footer }}

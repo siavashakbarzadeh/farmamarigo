@@ -1,38 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ site_title }}</title>
-    <link rel="stylesheet" href="{{ site_url }}/vendor/core/core/base/css/email.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <style>
+        *{
+        }
+    </style>
+
 </head>
-<body style="margin: 0;">
+<body>
+
+
 <table width="100%" id="mainStructure" border="0" cellspacing="0" cellpadding="0"
-       style="background-color: #e1e1e1;border-spacing: 0;">
+       style="border:0;background-color: #e5e5e5;border-spacing: 0; margin: 30px auto; width: 100%;">
     <!-- START TAB TOP -->
-    <tbody>
-    <tr>
-        <td valign="top" style="border-collapse: collapse;">
-            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0;">
-                <tbody>
-                <tr>
-                    <td valign="top" height="6" style="border-collapse: collapse;">
+    <tbody style='border:0;'>
+    <tr style="border:0;">
+        <td valign="top" style="border:0;border-collapse: collapse; color:#74787e;font-size: 15px;line-height: 18px;margin: 0;padding: 10px 0; ">
+            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="border:0;border-spacing: 0;">
+                <tbody style="border:0;">
+                <tr style='border:0;'>
+                    <td valign="top" height="6" style="border:0;border-collapse: collapse;color:#74787e;font-size: 15px;line-height: 18px;margin: 0;padding: 10px 0;">
                         <table width="800" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width"
-                               style="border-spacing: 0;">
+                               style="border-spacing: 0;border:0;">
                             <!-- start space height -->
-                            <tbody>
-                            <tr>
-                                <td height="5" valign="top" style="border-collapse: collapse;"></td>
+                            <tbody style='border:0;'>
+                            <tr style='border:0;'>
+                                <td height="5" valign="top" style="border:0;border-collapse: collapse; "></td>
                             </tr>
                             <!-- end space height -->
-                            <tr>
-                                <td height="5" class="remove" style="border-collapse: collapse;"></td>
+                            <tr style='border:0;'>
+                                <td height="5" class="remove" style="border:0;border-collapse: collapse; "></td>
                             </tr>
                             <!-- start space height -->
-                            <tr>
-                                <td height="5" valign="top" style="border-collapse: collapse;"></td>
+                            <tr style='border:0;'>
+                                <td height="5" valign="top" style="border:0;border-collapse: collapse;"></td>
                             </tr>
-                            <tr>
-                                <td height="5" class="remove" style="border-collapse: collapse;"></td>
+                            <tr style='border:0;'>
+                                <td height="5" class="remove" style="border:0;border-collapse: collapse;"></td>
                             </tr>
                             <!-- end space height -->
                             </tbody>
@@ -46,71 +53,42 @@
     <!-- END TAB TOP -->
     <!--START TOP NAVIGATION ?LAYOUT-->
     <tr>
-        <td align="center" valign="top" class="fix-box" style="border-collapse: collapse;">
+        <td align="center" valign="top" class="fix-box" style="border:0;border-collapse: collapse;">
             <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width"
-                   style="border-spacing: 0;">
+                   style="border:0;border-spacing: 0;">
                 <!-- START CONTAINER NAVIGATION -->
-                <tbody>
-                <tr>
-                    <td valign="middle" style="border-collapse: collapse;">
+                <tbody style="border:0;">
+                <tr style='border:0;'>
+                    <td valign="middle" style="border:0;border-collapse: collapse;">
                         <!-- start top navigation container -->
                         <table width="800" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width"
-                               style="border-spacing: 0;">
-                            <tbody>
-                            <tr>
-                                <td valign="middle" bgcolor="00a0e0" style="border-collapse: collapse;">
+                               style="border:0;border-spacing: 0;">
+                            <tbody style="border:0;">
+                            <tr style='border:0;'>
+                                <td valign="middle" bgcolor="ffffff" style="border:0;border-collapse: collapse;">
                                     <!-- start top navigation -->
                                     <table width="800" align="center" border="0" cellspacing="0" cellpadding="0"
-                                           class="full-width" style="border-spacing: 0;">
-                                        <tbody>
-                                        <tr>
-                                            <td valign="middle" style="border-collapse: collapse;">
+                                           class="full-width" style="border:0;border-spacing: 0;">
+                                        <tbody style='border:0;'>
+                                        <tr style='border:0;'>
+                                            <td valign="middle" style="border:0;border-collapse: collapse;">
                                                 <table border="0" align="left" cellpadding="0" cellspacing="0"
-                                                       class="container2" style="border-spacing: 0;">
-                                                    <tbody>
+                                                       class="container2" style="border:0;border-spacing: 0;">
+                                                    <tbody style="border:0;">
                                                     <!--start event date -->
-                                                    <tr>
+                                                    <tr style="border:0;">
                                                         <td valign="middle" align="center"
-                                                            style="border-collapse: collapse;">
+                                                            style="border:0;border-collapse: collapse;">
                                                             <table align="right" border="0" cellpadding="0"
                                                                    cellspacing="0" class="clear-align"
-                                                                   style="border-spacing: 0;">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td style="padding:15px;border-collapse:collapse; height: 70px; line-height: 70px">
-                                                                        <a href="{{ site_url }}" style="color: #fff; text-decoration: none !important;"
+                                                                   style="border:0;border-spacing: 0;">
+                                                                <tbody style='border:0;'>
+                                                                <tr style="border:0;">
+                                                                    <td style="border:0;padding:15px;border-collapse:collapse; height: 70px; line-height: 70px">
+                                                                        <a href="https://marigopharma.marigo.collaudo.biz" style="color: #fff; text-decoration: none !important;"
                                                                            target="_blank">
-                                                                            <img title="Logo"
-                                                                                 src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-2.png"
-                                                                                 height="70"
-                                                                                 style="max-width: 107px;display: block !important;height: auto !important;"
-                                                                                 alt="Logo" border="0"
-                                                                                 hspace="0"
-                                                                                 vspace="0"></a>
+                                                                           <img title="Logo" src="https://marigopharma.marigo.collaudo.biz/storage/logo-header-4.png" height="70" style="max-width: 107px; display: block !important; height: auto !important;" border="0" hspace="0" vspace="0">
                                                                     </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                                <!--end content nav -->
-
-                                                <!--start content nav -->
-                                                <table border="0" align="right" cellpadding="0" cellspacing="0"
-                                                       class="container2" style="border-spacing: 0;">
-                                                    <tbody>
-                                                    <!--start event date -->
-                                                    <tr>
-                                                        <td valign="middle" align="center"
-                                                            style="border-collapse: collapse;">
-                                                            <table align="right" border="0" cellpadding="0"
-                                                                   cellspacing="0" class="clear-align"
-                                                                   style="border-spacing: 0;">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td style="font-size: 13px;line-height: 22px;color: #FFF;padding: 15px;font-weight: normal;text-align: center;font-family: Tahoma, Helvetica, Arial, sans-serif;border-collapse: collapse;"><span style="display: inline-block; height: 70px; line-height: 70px;">{{ date_time }}</span></td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
@@ -137,22 +115,3 @@
         </td>
     </tr>
     <!--END TOP NAVIGATION LAYOUT-->
-    <!-- START MAIN CONTENT-->
-    <tr>
-        <td align="center" valign="top" class="fix-box" style="border-collapse: collapse;">
-            <!-- start layout-7 container -->
-            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width"
-                   style="border-spacing: 0;">
-                <tbody>
-                <tr>
-                    <td valign="top" style="border-collapse: collapse;">
-                        <table width="800" align="center" border="0" cellspacing="0" cellpadding="0" class="container"
-                               bgcolor="#ffffff" style="background-color: #ffffff;border-spacing: 0;">
-                            <!--start space height -->
-                            <tbody>
-                            <tr>
-                                <td height="30" style="border-collapse: collapse;"></td>
-                            </tr>
-                            <!--end space height -->
-                            <tr>
-                                <td style="min-height: 400px; padding: 15px; font-size: 13px;">
