@@ -79,8 +79,7 @@ class LoginController extends Controller
             if (Cache::has('VERIFICATION_URL_CUSTOMER_'.$user->id))
             Cache::forget('VERIFICATION_URL_CUSTOMER_'.$user->id);
         }else if($user->email_verified_at && $user->status == 'locked'){
-            session(['message' => 'La tua verifica è stata completata. Devi attendere alcune ore perché l\'amministratore approvi la tua richiesta di registrazione!']);
-            dd($_SESSION);
+            request()->session()->put('message', 'La tua verifica è stata completata. Devi attendere alcune ore perché l\'amministratore approvi la tua richiesta di registrazione!');
             return redirect('/login');
         }else{
             return redirect('/login');
