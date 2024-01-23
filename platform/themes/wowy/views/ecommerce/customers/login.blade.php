@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Crypt;
     <div class="container">
         <div class="row">
             <div class="col-lg-6 m-auto">
-            @if (isset($_GET['verify-message']))
+            @if (isset($_GET['verify_message']))
                     <div class="alert alert-info">
                         La tua verifica è stata completata. Devi attendere alcune ore perché l'amministratore approva la tua richiesta di registrazione!
                     </div>
