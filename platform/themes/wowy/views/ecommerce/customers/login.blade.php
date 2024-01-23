@@ -29,8 +29,7 @@ use Illuminate\Support\Facades\Crypt;
                 <div class="alert alert-success">
                     {{ session('message') }}
                 </div>
-            @endif
-            @dd(session()->get('message'));
+                @endif
                 <div class="login_wrap widget-taber-content p-30 background-white border-radius-10">
                     <div class="padding_eight_all bg-white">
                         <div class="heading_s1 mb-20">
