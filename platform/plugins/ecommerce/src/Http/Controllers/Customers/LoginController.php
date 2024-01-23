@@ -45,15 +45,15 @@ class LoginController extends Controller
             $customer=Customer::where('email',$email)->first();
         if ($customer->email_verified_at && $customer->status=='locked'){
             return redirect('/login?verify-message=true');
-        }else if($customer->email_verified_at && $customer->status=='activated'){ 
+        }else if($customer->email_verified_at && $customer->status=='activated'){
             return Theme::scope('ecommerce.customers.verify', ['already_active' => true], 'plugins/ecommerce::themes.customers.verify')->render();
-        }        
+        }
         else{
 
             $key = 'VERIFICATION_URL_CUSTOMER_'.$customer->id;
             if (!Cache::has($key)){
                 Cache::put($key,"generated",now()->addMinutes(5));
-                $url = URL::signedRoute('customer.user-verify',['id'=>$customer->id],now()->addMinutes(5));
+                $url = URL::signedRoute('customer.user-verify',['id'=>$customer->id],now()->addMinutes(1440));
                 Mail::to($customer->email)->send(new VerificationAccountMail($url));
             }
         }
@@ -63,7 +63,7 @@ class LoginController extends Controller
         }else{
             return redirect('/');
         }
-        
+
     }
 
     public function userVerify($id)
