@@ -70,7 +70,7 @@ class LoginController extends Controller
     {
         $user = Customer::query()->findOrFail($id);
 
-        Mail::to("a.allahverdi@m.icoa.it")->send(new VerificationAccountMail($user));
+        // Mail::to("a.allahverdi@m.icoa.it")->send(new VerificationAccountMail($user));
 //        Mail::to("s.akbarzadeh@m.icoa.it")->send(new VerificationAccountMail(auth()->user()));
 //        dd($request->all(),auth()->user()->email);
 
