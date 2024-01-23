@@ -78,9 +78,9 @@ class LoginController extends Controller
             $user->update(['email_verified_at'=>now()]);
             if (Cache::has('VERIFICATION_URL_CUSTOMER_'.$user->id))
             Cache::forget('VERIFICATION_URL_CUSTOMER_'.$user->id);
+            return redirect('/login?verify_message=neutral');
         }else if($user->email_verified_at && $user->status == 'locked'){
-
-            return redirect('/login?verify_message=tru');
+            return redirect('/login?verify_message=true');
         }else{
             return redirect('/login');
         }

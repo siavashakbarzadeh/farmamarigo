@@ -26,9 +26,15 @@ use Illuminate\Support\Facades\Crypt;
         <div class="row">
             <div class="col-lg-6 m-auto">
             @if (isset($_GET['verify_message']))
-                    <div class="alert alert-info">
-                        La tua verifica è stata completata. Devi attendere alcune ore perché l'amministratore approva la tua richiesta di registrazione!
-                    </div>
+                @if ($_GET['verify_message'] == 'true')
+                <div class="alert alert-info">
+                    La tua verifica è già stata completata. Devi attendere alcune ore perché l'amministratore approva la tua richiesta di registrazione!
+                </div>
+                @elseif($_GET['verify_message'] == 'neutral')
+                <div class="alert alert-success">
+                    La tua verifica è stata completata. Devi attendere alcune ore perché l'amministratore approva la tua richiesta di registrazione!
+                </div>
+                @endif
                 @endif
                 <div class="login_wrap widget-taber-content p-30 background-white border-radius-10">
                     <div class="padding_eight_all bg-white">
