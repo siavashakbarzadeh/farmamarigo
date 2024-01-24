@@ -15,7 +15,7 @@ class LogSentMail
 
         if ($event->message->getBody() instanceof \Symfony\Component\Mime\Part\Multipart\AlternativePart) {
             $parts = $event->message->getBody()->getParts();
-            
+
             foreach ($parts as $part) {
                 if ($part instanceof \Symfony\Component\Mime\Part\TextPart && $part->getMediaType() === 'text/plain') {
                     $emailContent = quoted_printable_decode($part->bodyToString());
@@ -42,7 +42,7 @@ class LogSentMail
         if($user!=null){
             $codice_cliente=$user->codice;
             $nome_cliente=$user->name;
-    
+
             EmailLog::create([
                 'codice_cliente' => isset($codice_cliente) && $codice_cliente ? $codice_cliente : ' ',
                 'nome_cliente' => $nome_cliente,
@@ -52,10 +52,10 @@ class LogSentMail
                 'data_invio' => now(),
             ]);
         }else{
-            dd($recipientEmail,'doesnt has an account!',$event->message->getSubject());
+            // dd($recipientEmail,'doesnt has an account!',$event->message->getSubject());
             // dd($recipientEmail,'doesnt has an account!',$event->message->getSubject());
         }
-        
+
     }
 
     }
