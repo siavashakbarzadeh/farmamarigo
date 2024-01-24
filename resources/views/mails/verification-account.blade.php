@@ -138,7 +138,7 @@
                                         <div class="card text-center">
                                             <div class="card-body">
                                             <div class="card-header">
-                                                <h4>Si preghiamo di confermare la sua richiesta di registrazione cliccando sul seguente link:</h4>
+                                                <h4>La preghiamo di confermare la sua richiesta di registrazione cliccando sul seguente link:</h4>
                                             </div>
                                             <div class="card-body">
                                                 <a href="{{ $url }}" target="_blank" style="padding: 15px 20px; background-color: #51B448; color:#ffffff; text-decoration: none"> Verificare la sua email</a>
