@@ -34,8 +34,8 @@ class ValidateSignature
             return $next($request);
         }
 
-        
 
+        // redirect
         throw new InvalidSignatureException;
     }
 }
