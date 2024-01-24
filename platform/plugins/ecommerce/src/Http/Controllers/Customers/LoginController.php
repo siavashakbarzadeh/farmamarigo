@@ -18,6 +18,8 @@ use Illuminate\Validation\ValidationException;
 use SeoHelper;
 use Theme;
 use Botble\Ecommerce\Http\Controllers\SaveCartController;
+use Illuminate\Support\Facades\DB;
+use Botble\Ecommerce\Mail\RegisterNotification;
 
 
 class LoginController extends Controller
@@ -78,6 +80,18 @@ class LoginController extends Controller
             $user->update(['email_verified_at'=>now()]);
             if (Cache::has('VERIFICATION_URL_CUSTOMER_'.$user->id))
             Cache::forget('VERIFICATION_URL_CUSTOMER_'.$user->id);
+            DB::connection('mysql2')->table('fa_registere_customers')->insert([
+                'id'=>$user->pk_cliente_id,
+                'codice' => $user->codice,
+                'name' => $user->nome,
+                'type'=>$user->type,
+                'status'=>$user->status,
+                'email' => $user->email,
+                'created_at' => $user->created_at,
+                'confirmed_at' => $user->confirmed_at,
+                'email_verified_at' => $user->email_verified_at,
+                'phone'=>$user->phone
+            ]);
             return redirect('/login?verify_message=neutral');
         }else if($user->email_verified_at && $user->status == 'locked'){
             return redirect('/login?verify_message=true');

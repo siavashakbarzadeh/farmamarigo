@@ -115,6 +115,10 @@ class CustomImport extends BaseController
                             'status'=>'activated',
                             'flag_isola'=>$user->flag_isola
                         ]);
+                        $registeredExists=DB::connection('mysql2')->table('fa_registered_customers')->where('email', $registered->email)->exists();
+                        if($registeredExists){
+                            DB::connection('mysql2')->table('fa_registered_customers')->where('email', $registered->email)->delete();
+                        }
                     }
                     else{
                         $password = $this->generateRandomString();  // Generate the password only for new users
