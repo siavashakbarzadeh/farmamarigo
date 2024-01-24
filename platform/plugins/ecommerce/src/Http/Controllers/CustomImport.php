@@ -99,7 +99,6 @@ class CustomImport extends BaseController
             $tipologia=$user->tipologia;
             $typeName = $this->getCustomerTypeName($tipologia);
             $exists = DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->exists();
-
             if (!$exists) {
                 if($user->email){
                     $registered = DB::connection('mysql')->table('ec_customers')->where('email', $user->email)->first();
@@ -121,10 +120,7 @@ class CustomImport extends BaseController
                         $password = $this->generateRandomString();  // Generate the password only for new users
                         $email=$user->email;
                     }
-                }else{
-
                 }
-
                 else{
                     $password=null;
                     $email=null;
