@@ -81,8 +81,8 @@ class LoginController extends Controller
             if (Cache::has('VERIFICATION_URL_CUSTOMER_'.$user->id))
             Cache::forget('VERIFICATION_URL_CUSTOMER_'.$user->id);
             DB::connection('mysql2')->table('fa_registered_customers')->insert([
-                'id'=>$user->pk_cliente_id,
-                'name' => $user->nome,
+                'id'=>$user->id,
+                'name' => $user->name,
                 'type'=>$user->type,
                 'status'=>$user->status,
                 'email' => $user->email,
