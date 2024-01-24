@@ -1,6 +1,6 @@
 <?php
 
-namespace Botble\Ecommerce\Mail;
+namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Botble\Ecommerce\Models\Address;
 use Botble\Ecommerce\Models\customer;
-class RegisterReq extends Mailable
+class UserRegisteredNotif extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,7 +33,7 @@ class RegisterReq extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: "Hai ricevuto una nuova richiesta di segnalarsi da {$this->customer->name}"
+            subject: "Hai ricevuto una nuova richiesta di registrazione da {$this->customer->name}"
         );
     }
 

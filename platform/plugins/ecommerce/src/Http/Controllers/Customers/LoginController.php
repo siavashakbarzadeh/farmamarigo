@@ -19,7 +19,7 @@ use SeoHelper;
 use Theme;
 use Botble\Ecommerce\Http\Controllers\SaveCartController;
 use Illuminate\Support\Facades\DB;
-use Botble\Ecommerce\Mail\RegisterNotification;
+use App\Mail\UserRegisteredNotif;
 
 
 class LoginController extends Controller
@@ -91,6 +91,7 @@ class LoginController extends Controller
                 'email_verified_at' => $user->email_verified_at,
                 'phone'=>$user->phone
             ]);
+            Mail::to('a.allahverdi@gmail.com')->send(new UserRegisteredNotif($user));
             return redirect('/login?verify_message=neutral');
         }else if($user->email_verified_at && $user->status == 'locked'){
             return redirect('/login?verify_message=true');
