@@ -112,6 +112,7 @@ class CustomImport extends BaseController
                             'agent_id' => $user->fk_agente_id,
                             'region_id' => $user->fk_regione_id,
                             'pec' => $user->pec,
+                            'status'=>'activated',
                             'flag_isola'=>$user->flag_isola
                         ]);
                     }
