@@ -102,9 +102,8 @@ class CustomImport extends BaseController
             if (!$exists) {
                 if($user->email){
                     $registered = DB::connection('mysql')->table('ec_customers')->where('email', $user->email)->first();
-                    dd($registered);
                     if($registered){
-                        DB::connection('mysql')->table('ec_customers')->where('email', $user->email)->update([
+                        DB::connection('mysql')->table('ec_customers')->where('email', $registered->email)->update([
                             'codice' => $user->codice,
                             'name' => $user->nome,
                             'type'=>$typeName,
@@ -115,6 +114,7 @@ class CustomImport extends BaseController
                             'pec' => $user->pec,
                             'flag_isola'=>$user->flag_isola
                         ]);
+
                     }
                     else{
                         $password = $this->generateRandomString();  // Generate the password only for new users
