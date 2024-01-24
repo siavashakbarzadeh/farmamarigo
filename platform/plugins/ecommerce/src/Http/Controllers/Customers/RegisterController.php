@@ -136,7 +136,6 @@ class RegisterController extends Controller
                     'customer_id' => $customer->id,
                     'is_default' => true,
                 ]);
-                Mail::to('s.akbarzadeh@m.icoa.it')->send(new RegisterReq($customer));
                 return $customer;
             });
         } catch (\Throwable $e) {
