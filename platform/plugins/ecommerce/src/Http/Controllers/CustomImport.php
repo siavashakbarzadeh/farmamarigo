@@ -114,37 +114,48 @@ class CustomImport extends BaseController
                             'pec' => $user->pec,
                             'flag_isola'=>$user->flag_isola
                         ]);
-
                     }
                     else{
                         $password = $this->generateRandomString();  // Generate the password only for new users
                         $email=$user->email;
+                        $row=DB::connection('mysql')->table('ec_customers')->insert([
+                            'id'=>$user->pk_cliente_id,
+                            'codice' => $user->codice,
+                            'name' => $user->nome,
+                            'type'=>$typeName,
+                            'status'=>'activated',
+                            'codice_fiscale' => $user->codice_fiscale,
+                            'piva' => $user->piva,
+                            'password' => bcrypt($password),
+                            'email' => $email,
+                            'agent_id' => $user->fk_agente_id,
+                            'region_id' => $user->fk_regione_id,
+                            'pec' => $user->pec,
+                            'flag_isola'=>$user->flag_isola
+                        ]);
+                        Mail::to($user->email)->send(new Welcome($user->nome,$user->email,$user->codice,$password));
                     }
                 }
                 else{
                     $password=null;
                     $email=null;
+                    $row=DB::connection('mysql')->table('ec_customers')->insert([
+                        'id'=>$user->pk_cliente_id,
+                        'codice' => $user->codice,
+                        'name' => $user->nome,
+                        'type'=>$typeName,
+                        'status'=>'activated',
+                        'codice_fiscale' => $user->codice_fiscale,
+                        'piva' => $user->piva,
+                        'password' => bcrypt($password),
+                        'email' => $email,
+                        'agent_id' => $user->fk_agente_id,
+                        'region_id' => $user->fk_regione_id,
+                        'pec' => $user->pec,
+                        'flag_isola'=>$user->flag_isola
+                    ]);
                 }
 
-                $row=DB::connection('mysql')->table('ec_customers')->insert([
-                    'id'=>$user->pk_cliente_id,
-                    'codice' => $user->codice,
-                    'name' => $user->nome,
-                    'type'=>$typeName,
-                    'status'=>'activated',
-                    'codice_fiscale' => $user->codice_fiscale,
-                    'piva' => $user->piva,
-                    'password' => bcrypt($password),
-                    'email' => $email,
-                    'agent_id' => $user->fk_agente_id,
-                    'region_id' => $user->fk_regione_id,
-                    'pec' => $user->pec,
-                    'flag_isola'=>$user->flag_isola
-                ]);
-
-                if($user->email){
-                Mail::to($user->email)->send(new Welcome($user->nome,$user->email,$user->codice,$password));
-                }
 
                 $provincia=DB::connection('mysql2')->table('arc_provincia')->where('pk_provincia_id', $user->fk_provincia_id)->first();
                 $regione=DB::connection('mysql2')->table('arc_regione')->where('pk_regione_id', $user->fk_regione_id)->first();
