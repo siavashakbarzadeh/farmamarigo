@@ -117,6 +117,36 @@ Route::prefix('/admin/ecommerce/questionnaires')
         $router->put('/{questionnaire}/inactive', [QuestionnaireController::class, 'inactive'])->name('inactive');
 
     });
+
+
+
+
+    Route::prefix('/admin/ecommerce/offerte')
+    ->name('admin.ecommerce.offerte.')
+
+    ->group(function (Router $router) {
+        $router->get('/create', [CreaSconto::class, 'getCreateView'])->name('create-view');
+        $router->get('/exportOffer', [CreaSconto::class, 'exportOffer'])->name('exportOffer');
+        $router->get('/', [CreaSconto::class, 'getListView'])->name('list-view');
+        $router->post('/update-offer', [CreaSconto::class, 'updateOffer'])->name('update-offer');
+        $router->post('/delete-offer', [CreaSconto::class, 'delete'])->name('delete-offer');
+        $router->post('/checkProductHasActiveOffer', [CreaSconto::class, 'checkProductHasActiveOffer'])->name('checkProductHasActiveOffer');
+        $router->post('/deactiveProductInoffer', [CreaSconto::class, 'deactiveProductInoffer'])->name('deactiveProductInoffer');
+        $router->post('/exportOfferDetails', [CreaSconto::class, 'exportOfferDetails'])->name('exportOfferDetails');
+        $router->post('/getOfferbyCustomerId', [CreaSconto::class, 'getOfferbyCustomerId'])->name('getOfferbyCustomerId');
+        $router->post('/getStrumentOfUser', [CreaSconto::class, 'getStrumentOfUser'])->name('getStrumentOfUser');
+        $router->post('/getListino', [CreaSconto::class, 'getListino'])->name('getListino');
+        $router->post('/deactiveCustomerInoffer', [CreaSconto::class, 'deactiveCustomerInoffer'])->name('deactiveCustomerInoffer');
+        $router->get('/edit/{id}', [CreaSconto::class, 'editView'])->name('edit');
+        $router->post('/updateExpirationDate', [CreaSconto::class, 'updateExpirationDate'])->name('updateExpirationDate');
+
+
+    });
+
+
+
+
+
 Route::get('/questionindex', [QuestionnaireController::class, 'index'])
     ->middleware(['check.auth.customer'])
     ->name('questionary.index');
