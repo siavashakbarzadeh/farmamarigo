@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Crypt;
 
 
 
-<section class="pt-100 pb-100">
+<section class="pt-100 pb-100" style="font-size: 120%">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 m-auto">
