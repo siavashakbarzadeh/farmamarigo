@@ -645,7 +645,7 @@ trait ProductActionsTrait
                     'ec_product_variations.id'
                 );
         }
-
+    }
     /**
      * @param int $id
      * @param BaseHttpResponse $response
