@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Crypt;
                     <div class="padding_eight_all bg-white">
                         <div class="heading_s1 mb-20">
                             <h3 class="mb-20">{{ __('Login') }}</h3>
-                            <p>{{ __('Please enter your email address and password') }}</p>
+{{--                            <p>{{ __('Please enter your email address and password') }}</p>--}}
                         </div>
                         <form class="form--auth form--login" method="POST" action="{{ route('customer.login.post') }}">
                             @csrf
