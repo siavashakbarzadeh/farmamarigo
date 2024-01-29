@@ -278,13 +278,6 @@ class CreaSconto extends BaseController
     }
 
     public function filterCustomers(Request $request){
-        // $customers=$request->input('customers');
-        // $query="select * from ec_customers where ";
-        // foreach($customers as $customer){
-        //     $query.=" id = '".$customer."' or";
-        // }
-        // $query = rtrim($query, " or");
-        // $customers=DB::connection('mysql')->select($query);
 
 
         $consumabili=$request->input('consumabili');
@@ -295,13 +288,10 @@ class CreaSconto extends BaseController
             $ids = DB::table('ec_pricelist')->where('product_id', $cs)->pluck('customer_id')->toArray();
             $incustomers[] = $ids;
         }
-        // $incustomers[0] is all we have
 
         $agents=$request->input('agents');
         $regione=$request->input('regions');
-        $strumenti=$request->input('strumenti');
 
-        $strumenti = array_filter($strumenti);
         $regione = array_filter($regione);
         $agents = array_filter($agents);
         $customers = array_filter($customers);
@@ -322,18 +312,16 @@ class CreaSconto extends BaseController
         }
 
 
-        $strumenti = DB::table('ec_products')->whereIn('id', $strumenti)->pluck('sku')->toArray();
         $customerIDs = DB::table('ec_customers as c')
-            ->join('ec_customer_strument as cs', 'c.id', '=', 'cs.customer_id')
-            ->when(!empty($filteredCustomerIDsByDate), function ($query) use ($filteredCustomerIDsByDate) {
-                return $query->whereIn('c.id', $filteredCustomerIDsByDate);
-            })
-            ->whereIn('cs.tag_id', $strumenti)
-            ->whereIn('c.region_id', $regione)    // Uncomment and add if needed
-            ->whereIn('c.agent_id', $agents)      // Uncomment and add if needed
-            ->distinct('c.id')
-            ->pluck('c.id')
-            ->toArray();
+        ->when(!empty($filteredCustomerIDsByDate), function ($query) use ($filteredCustomerIDsByDate) {
+            return $query->whereIn('c.id', $filteredCustomerIDsByDate);
+        })
+        ->whereIn('c.region_id', $regione)    // Uncomment and add if needed
+        ->whereIn('c.agent_id', $agents)      // Uncomment and add if needed
+        ->distinct('c.id')
+        ->pluck('c.id')
+        ->toArray();
+    
 
 
 

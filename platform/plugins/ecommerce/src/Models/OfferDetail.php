@@ -27,6 +27,6 @@ class OffersDetail extends BaseModel
     {
         return $this->belongsTo(Customer::class, 'id', 'customer_id');
     }
-
+    
     // Add more functions as needed to handle specific offer details
 }
