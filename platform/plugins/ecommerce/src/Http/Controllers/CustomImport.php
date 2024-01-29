@@ -474,6 +474,7 @@ class CustomImport extends BaseController
                             'description' => 'Description',
                             'price' => $price,
                             'tax_id' => $taxId,
+                            'sku'=>$product['codice'],
                             'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
                         ]);
                     } else {
@@ -503,6 +504,7 @@ class CustomImport extends BaseController
                                         'price' => $productItem->price,
                                         'is_variation' => true,
                                         'cost_per_item' => null,
+                                        'sku'=>$cProduct['codice'],
                                         'tax_id' => $productItem->tax_id,
                                         'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
                                         'images' => $cProduct ? collect([strtolower($cProduct['codice']) . '.jpg'])->toJson() : collect([strtolower($product['codice']) . '.jpg'])->toJson(),
