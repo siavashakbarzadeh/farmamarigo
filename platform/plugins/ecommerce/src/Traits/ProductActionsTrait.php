@@ -649,36 +649,30 @@ trait ProductActionsTrait
     public function getListProductForSelect(Request $request, BaseHttpResponse $response)
 {
     // Get the base query for available products.
-    $availableProducts = $this->productRepository
+    $keyword = '%' . $request->input('keyword') . '%';
+
+        $availableProducts = $this->productRepository
         ->getModel()
-        ->where('status', BaseStatusEnum::PUBLISHED)
-        ->where(function($q) use ($request) {
-            $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
-              ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
-        })
-        ->select(['ec_products.*'])
-        ->distinct('ec_products.id');
+        ->distinct()
+        ->select('ec_products.*')
+        ->leftJoin('ec_product_variations', 'ec_product_variations.configurable_product_id', '=', 'ec_products.id')
+        ->leftJoin('ec_product_variation_items', 'ec_product_variation_items.variation_id', '=', 'ec_product_variations.id')
+        ->where('ec_products.status', '=', 'PUBLISHED')
+        ->where(function ($query) use ($keyword) {
+            $query->where('ec_products.name', 'LIKE', $keyword)
+                  ->orWhere('ec_products.sku', 'LIKE', $keyword);
+        });
 
-    // Always include variations.
-    $availableProducts = $availableProducts
-        ->join('ec_product_variations', 'ec_product_variations.configurable_product_id', '=', 'ec_products.id')
-        ->join(
-            'ec_product_variation_items',
-            'ec_product_variation_items.variation_id',
-            '=',
-            'ec_product_variations.id'
-        );
-
-    // Apply pagination.
+    // Apply pagination
     $availableProducts = $availableProducts->simplePaginate(5);
 
-    // Process each product.
+    // Process each product
     foreach ($availableProducts as &$availableProduct) {
         $image = Arr::first($availableProduct->images) ?? null;
         $availableProduct->image_url = RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage());
         $availableProduct->price = $availableProduct->front_sale_price;
 
-        // Process each variation of the product.
+        // Process variations if needed
         foreach ($availableProduct->variations as &$variation) {
             $variation->price = $variation->product->front_sale_price;
             foreach ($variation->variationItems as &$variationItem) {
