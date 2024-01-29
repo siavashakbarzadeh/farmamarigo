@@ -651,17 +651,21 @@ trait ProductActionsTrait
     // Get the base query for available products.
     $keyword = '%' . $request->input('keyword') . '%';
 
-        $availableProducts = $this->productRepository
+    // Query for products and their variations
+    $availableProducts = $this->productRepository
         ->getModel()
         ->distinct()
         ->select('ec_products.*')
-        ->leftJoin('ec_product_variations', 'ec_product_variations.configurable_product_id', '=', 'ec_products.id')
-        ->leftJoin('ec_product_variation_items', 'ec_product_variation_items.variation_id', '=', 'ec_product_variations.id')
+        ->leftJoin('ec_product_variations', function($join) {
+            $join->on('ec_product_variations.configurable_product_id', '=', 'ec_products.id')
+                 ->orOn('ec_product_variations.product_id', '=', 'ec_products.id'); // This line is to handle main products as variations
+        })
         ->where('ec_products.status', '=', 'PUBLISHED')
         ->where(function ($query) use ($keyword) {
             $query->where('ec_products.name', 'LIKE', $keyword)
                   ->orWhere('ec_products.sku', 'LIKE', $keyword);
-        })->groupBy('ec_products.sku'); // Add this line
+        })
+        ->groupBy('ec_products.sku'); // Group by main product ID
 
     // Apply pagination
     $availableProducts = $availableProducts->simplePaginate(5);
