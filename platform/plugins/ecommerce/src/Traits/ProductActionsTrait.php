@@ -648,7 +648,7 @@ trait ProductActionsTrait
      */
     public function getListProductForSelect(Request $request, BaseHttpResponse $response)
     {
-        dd($request->input('include_variation'));
+
         $availableProducts = $this->productRepository
             ->getModel()
             ->where('status', BaseStatusEnum::PUBLISHED)
@@ -661,8 +661,8 @@ trait ProductActionsTrait
             ])
             ->distinct('ec_products.id');
 
-        $includeVariation = $request->input('include_variation', 0);
-        if ($includeVariation) {
+        // $includeVariation = $request->input('include_variation', 1);
+        if (true) {
             /**
              * @var Builder $availableProducts
              */
@@ -682,7 +682,7 @@ trait ProductActionsTrait
             $image = Arr::first($availableProduct->images) ?? null;
             $availableProduct->image_url = RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage());
             $availableProduct->price = $availableProduct->front_sale_price;
-            if ($includeVariation) {
+            if (true) {
                 foreach ($availableProduct->variations as &$variation) {
                     $variation->price = $variation->product->front_sale_price;
                     foreach ($variation->variationItems as &$variationItem) {
