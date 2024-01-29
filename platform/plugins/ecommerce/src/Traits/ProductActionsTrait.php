@@ -656,6 +656,7 @@ trait ProductActionsTrait
         ->getModel()
         ->distinct()
         ->select('ec_products.*')
+        ->where('is_variation', '<>', 1)
         ->where('ec_products.status', '=', 'PUBLISHED')
         ->where(function ($query) use ($keyword) {
             $query->where('ec_products.name', 'LIKE', $keyword)
