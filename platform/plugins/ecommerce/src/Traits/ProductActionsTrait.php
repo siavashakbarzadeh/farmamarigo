@@ -648,16 +648,19 @@ trait ProductActionsTrait
      */
     public function getListProductForSelect(Request $request, BaseHttpResponse $response)
     {
-
         $availableProducts = $this->productRepository
-        ->getModel()
-        ->where(function($q) use ($request){
-            $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
-            ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
-        })
-        ->distinct('ec_products.id');
+            ->getModel()
+            ->where('status', BaseStatusEnum::PUBLISHED)
+            ->where('is_variation', '<>', 1)
+            ->where(function($q) use ($request){
+                $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
+                ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
+            })            ->select([
+                'ec_products.*',
+            ])
+            ->distinct('ec_products.id');
 
-        $includeVariation = $request->input('include_variation', 1);
+        $includeVariation = $request->input('include_variation', 0);
         if ($includeVariation) {
             /**
              * @var Builder $availableProducts
