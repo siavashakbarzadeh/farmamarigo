@@ -572,6 +572,7 @@ class CustomImport extends BaseController
             'description' => 'Description',
             'price' => $price,
             'tax_id' => $taxId,
+            'sku'=>$product['codice'],
             'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
             'images' => collect([strtolower($product['codice']) . '.jpg'])->toJson(),
         ]);
