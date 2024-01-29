@@ -657,7 +657,7 @@ trait ProductActionsTrait
         })
         ->distinct('ec_products.id');
 
-        $includeVariation = $request->input('include_variation', 0);
+        $includeVariation = $request->input('include_variation', 1);
         if ($includeVariation) {
             /**
              * @var Builder $availableProducts
