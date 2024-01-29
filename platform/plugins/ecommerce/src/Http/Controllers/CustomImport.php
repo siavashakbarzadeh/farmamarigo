@@ -482,49 +482,51 @@ class CustomImport extends BaseController
                         $this->_generateTranslationProduct($product_name,$productItem);
                         $this->_generateSlugProduct($product_name,$productItem);
                         if ($variationItems->count()) {
-                            $assigned = false;
-                            foreach ($variationItems as $key=>$variationItem) {
-                                if (count($variationItem)){
-                                    $cProduct=$products->first(function ($item)use($variationItem){
-                                        $variationItem=$variationItem->toArray();
-                                        if (count($variationItem) == 1){
+                            $defaultProductCreated = false;
+                            foreach ($variationItems as $key => $variationItem) {
+                                $isDifferentVariant = count($variationItem) > 0;
+                                if ($isDifferentVariant) {
+                                    $cProduct = $products->first(function ($item) use ($variationItem) {
+                                        $variationItem = $variationItem->toArray();
+                                        if (count($variationItem) == 1) {
                                             return $item[array_key_first($variationItem)] == $variationItem[array_key_first($variationItem)]['title'];
-                                        }else{
-                                            return $item[array_key_first($variationItem)] == $variationItem[array_key_first($variationItem)]['title'] && $item[array_key_last($variationItem)] == $variationItem[array_key_last($variationItem)]['title'];
+                                        } else {
+                                            return $item[array_key_first($variationItem)] == $variationItem[array_key_first($variationItem)]['title'] &&
+                                                   $item[array_key_last($variationItem)] == $variationItem[array_key_last($variationItem)]['title'];
                                         }
                                     });
-                                }else{
-                                    $cProduct=null;
+
+                                    if ($cProduct) {
+                                        if (!$defaultProductCreated) {
+                                            $defaultProductCreated = true;
+                                            $productItem->update([
+                                                'sku' => $cProduct['codice'],
+                                                // other fields to update if needed
+                                            ]);
+                                        } else {
+                                            $productVariation = ProductVariation::create([
+                                                'product_id' => Product::create([
+                                                    'name' => $productItem->name,
+                                                    'description' => $productItem->description,
+                                                    'price' => $productItem->price,
+                                                    'is_variation' => true,
+                                                    'cost_per_item' => null,
+                                                    'sku' => $cProduct['codice'],
+                                                    'tax_id' => $productItem->tax_id,
+                                                    'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
+                                                    'images' => collect([strtolower($cProduct['codice']) . '.jpg'])->toJson(),
+                                                ])->id,
+                                                'configurable_product_id' => $productItem->id,
+                                                'is_default' => false // Since this is a variation
+                                            ]);
+                                            $productVariation->productAttributes()->attach($variationItem->pluck('id')->unique()->toArray());
+                                        }
+                                    }
                                 }
-                                if ($cProduct && !$assigned) $assigned=true;
-                                $productVariation = ProductVariation::create([
-                                    'product_id' => Product::create([
-                                        'name' => $productItem->name,
-                                        'description' => $productItem->description,
-                                        'price' => $productItem->price,
-                                        'is_variation' => true,
-                                        'cost_per_item' => null,
-                                        'sku'=>$cProduct ? $cProduct['codice']:null,
-                                        'tax_id' => $productItem->tax_id,
-                                        'brand_id' => \Botble\Ecommerce\Models\Brand::where('name', $brands->toArray()[$product['fk_fornitore_id']])->first()->id,
-                                        'images' => $cProduct ? collect([strtolower($cProduct['codice']) . '.jpg'])->toJson() : collect([strtolower($product['codice']) . '.jpg'])->toJson(),
-                                    ])->id,
-                                    'configurable_product_id' => $productItem->id,
-                                    'is_default'=>$assigned
-                                ]);
-                                $productVariation->productAttributes()->attach($variationItem->pluck('id')->unique()->toArray());
                             }
-                            DB::table("ec_product_with_attribute_set")->insert($variationItems->flatten(1)
-                                ->pluck('attribute_set_id')
-                                ->unique()
-                                ->map(function ($item)use($productItem){
-                                return [
-                                    'product_id'=>$productItem->id,
-                                    'attribute_set_id'=>$item,
-                                    'order'=>0
-                                ];
-                            })->toArray());
+                            // Other code related to 'ec_product_with_attribute_set'
                         }
+
                     }
                     $productItem->categories()->sync([$product['fk_linea_id']]);
                 }
