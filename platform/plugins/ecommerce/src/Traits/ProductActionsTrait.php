@@ -651,7 +651,6 @@ trait ProductActionsTrait
 
         $availableProducts = $this->productRepository
         ->getModel()
-        ->where('product_type','=',ProductTypeEnum::PHYSICAL)
         ->where(function($q) use ($request){
             $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
             ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
