@@ -647,53 +647,49 @@ trait ProductActionsTrait
      * @return BaseHttpResponse
      */
     public function getListProductForSelect(Request $request, BaseHttpResponse $response)
-    {
+{
+    // Get the base query for available products.
+    $availableProducts = $this->productRepository
+        ->getModel()
+        ->where('status', BaseStatusEnum::PUBLISHED)
+        ->where('is_variation', '<>', 1)
+        ->where(function($q) use ($request) {
+            $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
+              ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
+        })
+        ->select(['ec_products.*'])
+        ->distinct('ec_products.id');
 
-        $availableProducts = $this->productRepository
-            ->getModel()
-            ->where('status', BaseStatusEnum::PUBLISHED)
-            ->where('is_variation', '<>', 1)
-            ->where(function($q) use ($request){
-                $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
-                ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
-            })            ->select([
-                'ec_products.*',
-            ])
-            ->distinct('ec_products.id');
+    // Always include variations.
+    $availableProducts = $availableProducts
+        ->join('ec_product_variations', 'ec_product_variations.configurable_product_id', '=', 'ec_products.id')
+        ->join(
+            'ec_product_variation_items',
+            'ec_product_variation_items.variation_id',
+            '=',
+            'ec_product_variations.id'
+        );
 
-        // $includeVariation = $request->input('include_variation', 1);
-        if (true) {
-            /**
-             * @var Builder $availableProducts
-             */
-            $availableProducts = $availableProducts
-                ->join('ec_product_variations', 'ec_product_variations.configurable_product_id', '=', 'ec_products.id')
-                ->join(
-                    'ec_product_variation_items',
-                    'ec_product_variation_items.variation_id',
-                    '=',
-                    'ec_product_variations.id'
-                );
-        }
+    // Apply pagination.
+    $availableProducts = $availableProducts->simplePaginate(5);
 
-        $availableProducts = $availableProducts->simplePaginate(5);
+    // Process each product.
+    foreach ($availableProducts as &$availableProduct) {
+        $image = Arr::first($availableProduct->images) ?? null;
+        $availableProduct->image_url = RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage());
+        $availableProduct->price = $availableProduct->front_sale_price;
 
-        foreach ($availableProducts as &$availableProduct) {
-            $image = Arr::first($availableProduct->images) ?? null;
-            $availableProduct->image_url = RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage());
-            $availableProduct->price = $availableProduct->front_sale_price;
-            if (true) {
-                foreach ($availableProduct->variations as &$variation) {
-                    $variation->price = $variation->product->front_sale_price;
-                    foreach ($variation->variationItems as &$variationItem) {
-                        $variationItem->attribute_title = $variationItem->attribute->title;
-                    }
-                }
+        // Process each variation of the product.
+        foreach ($availableProduct->variations as &$variation) {
+            $variation->price = $variation->product->front_sale_price;
+            foreach ($variation->variationItems as &$variationItem) {
+                $variationItem->attribute_title = $variationItem->attribute->title;
             }
         }
-
-        return $response->setData($availableProducts);
     }
+
+    return $response->setData($availableProducts);
+}
 
     /**
      * @param CreateProductWhenCreatingOrderRequest $request
