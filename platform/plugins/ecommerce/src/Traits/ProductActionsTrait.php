@@ -652,7 +652,6 @@ trait ProductActionsTrait
     $availableProducts = $this->productRepository
         ->getModel()
         ->where('status', BaseStatusEnum::PUBLISHED)
-        ->where('is_variation', '<>', 1)
         ->where(function($q) use ($request) {
             $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
               ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
