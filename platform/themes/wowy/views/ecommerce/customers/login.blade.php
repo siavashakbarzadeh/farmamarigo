@@ -69,7 +69,7 @@ use Illuminate\Support\Facades\Crypt;
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="txt-password" class="required">{{ __('Captcha') }}</label>
+                                    <label for="txt-password" class="required">{{ __('Somma') }}</label>
                                     <div class="row">
                                         <div class="col-12 captcha" style="position: relative">
                                             <div class="captcha-value" style="position: absolute;
