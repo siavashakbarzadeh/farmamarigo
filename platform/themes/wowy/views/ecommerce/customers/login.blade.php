@@ -52,7 +52,7 @@ use Illuminate\Support\Facades\Crypt;
                             @endif
                             <div class="form__content">
                                 <div class="form-group">
-                                    <label for="txt-email" class="required">{{ __('Email Address') }}</label>
+                                    <label for="txt-email" class="required">{{ __('La tua email o il tuo codice cliente') }}</label>
                                     <input name="email" id="txt-email" type="email" value="{{ old('email') }}" placeholder="{{ __('Please enter your email address') }}">
                                     @if ($errors->has('email'))
                                         <span class="text-danger">{{ $errors->first('email') }}</span>
