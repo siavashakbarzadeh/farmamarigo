@@ -619,6 +619,7 @@ trait ProductActionsTrait
         );
     }
 
+
     /**
      * @param int $id
      * @param BaseHttpResponse $response
@@ -651,8 +652,10 @@ trait ProductActionsTrait
             ->getModel()
             ->where('status', BaseStatusEnum::PUBLISHED)
             ->where('is_variation', '<>', 1)
-            ->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
-            ->select([
+            ->where(function($q) use ($request){
+                $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
+                ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
+            })            ->select([
                 'ec_products.*',
             ])
             ->distinct('ec_products.id');
