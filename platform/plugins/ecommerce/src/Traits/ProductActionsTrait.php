@@ -651,37 +651,25 @@ trait ProductActionsTrait
     // Get the base query for available products.
     $keyword = '%' . $request->input('keyword') . '%';
 
-    // Query for products and their variations
+    // Query for main products only
     $availableProducts = $this->productRepository
         ->getModel()
         ->distinct()
         ->select('ec_products.*')
-        ->leftJoin('ec_product_variations', function($join) {
-            $join->on('ec_product_variations.configurable_product_id', '=', 'ec_products.id')
-                 ->orOn('ec_product_variations.product_id', '=', 'ec_products.id'); // This line is to handle main products as variations
-        })
         ->where('ec_products.status', '=', 'PUBLISHED')
         ->where(function ($query) use ($keyword) {
             $query->where('ec_products.name', 'LIKE', $keyword)
                   ->orWhere('ec_products.sku', 'LIKE', $keyword);
-        }); // Group by main product ID
+        });
 
     // Apply pagination
     $availableProducts = $availableProducts->simplePaginate(5);
 
-    // Process each product
+    // Process each main product
     foreach ($availableProducts as &$availableProduct) {
         $image = Arr::first($availableProduct->images) ?? null;
         $availableProduct->image_url = RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage());
         $availableProduct->price = $availableProduct->front_sale_price;
-
-        // Process variations if needed
-        foreach ($availableProduct->variations as &$variation) {
-            $variation->price = $variation->product->front_sale_price;
-            foreach ($variation->variationItems as &$variationItem) {
-                $variationItem->attribute_title = $variationItem->attribute->title;
-            }
-        }
     }
 
     return $response->setData($availableProducts);
