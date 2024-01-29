@@ -66,9 +66,14 @@ Route::group(['namespace' => 'Botble\Ecommerce\Http\Controllers', 'middleware' =
                 'permission' => 'products.edit',
             ])->where('id', '[0-9]+');
 
+            Route::get('get-list-products-for-select', [
+                'as' => 'get-list-products-for-select',
+                'uses' => 'ProductController@getListProductForSelect',
+                'permission' => 'products.index',
+            ]);
             Route::get('get-list-product-for-search', [
                 'as' => 'get-list-product-for-search',
-                'uses' => 'ProductController@getListProductForSearch',
+                'uses' => 'ProductController@getListProductForSelect',
                 'permission' => 'products.edit',
             ]);
 
@@ -78,11 +83,7 @@ Route::group(['namespace' => 'Botble\Ecommerce\Http\Controllers', 'middleware' =
                 'permission' => 'products.edit',
             ]);
 
-            Route::get('get-list-products-for-select', [
-                'as' => 'get-list-products-for-select',
-                'uses' => 'ProductController@getListProductForSelect',
-                'permission' => 'products.index',
-            ]);
+
 
             Route::post('create-product-when-creating-order', [
                 'as' => 'create-product-when-creating-order',

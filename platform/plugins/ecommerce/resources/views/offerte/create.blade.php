@@ -661,7 +661,7 @@
                 axios
                 .get("https://marigopharma.marigo.collaudo.biz/admin/ecommerce/products/get-list-products-for-select", { params:{
                 keyword: $(this).val(),
-                include_variation: 0,
+                include_variation: 1,
                 page: page
                 }})
                 .then((response) => {
@@ -696,7 +696,7 @@
                 axios
                 .get("https://marigopharma.marigo.collaudo.biz/admin/ecommerce/products/get-list-products-for-select", { params:{
                 keyword: $(this).val(),
-                include_variation: 0,
+                include_variation: 1,
                 page: page
                 }})
                 .then((response) => {
