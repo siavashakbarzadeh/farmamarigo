@@ -99,11 +99,16 @@ use Illuminate\Support\Facades\Crypt;
                                     <a class="text-muted" href="{{ route('customer.password.reset') }}" style="color: #005BA1 !important">{{ __('Forgot password?') }}</a>
                                 </div>
                             </div>
+                            <div class="login_footer form-group">
+                                <div class="chek-form">
+                                    <a class="text-muted" href="{{ route('customer.register') }}" style="color: #005BA1 !important">Non hai ancora ricevuto la mail con le credenziali di accesso? SEGNALATI!</a>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <button type="submit" class="form--auth--btn btn btn-fill-out btn-block hover-up">{{ __('Login') }}</button>
                             </div>
                             <br>
-                            <p>{{ __("Don't have an account?") }} <a href="{{ route('customer.register') }}" class="d-inline-block">{{ __('Create one') }}</a></p>
+{{--                            <p>{{ __("Don't have an account?") }} <a href="{{ route('customer.register') }}" class="d-inline-block">{{ __('Create one') }}</a></p>--}}
 
                             <div class="text-left">
                                 {!! apply_filters(BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM, null, \Botble\Ecommerce\Models\Customer::class) !!}
