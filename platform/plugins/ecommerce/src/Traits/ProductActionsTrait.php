@@ -648,6 +648,7 @@ trait ProductActionsTrait
      */
     public function getListProductForSelect(Request $request, BaseHttpResponse $response)
     {
+        dd($request);
         $availableProducts = $this->productRepository
             ->getModel()
             ->where('status', BaseStatusEnum::PUBLISHED)
