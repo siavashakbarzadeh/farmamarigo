@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Botble\Ecommerce\Mail\Welcome;
 
 class CustomImport extends BaseController
 {
@@ -53,50 +54,112 @@ class CustomImport extends BaseController
         shuffle($password);
         return implode('', $password);
     }
+
     function getCustomerTypeName($tipologia) {
         $customerTypes = [
             30 => 'Farmacia',
             31 => 'Parafarmacia',
             32 => 'Dentista',
             33 => 'StudioMedico',
-            34 => 'AltroPharma'
+            34 => 'AltroPharma',
+            999=>'test'
         ];
 
         return $customerTypes[$tipologia] ?? null;
     }
+
+    private function checkDeletedUsers(){
+        $deletedUsers = DB::connection('mysql')->table('ec_customers')->where('status', 'deleted')->get();
+
+
+        foreach ($deletedUsers as $deletedUser) {
+            // Check if the user's codice exists in the source database
+            $existsInSource = DB::connection('mysql2')->table('cli_cliente') // Replace with your source table name
+                                ->where('codice', $deletedUser->codice)
+                                ->exists();
+
+            if ($existsInSource) {
+                // Update the user's status to 'activated' in the destination database
+                DB::connection('mysql')->table('ec_customers')
+                    ->where('codice', $deletedUser->codice)
+                    ->update(['status' => 'activated']);
+            }
+        }
+        }
+
     public function users() {
-//        dd('ok');
-//        $this->agents();
+        // $this->agents();
 
-//        $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN ( 30,31, 32, 33,34,) and email IS NOT NULL');
-        $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN (30,31, 32, 33,34) and email IS NOT NULL');
+        $this->checkDeletedUsers();
 
-//        dd($users);
+        // $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN (30,31,32,33,34) and email IS NOT NULL');
+        $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN (999) and email IS NOT NULL');
 
         foreach($users as $user) {
             $tipologia=$user->tipologia;
             $typeName = $this->getCustomerTypeName($tipologia);
             $exists = DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->exists();
-
-            if (!$exists && $user->email) {
-                $password = $this->generateRandomString();  // Generate the password only for new users
-
-                $row=DB::connection('mysql')->table('ec_customers')->insert([
-                    'id'=>$user->pk_cliente_id,
-                    'codice' => $user->codice,
-                    'name' => $user->nome,
-                    'status' => 'activated',
-                    'type' => $typeName,
-                    'codice_fiscale' => $user->codice_fiscale,
-                    'piva' => $user->piva,
-                    'password' => bcrypt($password),
-                    'email' => $user->email,
-                    'agent_id' => $user->fk_agente_id,
-                    'region_id' => $user->fk_regione_id,
-                    'pec' => $user->pec,
-                    'flag_isola'=>$user->flag_isola
-                ]);
-
+            if (!$exists) {
+                if($user->email){
+                    $registered = DB::connection('mysql')->table('ec_customers')->where('email', $user->email)->first();
+                    if($registered){
+                        DB::connection('mysql')->table('ec_customers')->where('email', $registered->email)->update([
+                            'codice' => $user->codice,
+                            'name' => $user->nome,
+                            'type'=>$typeName,
+                            'codice_fiscale' => $user->codice_fiscale,
+                            'piva' => $user->piva,
+                            'agent_id' => $user->fk_agente_id,
+                            'region_id' => $user->fk_regione_id,
+                            'pec' => $user->pec,
+                            'status'=>'activated',
+                            'flag_isola'=>$user->flag_isola
+                        ]);
+                        $registeredExists=DB::connection('mysql2')->table('fa_registered_customers')->where('email', $registered->email)->exists();
+                        if($registeredExists){
+                            DB::connection('mysql2')->table('fa_registered_customers')->where('email', $registered->email)->delete();
+                        }
+                    }
+                    else{
+                        $password = $this->generateRandomString();  // Generate the password only for new users
+                        $email=$user->email;
+                        $row=DB::connection('mysql')->table('ec_customers')->insert([
+                            'id'=>$user->pk_cliente_id,
+                            'codice' => $user->codice,
+                            'name' => $user->nome,
+                            'type'=>$typeName,
+                            'status'=>'activated',
+                            'codice_fiscale' => $user->codice_fiscale,
+                            'piva' => $user->piva,
+                            'password' => bcrypt($password),
+                            'email' => $email,
+                            'agent_id' => $user->fk_agente_id,
+                            'region_id' => $user->fk_regione_id,
+                            'pec' => $user->pec,
+                            'flag_isola'=>$user->flag_isola
+                        ]);
+                        Mail::to($user->email)->send(new Welcome($user->nome,$user->email,$user->codice,$password));
+                    }
+                }
+                else{
+                    $password=null;
+                    $email=null;
+                    $row=DB::connection('mysql')->table('ec_customers')->insert([
+                        'id'=>$user->pk_cliente_id,
+                        'codice' => $user->codice,
+                        'name' => $user->nome,
+                        'type'=>$typeName,
+                        'status'=>'activated',
+                        'codice_fiscale' => $user->codice_fiscale,
+                        'piva' => $user->piva,
+                        'password' => bcrypt($password),
+                        'email' => $email,
+                        'agent_id' => $user->fk_agente_id,
+                        'region_id' => $user->fk_regione_id,
+                        'pec' => $user->pec,
+                        'flag_isola'=>$user->flag_isola
+                    ]);
+                }
 
 
                 $provincia=DB::connection('mysql2')->table('arc_provincia')->where('pk_provincia_id', $user->fk_provincia_id)->first();
@@ -115,52 +178,99 @@ class CustomImport extends BaseController
                     'state' => ($user->fk_provincia_id)?$provincia->nome:'NULL'
                 ]);
 
-                // Dispatch the Welcome job
-                if($user->email){
-//                    Mail::to($user->email)->send(new Welcome($user->nome,$user->email,$user->codice,$password));
-//                    Mail::to("a.allahverdi@icoa.it")->send(new Welcome($user->nome,$user->email,$user->codice,$password));
-                }
             }elseif($exists){
+                // Fetch the user from the 'ec_customers' table to check email and password.
+                $existingUser = DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->first();
 
-                $row=DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->update([
+                // If the user doesn't have an email and password in the 'ec_customers' table
+                if (!$existingUser->email && !$existingUser->password) {
+
+                    // Check if the user has an email in the other database ($user->email in this case)
+                    if ($user->email) {
+
+                        $password = $this->generateRandomString(); // Generate the password
+                        Mail::to($user->email)->send(new Welcome($user->nome, $user->email, $user->codice, $password));
+
+                        // Update the 'ec_customers' table with the generated password
+                        DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->update([
+                            'password' => bcrypt($password),
+                            'email' => $user->email,
+                        ]);
+                    }
+                }else{
+                    // If the user has the email and passowrd in the 'ec_customers' table
+                    if($existingUser->email!==$user->email){  // But the email is different from 'cli_cliente'
+                        DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->update(['email'=>$user->email]);
+                    }
+                }
+
+                // Update the rest of the user data in the 'ec_customers' table
+                DB::connection('mysql')->table('ec_customers')->where('codice', $user->codice)->update([
                     'codice' => $user->codice,
                     'name' => $user->nome,
+                    'type'=>$typeName,
                     'codice_fiscale' => $user->codice_fiscale,
                     'piva' => $user->piva,
-                    'email' => $user->email,
                     'agent_id' => $user->fk_agente_id,
                     'region_id' => $user->fk_regione_id,
                     'pec' => $user->pec,
                     'flag_isola'=>$user->flag_isola
                 ]);
 
-                $provincia=DB::connection('mysql2')->table('arc_provincia')->where('pk_provincia_id', $user->fk_provincia_id)->first();
-                $regione=DB::connection('mysql2')->table('arc_regione')->where('pk_regione_id', $user->fk_regione_id)->first();
+                // Fetch province and region details
+                $provincia = DB::connection('mysql2')->table('arc_provincia')->where('pk_provincia_id', $user->fk_provincia_id)->first();
+                $regione = DB::connection('mysql2')->table('arc_regione')->where('pk_regione_id', $user->fk_regione_id)->first();
 
+                // Update the user address details
                 DB::connection('mysql')->table('ec_customer_addresses')->where('customer_id', $user->pk_cliente_id)->update([
                     'phone' => '0000000000',
-                    'email' => $user->email?$user->email:'null@null.com',
+                    'email' => $user->email ? $user->email : 'null@null.com',
                     'country' => "IT",
-                    'zip_code' => $user->cap ? $user->cap:'00000',
+                    'zip_code' => $user->cap ? $user->cap : '00000',
                     'name' => $user->nome,
                     'is_default' => 1,
-                    'city' => ($user->fk_regione_id)?$regione->nome:'NULL',
+                    'city' => ($user->fk_regione_id) ? $regione->nome : 'NULL',
                     'address' => "default",
-                    'state' => ($user->fk_provincia_id)?$provincia->nome:'NULL'
+                    'state' => ($user->fk_provincia_id) ? $provincia->nome : 'NULL'
                 ]);
-
             }
         }
+
 
         // Remove the users that are no longer in the source
         $sourceIds = array_column($users, 'codice');
         $allUserIds = DB::connection('mysql')->table('ec_customers')->pluck('codice')->toArray();
         $usersToRemove = array_diff($allUserIds, $sourceIds);
-        DB::connection('mysql')->table('ec_customers')->whereIn('codice', $usersToRemove)->update(['status' => 'locked']);
+        DB::connection('mysql')
+        ->table('ec_customers')
+        ->whereIn('codice', $usersToRemove)
+        ->update([
+            'status' => 'Deleted',
+            'email' => null,
+            'password' => null
+        ]);
 
         $usersUpdatedCount = count($users);
-        return view('plugins/ecommerce::customImport.clienti-foreign-keys', compact('usersUpdatedCount'));
+
+
+        $currentUrl = request()->url(); // Gets the URL with query parameters
+
+        if (strpos($currentUrl, 'clientiImportSchedule') !== false) {
+            echo'ok';
+        }else{
+            // return 'ok';
+            return view('plugins/ecommerce::customImport.clienti-foreign-keys', compact('usersUpdatedCount'));
+        }
     }
+
+    private function updateRegistered(){
+
+        //
+
+
+
+    }
+
 
     public function sconto()
     {
@@ -181,6 +291,8 @@ class CustomImport extends BaseController
         }
         dd($users);
     }
+
+
 
 
     public function taxes()

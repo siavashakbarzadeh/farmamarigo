@@ -112,6 +112,26 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                        @if (Cart::instance('cart')->count() > 0)
+                            <div class="col-12 mt-30">
+                                <div class="row">
+                                    <div class="col-6" style="align-self: flex-end">
+                                        <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="submit" name="checkout" class="btn btn-rounded"> <i class="fa fa-share-square mr-10"></i> {{ __('Proceed To Checkout') }}</button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            {{--                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>--}}
+
+
+                        @endif
+                    </div>
                                     </div>
                                 </div>
                         </div>
@@ -150,26 +170,26 @@
 
                                                             $weight=0.00;
                                                             $IVAPERCENTAGE=1.22;
-$orderAmount=Cart::instance('cart')->rawTotal();
-//@dd($region, $customerType,$orderAmount);
+                                                            $orderAmount=Cart::instance('cart')->rawTotal();
+                                                            //@dd($region, $customerType,$orderAmount);
 
-        if ($region == ('campania'||'lazio') && $customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') && $orderAmount < 300) {
+                                                                    if ($region == ('campania'||'lazio') && $customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') && $orderAmount < 300) {
 
-              $shippingAmount= 10;
+                                                                        $shippingAmount= 10;
 
-        }
-        if ($region == ('campania'||'lazio') && $customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') && $orderAmount >= 300) {
-
-
-              $shippingAmount= 5;
-        }
-        if ($customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') ) {
+                                                                    }
+                                                                    if ($region == ('campania'||'lazio') && $customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') && $orderAmount >= 300) {
 
 
-              $shippingAmount= 10;
-        }
-        $subtotal=Cart::instance('cart')->rawSubTotal();
-//@dd(Cart::instance('cart')->subTotal());
+                                                                        $shippingAmount= 5;
+                                                                    }
+                                                                    if ($customerType == ('Farmacia'||'Parafarmacia'||'AltroPharma') ) {
+
+
+                                                                        $shippingAmount= 10;
+                                                                    }
+                                                                    $subtotal=Cart::instance('cart')->rawSubTotal();
+                                                            //@dd(Cart::instance('cart')->subTotal());
 
 //                                                            foreach (Cart::instance('cart')->content() as $key => $cartItem) {
 //                                                                $product = $products->find($cartItem->id);
@@ -247,26 +267,7 @@ $orderAmount=Cart::instance('cart')->rawTotal();
 
 
                     </div>
-                    <div class="row">
-                        @if (Cart::instance('cart')->count() > 0)
-                            <div class="col-8 mt-30">
-                                <div class="row">
-                                    <div class="col-6" style="align-self: flex-end">
-                                        <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
-                                    </div>
-                                    <div class="col-6">
-                                        <button type="submit" name="checkout" class="btn btn-rounded"> <i class="fa fa-share-square mr-10"></i> {{ __('Proceed To Checkout') }}</button>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            {{--                        <div class="divider center_icon mt-50 mb-50"><i class="fa fa-gem"></i></div>--}}
-
-
-                        @endif
-                    </div>
+                    
 
 
 

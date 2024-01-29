@@ -18,6 +18,8 @@ use Illuminate\Validation\ValidationException;
 use SeoHelper;
 use Theme;
 use Botble\Ecommerce\Http\Controllers\SaveCartController;
+use Illuminate\Support\Facades\DB;
+use App\Mail\UserRegisteredNotif;
 
 
 class LoginController extends Controller
@@ -45,15 +47,15 @@ class LoginController extends Controller
             $customer=Customer::where('email',$email)->first();
         if ($customer->email_verified_at && $customer->status=='locked'){
             return redirect('/login?verify-message=true');
-        }else if($customer->email_verified_at && $customer->status=='activated'){ 
+        }else if($customer->email_verified_at && $customer->status=='activated'){
             return Theme::scope('ecommerce.customers.verify', ['already_active' => true], 'plugins/ecommerce::themes.customers.verify')->render();
-        }        
+        }
         else{
 
             $key = 'VERIFICATION_URL_CUSTOMER_'.$customer->id;
             if (!Cache::has($key)){
                 Cache::put($key,"generated",now()->addMinutes(5));
-                $url = URL::signedRoute('customer.user-verify',['id'=>$customer->id],now()->addMinutes(5));
+                $url = URL::signedRoute('customer.user-verify',['id'=>$customer->id],now()->addMinutes(1440));
                 Mail::to($customer->email)->send(new VerificationAccountMail($url));
             }
         }
@@ -63,14 +65,14 @@ class LoginController extends Controller
         }else{
             return redirect('/');
         }
-        
+
     }
 
     public function userVerify($id)
     {
         $user = Customer::query()->findOrFail($id);
 
-        Mail::to("s.akbarzadeh@m.icoa.it")->send(new VerificationAccountMail($user));
+        // Mail::to("a.allahverdi@m.icoa.it")->send(new VerificationAccountMail($user));
 //        Mail::to("s.akbarzadeh@m.icoa.it")->send(new VerificationAccountMail(auth()->user()));
 //        dd($request->all(),auth()->user()->email);
 
@@ -78,9 +80,25 @@ class LoginController extends Controller
             $user->update(['email_verified_at'=>now()]);
             if (Cache::has('VERIFICATION_URL_CUSTOMER_'.$user->id))
             Cache::forget('VERIFICATION_URL_CUSTOMER_'.$user->id);
+            DB::connection('mysql2')->table('fa_registered_customers')->insert([
+                'id'=>$user->id,
+                'name' => $user->name,
+                'type'=>$user->type,
+                'status'=>$user->status,
+                'email' => $user->email,
+                'created_at' => $user->created_at,
+                'confirmed_at' => $user->confirmed_at,
+                'email_verified_at' => $user->email_verified_at,
+                'phone'=>$user->phone
+            ]);
+            Mail::to('a.allahverdi@icoa.it')->send(new UserRegisteredNotif($user));
+            return redirect('/login?verify_message=neutral');
+        }else if($user->email_verified_at && $user->status == 'locked'){
+            return redirect('/login?verify_message=true');
+        }else{
+            return redirect('/login');
         }
 
-        return redirect('/login')->with('message', 'La tua verifica è stata completata. Devi attendere alcune ore perché l\'amministratore approvi la tua richiesta di registrazione!');
 
     }
 
@@ -106,6 +124,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        $request->merge(['email' => $request->input('email')]);
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -140,7 +159,10 @@ class LoginController extends Controller
 
     protected function attemptLogin(Request $request)
     {
-        if ($this->guard()->validate($this->credentials($request))) {
+        if ($this->guard()->validate([
+            filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'codice'=>$request->email,
+            'password'=>$request->password
+        ])) {
             $customer = $this->guard()->getLastAttempted();
 
             if (EcommerceHelper::isEnableEmailVerification() && empty($customer->confirmed_at)) {

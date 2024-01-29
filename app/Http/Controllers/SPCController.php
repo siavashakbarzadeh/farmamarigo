@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Response;
 
 class SPCController extends Controller
 {
+
+
+
+    
+
+
     public  function getSegnalarsiList(){
         $list=Segnalarsi::paginate(15);
         return view('plugins/ecommerce::segnalarsi.list',compact('list'));

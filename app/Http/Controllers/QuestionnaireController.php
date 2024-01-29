@@ -24,9 +24,46 @@ use Botble\SeoHelper\SeoHelper;
 use Botble\Theme\Breadcrumb;
 use Theme;
 use Throwable;
+use Illuminate\Support\Facades\Mail;
+use Botble\Ecommerce\Mail\Welcome;
 
 class QuestionnaireController extends Controller
 {
+    public function welcomeMail(Request $request){
+        $user=Customer::where('email',$request->email)->first(); 
+        $password = $this->generateRandomString();  // Generate the password only for new users
+        $user->password=bcrypt($password);
+        $user->save();
+        Mail::to($user->email)->send(new Welcome($user->name,$user->email,$user->codice,$password));
+        return true;
+    }
+
+    private function generateRandomString($length=8){
+        $lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $numbers = '0123456789';
+        $specialChars = '!@#$%^&*()_-+=<>?';  // You can modify this to include/exclude any special characters
+    
+        // Ensure one character from each set
+        $password = [
+            $lowercase[rand(0, strlen($lowercase) - 1)],
+            $uppercase[rand(0, strlen($uppercase) - 1)],
+            $numbers[rand(0, strlen($numbers) - 1)],
+            $specialChars[rand(0, strlen($specialChars) - 1)]
+        ];
+    
+        // All combined characters
+        $allChars = $lowercase . $uppercase . $numbers . $specialChars;
+    
+        // Fill the rest
+        for ($i = 4; $i < $length; $i++) {
+            $password[] = $allChars[rand(0, strlen($allChars) - 1)];
+        }
+    
+        // Shuffle and convert the array of characters back into a string
+        shuffle($password);
+        return implode('', $password);
+    }
 
     public function checksession(Request $request){
         dd($request->session()->all());
@@ -52,6 +89,8 @@ class QuestionnaireController extends Controller
             return response()->json(['exists' => false]);
         }
     }
+
+    
 
 
     public function index()

@@ -7,22 +7,27 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Botble\Ecommerce\Models\Address;
-use Botble\Ecommerce\Models\customer;
-class RegisterReq extends Mailable
+
+class Welcome extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $customer;
+    public $name;
+    public $email;
+    public $code;
+    public $password;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($customer)
+    public function __construct($name,$email,$code,$password)
     {
-        $this->customer = $customer;
+        $this->name = $name;
+        $this->email = $email;
+        $this->code = $code;
+        $this->password = $password;
     }
 
     /**
@@ -33,7 +38,7 @@ class RegisterReq extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: "Hai ricevuto una nuova richiesta di segnalarsi da {$this->customer->name}"
+            subject: 'Benvenuto nell’area riservata del sito internet Marigofarma',
         );
     }
 
@@ -45,7 +50,7 @@ class RegisterReq extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mails.register-submitted',
+            view: 'mails.welcome',
         );
     }
 

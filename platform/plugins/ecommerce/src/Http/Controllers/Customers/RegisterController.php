@@ -122,6 +122,7 @@ class RegisterController extends Controller
                     'email' => BaseHelper::clean($data['email']),
                     'password' => Hash::make($data['password']),
                     'type' => $data['type'],
+                    'phone'=>$data['phone'],
                     'first_access' => Carbon::now(), // Add this line
                 ]);
                 Address::create([
@@ -135,7 +136,6 @@ class RegisterController extends Controller
                     'customer_id' => $customer->id,
                     'is_default' => true,
                 ]);
-                Mail::to('s.akbarzadeh@m.icoa.it')->send(new RegisterReq($customer));
                 return $customer;
             });
         } catch (\Throwable $e) {
@@ -151,9 +151,9 @@ class RegisterController extends Controller
 
     public function confirm(int $id, Request $request, BaseHttpResponse $response, CustomerInterface $customerRepository)
     {
-        if (!URL::hasValidSignature($request)) {
-            abort(404);
-        }
+        // if (!URL::hasValidSignature($request)) {
+        //     abort(404);
+        // }
 
         $customer = $customerRepository->findOrFail($id);
 
