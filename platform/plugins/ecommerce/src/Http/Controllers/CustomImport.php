@@ -87,12 +87,56 @@ class CustomImport extends BaseController
         }
         }
 
-    public function users() {
-        // $this->agents();
+        public function regione(){
+            $this->str_scheda();
+            $regione=DB::connection('mysql2')->select('select * from arc_regione where fk_nazione_id=118');
+            $regUpdated=array();
+            foreach($regione as $reg){
+                $row=DB::connection('mysql')->table('cities')->updateOrInsert(
+                    [
+                        'id'=>$reg->pk_regione_id,
+                        'name'=>$reg->nome
+                    ],
+                    ['state_id'=>$reg->pk_regione_id]);
+                    if($row==true){
+                        array_push($regUpdated, $row);
+                    }
+            }
+            return view('plugins/ecommerce::customImport.clienti-foreign-keys', compact('regUpdated'));
+        }
 
+        private function agents(){
+            $agents=DB::connection('mysql2')->select('select * from cli_agente');
+            $agenteUpdated=array();
+            foreach($agents as $agent){
+                $row=DB::connection('mysql')->table('ec_agent')->updateOrInsert([
+                    'id'=>$agent->pk_agente_id,
+                    'codice'=>$agent->codice
+                ],[
+                    'nome'=>$agent->nome,
+                    'cognome'=>$agent->cognome,
+                    'tipologia'=>$agent->tipologia,
+                    'email'=>$agent->email,
+                    'cellulare'=>$agent->cellulare,
+                ]);
+                if($row==true){
+                    array_push($agenteUpdated, $row);
+                }
+            }
+            // if(empty($agenteUpdated)) return 'No connected record updated';
+            // else return $agenteUpdated;
+
+
+
+        }
+
+    public function users() {
+
+        $this->agents();
         $this->checkDeletedUsers();
 
         // $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN (30,31,32,33,34) and email IS NOT NULL');
+
         $users = DB::connection('mysql2')->select('select * from cli_cliente where tipologia IN (999) and email IS NOT NULL');
 
         foreach($users as $user) {
