@@ -664,8 +664,7 @@ trait ProductActionsTrait
         ->where(function ($query) use ($keyword) {
             $query->where('ec_products.name', 'LIKE', $keyword)
                   ->orWhere('ec_products.sku', 'LIKE', $keyword);
-        })
-        ->groupBy('ec_products.id'); // Group by main product ID
+        }); // Group by main product ID
 
     // Apply pagination
     $availableProducts = $availableProducts->simplePaginate(5);
