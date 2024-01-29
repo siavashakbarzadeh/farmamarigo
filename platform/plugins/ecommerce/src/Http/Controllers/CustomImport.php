@@ -88,7 +88,7 @@ class CustomImport extends BaseController
         }
 
         public function regione(){
-            $this->str_scheda();
+            // $this->str_scheda();
             $regione=DB::connection('mysql2')->select('select * from arc_regione where fk_nazione_id=118');
             $regUpdated=array();
             foreach($regione as $reg){
