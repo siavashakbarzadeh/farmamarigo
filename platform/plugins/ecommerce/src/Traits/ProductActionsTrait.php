@@ -619,33 +619,7 @@ trait ProductActionsTrait
         );
     }
 
-    public function getListProductForSelect(Request $request, BaseHttpResponse $response)
-    {
 
-        $availableProducts = $this->productRepository
-        ->getModel()
-        ->where('product_type','=',ProductTypeEnum::PHYSICAL)
-        ->where(function($q) use ($request){
-            $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
-            ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
-        })
-        ->distinct('ec_products.id');
-
-        $includeVariation = $request->input('include_variation', 0);
-        if ($includeVariation) {
-            /**
-             * @var Builder $availableProducts
-             */
-            $availableProducts = $availableProducts
-                ->join('ec_product_variations', 'ec_product_variations.configurable_product_id', '=', 'ec_products.id')
-                ->join(
-                    'ec_product_variation_items',
-                    'ec_product_variation_items.variation_id',
-                    '=',
-                    'ec_product_variations.id'
-                );
-        }
-    }
     /**
      * @param int $id
      * @param BaseHttpResponse $response
@@ -674,15 +648,15 @@ trait ProductActionsTrait
      */
     public function getListProductForSelect(Request $request, BaseHttpResponse $response)
     {
+
         $availableProducts = $this->productRepository
-            ->getModel()
-            ->where('status', BaseStatusEnum::PUBLISHED)
-            ->where('is_variation', '<>', 1)
-            ->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
-            ->select([
-                'ec_products.*',
-            ])
-            ->distinct('ec_products.id');
+        ->getModel()
+        ->where('product_type','=',ProductTypeEnum::PHYSICAL)
+        ->where(function($q) use ($request){
+            $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
+            ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
+        })
+        ->distinct('ec_products.id');
 
         $includeVariation = $request->input('include_variation', 0);
         if ($includeVariation) {
