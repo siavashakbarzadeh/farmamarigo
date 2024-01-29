@@ -192,33 +192,30 @@ class CreaSconto extends BaseController
         return view('plugins/ecommerce::offerte.list',compact('offers'));
     }
 
-    public function getCustomersByConsumabili(Request $request){
+    public function getCustomersByProduct(Request $request){
 
 
-        $consumabili=$request->input('consumabili');
+        $products=$request->input('products');
         $customers=[];
         if($request->input('scontorange')){
 
-            $id=intval($consumabili['id']);
-            $max = number_format((float)$consumabili['max'], 4, '.', '');
-            $min = number_format((float)$consumabili['min'], 4, '.', '');
+            $id=intval($products['id']);
+            $max = number_format((float)$products['max'], 4, '.', '');
+            $min = number_format((float)$products['min'], 4, '.', '');
             $records=DB::connection('mysql')->select("select * from ec_pricelist where (final_price < $max and final_price > $min) and product_id = $id");
             $ids = array_column($records, 'customer_id');
             $incustomers[]=$ids;
         }
+
         else{
-            foreach($consumabili as $cs){
-                $cs=intval($cs);
-                $records=DB::connection('mysql')->select("select * from ec_pricelist where product_id = $cs");
+            foreach($products as $p){
+                $p=intval($p);
+                $records=DB::connection('mysql')->select("select * from ec_pricelist where product_id = $p");
                 $ids = array_column($records, 'customer_id');
                 $incustomers[]=$ids;
 
             }
         }
-
-
-
-
 
         $incustomers = array_reduce($incustomers, function ($carry, $array) {
             if ($carry === null) {
@@ -257,34 +254,14 @@ class CreaSconto extends BaseController
 
             }
         }
-        $strumenti=[];
-        foreach($customers as $customer){
-            $id=$customer->id;
-            $records=DB::connection('mysql')->select("select * from ec_customer_strument where customer_id = $id");
-            $tag_ids = array_column($records, 'tag_id');
-            $strumenti_tmp=[];
-            foreach($tag_ids as $tag_id){
-                $product = Product::where('sku', $tag_id)->first();
-                $strumenti_tmp[]=$product;
-            }
-            foreach($strumenti_tmp as $tmp){
-                $id=$tmp->id;
-                $strumenti[]=ProductTag::find($id);
-            }
-        }
-        $strumenti=collect($strumenti)->unique('id')->values()->all();
 
         $data=[
             'incustomers'=>$this->array_sort_by_column($customers,'name'),
             'regione'=>$this->array_sort_by_column($regione,'name'),
-            'strumenti'=>$this->array_sort_by_column($strumenti,'name'),
             'agents'=>$this->array_sort_by_column($agents,'nome'),
             'count'=>count($customers)
         ];
         return $data;
-
-
-
 
     }
 

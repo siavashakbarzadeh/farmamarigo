@@ -647,52 +647,34 @@ trait ProductActionsTrait
      * @return BaseHttpResponse
      */
     public function getListProductForSelect(Request $request, BaseHttpResponse $response)
-    {
-        $availableProducts = $this->productRepository
-            ->getModel()
-            ->where('status', BaseStatusEnum::PUBLISHED)
-            ->where('is_variation', '<>', 1)
-            ->where(function($q) use ($request){
-                $q->where('name', 'LIKE', '%' . $request->input('keyword') . '%')
-                ->orWhere('sku', 'LIKE', '%' . $request->input('keyword') . '%');
-            })            ->select([
-                'ec_products.*',
-            ])
-            ->distinct('ec_products.id');
+{
+    // Get the base query for available products.
+    $keyword = '%' . $request->input('keyword') . '%';
 
-        $includeVariation = $request->input('include_variation', 0);
-        if ($includeVariation) {
-            /**
-             * @var Builder $availableProducts
-             */
-            $availableProducts = $availableProducts
-                ->join('ec_product_variations', 'ec_product_variations.configurable_product_id', '=', 'ec_products.id')
-                ->join(
-                    'ec_product_variation_items',
-                    'ec_product_variation_items.variation_id',
-                    '=',
-                    'ec_product_variations.id'
-                );
-        }
+    // Query for main products only
+    $availableProducts = $this->productRepository
+        ->getModel()
+        ->distinct()
+        ->select('ec_products.*')
+        ->where('is_variation', '<>', 1)
+        ->where('ec_products.status', '=', 'PUBLISHED')
+        ->where(function ($query) use ($keyword) {
+            $query->where('ec_products.name', 'LIKE', $keyword)
+                  ->orWhere('ec_products.sku', 'LIKE', $keyword);
+        });
 
-        $availableProducts = $availableProducts->simplePaginate(5);
+    // Apply pagination
+    $availableProducts = $availableProducts->simplePaginate(5);
 
-        foreach ($availableProducts as &$availableProduct) {
-            $image = Arr::first($availableProduct->images) ?? null;
-            $availableProduct->image_url = RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage());
-            $availableProduct->price = $availableProduct->front_sale_price;
-            if ($includeVariation) {
-                foreach ($availableProduct->variations as &$variation) {
-                    $variation->price = $variation->product->front_sale_price;
-                    foreach ($variation->variationItems as &$variationItem) {
-                        $variationItem->attribute_title = $variationItem->attribute->title;
-                    }
-                }
-            }
-        }
-
-        return $response->setData($availableProducts);
+    // Process each main product
+    foreach ($availableProducts as &$availableProduct) {
+        $image = Arr::first($availableProduct->images) ?? null;
+        $availableProduct->image_url = RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage());
+        $availableProduct->price = $availableProduct->front_sale_price;
     }
+
+    return $response->setData($availableProducts);
+}
 
     /**
      * @param CreateProductWhenCreatingOrderRequest $request

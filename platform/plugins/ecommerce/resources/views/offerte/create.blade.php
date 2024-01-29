@@ -661,7 +661,7 @@
                 axios
                 .get("https://marigopharma.marigo.collaudo.biz/admin/ecommerce/products/get-list-products-for-select", { params:{
                 keyword: $(this).val(),
-                include_variation: 1,
+                include_variation: true,
                 page: page
                 }})
                 .then((response) => {
@@ -696,7 +696,7 @@
                 axios
                 .get("https://marigopharma.marigo.collaudo.biz/admin/ecommerce/products/get-list-products-for-select", { params:{
                 keyword: $(this).val(),
-                include_variation: 1,
+                include_variation: 0,
                 page: page
                 }})
                 .then((response) => {
@@ -767,7 +767,7 @@
 
 
             axios
-            .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-consumabili", {consumabili: idArray,collegati:1})
+            .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-product", {products: idArray,collegati:1})
             .then((response) => {
                 console.log(response.data);
                 var customers = response.data.incustomers;
@@ -890,7 +890,7 @@
             idArray.push(rowId);
             });
             axios
-            .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-consumabili", {consumabili: idArray})
+            .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-product", {products: idArray})
             .then((response) => {
                 console.log(response.data);
                 var customers = response.data.incustomers;
@@ -1010,7 +1010,7 @@
                     idArray.push(rowId);
                     });
                     axios
-                    .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-consumabili", {consumabili: idArray})
+                    .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-product", {products: idArray})
                     .then((response) => {
                         console.log(response.data);
                         var customers = response.data.incustomers;
@@ -1141,7 +1141,7 @@
             var max = $('.max').val();
             var min = $('.min').val();
             axios
-                    .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-consumabili", {consumabili: {id:idArray[0],max:max,min:min},scontorange:true})
+                    .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-product", {products: {id:idArray[0],max:max,min:min},scontorange:true})
                     .then((response) => {
                         console.log(response.data);
                         var customers = response.data.incustomers;
@@ -1263,7 +1263,7 @@
                     idArray.push(rowId);
                     });
                     axios
-                    .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-consumabili", {consumabili: idArray})
+                    .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-product", {products: idArray})
                     .then((response) => {
                         console.log(response.data);
                         var customers = response.data.incustomers;
@@ -1427,7 +1427,7 @@
             idArray.push(rowId);
             });
             axios
-            .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-consumabili", {consumabili: idArray})
+            .post("https://marigopharma.marigo.collaudo.biz/get-customers-by-product", {products: idArray})
             .then((response) => {
                 console.log(response.data);
                 var customers = response.data.incustomers;
