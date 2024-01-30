@@ -101,13 +101,13 @@
                                 </button>
                             </div>
                             <div id="collapseTwo" class="accordion-collapse collapse " aria-labelledby="headingOne">
-                                <div class="accordion-body brands-place">
+                                <div class="accordion-body category-place">
                                     @foreach ($categories as $category)
                                         <div class="row"
                                             style="border: 1px solid #F5F5F5;border-right: 0;border-left: 0;border-top: 0; margin-top:5px">
                                             <div class="col-1" style="align-self: center">
                                                 <input class="category-check form-check-input" name="category[]"
-                                                    type="checkbox" id="brand-filter-{{ $category->id }}"
+                                                    type="checkbox" id="category-filter-{{ $category->id }}"
                                                     value="{{ $category->id }}"
                                                     @if (in_array($category->id, request()->input('categories', []))) checked @endif>
                                             </div>
