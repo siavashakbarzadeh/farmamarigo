@@ -192,79 +192,69 @@ class CreaSconto extends BaseController
         return view('plugins/ecommerce::offerte.list',compact('offers'));
     }
 
-    public function getCustomersByProduct(Request $request){
-
-        dd($request->input('products'));
-        
-        $products=$request->input('products');
-
-        $customers=[];
-        if($request->input('scontorange')){
-            $id=intval($products['id']);
-            $max = number_format((float)$products['max'], 4, '.', '');
-            $min = number_format((float)$products['min'], 4, '.', '');
-            $records=DB::connection('mysql')->select("select * from ec_pricelist where (final_price < $max and final_price > $min) and product_id = $id");
+    public function getCustomersByProduct(Request $request)
+    {
+        // Retrieve product IDs from the request
+        $productsInput = $request->input('products');
+    
+        // Get all product and variant IDs
+        $productAndVariantIds = [];
+        foreach ($productsInput as $productId) {
+            $product = Product::with('variations')->find($productId);
+            if ($product) {
+                $productAndVariantIds[] = $productId; // Add main product ID
+                foreach ($product->variations as $variation) {
+                    $productAndVariantIds[] = $variation->id; // Add variant IDs
+                }
+            }
+        }
+    
+        // Retrieve customers based on product and variant IDs
+        $customersForProducts = [];
+        foreach ($productAndVariantIds as $id) {
+            $id = intval($id);
+            $records = DB::connection('mysql')->select("SELECT * FROM ec_pricelist WHERE product_id = $id");
             $ids = array_column($records, 'customer_id');
-            $incustomers[]=$ids;
+            $customersForProducts[] = $ids;
         }
-        else{
-            foreach($products as $p){
-                $p=intval($p);
-                $records=DB::connection('mysql')->select("select * from ec_pricelist where product_id = $p");
-                $ids = array_column($records, 'customer_id');
-                $incustomers[]=$ids;
-
+    
+        // Find common customers among all products and their variants
+        $commonCustomerIds = count($customersForProducts) ? call_user_func_array('array_intersect', $customersForProducts) : [];
+    
+        // Fetch customer details along with regions and agents
+        $customers = [];
+        $regioneIds = [];
+        $agentIds = [];
+        foreach ($commonCustomerIds as $customerId) {
+            $customer = Customer::find($customerId);
+            if ($customer) {
+                $customers[] = $customer;
+                $regioneIds[] = $customer->region_id;
+                $agentIds[] = $customer->agent_id;
             }
         }
-
-
-        $incustomers = array_reduce($incustomers, function ($carry, $array) {
-            if ($carry === null) {
-                return $array;
-            }
-            return array_intersect($carry, $array);
-        });
-        $customers=[];
-        $regione_ids=[];
-        $agents_ids=[];
-        foreach($incustomers as $id){
-            $record = Customer::find($id);
-            if($record!=null){
-                $regione_ids[]=$record->region_id;
-                $agents_ids[]=$record->agent_id;
-                $customers[]=$record;
-            }
-        }
-        $agents_ids=array_unique($agents_ids);
-        $regione_ids=array_unique($regione_ids);
-
-        $regione=[];
-        $agents=[];
-        foreach($agents_ids as $agent_id){
-            $record = Agent::find($agent_id);
-            if($record!=null){
-                $agents[]=$record;
-            }
-        }
-
-
-        foreach($regione_ids as $regione_id){
-            $record = Regione::find($regione_id);
-            if($record!=null){
-                $regione[]=$record;
-
-            }
-        }
-
-        $data=[
-            'incustomers'=>$this->array_sort_by_column($customers,'name'),
-            'regione'=>$this->array_sort_by_column($regione,'name'),
-            'agents'=>$this->array_sort_by_column($agents,'nome'),
-            'count'=>count($customers)
+    
+        // Remove duplicate IDs
+        $regioneIds = array_unique($regioneIds);
+        $agentIds = array_unique($agentIds);
+    
+        // Fetch Regions
+        $regione = Regione::findMany($regioneIds)->sortBy('name')->values()->all();
+    
+        // Fetch Agents
+        $agents = Agent::findMany($agentIds)->sortBy('nome')->values()->all();
+    
+        // Prepare the data to return
+        $data = [
+            'incustomers' => $customers, // Assuming you handle sorting elsewhere
+            'regione' => $regione,
+            'agents' => $agents,
+            'count' => count($customers)
         ];
+    
         return $data;
-
     }
+    
 
 
     private function array_sort_by_column(&$array, $column, $direction = SORT_ASC) {
