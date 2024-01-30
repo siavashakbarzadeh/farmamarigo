@@ -20686,3 +20686,8 @@ textarea {
 input.qty-input[type=number] {
     border: none !important;
 }
+
+.button-add-to-cart::before,
+.button-add-to-cart::after {
+    content: none;
+}
