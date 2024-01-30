@@ -194,18 +194,23 @@ class CreaSconto extends BaseController
 
     public function getCustomersByProduct(Request $request)
     {
-        // Retrieve product IDs from the request
+        // Retrieve product IDs from the request    
         $productsInput = $request->input('products');
-    
-        // Get all product and variant IDs
+
+        // Get all product IDs, including variants if they exist
         $productAndVariantIds = [];
         foreach ($productsInput as $productId) {
             $product = Product::with('variations')->find($productId);
-            dd($product);
             if ($product) {
-                $productAndVariantIds[] = $productId; // Add main product ID
-                foreach ($product->variations as $variation) {
-                    $productAndVariantIds[] = $variation->id; // Add variant IDs
+                if ($product->variations->isEmpty()) {
+                    // Specific logic for products without variants
+                    // For example, add the product ID directly
+                    $productAndVariantIds[] = $productId;
+                } else {
+                    // For products with variants, add all variant IDs
+                    foreach ($product->variations as $variation) {
+                        $productAndVariantIds[] = $variation->id;
+                    }
                 }
             }
         }
@@ -221,7 +226,6 @@ class CreaSconto extends BaseController
     
         // Find common customers among all products and their variants
         $commonCustomerIds = count($customersForProducts) ? call_user_func_array('array_intersect', $customersForProducts) : [];
-        dd($commonCustomerIds);
         // Fetch customer details along with regions and agents
         $customers = [];
         $regioneIds = [];
