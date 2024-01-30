@@ -204,7 +204,7 @@
         {{--            </div> --}}
         {{--        @endif --}}
 
-        <div class="col-lg-12 widget-filter-item mt-10" data-type="price">
+        {{-- <div class="col-lg-12 widget-filter-item mt-10" data-type="price">
             <strong style="color: #005ba1;font-size: 16px;font-weight: 700;display: block;" class="mb-1">Prezzo
             </strong>
             <div class="container">
@@ -229,7 +229,7 @@
                 </div>
             </div>
 
-        </div>
+        </div> --}}
         {{--            <div class="row"> --}}
         {{--                {!! render_product_swatches_filter([ --}}
         {{--                    'view' => Theme::getThemeNamespace() . '::views.ecommerce.attributes.attributes-filter-renderer' --}}
