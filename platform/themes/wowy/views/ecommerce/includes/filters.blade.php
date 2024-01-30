@@ -13,6 +13,15 @@
 
 <div class="shop-product-filter-header">
     <div class="row">
+        <div class="search-style-2 mb-4">
+            <div class="row">
+                <div class="col-12">
+                    <form action="https://marigolab.it/product-categories/prodotti-consumabili" method="get" id='queryonsearch'>
+                        <strong style="color: #005ba1;font-size: 16px;font-weight: 700;display: block;" class="mb-1">Prodotto</strong>
+                        <input autofocus style="width:100% !important;border-radius: 5px;font-size: smaller;" type="text"  placeholder="Scrivi codice o nome prodotto..." id='search-consumabili' autocomplete="off" style="border-radius:26px !important;" >                    </form>
+                </div>
+            </div>
+        </div>
         @if (count($categories) > 0)
             <div class="col-lg-12 widget-filter-item">
                 <h5 class="mb-20 widget__title" data-title="{{ __('Categories') }}">{{ __('categories') }}</h5>
