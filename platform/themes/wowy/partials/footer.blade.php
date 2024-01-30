@@ -494,7 +494,7 @@
 
 
     });
-    const cards = document.querySelectorAll('.product-content-wrap');
+    const cards = document.querySelectorAll('.product-content-wrap h2');
     const maxHeight = Math.max(...Array.from(cards).map(card => card.offsetHeight));
     cards.forEach(card => card.style.height = `${maxHeight}px`);
 
