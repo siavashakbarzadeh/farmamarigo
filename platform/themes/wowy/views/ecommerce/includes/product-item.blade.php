@@ -88,14 +88,14 @@
             @endif
             <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>
 
-            @if (EcommerceHelper::isReviewEnabled())
+            {{-- @if (EcommerceHelper::isReviewEnabled())
                 <div class="rating_wrap">
                     <div class="rating">
                         <div class="product_rate" style="width: {{ $product->reviews_avg * 20 }}%"></div>
                     </div>
                     <span class="rating_num">({{ $product->reviews_count }})</span>
                 </div>
-            @endif
+            @endif --}}
 
             <!-- {!! apply_filters('ecommerce_before_product_price_in_listing', null, $product) !!} -->
             <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">

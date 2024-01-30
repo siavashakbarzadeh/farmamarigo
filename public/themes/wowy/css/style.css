@@ -3027,10 +3027,11 @@ table .product-thumbnail img {
 
 .product-cart-wrap .product-content-wrap .product-price span.old-price {
     color: var(--color-grey-4);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
-    margin: 0 0 0 7px;
-    text-decoration: line-through
+    display: block;
+    margin: 0 0 0 0px;
+    text-decoration: line-through;
 }
 
 .product-cart-wrap .product-content-wrap .rating-result>span {
