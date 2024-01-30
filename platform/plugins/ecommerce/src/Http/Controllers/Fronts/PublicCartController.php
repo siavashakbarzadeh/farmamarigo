@@ -43,33 +43,8 @@ class PublicCartController extends Controller
         }
 
         $product = $this->productRepository->findById($request->input('id'));
-        dd($product->is_variation);
-        if(auth('customer')->user()!==NULL){
-            $userid=auth('customer')->user()->id;
-            $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
-            if(isset($pricelist[0]))
-            {
-            $reserved_price = $pricelist[0]->final_price;
-            $offerDetail = OffersDetail::where('product_id', $product->id)
-                ->where('customer_id', $userid)
-                ->where('status', 'active')
-                ->first();
-            if ($offerDetail) {
-                $offer = Offers::find($offerDetail->offer_id);
-                if ($offer) {
-                    $offerType = $offer->offer_type;
-                }
-            }
-                if($offerDetail){
+        $product_price= $request->input('product_price');
 
-                }
-                $product_price=$pricelist[0]->final_price;
-            }else{
-                $product_price=$product->price;
-            }
-        }else{
-            $product_price=$product->price;
-        }
 
         if (! $product) {
             return $response
