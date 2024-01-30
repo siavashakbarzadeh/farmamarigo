@@ -44,7 +44,7 @@
                                 <img src="{{ $Image }}" alt=" {{ $product->name  }}" style='width: 100%; max-height: 100%; display: block; margin: auto;'>
                             </a>
                         </figure>
-                    @endif                    
+                    @endif
                 </div>
                 <!-- THUMBNAILS -->
                 @if($responseCode==200)
@@ -210,7 +210,7 @@
                         </li>
                     @endif
 
-                    <li><span class="d-inline-block">{{ __('Availability') }}:</span> <span class="in-stock text-success ml-5">{!! BaseHelper::clean($product->stock_status_html) !!}</span></li>
+{{--                    <li><span class="d-inline-block">{{ __('Availability') }}:</span> <span class="in-stock text-success ml-5">{!! BaseHelper::clean($product->stock_status_html) !!}</span></li>--}}
                 </ul>
             </div>
             <!-- Detail Info -->
