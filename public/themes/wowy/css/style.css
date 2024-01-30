@@ -16165,7 +16165,7 @@ header.header-area .sticky-bar:not(.stick) .main-categories-wrap>a.cant-close>i 
 }
 
 .main-menu.main-menu-light-white>nav>ul>li>a {
-    color: #fff
+    color: #fff !important
 }
 
 .main-menu.main-menu-padding-1>nav>ul>li {
