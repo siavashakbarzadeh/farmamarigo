@@ -47,7 +47,16 @@
         @endif
 
         @php
-            $brands = get_all_brands(['status' => \Botble\Base\Enums\BaseStatusEnum::PUBLISHED], [], ['products']);
+            use App\Models\Product; // Replace with your actual Product model namespace
+            use App\Models\Brand; // Replace with your actual Brand model namespace
+
+            // Retrieve all unique brand IDs from products
+            $brandIds = Product::where('status', \Botble\Base\Enums\BaseStatusEnum::PUBLISHED)
+                ->pluck('brand_id')
+                ->unique();
+
+            // Retrieve brands that are used in products
+            $brands = Brand::whereIn('id', $brandIds)->get();
         @endphp
         <div class="col-12 mb-5 widget-filter-item">
             <div class="accordion my-2" id="brandsAccordionWrapper ">
