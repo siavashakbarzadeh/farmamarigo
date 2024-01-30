@@ -250,7 +250,7 @@
     <div class="widget mt-3 row">
         <div class="container">
             <button class="btn btn-danger col-12 clear_filter dib clear_all_filter"
-                style="color:#51b448;background-color:white !important;font-size: small; border-radius: 25px; text-transform: none;"
+                style="font-size: small; border-radius: 25px; text-transform: none;"
                 href="{{ URL::current() }}">{{ __('Cancella filtri') }}</button>
         </div>
     </div>
