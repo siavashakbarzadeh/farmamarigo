@@ -117,7 +117,8 @@
                             <div class="col-12 mt-30">
                                 <div class="row">
                                     <div class="col-6" style="align-self: flex-end">
-                                        <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>
+                                        <a href="/empty-cart" class='mt-5 btn btn-danger btn-outline col-12 empty-card' style='border-radius:50px'><i class='fa fa-trash-alt mr-2'></i> Svuota il Carrello</a>
+{{--                                        <a class="btn btn-rounded" href="{{ route('public.products') }}"><i class="far fa-cart-plus mr-5"></i>{{ __('Continue Shopping') }}</a>--}}
                                     </div>
                                     <div class="col-6">
                                         <button type="submit" name="checkout" class="btn btn-rounded"> <i class="fa fa-share-square mr-10"></i> {{ __('Proceed To Checkout') }}</button>
@@ -267,7 +268,7 @@
 
 
                     </div>
-                    
+
 
 
 

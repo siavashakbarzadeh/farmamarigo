@@ -9,23 +9,23 @@
     @if (auth('customer')->check())
         <div class="form-group mb-3">
             @if ($isAvailableAddress)
-                <label class="control-label mb-2" for="address_id">{{ __('Select available addresses') }}:</label>
+{{--                <label class="control-label mb-2" for="address_id">{{ __('Select available addresses') }}:</label>--}}
             @endif
             @php
                 $oldSessionAddressId = old('address.address_id', $sessionAddressId);
             @endphp
             <div class="list-customer-address @if (! $isAvailableAddress) d-none @endif">
-                <div class="select--arrow">
-                    <select name="address[address_id]" class="form-control address-control-item" id="address_id">
-                        <option value="new" @selected ($oldSessionAddressId == 'new')>{{ __('Add new address...') }}</option>
-                        @if ($isAvailableAddress)
-                            @foreach ($addresses as $address)
-                                <option value="{{ $address->id }}" @selected ($oldSessionAddressId == $address->id)>{{ $address->full_address }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    <i class="fas fa-angle-down"></i>
-                </div>
+{{--                <div class="select--arrow">--}}
+{{--                    <select name="address[address_id]" class="form-control address-control-item" id="address_id">--}}
+{{--                        <option value="new" @selected ($oldSessionAddressId == 'new')>{{ __('Add new address...') }}</option>--}}
+{{--                        @if ($isAvailableAddress)--}}
+{{--                            @foreach ($addresses as $address)--}}
+{{--                                <option value="{{ $address->id }}" @selected ($oldSessionAddressId == $address->id)>{{ $address->full_address }}</option>--}}
+{{--                            @endforeach--}}
+{{--                        @endif--}}
+{{--                    </select>--}}
+{{--                    <i class="fas fa-angle-down"></i>--}}
+{{--                </div>--}}
                 <br>
                 <div class="address-item-selected @if (! $sessionAddressId) d-none @endif">
                     @if ($isAvailableAddress && $oldSessionAddressId != 'new')
