@@ -98,9 +98,9 @@
             @endif
 
             <!-- {!! apply_filters('ecommerce_before_product_price_in_listing', null, $product) !!} -->
-
-            <div class="product-price">
-
+            <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
+                <div class="product-price">
+                    @csrf
                 @if (isset($reserved_price))
                     @if (!isset($offerDetail) && $reserved_price !== $product->price)
                         <span>{{ format_price($reserved_price) }}</span>
@@ -131,12 +131,14 @@
 
             @if (EcommerceHelper::isCartEnabled())
                 <div class="product-action-1 show " @if (!EcommerceHelper::isReviewEnabled()) style="bottom: 10px;" @endif>
-                    <a aria-label="{{ __('Add To Cart') }}" class="action-btn hover-up add-to-cart-button"
-                        data-id="{{ $product->id }}" data-url="{{ route('public.cart.add-to-cart') }}"
-                        href="#"><i class="far fa-shopping-bag"></i></a>
+                    <button type="submit"
+                        class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
+                        type="submit" @if ($product->isOutOfStock()) disabled @endif>
+                        <i class="far fa-shopping-bag"></i></button>
 
                 </div>
             @endif
+            </form>
         </div>
     </div>
 @endif
