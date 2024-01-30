@@ -103,37 +103,37 @@
                     @csrf
                     <div class="col-8">
                         <input type="hidden" name="id" class="hidden-product-id"
-                        value="{{ $product->is_variation || !$product->defaultVariation->product_id ? $product->id : $product->defaultVariation->product_id }}" />
-                    @if (isset($reserved_price))
-                        @if (!isset($offerDetail) && $reserved_price !== $product->price)
-                            <span>{{ format_price($reserved_price) }}</span>
-                            <input type="hidden" name="product_price" class="hidden-product-id"
-                                value="{{ $reserved_price }}" />
-                            <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
-                        @elseif (isset($offerDetail) &&
-                                ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
-                                $offerDetail->product_price !== $product->price)
-                            <span>{{ format_price($offerDetail->product_price) }}</span>
-                            <input type="hidden" name="product_price" class="hidden-product-id"
-                                value="{{ $offerDetail->product_price ? $offerDetail->product_price : $pricelist[0]->final_price }}" />
-                            <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
-                        @elseif ($offerDetail && ($offerType != 1 || $offerType != 2 || $offerType != 3))
-                            <span>{{ format_price($reserved_price) }}</span>
-                            <input type="hidden" name="product_price" class="hidden-product-id"
-                                value="{{ $reserved_price }}" />
-                            <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                            value="{{ $product->is_variation || !$product->defaultVariation->product_id ? $product->id : $product->defaultVariation->product_id }}" />
+                        @if (isset($reserved_price))
+                            @if (!isset($offerDetail) && $reserved_price !== $product->price)
+                                <span>{{ format_price($reserved_price) }}</span>
+                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                    value="{{ $reserved_price }}" />
+                                <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                            @elseif (isset($offerDetail) &&
+                                    ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
+                                    $offerDetail->product_price !== $product->price)
+                                <span>{{ format_price($offerDetail->product_price) }}</span>
+                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                    value="{{ $offerDetail->product_price ? $offerDetail->product_price : $pricelist[0]->final_price }}" />
+                                <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                            @elseif ($offerDetail && ($offerType != 1 || $offerType != 2 || $offerType != 3))
+                                <span>{{ format_price($reserved_price) }}</span>
+                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                    value="{{ $reserved_price }}" />
+                                <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                            @endif
+                        @else
+                            <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
                         @endif
-                    @else
-                        <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
-                    @endif
                     </div>
-                    
+
 
                     <div class="col-4">
                         <button type="submit"
                             class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
                             type="submit" @if ($product->isOutOfStock()) disabled @endif aria-label='Aggiungi'
-                            style='padding:0px 9px !important'>
+                            style='padding:7px 13px !important'>
                             <i class="far fa-shopping-bag"></i></button>
                     </div>
 
