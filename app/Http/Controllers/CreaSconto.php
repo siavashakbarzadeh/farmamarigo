@@ -215,6 +215,7 @@ class CreaSconto extends BaseController
             }
         }
     
+        dd($productAndVariantIds);
         // Retrieve customers based on product and variant IDs
         $customersForProducts = [];
         foreach ($productAndVariantIds as $id) {
