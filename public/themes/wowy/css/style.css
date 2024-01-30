@@ -20135,7 +20135,7 @@ small {
 }
 
 .btn.btn-danger:hover {
-    background-color: #bb2d3b;
+    background-color: #bb2d3b !important;
     color: #fff !important
 }
 
