@@ -1,4 +1,3 @@
-
 {!! dynamic_sidebar('top_footer_sidebar') !!}
 <footer class="main">
     <section class="section-padding-60">
@@ -28,7 +27,8 @@
 </footer>
 
 <!-- Quick view -->
-<div class="modal fade custom-modal" id="quick-view-modal" tabindex="-1" aria-labelledby="quick-view-modal-label" aria-hidden="true">
+<div class="modal fade custom-modal" id="quick-view-modal" tabindex="-1" aria-labelledby="quick-view-modal-label"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -42,7 +42,8 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
 @if (is_plugin_active('ecommerce'))
     <script>
@@ -66,42 +67,44 @@
 
 {!! Theme::place('footer') !!}
 
-@if (session()->has('success_msg') || session()->has('error_msg') || (isset($errors) && $errors->count() > 0) || isset($error_msg))
+@if (session()->has('success_msg') ||
+        session()->has('error_msg') ||
+        (isset($errors) && $errors->count() > 0) ||
+        isset($error_msg))
     <script type="text/javascript">
-        window.onload = function () {
+        window.onload = function() {
             @if (session()->has('success_msg'))
-            window.showAlert('alert-success', '{{ session('success_msg') }}');
+                window.showAlert('alert-success', '{{ session('success_msg') }}');
             @endif
 
             @if (session()->has('error_msg'))
-            window.showAlert('alert-danger', '{{ session('error_msg') }}');
+                window.showAlert('alert-danger', '{{ session('error_msg') }}');
             @endif
 
             @if (isset($error_msg))
-            window.showAlert('alert-danger', '{{ $error_msg }}');
+                window.showAlert('alert-danger', '{{ $error_msg }}');
             @endif
 
             @if (isset($errors))
-            @foreach ($errors->all() as $error)
-            window.showAlert('alert-danger', '{!! BaseHelper::clean($error) !!}');
-            @endforeach
+                @foreach ($errors->all() as $error)
+                    window.showAlert('alert-danger', '{!! BaseHelper::clean($error) !!}');
+                @endforeach
             @endif
         };
     </script>
 @endif
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+</script>
 
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
-
     // $("#owl-demo").owlCarousel({
     //
     //     autoPlay: 3000, //Set AutoPlay to 3 seconds
@@ -118,76 +121,78 @@
     //         itemsDesktopSmall : [979,3]
     // })
     $('.featured-brands-carousel').owlCarousel({
-        autoplay:true,
-        autoplayTimeout:2000,
-        autoplayHoverPause:true,
-        stagePadding: 50,/*the little visible images at the end of the carousel*/
-        loop:true,
+        autoplay: true,
+        autoplayTimeout: 2000,
+        autoplayHoverPause: true,
+        stagePadding: 50,
+        /*the little visible images at the end of the carousel*/
+        loop: true,
         rtl: false,
-        lazyLoad:true,
-        autoHeight:true,
-        margin:-50,
-        nav:false,
-        responsive:{
-            0:{
-                items:1
+        lazyLoad: true,
+        autoHeight: true,
+        margin: -50,
+        nav: false,
+        responsive: {
+            0: {
+                items: 1
             },
-            600:{
-                items:2
+            600: {
+                items: 2
             },
-            800:{
+            800: {
                 items: 3
             },
-            1000:{
-                items:4
+            1000: {
+                items: 4
             },
-            1200:{
+            1200: {
                 items: 4
             }
         }
     })
-
-
 </script>
 
 <script>
-
-    $(".form--auth--btn").click(function(e){
+    $(".form--auth--btn").click(function(e) {
         e.preventDefault();
         let captchaInput = $("#captcha-login").val();
 
-        axios.post('/captcha-validator/login', { captcha: captchaInput })
-        .then(response => {
-            if(response.data.valid){
-                $('.captcha-error').html('');
-                $(".form--auth").submit();
+        axios.post('/captcha-validator/login', {
+                captcha: captchaInput
+            })
+            .then(response => {
+                if (response.data.valid) {
+                    $('.captcha-error').html('');
+                    $(".form--auth").submit();
 
-            }
-        })
-        .catch(error => {
-            if(error.response && error.response.status === 422){
-                $('.captcha-error').html('La somma inserita non è corretta');
-                refreshLoginForm();
-            }
-        });
+                }
+            })
+            .catch(error => {
+                if (error.response && error.response.status === 422) {
+                    $('.captcha-error').html('La somma inserita non è corretta');
+                    refreshLoginForm();
+                }
+            });
 
     });
 
 
-    $("#contact-form-btn").click(function(e){
+    $("#contact-form-btn").click(function(e) {
         e.preventDefault();
 
         let captchaInput = $("#captcha-contact").val();
 
-        axios.post('/captcha-validator/contact-form', { captcha: captchaInput })
+        axios.post('/captcha-validator/contact-form', {
+                captcha: captchaInput
+            })
             .then(response => {
-                if(response.data.valid){
+                if (response.data.valid) {
                     $('.captcha-error').html('');
 
                 }
             })
             .catch(error => {
-                if(error.response && error.response.status === 422){
+                if (error.response && error.response.status === 422) {
                     $('.captcha-error').html('La somma inserita non è corretta');
                     refreshContactForm();
                 }
@@ -212,21 +217,23 @@
         // Only proceed if the email is not empty
         if (email) {
             // Send a request to your endpoint
-            axios.post('checkEmailAlreadyexists', { email: email })
+            axios.post('checkEmailAlreadyexists', {
+                    email: email
+                })
                 .then(function(response) {
                     // Handle the response here
                     // For example, if email exists, show a message or change input style
-                    if(response.data.exists) {
+                    if (response.data.exists) {
                         // Email exists - handle accordingly
                         $('.email-controll-registration').addClass('red-border');
-                        $('#realtime-email-error').css('display','block');
+                        $('#realtime-email-error').css('display', 'block');
                         console.log(response);
                         $('#realtime-email-error').html(response.data.msg);
 
                     } else {
                         // Email does not exist - handle accordingly
                         $('.email-controll-registration').removeClass('red-border');
-                        $('#realtime-email-error').css('display','none');
+                        $('#realtime-email-error').css('display', 'none');
                     }
                 })
                 .catch(function(error) {
@@ -241,35 +248,35 @@
         e.preventDefault();
         let allValid = true;
 
-            // Loop through each text input field in the form
-            $("#registration-form input[type='text']").each(function() {
-                if ($(this).val().trim() === "") {
-                    allValid = false;
-                    $(this).css('border', '1px solid red');
-                } else {
-                    $(this).css('border', '');
-                }
-            });
-            $("#registration-form input[type='email']").each(function() {
-                if ($(this).val().trim() === "") {
-                    allValid = false;
-                    $(this).css('border', '1px solid red');
-                } else {
-                    $(this).css('border', '');
-                }
-            });
-            $("#registration-form input[type='password']").each(function() {
-                if ($(this).val().trim() === "") {
-                    allValid = false;
-                    $(this).css('border', '1px solid red');
-                } else {
-                    $(this).css('border', '');
-                }
-            });
-            if ($('#realtime-email-error').css('display') === 'block') {
+        // Loop through each text input field in the form
+        $("#registration-form input[type='text']").each(function() {
+            if ($(this).val().trim() === "") {
                 allValid = false;
+                $(this).css('border', '1px solid red');
+            } else {
+                $(this).css('border', '');
             }
-            let isCheckboxChecked = false;
+        });
+        $("#registration-form input[type='email']").each(function() {
+            if ($(this).val().trim() === "") {
+                allValid = false;
+                $(this).css('border', '1px solid red');
+            } else {
+                $(this).css('border', '');
+            }
+        });
+        $("#registration-form input[type='password']").each(function() {
+            if ($(this).val().trim() === "") {
+                allValid = false;
+                $(this).css('border', '1px solid red');
+            } else {
+                $(this).css('border', '');
+            }
+        });
+        if ($('#realtime-email-error').css('display') === 'block') {
+            allValid = false;
+        }
+        let isCheckboxChecked = false;
 
         $("#registration-form input[type='checkbox']").each(function() {
             if ($(this).is(':checked')) {
@@ -286,13 +293,14 @@
 
         // CAPTCHA validation
         let captchaInput = $("#captcha-register").val();
-        axios.post('/captcha-validator/register', { captcha: captchaInput })
+        axios.post('/captcha-validator/register', {
+                captcha: captchaInput
+            })
             .then(response => {
-                if(response.data.valid && allValid && isCheckboxChecked){
+                if (response.data.valid && allValid && isCheckboxChecked) {
                     // If CAPTCHA and all other validations are passed, submit the form
                     $('.form--auth').submit();
-                }
-                else if(response.data.valid && !allValid){
+                } else if (response.data.valid && !allValid) {
 
                 } else {
                     // Handle CAPTCHA validation failure
@@ -300,7 +308,7 @@
                 }
             })
             .catch(error => {
-                if(error.response && error.response.status === 422){
+                if (error.response && error.response.status === 422) {
                     // Handle specific error here for CAPTCHA
                     $('.captcha-error').html('CAPTCHA is not correct');
                     refreshRegisterFormCaptcha();
@@ -321,165 +329,176 @@
     }
 
 
-$(document).ready(function() {
+    $(document).ready(function() {
 
 
-const $passwordField = $("#txt-password");
-const $togglePasswordButton = $("#toggle-password");
-if (window.location.href.includes('register')) {
-$togglePasswordButton.on("click", function () {
-  // Check if the URL contains 'was'
+        const $passwordField = $("#txt-password");
+        const $togglePasswordButton = $("#toggle-password");
+        if (window.location.href.includes('register')) {
+            $togglePasswordButton.on("click", function() {
+                // Check if the URL contains 'was'
 
-    // Execute the toggle functionality only if the URL contains 'was'
-    if ($passwordField.attr("type") === "password") {
-      $passwordField.attr("type", "text");
-      $togglePasswordButton.removeClass("fa-eye").addClass("fa-eye-slash");
-    } else {
-      $passwordField.attr("type", "password");
-      $togglePasswordButton.removeClass("fa-eye-slash").addClass("fa-eye");
-    }
+                // Execute the toggle functionality only if the URL contains 'was'
+                if ($passwordField.attr("type") === "password") {
+                    $passwordField.attr("type", "text");
+                    $togglePasswordButton.removeClass("fa-eye").addClass("fa-eye-slash");
+                } else {
+                    $passwordField.attr("type", "password");
+                    $togglePasswordButton.removeClass("fa-eye-slash").addClass("fa-eye");
+                }
 
-});
-}
-
-
-const $passwordField1 = $("#txt-password1");
-const $togglePasswordButton1 = $("#toggle-password");
-if (window.location.href.includes('login')) {
-$togglePasswordButton.on("click", function () {
-  // Check if the URL contains 'was'
-
-    // Execute the toggle functionality only if the URL contains 'was'
-    if ($passwordField1.attr("type") === "password") {
-      $passwordField1.attr("type", "text");
-      $togglePasswordButton1.removeClass("fa-eye").addClass("fa-eye-slash");
-    } else {
-      $passwordField1.attr("type", "password");
-      $togglePasswordButton1.removeClass("fa-eye-slash").addClass("fa-eye");
-    }
-
-});
-}
-
-
-
-    const $password_confirmation_Field = $("#txt-password-confirmation");
-    const $togglePassword_confirmation_Button = $("#toggle-password-confirmation");
-
-    $togglePassword_confirmation_Button.on("click", function () {
-      if ($password_confirmation_Field.attr("type") === "password") {
-        $password_confirmation_Field.attr("type", "text");
-        $togglePassword_confirmation_Button.removeClass("fa-eye").addClass("fa-eye-slash");
-      } else {
-        $password_confirmation_Field.attr("type", "password");
-        $togglePassword_confirmation_Button.removeClass("fa-eye-slash").addClass("fa-eye");
-      }
-    });
-
-
-
-    //for the change password
-
-    const $password_old1_Field = $("#old_password");
-    const $togglePassword_old1_Button = $("#toggle-old-password");
-
-    $togglePassword_old1_Button.on("click", function () {
-      if ($password_old1_Field.attr("type") === "password") {
-        $password_old1_Field.attr("type", "text");
-        $togglePassword_old1_Button.removeClass("fa-eye").addClass("fa-eye-slash");
-      } else {
-        $password_old1_Field.attr("type", "password");
-        $togglePassword_old1_Button.removeClass("fa-eye-slash").addClass("fa-eye");
-      }
-    });
-
-
-    const $password1_Field = $("#password");
-    const $togglePassword1_Button = $("#toggle-password");
-
-    $togglePassword1_Button.on("click", function () {
-      if ($password1_Field.attr("type") === "password") {
-        $password1_Field.attr("type", "text");
-        $togglePassword1_Button.removeClass("fa-eye").addClass("fa-eye-slash");
-      } else {
-        $password1_Field.attr("type", "password");
-        $togglePassword1_Button.removeClass("fa-eye-slash").addClass("fa-eye");
-      }
-    });
-
-
-    const $password_confirmation1_Field = $("#password_confirmation");
-    const $togglePassword_confirmation1_Button = $("#toggle-password-confirmation");
-
-    $togglePassword_confirmation1_Button.on("click", function () {
-      if ($password_confirmation1_Field.attr("type") === "password") {
-        $password_confirmation1_Field.attr("type", "text");
-        $togglePassword_confirmation1_Button.removeClass("fa-eye").addClass("fa-eye-slash");
-      } else {
-        $password_confirmation1_Field.attr("type", "password");
-        $togglePassword_confirmation1_Button.removeClass("fa-eye-slash").addClass("fa-eye");
-      }
-    });
-
-});
-
-
-$(document).on("keyup", "input[name='password']", function(e) {
-    if (!window.location.pathname.includes("/login")) {
-        console.log('ow');
-
-        e.preventDefault();
-        var password = $(this).val();
-        var validationResult = validatePassword(password);
-
-        // Remove any existing error spans with class 'password-error'
-        $(this).next('#password-error').remove();
-        $(this).closest('div').find('#password-error').remove();
-
-        if(validationResult=="La password è forte."){
-            $(this).removeClass('is-invalid');
-            $(this).addClass('is-valid');
-            $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' + validationResult + '</span>');
-        }else{
-            $(this).removeClass('is-valid');
-            $(this).addClass('is-invalid');
-            $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' + validationResult + '</span>');
-
+            });
         }
-    }
+
+
+        const $passwordField1 = $("#txt-password1");
+        const $togglePasswordButton1 = $("#toggle-password");
+        if (window.location.href.includes('login')) {
+            $togglePasswordButton.on("click", function() {
+                // Check if the URL contains 'was'
+
+                // Execute the toggle functionality only if the URL contains 'was'
+                if ($passwordField1.attr("type") === "password") {
+                    $passwordField1.attr("type", "text");
+                    $togglePasswordButton1.removeClass("fa-eye").addClass("fa-eye-slash");
+                } else {
+                    $passwordField1.attr("type", "password");
+                    $togglePasswordButton1.removeClass("fa-eye-slash").addClass("fa-eye");
+                }
+
+            });
+        }
+
+
+
+        const $password_confirmation_Field = $("#txt-password-confirmation");
+        const $togglePassword_confirmation_Button = $("#toggle-password-confirmation");
+
+        $togglePassword_confirmation_Button.on("click", function() {
+            if ($password_confirmation_Field.attr("type") === "password") {
+                $password_confirmation_Field.attr("type", "text");
+                $togglePassword_confirmation_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+            } else {
+                $password_confirmation_Field.attr("type", "password");
+                $togglePassword_confirmation_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+            }
+        });
+
+
+
+        //for the change password
+
+        const $password_old1_Field = $("#old_password");
+        const $togglePassword_old1_Button = $("#toggle-old-password");
+
+        $togglePassword_old1_Button.on("click", function() {
+            if ($password_old1_Field.attr("type") === "password") {
+                $password_old1_Field.attr("type", "text");
+                $togglePassword_old1_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+            } else {
+                $password_old1_Field.attr("type", "password");
+                $togglePassword_old1_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+            }
+        });
+
+
+        const $password1_Field = $("#password");
+        const $togglePassword1_Button = $("#toggle-password");
+
+        $togglePassword1_Button.on("click", function() {
+            if ($password1_Field.attr("type") === "password") {
+                $password1_Field.attr("type", "text");
+                $togglePassword1_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+            } else {
+                $password1_Field.attr("type", "password");
+                $togglePassword1_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+            }
+        });
+
+
+        const $password_confirmation1_Field = $("#password_confirmation");
+        const $togglePassword_confirmation1_Button = $("#toggle-password-confirmation");
+
+        $togglePassword_confirmation1_Button.on("click", function() {
+            if ($password_confirmation1_Field.attr("type") === "password") {
+                $password_confirmation1_Field.attr("type", "text");
+                $togglePassword_confirmation1_Button.removeClass("fa-eye").addClass("fa-eye-slash");
+            } else {
+                $password_confirmation1_Field.attr("type", "password");
+                $togglePassword_confirmation1_Button.removeClass("fa-eye-slash").addClass("fa-eye");
+            }
+        });
+
+    });
+
+
+    $(document).on("keyup", "input[name='password']", function(e) {
+        if (!window.location.pathname.includes("/login")) {
+            console.log('ow');
+
+            e.preventDefault();
+            var password = $(this).val();
+            var validationResult = validatePassword(password);
+
+            // Remove any existing error spans with class 'password-error'
+            $(this).next('#password-error').remove();
+            $(this).closest('div').find('#password-error').remove();
+
+            if (validationResult == "La password è forte.") {
+                $(this).removeClass('is-invalid');
+                $(this).addClass('is-valid');
+                $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' +
+                    validationResult + '</span>');
+            } else {
+                $(this).removeClass('is-valid');
+                $(this).addClass('is-invalid');
+                $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' +
+                    validationResult + '</span>');
+
+            }
+        }
     })
 
 
     $(document).on("blur", "input[name='password']", function(e) {
         e.preventDefault();
         if (window.location.href.includes('register')) {
-        var password = $(this).val();
-        var validationResult = validatePassword(password);
+            var password = $(this).val();
+            var validationResult = validatePassword(password);
 
-        $(this).next('#password-error').remove();
-        $(this).closest('div').find('#password-error').remove();
+            $(this).next('#password-error').remove();
+            $(this).closest('div').find('#password-error').remove();
 
-        // Remove any existing error spans with class 'password-error'
+            // Remove any existing error spans with class 'password-error'
 
-        if(validationResult=="La password è forte."){
-            $(this).removeClass('is-invalid');
-            $(this).addClass('is-valid');
-            $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' + validationResult + '</span>');
+            if (validationResult == "La password è forte.") {
+                $(this).removeClass('is-invalid');
+                $(this).addClass('is-valid');
+                $(this).after('<span id="password-error" class="valid-feedback" style="display:block">' +
+                    validationResult + '</span>');
 
-        }else{
-            $(this).removeClass('is-valid');
-            $(this).addClass('is-invalid');
-            $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' + validationResult + '</span>');
+            } else {
+                $(this).removeClass('is-valid');
+                $(this).addClass('is-invalid');
+                $(this).after('<span id="password-error" class="invalid-feedback" style="display:block">' +
+                    validationResult + '</span>');
 
+            }
         }
-    }
 
     })
 
 
+    $(document).on("click", ".form-check-input", async function() {
+        await $(this).closest('#products-filter-ajax').submit();
 
 
-function validatePassword(password) {
+    });
+
+
+
+
+    function validatePassword(password) {
         // At least 8 characters long
         if (password.length < 6) {
             return "password deve contenere almeno 6 caratteri.";
@@ -512,13 +531,11 @@ function validatePassword(password) {
 
 
     // Select all input fields in the form
-
-
-
 </script>
 
 
 
 <div id="scrollUp"><i class="fal fa-long-arrow-up"></i></div>
 </body>
+
 </html>
