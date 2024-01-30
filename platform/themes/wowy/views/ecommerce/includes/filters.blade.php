@@ -248,18 +248,8 @@
     {{--    </div> --}}
 
     <div class="widget mt-3 row">
-
-        <button type="submit" class="btn btn-sm btn-default col-12"
-            style="font-size:small;border-radius:25px; text-transform:none;"><i class="fa fa-filter mr-5 ml-0"></i>
-            {{ __('Filter') }}</button>
-    </div>
-
-    <div class="widget mt-3 row">
         <div class="container">
-            @php
-                $category = $_GET['categories'][0] ?? null;
-            @endphp
-            <button class="btn btn-sm col-12 clear_filter dib clear_all_filter"
+            <button class="btn btn-danger col-12 clear_filter dib clear_all_filter"
                 style="color:#51b448;background-color:white !important;font-size: small; border-radius: 25px; text-transform: none;"
                 href="{{ URL::current() }}">{{ __('Cancella filtri') }}</button>
         </div>
