@@ -1,9 +1,9 @@
-<div class="page-header breadcrumb-wrap">
+{{-- <div class="page-header breadcrumb-wrap">
     <div class="container">
         <div class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
 
             @foreach ($crumbs = Theme::breadcrumb()->getCrumbs() as $i => $crumb)
-                @if ($i != (count($crumbs) - 1))
+                @if ($i != count($crumbs) - 1)
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item d-inline-block">
                         <a href="{{ $crumb['url'] }}" itemprop="item" title="{{ $crumb['label'] }}">
                             {{ $crumb['label'] }}
@@ -24,4 +24,4 @@
             @endforeach
         </div>
     </div>
-</div>
+</div> --}}
