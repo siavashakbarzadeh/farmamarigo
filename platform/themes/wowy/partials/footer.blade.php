@@ -494,6 +494,9 @@
 
 
     });
+    const cards = document.querySelectorAll('.product-cart-wrap');
+    const maxHeight = Math.max(...Array.from(cards).map(card => card.offsetHeight));
+    cards.forEach(card => card.style.height = `${maxHeight}px`);
 
 
 
