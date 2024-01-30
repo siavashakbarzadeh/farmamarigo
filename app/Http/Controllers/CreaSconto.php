@@ -262,83 +262,82 @@ class CreaSconto extends BaseController
         return $array;
     }
 
-    public function filterCustomers(Request $request){
+    public function filterCustomers(Request $request)
+{
+    // Retrieve input data
+    $consumabili = $request->input('consumabili');
+    $agents = $request->input('agents', []);
+    $regione = $request->input('regions', []);
+    $fromDate = $request->input('fromDate');
+    $toDate = $request->input('toDate');
 
-
-        $consumabili=$request->input('consumabili');
-        $customers=[];
-
-
-        foreach($consumabili as $cs){
-            $ids = DB::table('ec_pricelist')->where('product_id', $cs)->pluck('customer_id')->toArray();
-            $incustomers[] = $ids;
+    // Group consumable product and variant IDs
+    $consumabiliAndVariantIdsGrouped = [];
+    foreach ($consumabili as $cs) {
+        $product = Product::with('variations')->find($cs);
+        if ($product) {
+            $group = [$cs]; // Start group with main product ID
+            foreach ($product->variations as $variation) {
+                $group[] = $variation->id; // Add variant IDs
+            }
+            $consumabiliAndVariantIdsGrouped[] = $group;
         }
+    }
 
-        $agents=$request->input('agents');
-        $regione=$request->input('regions');
-
-        $regione = array_filter($regione);
-        $agents = array_filter($agents);
-        $customers = array_filter($customers);
-
-
-        $filteredCustomerIDsByDate = [];
-        $fromDate = Carbon::parse($request->input('fromDate'));
-        $toDate = Carbon::parse($request->input('toDate'));
-        if ($fromDate && $toDate) {
-            $oldProducts = DB::connection('mysql2')->select(
-                "select * from cli_acquistato where data between :fromDate and :toDate",
-                ['fromDate' => $fromDate, 'toDate' => $toDate]
-            );
-
-            $filteredCustomerIDsByDate = array_map(function($product) {
-                return $product->fk_cliente_id;
-            }, $oldProducts);
+    // Retrieve and intersect customer IDs for each consumable group
+    $customersForConsumabili = [];
+    foreach ($consumabiliAndVariantIdsGrouped as $group) {
+        $groupCustomerIds = [];
+        foreach ($group as $id) {
+            $ids = DB::table('ec_pricelist')->where('product_id', $id)->pluck('customer_id')->toArray();
+            $groupCustomerIds = array_merge($groupCustomerIds, $ids);
         }
+        $groupCustomerIds = array_unique($groupCustomerIds); // Remove duplicate customer IDs within the group
+        $customersForConsumabili[] = $groupCustomerIds;
+    }
 
+    // Date range filter
+    $filteredCustomerIDsByDate = [];
+    if ($fromDate && $toDate) {
+        $fromDate = Carbon::parse($fromDate);
+        $toDate = Carbon::parse($toDate);
+        $oldProducts = DB::connection('mysql2')->select(
+            "SELECT * FROM cli_acquistato WHERE data BETWEEN :fromDate AND :toDate",
+            ['fromDate' => $fromDate, 'toDate' => $toDate]
+        );
+        $filteredCustomerIDsByDate = array_column($oldProducts, 'fk_cliente_id');
+    }
 
-        $customerIDs = DB::table('ec_customers as c')
+    // Filter customers by region and agent
+    $customerIDs = DB::table('ec_customers as c')
         ->when(!empty($filteredCustomerIDsByDate), function ($query) use ($filteredCustomerIDsByDate) {
             return $query->whereIn('c.id', $filteredCustomerIDsByDate);
         })
-        ->whereIn('c.region_id', $regione)    // Uncomment and add if needed
-        ->whereIn('c.agent_id', $agents)      // Uncomment and add if needed
-        ->distinct('c.id')
+        ->when(!empty($regione), function ($query) use ($regione) {
+            return $query->whereIn('c.region_id', $regione);
+        })
+        ->when(!empty($agents), function ($query) use ($agents) {
+            return $query->whereIn('c.agent_id', $agents);
+        })
+        ->distinct()
         ->pluck('c.id')
         ->toArray();
-    
 
+    // Find the intersecting customer IDs
+    $intersection = count($customersForConsumabili) ? call_user_func_array('array_intersect', $customersForConsumabili) : [];
 
+    // Intersect and difference with filtered customer IDs
+    $finalIntersection = array_values(array_intersect($intersection, $customerIDs));
+    $finalDifference = array_values(array_diff($intersection, $finalIntersection));
 
-        $intersection = array_reduce($incustomers, function ($carry, $item) {
-            if ($carry === null) {
-                return $item;
-            }
-            return array_intersect($carry, $item);
-        }, null);
+    $data = [
+        "customersToCheck" => $finalIntersection,
+        "customersToUncheck" => $finalDifference,
+        "count" => count($finalIntersection)
+    ];
 
-
-        $finalIntersection = array_values(array_intersect($intersection, $customerIDs));
-
-
-        $finalDifference = array_values(array_diff($intersection, $finalIntersection));
-
-
-
-
-
-        $data=[
-            "customersToCheck"=>$finalIntersection,
-            "customersToUncheck"=>$finalDifference,
-            "count"=>count($finalIntersection)
-        ];
-
-
-        return $data;
-
-
-
-    }
+    return $data;
+}
 
 
     public function checkIfBetter(Request $request)
