@@ -125,6 +125,8 @@
                                     <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
                                 @endif
                             @else
+                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                    value="{{ $product->front_sale_price_with_taxes }}" />
                                 <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
                             @endif
                         </div>
