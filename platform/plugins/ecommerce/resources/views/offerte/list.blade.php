@@ -5,10 +5,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 mt-5">
-                @if(session()->has('success'))
+                @if (session()->has('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
-                @if(session()->has('error'))
+                @if (session()->has('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
                 <h2 class="d-inline">Elenco delle offerte</h2>
@@ -22,52 +22,67 @@
                 </div>
                 <table class="mt-3 table table-striped table-hover">
                     <thead>
-                    <tr>
-                        <th></th>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Stato</th>
-                        <th>Tipo</th>
-                        <th>Data di inizia</th>
-                        <th>Data di scadenza</th>
-                        <th>Numero di clienti</th>
-                        <th>Azione</th>
-                    </tr>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Stato</th>
+                            <th>Tipo</th>
+                            <th>Data di inizia</th>
+                            <th>Data di scadenza</th>
+                            <th>Numero di clienti</th>
+                            <th>Azione</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach($offers as $offer)
+                        @foreach ($offers as $offer)
+                            @php
 
-                        @php
+                                if ($offer->offer_type == 1 || $offer->offer_type == 2) {
+                                    $offer_type = 'sconto percentuale';
+                                }
+                                if ($offer->offer_type == 3) {
+                                    $offer_type = 'prezzo fisso';
+                                }
+                                if ($offer->offer_type == 4) {
+                                    $offer_type = '3x2';
+                                }
+                                if ($offer->offer_type == 5) {
+                                    $offer_type = 'collegati';
+                                }
+                                if ($offer->offer_type == 6) {
+                                    $offer_type = 'quantita';
+                                }
 
-                            if($offer->offer_type==1 || $offer->offer_type==2) $offer_type='sconto percentuale';
-                            if($offer->offer_type==3) $offer_type='prezzo fisso';
-                            if($offer->offer_type==4) $offer_type='3x2';
-                            if($offer->offer_type==5) $offer_type='collegati';
-                            if($offer->offer_type==6) $offer_type='quantita';
+                            @endphp
+                            <tr data-id="{{ $offer->id }}" class="offerte-row">
+                                <td><label class="switch">
+                                        <input class='toggle-switch' type="checkbox"
+                                            @if ($offer->active == 1) checked @else @endif>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                                <td>{{ $offer->id }}</td>
+                                <td>{{ $offer->offer_name }}</td>
+                                <td class="offer-status">{!! $offer->active
+                                    ? "<button class='btn btn-success'>Attivo</button>"
+                                    : "<button class='btn btn-danger'>Inattivo</button>" !!} </td>
+                                <td><span class="badge badge-danger">{{ $offer_type }}</span></td>
+                                <td>{{ $offer->offer_starting_date }}</td>
+                                <td>{{ $offer->offer_expiring_date }}</td>
 
-                        @endphp
-                        <tr data-id="{{ $offer->id }}" class="offerte-row">
-                            <td><label class="switch">
-                                    <input class='toggle-switch' type="checkbox" @if($offer->active==1) checked @else @endif>
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                            <td>{{ $offer->id }}</td>
-                            <td>{{ $offer->offer_name }}</td>
-                            <td class="offer-status">{!! ($offer->active )?"<button class='btn btn-success'>Attivo</button>":"<button class='btn btn-danger'>Inattivo</button>" !!} </td>
-                            <td><span class="badge badge-danger">{{ $offer_type }}</span></td>
-                            <td>{{ $offer->offer_starting_date }}</td>
-                            <td>{{ $offer->offer_expiring_date }}</td>
-
-                            <td><span class="badge badge-info">{{ $offer->offerDetails->pluck('customer_id')->unique()->count() }}</span></td>
-                            <td>
-                                <button class="delete-offerte btn btn-danger"><i class="fa fa-trash"></i></button>
-                                <a class="btn btn-primary mr-2 edit-offer"
-                                   href="/admin/ecommerce/offerte/edit/{{ $offer->id }}"><i class="fa fa-edit"></i></a>
-                                <button class="btn btn-primary mr-2 export-offer"><i class="fa fa-table"></i></button>
-                            </td>
-                        </tr>
-                    @endforeach
+                                <td><span
+                                        class="badge badge-info">{{ $offer->offerDetails->pluck('customer_id')->unique()->count() }}</span>
+                                </td>
+                                <td>
+                                    <button class="delete-offerte btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    <a class="btn btn-primary mr-2 edit-offer"
+                                        href="/admin/ecommerce/offerte/edit/{{ $offer->id }}"><i
+                                            class="fa fa-edit"></i></a>
+                                    <button class="btn btn-primary mr-2 export-offer"><i class="fa fa-table"></i></button>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -113,15 +128,15 @@
                 transition: .4s;
             }
 
-            input:checked + .slider {
+            input:checked+.slider {
                 background-color: #2196F3;
             }
 
-            input:focus + .slider {
+            input:focus+.slider {
                 box-shadow: 0 0 1px #2196F3;
             }
 
-            input:checked + .slider:before {
+            input:checked+.slider:before {
                 -webkit-transform: translateX(20px);
                 -ms-transform: translateX(20px);
                 transform: translateX(20px);
@@ -138,10 +153,10 @@
         </style>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
-                integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
-            $(document).on('change', '.toggle-switch', function (evt) {
+            $(document).on('change', '.toggle-switch', function(evt) {
                 var offerId = $(this).closest('tr').data('id');
                 console.log(offerId);
                 var activeStatus = $(this).prop('checked');
@@ -154,7 +169,7 @@
 
                 }
                 axios
-                    .post("https://marigolab.it/admin/ecommerce/offerte/update-offer", {
+                    .post("https://marigopharma.marigo.collaudo.biz/admin/ecommerce/offerte/update-offer", {
                         offerId: offerId
                     })
                     .then((response) => {
@@ -162,9 +177,8 @@
                         console.log(response.data)
                     })
                     .catch((err) => console.log(err));
-            })
-            ;
-            $(document).on('click', '.delete-offerte', function (evt) {
+            });
+            $(document).on('click', '.delete-offerte', function(evt) {
                 var offerId = $(this).closest('tr').data('id');
                 var tr = $(this).closest('tr');
                 Swal.fire({
@@ -176,7 +190,10 @@
                     cancelButtonText: 'Annulla',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        axios.post(`https://marigolab.it/admin/ecommerce/offerte/delete-offer`, {offerId: offerId})
+                        axios.post(
+                                `https://marigopharma.marigo.collaudo.biz/admin/ecommerce/offerte/delete-offer`, {
+                                    offerId: offerId
+                                })
                             .then((response) => {
                                 tr.remove();
                             })
@@ -189,11 +206,15 @@
             });
 
 
-            $(document).on('click', '.export-offer', function (evt) {
+            $(document).on('click', '.export-offer', function(evt) {
                 var offerId = $(this).closest('tr').data('id');
-                axios.post(`https://marigolab.it/admin/ecommerce/offerte/exportOfferDetails`, {offer_id: offerId})
+                axios.post(`https://marigopharma.marigo.collaudo.biz/admin/ecommerce/offerte/exportOfferDetails`, {
+                        offer_id: offerId
+                    })
                     .then((response) => {
-                        const blob = new Blob([response.data], {type: 'text/csv'});
+                        const blob = new Blob([response.data], {
+                            type: 'text/csv'
+                        });
                         console.log(response.data, blob)
                         // Create a temporary URL for the Blob object
                         const url = URL.createObjectURL(blob);
@@ -211,9 +232,6 @@
                     })
 
             });
-
-
         </script>
-
     @endpush
 @stop
