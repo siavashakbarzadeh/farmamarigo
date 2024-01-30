@@ -135,7 +135,8 @@
                     <div class="product-action-1 show " @if (!EcommerceHelper::isReviewEnabled()) style="bottom: 10px;" @endif>
                         <button type="submit"
                             class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
-                            type="submit" @if ($product->isOutOfStock()) disabled @endif>
+                            type="submit" @if ($product->isOutOfStock()) disabled @endif aria-label='Aggiungi'
+                            style='padding:0px 9px !important'>
                             <i class="far fa-shopping-bag"></i></button>
 
                     </div>
