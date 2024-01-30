@@ -101,7 +101,8 @@
             <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
                 <div class="product-price">
                     @csrf
-                    <input type="hidden" name="id" class="hidden-product-id"
+                    <div class="col-8">
+                        <input type="hidden" name="id" class="hidden-product-id"
                         value="{{ $product->is_variation || !$product->defaultVariation->product_id ? $product->id : $product->defaultVariation->product_id }}" />
                     @if (isset($reserved_price))
                         @if (!isset($offerDetail) && $reserved_price !== $product->price)
@@ -125,6 +126,16 @@
                     @else
                         <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
                     @endif
+                    </div>
+                    
+
+                    <div class="col-4">
+                        <button type="submit"
+                            class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
+                            type="submit" @if ($product->isOutOfStock()) disabled @endif aria-label='Aggiungi'
+                            style='padding:0px 9px !important'>
+                            <i class="far fa-shopping-bag"></i></button>
+                    </div>
 
 
                 </div>
@@ -132,14 +143,14 @@
                 {!! apply_filters('ecommerce_after_product_price_in_listing', null, $product) !!}
 
                 @if (EcommerceHelper::isCartEnabled())
-                    <div class="product-action-1 show " @if (!EcommerceHelper::isReviewEnabled()) style="bottom: 10px;" @endif>
+                    {{-- <div class="product-action-1 show " @if (!EcommerceHelper::isReviewEnabled()) style="bottom: 10px;" @endif>
                         <button type="submit"
                             class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
                             type="submit" @if ($product->isOutOfStock()) disabled @endif aria-label='Aggiungi'
                             style='padding:0px 9px !important'>
                             <i class="far fa-shopping-bag"></i></button>
 
-                    </div>
+                    </div> --}}
                 @endif
             </form>
         </div>
