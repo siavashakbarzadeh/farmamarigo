@@ -201,6 +201,7 @@ class CreaSconto extends BaseController
         $productAndVariantIds = [];
         foreach ($productsInput as $productId) {
             $product = Product::with('variations')->find($productId);
+            dd($product);
             if ($product) {
                 $productAndVariantIds[] = $productId; // Add main product ID
                 foreach ($product->variations as $variation) {
@@ -220,7 +221,7 @@ class CreaSconto extends BaseController
     
         // Find common customers among all products and their variants
         $commonCustomerIds = count($customersForProducts) ? call_user_func_array('array_intersect', $customersForProducts) : [];
-    
+        dd($commonCustomerIds);
         // Fetch customer details along with regions and agents
         $customers = [];
         $regioneIds = [];
