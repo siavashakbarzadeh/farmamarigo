@@ -328,7 +328,7 @@ class CreaSconto extends BaseController
 
     // Intersect and difference with filtered customer IDs
     $finalIntersection = array_values(array_intersect($intersection, $customerIDs));
-    
+
     $finalDifference = array_values(array_diff($intersection, $finalIntersection));
 
     $data = [
@@ -468,7 +468,7 @@ class CreaSconto extends BaseController
             }
         }
 
-        return Redirect::to('https://marigolab.it/admin/discounts');
+        return Redirect::to('https://marigopharma.marigo.collaudo.biz/admin/discounts');
 
 
 
