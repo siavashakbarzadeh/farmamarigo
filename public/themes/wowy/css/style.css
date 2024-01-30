@@ -20131,12 +20131,12 @@ small {
 .btn.btn-danger {
     background: #fff;
     border-color: #b02a37;
-    color: #b02a37
+    color: #b02a37 !important
 }
 
 .btn.btn-danger:hover {
     background-color: #bb2d3b;
-    color: #fff
+    color: #fff !important
 }
 
 @media only screen and (max-width:768px) {
