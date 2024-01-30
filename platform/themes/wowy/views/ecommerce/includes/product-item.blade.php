@@ -42,27 +42,24 @@
                             $Image = $defaultImgUrl;
                         }
                     @endphp
-                    @if (isset($offerDetail))
 
-                        @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
-                            <span class="discount-ev"></span>
-                            <span
-                                class="discount-percentage">{{ get_sale_percentage($pricelist[0]->final_price, $reserved_price) }}</span>
-                        @elseif ($offerType == 4)
-                            <span class="discount-ev"></span>
-                            <span class="discount-percentage">3x2</span>
-                        @elseif ($offerType == 5)
-                            <span class="discount-ev"></span>
-                            <span class="discount-percentage"><i class="fa fa-link"></i></span>
-                        @elseif ($offerType == 6)
-                            <span class="discount-ev"></span>
-                            <span class="discount-percentage">QTY</span>
-                        @endif
-
-                    @endif
                     <img class="default-img" src="{{ $Image }}" alt="{{ $product->name }}">
 
                 </a>
+                @if (isset($offerDetail))
+
+                    @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
+                        <span
+                            class="discount-ev">{{ get_sale_percentage($pricelist[0]->final_price, $offerDetail->product_price) }}</span>
+                    @elseif ($offerType == 4)
+                        <span class="discount-ev">3x2</span>
+                    @elseif ($offerType == 5)
+                        <span class="discount-ev"><i class="fa fa-link"></i></span>
+                    @elseif ($offerType == 6)
+                        <span class="discount-ev">QTY</span>
+                    @endif
+
+                @endif
             </div>
             <div class="product-badges product-badges-position product-badges-mrg">
                 @if ($product->isOutOfStock())
@@ -110,8 +107,7 @@
                         <input type="hidden" name="product_price" class="hidden-product-id"
                             value="{{ $reserved_price }}" />
                         <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
-                    @elseif (
-                        isset($offerDetail) &&
+                    @elseif (isset($offerDetail) &&
                             ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
                             $offerDetail->product_price !== $product->price)
                         <span>{{ format_price($offerDetail->product_price) }}</span>
