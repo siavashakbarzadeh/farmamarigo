@@ -194,11 +194,12 @@ class CreaSconto extends BaseController
 
     public function getCustomersByProduct(Request $request){
 
-
+        dd($request->input('products'));
+        
         $products=$request->input('products');
+
         $customers=[];
         if($request->input('scontorange')){
-
             $id=intval($products['id']);
             $max = number_format((float)$products['max'], 4, '.', '');
             $min = number_format((float)$products['min'], 4, '.', '');
@@ -206,7 +207,6 @@ class CreaSconto extends BaseController
             $ids = array_column($records, 'customer_id');
             $incustomers[]=$ids;
         }
-
         else{
             foreach($products as $p){
                 $p=intval($p);
@@ -216,6 +216,7 @@ class CreaSconto extends BaseController
 
             }
         }
+
 
         $incustomers = array_reduce($incustomers, function ($carry, $array) {
             if ($carry === null) {
