@@ -47,8 +47,8 @@
         @endif
 
         @php
-            use App\Models\Product; // Replace with your actual Product model namespace
-            use App\Models\Brand; // Replace with your actual Brand model namespace
+            use Botble\Ecommerce\Models\Product;
+            use Botble\Ecommerce\Models\Brand;
 
             // Retrieve all unique brand IDs from products
             $brandIds = Product::where('status', \Botble\Base\Enums\BaseStatusEnum::PUBLISHED)
