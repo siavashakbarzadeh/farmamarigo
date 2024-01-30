@@ -30,6 +30,52 @@
                 </div>
             </div>
         </div>
+        @if (request()->user('customer'))
+            <strong style="color: #005ba1;font-size: 16px;font-weight: 700;display: block;" class="mb-1">
+                Mostra solo
+            </strong>
+
+            <input type="hidden" name="userid" id= "user_id" value={{ request()->user('customer')->id }}>
+            <div class="col-12 mb-5 widget-filter-item">
+                <div class="row"
+                    style="border: 1px solid #F5F5F5;border-right: 0;border-left: 0;border-top: 0; margin-top:5px">
+                    <div class="col-1" style="align-self: center">
+                        <input class="wishlist-check form-check-input" type="checkbox" id='wishlist' name='wishlist'
+                            value="1" @if (request()->input('wishlist') == 1) checked @endif>
+                    </div>
+                    <div class="col-10">
+                        <label class="wishlist-check form-check-label"><span class="d-inline-block">I miei
+                                preferiti</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mb-5 widget-filter-item">
+                <div class="row"
+                    style="border: 1px solid #F5F5F5;border-right: 0;border-left: 0;border-top: 0; margin-top:5px">
+                    <div class="col-1" style="align-self: center">
+                        <input class="discounted-check form-check-input" type="checkbox" id='discounted'
+                            name='discounted' value=1 @if (request()->input('discounted') == 1) checked @endif>
+                    </div>
+                    <div class="col-10">
+                        <label class="discounted-check form-check-label"><span class="d-inline-block">Prodotti in
+                                offerta</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mb-5 widget-filter-item">
+                <div class="row"
+                    style="border: 1px solid #F5F5F5;border-right: 0;border-left: 0;border-top: 0; margin-top:5px">
+                    <div class="col-1" style="align-self: center">
+                        <input class="recenti-check form-check-input" type="checkbox" id='recenti' name='recenti'
+                            value=1 @if (request()->input('recenti') == 1) checked @endif>
+                    </div>
+                    <div class="col-10">
+                        <label class="recenti-check form-check-label"><span class="d-inline-block">Acquistati di
+                                recente</span></label>
+                    </div>
+                </div>
+            </div>
+        @endif
         @if (count($categories) > 0)
             <div class="col-lg-12 mb-4 widget-filter-item">
                 @php
