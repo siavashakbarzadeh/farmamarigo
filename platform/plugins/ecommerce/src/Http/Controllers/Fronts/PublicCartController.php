@@ -43,7 +43,7 @@ class PublicCartController extends Controller
         }
 
         $product = $this->productRepository->findById($request->input('id'));
-        dd($product);
+        dd($product->is_variation);
         if(auth('customer')->user()!==NULL){
             $userid=auth('customer')->user()->id;
             $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
