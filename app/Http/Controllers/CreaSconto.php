@@ -194,55 +194,43 @@ class CreaSconto extends BaseController
 
     public function getCustomersByProduct(Request $request)
     {
-        // Retrieve product IDs from the request    
+        // Retrieve product IDs from the request
         $productsInput = $request->input('products');
-
-        // Get all product IDs, including variants if they exist
-        $productAndVariantIds = [];
+    
+        // Group product and variant IDs
+        $productAndVariantIdsGrouped = [];
         foreach ($productsInput as $productId) {
             $product = Product::with('variations')->find($productId);
             if ($product) {
-                if ($product->variations->isEmpty()) {
-                    // Specific logic for products without variants
-                    // For example, add the product ID directly
-                    $productAndVariantIds[] = $productId;
-                } else {
-                    // For products with variants, add all variant IDs
-                    foreach ($product->variations as $variation) {
-                        $productAndVariantIds[] = $variation->id;
-                    }
+                $group = [$productId]; // Start group with main product ID
+                foreach ($product->variations as $variation) {
+                    $group[] = $variation->id; // Add variant IDs
                 }
+                $productAndVariantIdsGrouped[] = $group;
             }
         }
     
-        dd($productAndVariantIds);
-        // Retrieve customers based on product and variant IDs
-        $customersForProducts = [];
-        foreach ($productAndVariantIds as $id) {
-            $id = intval($id);
-            $records = DB::connection('mysql')->select("SELECT * FROM ec_pricelist WHERE product_id = $id");
-            $ids = array_column($records, 'customer_id');
-            $customersForProducts[] = $ids;
+        // Retrieve and intersect customer IDs for each product group
+        $customerGroups = [];
+        foreach ($productAndVariantIdsGrouped as $group) {
+            $groupCustomerIds = [];
+            foreach ($group as $id) {
+                $id = intval($id);
+                $records = DB::connection('mysql')->select("SELECT * FROM ec_pricelist WHERE product_id = $id");
+                $ids = array_column($records, 'customer_id');
+                $groupCustomerIds = array_merge($groupCustomerIds, $ids);
+            }
+            $groupCustomerIds = array_unique($groupCustomerIds); // Remove duplicate customer IDs within the group
+            $customerGroups[] = $groupCustomerIds;
         }
     
-        // Find common customers among all products and their variants
-        $commonCustomerIds = count($customersForProducts) ? call_user_func_array('array_intersect', $customersForProducts) : [];
+        // Find the intersecting customer IDs across all groups
+        $commonCustomerIds = count($customerGroups) ? call_user_func_array('array_intersect', $customerGroups) : [];
+    
         // Fetch customer details along with regions and agents
-        $customers = [];
-        $regioneIds = [];
-        $agentIds = [];
-        foreach ($commonCustomerIds as $customerId) {
-            $customer = Customer::find($customerId);
-            if ($customer) {
-                $customers[] = $customer;
-                $regioneIds[] = $customer->region_id;
-                $agentIds[] = $customer->agent_id;
-            }
-        }
-    
-        // Remove duplicate IDs
-        $regioneIds = array_unique($regioneIds);
-        $agentIds = array_unique($agentIds);
+        $customers = Customer::findMany($commonCustomerIds);
+        $regioneIds = $customers->pluck('region_id')->unique();
+        $agentIds = $customers->pluck('agent_id')->unique();
     
         // Fetch Regions
         $regione = Regione::findMany($regioneIds)->sortBy('name')->values()->all();
@@ -252,7 +240,7 @@ class CreaSconto extends BaseController
     
         // Prepare the data to return
         $data = [
-            'incustomers' => $customers, // Assuming you handle sorting elsewhere
+            'incustomers' => $customers->sortBy('name')->values()->all(),
             'regione' => $regione,
             'agents' => $agents,
             'count' => count($customers)
