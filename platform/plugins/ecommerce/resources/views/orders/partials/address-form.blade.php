@@ -9,7 +9,7 @@
     @if (auth('customer')->check())
         <div class="form-group mb-3">
             @if ($isAvailableAddress)
-                <label class="control-label mb-2" for="address_id">{{ __('Select available addresses') }}:</label>
+{{--                <label class="control-label mb-2" for="address_id">{{ __('Select available addresses') }}:</label>--}}
             @endif
             @php
                 $oldSessionAddressId = old('address.address_id', $sessionAddressId);
