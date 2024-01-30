@@ -10,18 +10,24 @@
                 @include('plugins/ecommerce::orders.partials.logo')
 
                 <div class="thank-you">
-                    <i class="fa fa-check-circle" aria-hidden="true"></i>
-                    <div class="d-inline-block">
-                        <h3 class="thank-you-sentence">
-                            {{ __('Your order is successfully placed') }}
+                    <div class="d-block">
+                        <h3 class="thank-you-sentence" style="position:relative">
+                            <i class="fa fa-check-circle" aria-hidden="true" style="font-size:5em;color:#71d782"></i>
+                            <div style="position: absolute;top:0px;font-size:larger;left:122px">
+                                <h3>{{ __('Your order is successfully placed') }}</h3>
+                                <p>{{ __('Nel caso in cui tu ne avessi necessità, hai la possibilità di apportare modifiche al tuo ordine per i prossimi 30 minuti.') }}</p>
+                            </div>
+
                         </h3>
-                        <p>{{ __('Thank you for purchasing our products!') }}</p>
                     </div>
                 </div>
 
                 @include('plugins/ecommerce::orders.thank-you.customer-info', compact('order'))
 
-                <a href="{{ route('public.index') }}" class="btn payment-checkout-btn"> {{ __('Continue shopping') }} </a>
+{{--                <a href="{{ route('public.index') }}" class="btn payment-checkout-btn"> {{ __('Continue shopping') }} </a>--}}
+
+                <a href="https://marigopharma.marigo.collaudo.biz/customer/orders" class="btn payment-checkout-btn"style="background:#005BA1"> {{ __('I tuoi ordini') }} </a>
+
             </div>
 
         </div>
