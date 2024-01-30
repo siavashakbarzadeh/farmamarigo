@@ -220,7 +220,7 @@
     <div class="tab-style3">
         <ul class="nav nav-tabs text-uppercase">
             <li class="nav-item">
-                <a class="nav-link active" id="Description-tab" data-bs-toggle="tab" href="#Description">{{ __('Description') }}</a>
+{{--                <a class="nav-link active" id="Description-tab" data-bs-toggle="tab" href="#Description">{{ __('Description') }}</a>--}}
             </li>
             @if (EcommerceHelper::isReviewEnabled())
                 <li class="nav-item">
