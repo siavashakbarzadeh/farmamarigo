@@ -205,26 +205,30 @@
         {{--        @endif --}}
 
         <div class="col-lg-12 widget-filter-item mt-10" data-type="price">
-            <h5 class="mb-5 widget__title" data-title="{{ __('Price') }}">{{ __('Price') }}</h5>
-            <div class="price-filter range">
-                <div class="price-filter-inner">
-                    <div class="slider-range"></div>
-                    <input type="hidden" class="min_price min-range" name="min_price"
-                        value="{{ request()->input('min_price', 0) }}" data-min="0"
-                        data-label="{{ __('Min price') }}" />
-                    <input type="hidden" class="min_price max-range" name="max_price"
-                        value="{{ request()->input('max_price', (int) theme_option('max_filter_price', 5) * get_current_exchange_rate()) }}"
-                        data-max="{{ (int) theme_option('max_filter_price', 5) * get_current_exchange_rate() }}"
-                        data-label="{{ __('Max price') }}" />
-                    <div class="price_slider_amount">
-                        <div class="label-input">
-                            <span class="d-inline-block"> Tra </span>
-                            <span class="from d-inline-block"></span>
-                            <span class="to d-inline-block"></span>
+            <strong style="color: #005ba1;font-size: 16px;font-weight: 700;display: block;" class="mb-1">Prezzo
+            </strong>
+            <div class="container">
+                <div class="price-filter range">
+                    <div class="price-filter-inner">
+                        <div class="slider-range"></div>
+                        <input type="hidden" class="min_price min-range" name="min_price"
+                            value="{{ request()->input('min_price', 0) }}" data-min="0"
+                            data-label="{{ __('Min price') }}" />
+                        <input type="hidden" class="min_price max-range" name="max_price"
+                            value="{{ request()->input('max_price', (int) theme_option('max_filter_price', 5) * get_current_exchange_rate()) }}"
+                            data-max="{{ (int) theme_option('max_filter_price', 5) * get_current_exchange_rate() }}"
+                            data-label="{{ __('Max price') }}" />
+                        <div class="price_slider_amount">
+                            <div class="label-input">
+                                <span class="d-inline-block"> Tra </span>
+                                <span class="from d-inline-block"></span>
+                                <span class="to d-inline-block"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
         {{--            <div class="row"> --}}
         {{--                {!! render_product_swatches_filter([ --}}
