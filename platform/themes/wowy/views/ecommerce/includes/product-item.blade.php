@@ -42,7 +42,7 @@
                             $Image = $defaultImgUrl;
                         }
                     @endphp
-                    @if ($offerDetail)
+                    @if (isset($offerDetail))
 
                         @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
                             <span class="discount-ev"></span>
@@ -105,13 +105,13 @@
             <div class="product-price">
 
                 @if (isset($reserved_price))
-                    @if (!$offerDetail && $reserved_price !== $product->price)
+                    @if (!isset($offerDetail) && $reserved_price !== $product->price)
                         <span>{{ format_price($reserved_price) }}</span>
                         <input type="hidden" name="product_price" class="hidden-product-id"
                             value="{{ $reserved_price }}" />
                         <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
                     @elseif (
-                        $offerDetail &&
+                        isset($offerDetail) &&
                             ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
                             $offerDetail->product_price !== $product->price)
                         <span>{{ format_price($offerDetail->product_price) }}</span>
