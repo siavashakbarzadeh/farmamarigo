@@ -102,7 +102,7 @@
                 <div class="product-price">
                     @csrf
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-8" style="align-self: center">
                             <input type="hidden" name="id" class="hidden-product-id"
                                 value="{{ $product->is_variation || !$product->defaultVariation->product_id ? $product->id : $product->defaultVariation->product_id }}" />
                             @if (isset($reserved_price))
@@ -130,12 +130,12 @@
                         </div>
 
 
-                        <div class="col-4">
+                        <div class="col-4" style="text-align: right">
                             <button type="submit"
                                 class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
                                 type="submit" @if ($product->isOutOfStock()) disabled @endif aria-label='Aggiungi'
-                                style='padding:7px 13px !important'>
-                                <i class="far fa-shopping-bag"></i></button>
+                                style='padding:8px 12px !important'>
+                                <i class="far fa-shopping-bag" style="font-size: larger"></i></button>
                         </div>
                     </div>
 
