@@ -10564,12 +10564,15 @@ html {
 
 .discount-ev {
     position: absolute;
-    right: -36px;
-    top: -20px;
-    width: 110px;
-    height: 53px;
+    left: 10px;
+    top: 7px;
+    width: 40px;
+    height: 20px;
     background: #ec5757;
-    transform: rotate(45deg);
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    font-weight: 300;
 }
 
 .discount-percentage {

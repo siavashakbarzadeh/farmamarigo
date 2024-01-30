@@ -1,4 +1,26 @@
+@php
+use Botble\Ecommerce\Models\OffersDetail;
+use Botble\Ecommerce\Models\Offers;
+@endphp
 @if ($product)
+@php
+if(auth('customer')->user()!==NULL){
+    $userid=auth('customer')->user()->id;
+    $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+    if(isset($pricelist[0])){
+        $reserved_price=$pricelist[0]->final_price;
+
+        $offerDetail=OffersDetail::where('product_id',$product->id)->where('customer_id',$userid)->where('status','active')->first();
+        if($offerDetail){
+            $offer=Offers::find($offerDetail->offer_id);
+            if($offer){
+                $offerType=$offer->offer_type;
+            }
+        }
+
+    }
+}
+@endphp
     <div class="product-cart-wrap mb-30">
         <div class="product-img-action-wrap">
             <div class="product-img product-img-zoom">
@@ -19,6 +41,26 @@
                             $Image=$defaultImgUrl;
                         }
                     @endphp
+                    @if($offerDetail)
+
+                    @if($offerType==1 || $offerType==2 || $offerType==3)
+
+                    <span class="discount-ev"></span>
+                    <span class="discount-percentage">{{ get_sale_percentage($pricelist[0]->final_price, $offerDetail->product_price)}}</span>
+
+                    @elseif ($offerType==4)
+                    <span class="discount-ev"></span>
+                    <span class="discount-percentage">3x2</span>
+                    @elseif ($offerType==5)
+                    <span class="discount-ev"></span>
+                    <span class="discount-percentage"><i class="fa fa-link"></i></span>
+                    @elseif ($offerType==6)
+                    <span class="discount-ev"></span>
+                    <span class="discount-percentage">QTY</span>
+                    @endif
+
+                    @endif
+                    @endif
                     <img class="default-img" src="{{ $Image }}" alt="{{ $product->name }}">
 
                 </a>
@@ -69,20 +111,13 @@
             <!-- {!! apply_filters('ecommerce_before_product_price_in_listing', null, $product) !!} -->
 
             <div class="product-price">
-            @php
-                if(auth('customer')->user()!==NULL){
-                    $userid=auth('customer')->user()->id;
-                    $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
-                    if(isset($pricelist[0])){
-                        $reserved_price=$pricelist[0]->final_price;
-                    }
-                }
-                @endphp
+            
                 @if(isset($reserved_price))
                     @if ($reserved_price !== $product->price)
+                    @if()
                     <span>{{ format_price($reserved_price) }}</span>
                     <input type="hidden" name="product_price" class="hidden-product-id" value="{{ $reserved_price }}"/>
-                        <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                    <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
                     @endif
                 @else
                 <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
