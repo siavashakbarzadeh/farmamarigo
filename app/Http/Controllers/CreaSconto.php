@@ -328,6 +328,7 @@ class CreaSconto extends BaseController
 
     // Intersect and difference with filtered customer IDs
     $finalIntersection = array_values(array_intersect($intersection, $customerIDs));
+    
     $finalDifference = array_values(array_diff($intersection, $finalIntersection));
 
     $data = [
