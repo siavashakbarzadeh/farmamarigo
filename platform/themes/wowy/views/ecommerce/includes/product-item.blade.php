@@ -46,7 +46,7 @@ if(auth('customer')->user()!==NULL){
                     @if($offerType==1 || $offerType==2 || $offerType==3)
 
                     <span class="discount-ev"></span>
-                    <span class="discount-percentage">{{ get_sale_percentage($pricelist[0]->final_price, $offerDetail->product_price)}}</span>
+                    <span class="discount-percentage">{{ get_sale_percentage($pricelist[0]->final_price, $reserved_price)}}</span>
 
                     @elseif ($offerType==4)
                     <span class="discount-ev"></span>
@@ -113,8 +113,17 @@ if(auth('customer')->user()!==NULL){
             <div class="product-price">
             
                 @if(isset($reserved_price))
-                    @if ($reserved_price !== $product->price)
-                    @if()
+                    @if (!$offerDetaail && $reserved_price !== $product->price)
+                    <span>{{ format_price($reserved_price) }}</span>
+                    <input type="hidden" name="product_price" class="hidden-product-id" value="{{ $reserved_price }}"/>
+                    <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                    @else
+
+                    @if($offerDetail && ($offerType==1 || $offerType==2 || $offerType==3) && $offerDetail->product_price !== $product->price)
+                    <span>{{ format_price($offerDetail->product_price) }}</span>
+                    <input type="hidden" name="product_price" class="hidden-product-id" value="{{ ($offerDetail->product_price) ? $offerDetail->product_price : $pricelist[0]->final_price }}"/>
+                    <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                    @endif
                     <span>{{ format_price($reserved_price) }}</span>
                     <input type="hidden" name="product_price" class="hidden-product-id" value="{{ $reserved_price }}"/>
                     <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
