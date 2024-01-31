@@ -25,9 +25,12 @@ class CheckCartRecord
                 // Decode the JSON string from the 'cart' column into an array
                 $cartData = json_decode($cartRecord->cart, true); // true to get an associative array
 
-                if (json_last_error() === JSON_ERROR_NONE) { // Check if JSON decoding was successful
-                    session(['cart' => $cartData]);
-                } else {
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    Cart::instance('cart')->destroy();
+                    foreach($cartData->cart as $product){
+                        Cart::instance('cart')->add($product);
+                    } // Check if JSON decoding was successful
+                    } else {
                     // Handle the error or ignore the cart data if it's not a valid JSON
                 }
             }
