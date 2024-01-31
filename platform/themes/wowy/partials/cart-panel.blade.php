@@ -147,6 +147,8 @@
                                     @else
                                         <span class="d-inline-block">{{ format_price($cartItem->price) }}</span>
                                     @endif
+                                @else
+                                <span class="d-inline-block">{{ format_price($cartItem->price) }}</span>
                                 @endif
 
                             </h3>
