@@ -31,7 +31,6 @@ class CheckCartRecord
                     // Handle the error or ignore the cart data if it's not a valid JSON
                 }
             }
-            dd($cartRecord,session('cart'));
 
             
         }
