@@ -178,7 +178,10 @@
                                                 </ul>
                                             </li>
                                         @else
-                                            <li><a
+                                            <li>
+                                                <i class="fa fa-user mr-5"
+                                                    style="color: rgb(0, 92, 158) !important"></i>
+                                                <a
                                                     href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a>
                                             </li>
                                         @endif
