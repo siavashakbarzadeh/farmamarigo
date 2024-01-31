@@ -3,6 +3,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Botble\Ecommerce\Models\SaveCart;
+use Botble\Ecommerce\Models\Product;
 use Cart;
 
 
@@ -28,6 +29,7 @@ class CheckCartRecord
                 if (json_last_error() === JSON_ERROR_NONE) {
                     Cart::instance('cart')->destroy();
                     foreach($cartData['cart'] as $product){
+                        dd(Product::find($product['id']));
                         Cart::instance('cart')->add($product);
                     } // Check if JSON decoding was successful
                     } else {
