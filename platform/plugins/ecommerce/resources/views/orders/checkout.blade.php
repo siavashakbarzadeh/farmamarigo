@@ -379,14 +379,13 @@ background-color: rgba(0,0,0,0.4);">
                                 <div class="col-md-6 checkout-button-group">
                                     @if (EcommerceHelper::isValidToProcessCheckout())
                                         <button type="submit"
-                                            style='background-color: #005BA1;
+                                            style='background-color:#51b448;
                                         border: none;
                                         border-radius: 50px;
                                         color: #fff;
                                         font-size: 15px;
                                         font-weight: 500;
                                         padding: 12px 40px;'class="btn payment-checkout-btn payment-checkout-btn-step float-end"
-                                            style="background:#51b448"
                                             data-processing-text="{{ __('In lavorazione. attendere prego...') }}"
                                             data-error-header="{{ __('Error') }}">
                                             {{ __("Invia l'ordine") }}
