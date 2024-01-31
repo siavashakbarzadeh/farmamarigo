@@ -20692,3 +20692,13 @@ input.qty-input[type=number] {
 .button-add-to-cart::after {
     content: none;
 }
+
+.cart-dropdown-wrap .shopping-cart-footer .shopping-cart-button a {
+    border-radius: 50px;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 16px 42px 17px;
+}
