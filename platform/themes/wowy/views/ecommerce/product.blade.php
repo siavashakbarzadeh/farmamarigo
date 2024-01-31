@@ -144,7 +144,7 @@
                 <div class="bt-1 border-color-1 mt-15 mb-15"></div>
                 <div class="short-desc mb-30">
                     {{-- {!! apply_filters('ecommerce_before_product_description', null, $product) !!} --}}
-                    {!! BaseHelper::clean($product->description) !!}
+{{--                    {!! BaseHelper::clean($product->description) !!}--}}
                     {{-- {!! apply_filters('ecommerce_after_product_description', null, $product) !!} --}}
                 </div>
 
