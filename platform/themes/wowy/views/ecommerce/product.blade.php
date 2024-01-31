@@ -219,20 +219,20 @@
                             @endif
                         </div>
                         <!-- @if (EcommerceHelper::isCompareEnabled())
-                                <a aria-label="{{ __('Add To Compare') }}" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}"><i class="far fa-exchange-alt"></i></a>
-                            @endif -->
+<a aria-label="{{ __('Add To Compare') }}" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}"><i class="far fa-exchange-alt"></i></a>
+@endif -->
                     </div>
             </div>
             </form>
             <ul class="product-meta font-xs color-grey mt-50">
                 @if ($product->sku)
-                    <li class="mb-5"><span class="d-inline-block" id="product-sku">{{ __('SKU') }}</span>:
+                    <li class="mb-5"><span class="d-inline-block" id="product-sku">Codice</span>:
                         <span>{{ $product->sku }}</span>
                     </li>
                 @endif
 
                 @if ($product->categories->count())
-                    <li class="mb-5"><span class="d-inline-block">{{ __('Categories') }}:</span>
+                    <li class="mb-5"><span class="d-inline-block">{{ __('Category') }}:</span>
                         @foreach ($product->categories as $category)
                             <a href="{{ $category->url }}" title="{{ $category->name }}">{{ $category->name }}</a>
                             @if (!$loop->last)
@@ -456,7 +456,7 @@
 
     </div>
     @endif --}}
-</div>
+    </div>
 </div>
 
 @php
