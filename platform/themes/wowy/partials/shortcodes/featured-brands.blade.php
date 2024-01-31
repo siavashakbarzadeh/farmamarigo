@@ -10,7 +10,7 @@
 
             @foreach ($brands as $brand)
                 <div class="col-6">
-                    <a class="displayManufacturer" href="{{ $brand->website }}">
+                    <a class="displayManufacturer" href="/products?brands={{ $brand->id }}">
                         <img class="displayManufacturerImg" src="{{ RvMedia::getImageUrl($brand->logo ) }}">
                     </a>
                 </div>
