@@ -27,6 +27,10 @@ class CheckCartRecord
             if ($cartRecord && !session()->has('cart') ) {
                 LoginController::staticLogout($user_id);
             }else{
+                $cart = session('cart');
+                if(!isset($cart['cart'])){
+                    LoginController::staticLogout($user_id);
+                }
                 return $next($request);
 
             }
