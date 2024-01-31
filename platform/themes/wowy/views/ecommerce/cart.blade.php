@@ -11,11 +11,11 @@
                                     <table class="table shopping-summery text-center clean table--cart">
                                         <thead>
                                             <tr class="main-heading">
-                                                <th scope="col">{{ __('Image') }}</th>
+                                                <th scope="col"></th>
                                                 <th scope="col">{{ __('Name') }}</th>
-                                                <th scope="col">{{ __('Price') }}</th>
-                                                <th scope="col">{{ __('Quantity') }}</th>
-                                                <th scope="col">{{ __('Subtotal') }}</th>
+                                                <th scope="col">{{ __('Prezzo') }}</th>
+                                                <th scope="col">{{ __('Quantità') }}</th>
+                                                <th scope="col">{{ __('Totale parziale') }}</th>
                                                 <th scope="col">{{ __('Remove') }}</th>
                                             </tr>
                                         </thead>
