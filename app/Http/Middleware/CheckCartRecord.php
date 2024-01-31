@@ -20,7 +20,6 @@ class CheckCartRecord
         if ($user=$request->user('customer')) {
             $user_id = $user->id;
             $cartRecord = SaveCart::where('user_id', $user_id)->first();
-            dd($cartRecord,session('cart'));
 
             if ($cartRecord) {
                 // Decode the JSON string from the 'cart' column into an array
@@ -32,6 +31,8 @@ class CheckCartRecord
                     // Handle the error or ignore the cart data if it's not a valid JSON
                 }
             }
+            dd($cartRecord,session('cart'));
+
             
         }
         return $next($request);
