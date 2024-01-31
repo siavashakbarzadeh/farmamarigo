@@ -34,8 +34,14 @@ class OrderIncompleteTable extends OrderTable
             ->editColumn('user_id', function ($item) {
                 return BaseHelper::clean($item->user->name ?: $item->address->name);
             })
+            ->editColumn('user_codice', function ($item) {
+                return BaseHelper::clean($item->user->codice ?: $item->user->name);
+            })
+            ->editColumn('status', function ($item) {
+                return BaseHelper::clean($item->status->toHtml());
+            })
             ->editColumn('created_at', function ($item) {
-                return BaseHelper::formatDate($item->created_at);
+                return BaseHelper::formatDate($item->created_at, 'd/m/Y H:i');
             })
             ->addColumn('operations', function ($item) {
                 $viewButton = Html::link(
@@ -50,19 +56,21 @@ class OrderIncompleteTable extends OrderTable
                     false
                 )->toHtml();
 
-                return $this->getOperations(null, 'orders.destroy', $item, $viewButton);
+                return $this->getOperations('orders.edit', 'orders.destroy', $item, $viewButton);
             })
             ->filter(function ($query) {
                 $keyword = $this->request->input('search.value');
                 if ($keyword) {
                     return $query
                         ->whereHas('address', function ($subQuery) use ($keyword) {
-                            return $subQuery->where('name', 'LIKE', '%' . $keyword . '%');
+                            return $subQuery->where('name', 'LIKE', '%' . $keyword . '%')->where('is_finished',0);
                         })
                         ->orWhereHas('user', function ($subQuery) use ($keyword) {
-                            return $subQuery->where('name', 'LIKE', '%' . $keyword . '%');
+                            return $subQuery->where(function ($subQuery1) use ($keyword) {
+                                $subQuery1->orWhere('codice', 'LIKE', '%' . $keyword . '%');
+                            })->where('is_finished',1);
                         })
-                        ->orWhere('code', 'LIKE', '%' . $keyword . '%');
+                        ->orWhere('code', 'LIKE', '%' . $keyword . '%')->where('is_finished',0);
                 }
 
                 return $query;
@@ -74,14 +82,16 @@ class OrderIncompleteTable extends OrderTable
     public function query(): Relation|Builder|QueryBuilder
     {
         $query = $this->repository->getModel()
+            ->where('is_finished',0)
             ->select([
                 'id',
                 'user_id',
+                'status',
                 'created_at',
                 'amount',
             ])
-            ->with(['user'])
-            ->where('is_finished', 0);
+            ->with(['user']);
+            
 
         return $this->applyScopes($query);
     }
@@ -110,12 +120,21 @@ class OrderIncompleteTable extends OrderTable
                 'title' => trans('plugins/ecommerce::order.customer_label'),
                 'class' => 'text-start',
             ],
+            'user_codice' => [
+                'title' => "Codice Cliente",
+                'class' => 'text-start',
+            ],
             'amount' => [
-                'title' => trans('plugins/ecommerce::order.amount'),
+                'title' => "Imponibile",
+                'class' => 'text-center',
+            ],
+            'status' => [
+                'title' => "SATATO",
                 'class' => 'text-center',
             ],
             'created_at' => [
-                'title' => trans('core/base::tables.created_at'),
+                'title' => 'CREATO_IL',
+
                 'width' => '100px',
                 'class' => 'text-start',
             ],
