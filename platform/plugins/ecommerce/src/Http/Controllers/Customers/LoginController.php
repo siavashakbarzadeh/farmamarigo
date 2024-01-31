@@ -154,7 +154,7 @@ class LoginController extends Controller
         session()->flush();
     
         // Assuming you're using the default guard, you can call the Auth facade statically
-        Auth::guard()->logout();
+        auth('customer')->logout();
     
         // Since there's no $request object available in this static context, 
         // you can't directly call loggedOut($request). You might need to adjust this part.
