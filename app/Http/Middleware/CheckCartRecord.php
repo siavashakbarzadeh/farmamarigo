@@ -28,8 +28,8 @@ class CheckCartRecord
 
                 if (json_last_error() === JSON_ERROR_NONE) {
                     Cart::instance('cart')->destroy();
-                    foreach($cartData['cart'] as $product){
-                        dd(Product::find($product['id']));
+                    foreach($cartData['cart'] as $productInRecord){
+                        $product=Product::find($productInRecord['id']);
                         Cart::instance('cart')->add($product);
                     } // Check if JSON decoding was successful
                     } else {
