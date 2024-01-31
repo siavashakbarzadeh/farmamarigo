@@ -1,5 +1,5 @@
 @php
-    use App\Http\Controllers\suggestionController;
+    use App\Http\Controllers\SuggestionController;
     use Botble\Ecommerce\Models\OffersDetail;
     use Botble\Ecommerce\Models\Offers;
     use Botble\Ecommerce\Models\Product;
@@ -11,7 +11,7 @@
             $userid = 2621;
         }
         if (!CarouselProducts::where('customer_id', $userid)->exists()) {
-            $discountedProducts = suggestionController::getProduct($userid);
+            $discountedProducts = SuggestionController::getProduct($userid);
         } else {
             $productIds = CarouselProducts::where('customer_id', $userid)->pluck('product_id');
             $discountedProducts = Product::whereIn('id', $productIds)->get();

@@ -1,12 +1,12 @@
 @php
-use App\Http\Controllers\suggestionController;
-use Botble\Ecommerce\Models\OffersDetail;
-use Botble\Ecommerce\Models\Offers;
-use Botble\Ecommerce\Models\Product;
-use Botble\Ecommerce\Models\CarouselProducts;
+    use App\Http\Controllers\SuggestionController;
+    use Botble\Ecommerce\Models\OffersDetail;
+    use Botble\Ecommerce\Models\Offers;
+    use Botble\Ecommerce\Models\Product;
+    use Botble\Ecommerce\Models\CarouselProducts;
 
-$userid=request()->user('customer')->id;
-if (auth('customer')->user() !== null) {
+    $userid = request()->user('customer')->id;
+    if (auth('customer')->user() !== null) {
         $userid = auth('customer')->user()->id;
         $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
         if (isset($pricelist[0])) {
