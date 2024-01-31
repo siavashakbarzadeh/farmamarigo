@@ -18,7 +18,7 @@
         }
     }
 @endphp
-<section class="mt-60 mb-60">
+<section class="mt-60 mb-20">
     <div class="container">
         <div class="row">
             <div class="col-12 section--shopping-cart">
