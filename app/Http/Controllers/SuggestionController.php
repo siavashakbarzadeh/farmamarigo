@@ -50,18 +50,18 @@ class SuggestionController extends Controller
 
     public static function getProduct($userId=11)
 {
-    $lastRecord = offerType::latest()->first();
+    // $lastRecord = offerType::latest()->first();
 
-    $navigatedProducts = self::getProductsById(
-        DB::connection('mysql')->table('ec_suggestion_data')
-            ->select('href', DB::raw('COUNT(*) as interaction_count'))
-            ->where('user', $userId)
-            ->groupBy('href')
-            ->orderByDesc('interaction_count')
-            ->take(100)
-            ->pluck('href')
-            ->toArray()
-    );
+    // $navigatedProducts = self::getProductsById(
+    //     DB::connection('mysql')->table('ec_suggestion_data')
+    //         ->select('href', DB::raw('COUNT(*) as interaction_count'))
+    //         ->where('user', $userId)
+    //         ->groupBy('href')
+    //         ->orderByDesc('interaction_count')
+    //         ->take(100)
+    //         ->pluck('href')
+    //         ->toArray()
+    // );
 
     $discountedProducts = self::getProductsById(
         DB::connection('mysql')->table('ec_pricelist')
@@ -72,37 +72,37 @@ class SuggestionController extends Controller
 
     );
 
-    $expiry_limit = $lastRecord->expiry_limit;
-    $expiringProducts = [];
-    if (in_array($expiry_limit, [1, 3, 6])) {
-        $expiringProducts = self::getProductsBySku(
-            DB::connection('mysql')->table('ec_oldProducts')
-                ->where('client_id', $userId)
-                ->whereNotNull('scadenza')
-                ->whereRaw("scadenza <= CURRENT_DATE + INTERVAL {$expiry_limit} MONTH")
-                ->pluck('product')
-                ->toArray()
-        );
-    }
+    // $expiry_limit = $lastRecord->expiry_limit;
+    // $expiringProducts = [];
+    // if (in_array($expiry_limit, [1, 3, 6])) {
+    //     $expiringProducts = self::getProductsBySku(
+    //         DB::connection('mysql')->table('ec_oldProducts')
+    //             ->where('client_id', $userId)
+    //             ->whereNotNull('scadenza')
+    //             ->whereRaw("scadenza <= CURRENT_DATE + INTERVAL {$expiry_limit} MONTH")
+    //             ->pluck('product')
+    //             ->toArray()
+    //     );
+    // }
 
-    $productTypes = [
-        'Offers' => $discountedProducts,
-        'Expiring' => $expiringProducts,
-        'Navigated' => $navigatedProducts
-    ];
+    // $productTypes = [
+    //     'Offers' => $discountedProducts,
+    //     'Expiring' => $expiringProducts,
+    //     'Navigated' => $navigatedProducts
+    // ];
 
-    $firstPr = $productTypes[$lastRecord->First] ?? [];
-    $secondPr = $productTypes[$lastRecord->Second] ?? [];
-    $thirdPr = $productTypes[$lastRecord->Third] ?? [];
+    // $firstPr = $productTypes[$lastRecord->First] ?? [];
+    // $secondPr = $productTypes[$lastRecord->Second] ?? [];
+    // $thirdPr = $productTypes[$lastRecord->Third] ?? [];
 
-    $array_to_show = [];
-    foreach ([$firstPr, $secondPr, $thirdPr] as $pr) {
-        $array_to_show = array_merge($array_to_show, $pr);
-    }
+    // $array_to_show = [];
+    // foreach ([$firstPr, $secondPr, $thirdPr] as $pr) {
+    //     $array_to_show = array_merge($array_to_show, $pr);
+    // }
 
-    $array_to_show = array_slice(array_unique($array_to_show), 0, $lastRecord->show);
-    $array_to_show = array_filter($array_to_show);
-
+    // $array_to_show = array_slice(array_unique($array_to_show), 0, $lastRecord->show);
+    // $array_to_show = array_filter($array_to_show);
+    $array_to_show = $discountedProducts ;
     foreach ($array_to_show as $item) {
         $carousel = new CarouselProducts();
         $carousel->customer_id = $userId;
