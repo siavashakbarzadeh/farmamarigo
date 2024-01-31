@@ -370,7 +370,7 @@
                     <p>{{ __('No reviews!') }}</p>
                 @endif --}}
         <!--comment form-->
-        <div class="comment-form" @if (!$product->reviews_count) style="border: none" @endif>
+        {{-- <div class="comment-form" @if (!$product->reviews_count) style="border: none" @endif>
             <h4 class="mb-15">{{ __('Add a review') }}</h4>
             <div class="row">
                 <div class="col-lg-8 col-md-12">
@@ -455,7 +455,7 @@
         </div>
 
     </div>
-    @endif
+    @endif --}}
 </div>
 </div>
 
