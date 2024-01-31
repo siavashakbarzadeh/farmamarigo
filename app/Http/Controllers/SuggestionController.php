@@ -14,7 +14,7 @@ use Botble\Ecommerce\Models\CarouselProducts;
 
 
 
-
+ 
 class suggestionController extends Controller
 {
 
