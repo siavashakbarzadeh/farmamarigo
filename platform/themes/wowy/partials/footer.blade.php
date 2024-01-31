@@ -494,6 +494,51 @@
 
 
     });
+
+
+    $(document).ready(function() {
+        // Handle hover event
+        $('.product-cart-wrap').hover(
+            function() {
+                var href = $(this).find('.hidden-product-id').val();
+                axios.post('/saveInteraction', {
+                        href: href,
+                        action: 'hover'
+                    })
+                    .then(function(response) {
+                        console.log(response.data);
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            },
+            function() {
+                // Code for "mouseleave" event goes here
+            }
+        );
+
+        $('.product-cart-wrap .button-add-to-cart').click(function() {
+            var href = $(this).find('.hidden-product-id').val();
+            axios.post('/saveInteraction', {
+                    href: href,
+                    action: 'basket'
+                })
+                .then(function(response) {
+                    console.log(response.data);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        });
+
+
+
+
+
+    });
+
+
+
     const cards = document.querySelectorAll('.product-content-wrap h2');
     const maxHeight = Math.max(...Array.from(cards).map(card => card.offsetHeight));
     cards.forEach(card => card.style.height = `${maxHeight}px`);

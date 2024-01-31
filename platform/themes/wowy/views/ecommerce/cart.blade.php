@@ -1,3 +1,22 @@
+use App\Http\Controllers\suggestionController;
+use Botble\Ecommerce\Models\OffersDetail;
+use Botble\Ecommerce\Models\Offers;
+use Botble\Ecommerce\Models\Product;
+use Botble\Ecommerce\Models\CarouselProducts;
+use Botble\Ecommerce\Models\SPC;
+        if(request()->user('customer')){
+        $userid=request()->user('customer')->id;
+        if($userid==11 || $userid==13){
+            $userid=2621;
+        }
+        if(!CarouselProducts::where('customer_id',$userid)->exists()){
+            $discountedProducts=suggestionController::getProduct($userid);
+        }else{
+            $productIds=CarouselProducts::where('customer_id',$userid)->pluck('product_id');
+            $discountedProducts=Product::whereIn('id',$productIds)->get();
+        }
+        }
+@endphp
 <section class="mt-60 mb-60">
     <div class="container">
         <div class="row">
@@ -332,17 +351,20 @@
     </div>
 </section>
 
-@if (count($crossSellProducts) > 0)
-    <div class="row mt-60">
-        <div class="col-12">
-            <h3 class="section-title style-1 mb-30">{{ __('You may also like') }}</h3>
-        </div>
-        @foreach ($crossSellProducts as $crossProduct)
-            <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-                @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.product-item', [
-                    'product' => $crossProduct,
-                ])
-            </div>
+@if (request()->user('customer'))
+
+<div class="row">
+    <center>
+        <h4 class="title-discounted mb-30" style="color:#005BA1; ">
+            <i class="fas fa-circle" style="animation:pulse-blue 2s infinite;border-radius:10px"></i> &nbsp; &nbsp;
+            Pensiamo che questi prodotti potrebbero interessarti
+        </h4>
+    </center>
+    <div class="owl-carousel owl-theme discounted-carousel ">
+    @foreach($discountedProducts as $discountedProduct)
+            @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.cart-related-product-items', ['product' => $discountedProduct])
         @endforeach
     </div>
-@endif
+</div>
+
+@endif 

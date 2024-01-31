@@ -22,6 +22,8 @@ use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\CaptchaHandler;
 use Botble\Ecommerce\Http\Controllers\Fronts\PublicCheckoutController;
 use Botble\Ecommerce\Http\Controllers\Fronts\PublicCartController;
+use App\Http\Controllers\suggestionController;
+
 
 
 
@@ -229,3 +231,6 @@ Route::prefix('/admin/ecommerce/mail-log')
     });
 
     Route::get('/empty-cart', [PublicCartController::class, 'emptyCart']);
+
+
+    Route::post('/saveInteraction', [suggestionController::class, 'saveInteraction']);
