@@ -24,13 +24,14 @@ class CheckCartRecord
             $user_id = $user->id;
             $cartRecord = SaveCart::where('user_id', $user_id)->first();
 
-            if ($cartRecord ) {
-
-                dd(Cart::instance('cart')->content() == []);
+            if ($cartRecord && !session()->has('cart') ) {
+                LoginController::staticLogout($user_id);
+            }else{
+                return $next($request);
 
             }
-            
         }
         return $next($request);
+
     }
 }
