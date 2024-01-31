@@ -12,11 +12,12 @@ class CheckCartRecord
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, \Closure $next) // Note: \Closure is used directly here
     {
-        if ($user=$request->user('customer')) {
-            $user_id = $user->id;
+        if (Auth::check()) {
+            $user_id = Auth::id();
             $cartRecord = SaveCart::where('user_id', $user_id)->first();
+
             if ($cartRecord) {
                 session(['cart' => $cartRecord->cart]);
             }
