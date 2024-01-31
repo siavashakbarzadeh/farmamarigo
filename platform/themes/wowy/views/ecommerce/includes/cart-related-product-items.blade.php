@@ -32,7 +32,7 @@
     <div class="product-cart-wrap mb-30">
         <div class="product-img-action-wrap">
             <div class="row">
-                <div class="col-3">
+                <div class="col-5">
                     <div class="product-img product-img-zoom">
                         <a href="{{ $product->url }}">
                             @php
@@ -71,86 +71,87 @@
                         @endif
                     </div>
                 </div>
-            </div>
-            <div class="col-9">
-                <div class="product-content-wrap">
-                    @php $category = $product->categories->sortByDesc('id')->first(); @endphp
-                    <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>
+                <div class="col-7">
+                    <div class="product-content-wrap">
+                        @php $category = $product->categories->sortByDesc('id')->first(); @endphp
+                        <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>
 
-                    {{-- @if (EcommerceHelper::isReviewEnabled())
-                        <div class="rating_wrap">
-                            <div class="rating">
-                                <div class="product_rate" style="width: {{ $product->reviews_avg * 20 }}%"></div>
+                        {{-- @if (EcommerceHelper::isReviewEnabled())
+                            <div class="rating_wrap">
+                                <div class="rating">
+                                    <div class="product_rate" style="width: {{ $product->reviews_avg * 20 }}%"></div>
+                                </div>
+                                <span class="rating_num">({{ $product->reviews_count }})</span>
                             </div>
-                            <span class="rating_num">({{ $product->reviews_count }})</span>
-                        </div>
-                    @endif --}}
+                        @endif --}}
 
-                    <!-- {!! apply_filters('ecommerce_before_product_price_in_listing', null, $product) !!} -->
-                    <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
-                        <div class="product-price">
-                            @csrf
-                            <div class="row">
-                                <div class="col-8" style="align-self: center">
-                                    <input type="hidden" name="id" class="hidden-product-id"
-                                        value="{{ $product->is_variation || !$product->defaultVariation->product_id ? $product->id : $product->defaultVariation->product_id }}" />
-                                    @if (isset($reserved_price))
-                                        @if (!isset($offerDetail) && $reserved_price !== $product->price)
-                                            <span>{{ format_price($reserved_price) }}</span>
+                        <!-- {!! apply_filters('ecommerce_before_product_price_in_listing', null, $product) !!} -->
+                        <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
+                            <div class="product-price">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-8" style="align-self: center">
+                                        <input type="hidden" name="id" class="hidden-product-id"
+                                            value="{{ $product->is_variation || !$product->defaultVariation->product_id ? $product->id : $product->defaultVariation->product_id }}" />
+                                        @if (isset($reserved_price))
+                                            @if (!isset($offerDetail) && $reserved_price !== $product->price)
+                                                <span>{{ format_price($reserved_price) }}</span>
+                                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                                    value="{{ $reserved_price }}" />
+                                                <span
+                                                    class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                                            @elseif (isset($offerDetail) &&
+                                                    ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
+                                                    $offerDetail->product_price !== $product->price)
+                                                <span>{{ format_price($offerDetail->product_price) }}</span>
+                                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                                    value="{{ $offerDetail->product_price ? $offerDetail->product_price : $pricelist[0]->final_price }}" />
+                                                <span
+                                                    class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                                            @elseif ($offerDetail && ($offerType != 1 || $offerType != 2 || $offerType != 3))
+                                                <span>{{ format_price($reserved_price) }}</span>
+                                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                                    value="{{ $reserved_price }}" />
+                                                <span
+                                                    class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                                            @endif
+                                        @else
                                             <input type="hidden" name="product_price" class="hidden-product-id"
-                                                value="{{ $reserved_price }}" />
-                                            <span
-                                                class="old-price">{{ format_price($product->price_with_taxes) }}</span>
-                                        @elseif (isset($offerDetail) &&
-                                                ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
-                                                $offerDetail->product_price !== $product->price)
-                                            <span>{{ format_price($offerDetail->product_price) }}</span>
-                                            <input type="hidden" name="product_price" class="hidden-product-id"
-                                                value="{{ $offerDetail->product_price ? $offerDetail->product_price : $pricelist[0]->final_price }}" />
-                                            <span
-                                                class="old-price">{{ format_price($product->price_with_taxes) }}</span>
-                                        @elseif ($offerDetail && ($offerType != 1 || $offerType != 2 || $offerType != 3))
-                                            <span>{{ format_price($reserved_price) }}</span>
-                                            <input type="hidden" name="product_price" class="hidden-product-id"
-                                                value="{{ $reserved_price }}" />
-                                            <span
-                                                class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                                                value="{{ $product->front_sale_price_with_taxes }}" />
+                                            <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
                                         @endif
-                                    @else
-                                        <input type="hidden" name="product_price" class="hidden-product-id"
-                                            value="{{ $product->front_sale_price_with_taxes }}" />
-                                        <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
-                                    @endif
+                                    </div>
+
+
+                                    <div class="col-4" style="text-align: right">
+                                        <button type="submit"
+                                            class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
+                                            type="submit" @if ($product->isOutOfStock()) disabled @endif
+                                            aria-label='Aggiungi' style='padding:8px 12px !important'>
+                                            <i class="far fa-shopping-bag" style="font-size: larger"></i></button>
+                                    </div>
                                 </div>
 
 
-                                <div class="col-4" style="text-align: right">
+                            </div>
+
+                            {!! apply_filters('ecommerce_after_product_price_in_listing', null, $product) !!}
+
+                            @if (EcommerceHelper::isCartEnabled())
+                                {{-- <div class="product-action-1 show " @if (!EcommerceHelper::isReviewEnabled()) style="bottom: 10px;" @endif>
                                     <button type="submit"
                                         class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
-                                        type="submit" @if ($product->isOutOfStock()) disabled @endif
-                                        aria-label='Aggiungi' style='padding:8px 12px !important'>
-                                        <i class="far fa-shopping-bag" style="font-size: larger"></i></button>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        {!! apply_filters('ecommerce_after_product_price_in_listing', null, $product) !!}
-
-                        @if (EcommerceHelper::isCartEnabled())
-                            {{-- <div class="product-action-1 show " @if (!EcommerceHelper::isReviewEnabled()) style="bottom: 10px;" @endif>
-                                <button type="submit"
-                                    class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
-                                    type="submit" @if ($product->isOutOfStock()) disabled @endif aria-label='Aggiungi'
-                                    style='padding:0px 9px !important'>
-                                    <i class="far fa-shopping-bag"></i></button>
-        
-                            </div> --}}
-                        @endif
-                    </form>
+                                        type="submit" @if ($product->isOutOfStock()) disabled @endif aria-label='Aggiungi'
+                                        style='padding:0px 9px !important'>
+                                        <i class="far fa-shopping-bag"></i></button>
+            
+                                </div> --}}
+                            @endif
+                        </form>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endif
