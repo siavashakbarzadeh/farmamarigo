@@ -3,6 +3,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Botble\Ecommerce\Models\SaveCart;
+use Cart;
 
 
 class CheckCartRecord
@@ -19,6 +20,7 @@ class CheckCartRecord
         if ($user=$request->user('customer')) {
             $user_id = $user->id;
             $cartRecord = SaveCart::where('user_id', $user_id)->first();
+            dd($cartRecord,session('cart'));
 
             if ($cartRecord) {
                 session(['cart' => $cartRecord->cart]);
