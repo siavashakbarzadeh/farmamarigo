@@ -148,7 +148,7 @@
                                         <span class="d-inline-block">{{ format_price($cartItem->price) }}</span>
                                     @endif
                                 @else
-                                <span class="d-inline-block">{{ format_price($cartItem->price) }}</span>
+                                    <span class="d-inline-block">{{ format_price($cartItem->price) }}</span>
                                 @endif
 
                             </h3>
@@ -184,20 +184,23 @@
         <div class="shopping-cart-total">
             @if (EcommerceHelper::isTaxEnabled())
                 <h5><strong class="d-inline-block">{{ __('IVA esclusa') }}:</strong>
-                    <span>{{ format_price($cartTotal) }}</span></h5>
+                    <span>{{ format_price($cartTotal) }}</span>
+                </h5>
                 <div class="clearfix"></div>
                 <h5><strong class="d-inline-block">{{ __('IVA') }}:</strong>
-                    <span>{{ format_price($cartIva) }}</span></h5>
+                    <span>{{ format_price($cartIva) }}</span>
+                </h5>
                 <div class="clearfix"></div>
                 <h4><strong class="d-inline-block">{{ __('IVA inclusa') }}:</strong> <span
                         class="total-on-dropdown">{{ format_price($cartTotal + $cartIva) }}</span></h4>
             @else
                 <h4><strong class="d-inline-block">{{ __('IVA esclusa') }}:</strong>
-                    <span>{{ format_price($cartTotal) }}</span></h4>
+                    <span>{{ format_price($cartTotal) }}</span>
+                </h4>
             @endif
         </div>
         <div class="shopping-cart-button">
-            <a href="{{ route('public.cart') }}">{{ __("Controlla e concludi l'ordine") }}</a>
+            <a href="{{ route('public.cart') }}" style="color:white">{{ __("Controlla e concludi l'ordine") }}</a>
             {{-- @if (session('tracked_start_checkout'))
                 <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}">{{ __('Checkout') }}</a>
             @endif --}}
