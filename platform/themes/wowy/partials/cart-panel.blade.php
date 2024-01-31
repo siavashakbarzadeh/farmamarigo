@@ -1,4 +1,10 @@
-@if (Cart::instance('cart')->count() > 0)
+@php
+    use Botble\Ecommerce\Models\OffersDetail;
+    use Botble\Ecommerce\Models\Offers;
+    use Botble\Ecommerce\Models\Product;
+@endphp
+
+@if (Cart::instance('cart')->count() > 0 && request()->user('customer'))
     @php
         $products = get_products([
             'condition' => [
@@ -7,40 +13,131 @@
             'with' => ['slugable'],
         ]);
     @endphp
+
     @if (count($products))
+
+    @php
+
+    $cartTotal=Cart::instance('cart')->rawSubTotal();
+    $cartIva=Cart::instance('cart')->rawTax();
+    if(request()->user('customer')){
+        $userid=request()->user('customer')->id;
+        if($userid==11 || $userid==13){
+            $userid=2621;
+        }
+        foreach(Cart::instance('cart')->content() as $key => $cartItem){
+            $product = $products->find($cartItem->id);
+            $offerDetail=OffersDetail::where('product_id',$cartItem->id)->where('customer_id',$userid)->where('status','active')->first();
+            if(auth("customer")->user()){
+                if($offerDetail){
+                $offer=Offers::find($offerDetail->offer_id);
+                if($offer){
+                    $offerType=$offer->offer_type;
+                    if($offerType==4 && $cartItem->qty >=3){
+                        $cartTotal=$cartTotal- ($cartItem->price * floor($cartItem->qty/3));
+                        $tax=str_replace('€', '', $cartItem->tax());
+                        $tax = str_replace(',', '.', $tax);
+                        $cartIva = $cartIva - (floatval($tax) * floor($cartItem->qty/3));
+                    }
+                    if($offerType==6 && $cartItem->qty >= $offerDetail->quantity){
+
+                        $cartIva= $cartIva - ((floatval($cartItem->tax()) * $cartItem->qty)) + (($product->tax->percentage * $offerDetail->product_price / 100 * $cartItem->qty));
+                        $cartTotal=$cartTotal- ($cartItem->price* $cartItem->qty) + ($offerDetail->product_price* $cartItem->qty);
+                    }
+
+                }
+            }
+            }
+
+        }
+    }
+
+    @endphp
         <ul>
             @foreach(Cart::instance('cart')->content() as $key => $cartItem)
                 @php
                     $product = $products->find($cartItem->id);
+
+                    if(request()->user('customer')){
+                        $userid=request()->user('customer')->id;
+                        if($userid==11 || $userid==13){
+                            $userid=2621;
+                        }
+
+                        $offerDetail=OffersDetail::where('product_id',$product->id)->where('customer_id',$userid)->where('status','active')->first();
+                        if($offerDetail){
+                            $offer=Offers::find($offerDetail->offer_id);
+                            if($offer){
+                                $offerType=$offer->offer_type;
+
+                            }
+                        }
+                    }
+
                 @endphp
 
                 @if (!empty($product))
+                @php
+                if (request()->user('customer')){
+                    $pricelist=DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+
+                }
+                @endphp
                     <li>
                         <div class="shopping-cart-img">
                             <a href="{{ $product->original_product->url }}">
                                 @php
-                        $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
-                        $productImgUrl =RvMedia::getImageUrl($product->original_product->image);
-                        $ch = curl_init($productImgUrl);
-                        curl_setopt($ch, CURLOPT_NOBODY, true);
-                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-                        curl_exec($ch);
-                        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                        curl_close($ch);
+                                    $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
+                                    $productImgUrl =RvMedia::getImageUrl($product->original_product->image);
+                                    $ch = curl_init($productImgUrl);
+                                    curl_setopt($ch, CURLOPT_NOBODY, true);
+                                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                                    curl_exec($ch);
+                                    $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                                    curl_close($ch);
 
-                        if($responseCode == 200){
-                            $Image=$productImgUrl;
-                        }else{
-                            $Image=$defaultImgUrl;
-                        }
-                    @endphp
+                                    if($responseCode == 200){
+                                        $Image=$productImgUrl;
+                                    }else{
+                                        $Image=$defaultImgUrl;
+                                    }
+                                @endphp
                                 <img style="width:50px"  alt="{{ $product->name }}" src="{{ $Image }}">
-                            </a>
-                        </div>
+                            </a>                        </div>
                         <div class="shopping-cart-title">
-                            <h6><a href="{{ $product->original_product->url }}">{{ $product->name }}  @if ($product->isOutOfStock()) <span class="stock-status-label">({!! $product->stock_status_html !!})</span> @endif</a></h6>
-                            <h3 style="font-size: small;font-weight: 500;" ><span class="d-inline-block">{{ $cartItem->qty }}</span> <span class="d-inline-block"> x </span> <span class="d-inline-block">{{ format_price($cartItem->price) }}</span> @if ($product->front_sale_price != $product->price)
-                                    <small><del>{{ format_price($product->price) }}</del></small>@endif</h3>
+                            <h6>{{ $product->name }}  @if ($product->isOutOfStock()) <span class="stock-status-label">({!! $product->stock_status_html !!})</span> @endif</h6>
+                            <h3 style="font-size: small;font-weight: 500;">Codice: {{ $product->sku }}</h3>
+                            <h3><span class="d-inline-block">{{ $cartItem->qty }}</span>
+                                <span class="d-inline-block"> x </span>
+                                @if(auth("customer")->user())
+
+                                @if($offerDetail)
+                                    @if($offerType==1 || $offerType==2 || $offerType==3)
+                                    <span class="d-inline-block">{{ format_price($offerDetail->product_price) }}</span>
+                                    <small><del>{{ format_price($pricelist[0]->final_price) }}</del></small>
+                                    @elseif ($offerType==6)
+                                        @if ($cartItem->qty >= $offerDetail->quantity)
+
+                                        <span>{{ format_price($offerDetail->product_price) }}</span>
+                                        <small><del>{{ format_price($pricelist[0]->final_price) }}</del></small>
+                                        @else
+                                        <span>{{ format_price($cartItem->price) }}</span>
+                                        @endif
+
+                                    @elseif($offerType==4)
+                                        <span>{{ format_price($cartItem->price) }}</span>
+                                        <span class="d-block badge badge-secondary" style="background: #E52728;font-size:smaller;color:white">3x2</span>
+                                    @elseif ($offerType==5)
+                                    <span>{{ format_price($cartItem->price) }}</span>
+                                    <span class="d-block badge badge-secondary" style="background: #E52728;font-size:smaller;color:white"><i class="fa fa-link"></i></span>
+
+                                    @endif
+                                @else
+                                    <span class="d-inline-block">{{ format_price($cartItem->price) }}</span>
+                                @endif
+                                @endif
+
+                            </h3>
                             <p class="mb-0"><small>{{ $cartItem->options['attributes'] ?? '' }}</small></p>
 
                             @if (!empty($cartItem->options['options']))
@@ -56,40 +153,34 @@
                             @endif
                         </div>
                         <div class="shopping-cart-delete">
-                            <a href="#" data-url="{{ route('public.cart.remove', $cartItem->rowId) }}" class="remove-cart-item"><i class="fa fa-trash-alt  " style="color: red; font-size: 12pt;"></i></a>
+                            <a href="#" data-url="{{ route('public.cart.remove', $cartItem->rowId) }}" class="remove-cart-item"><i class="fa fa-trash-alt" style="color:red;font-size: smaller;"></i></a>
                         </div>
                     </li>
                 @endif
             @endforeach
+            
+            <a href="/empty-cart" class='mt-5 btn btn-danger btn-outline col-12 empty-card' style='border-radius:50px'>Svuota il Carrello</a>
         </ul>
     @endif
     <div class="shopping-cart-footer">
         <div class="shopping-cart-total">
             @if (EcommerceHelper::isTaxEnabled())
-                <h5><strong class="d-inline-block">{{ __('Sub Total') }}:</strong> <span>{{ format_price(Cart::instance('cart')->rawSubTotal()) }}</span></h5>
+                <h5><strong class="d-inline-block">{{ __('IVA esclusa') }}:</strong> <span>{{ format_price($cartTotal) }}</span></h5>
                 <div class="clearfix"></div>
-                <h5><strong class="d-inline-block">{{ __('Tax') }}:</strong> <span>{{ format_price(Cart::instance('cart')->rawTax()) }}</span></h5>
+                <h5><strong class="d-inline-block">{{ __('IVA') }}:</strong> <span>{{ format_price($cartIva) }}</span></h5>
                 <div class="clearfix"></div>
-                <h4><strong class="d-inline-block">{{ __('Total') }}:</strong> <span>{{ format_price(Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax()) }}</span></h4>
+                <h4><strong class="d-inline-block">{{ __('IVA inclusa') }}:</strong> <span class="total-on-dropdown">{{ format_price($cartTotal + $cartIva) }}</span></h4>
             @else
-                <h4><strong class="d-inline-block">{{ __('Sub Total') }}:</strong> <span>{{ format_price(Cart::instance('cart')->rawSubTotal()) }}</span></h4>
+                <h4><strong class="d-inline-block">{{ __('IVA esclusa') }}:</strong> <span>{{ format_price($cartTotal) }}</span></h4>
             @endif
         </div>
-        <div class="shopping-cart-button col-12">
-{{--            @if(auth()->customer()use)--}}
-{{--            auth()->user()--}}
-            @if(auth('customer')->user())
-                <a class='col-12' style='padding:26px 26px;text-align:center;font-size:16px;font-weight:800;color:white!important' href="{{ route('public.cart') }}">Controlla e concludi l'ordine</a>
-            @else
-                <a class='col-12' style='padding:26px 26px;text-align:center;font-size:16px;font-weight:800;color:white!important' href="{{ route('customer.login') }}">{{ __('Log In / Sign Up') }}</a></li>
-
-            @endif
-
-{{--            @if (session('tracked_start_checkout'))--}}
-{{--                <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}">{{ __('Checkout') }}</a>--}}
-{{--            @endif--}}
+        <div class="shopping-cart-button">
+            <a href="{{ route('public.cart') }}">{{ __("Controlla e concludi l'ordine") }}</a>
+            {{-- @if (session('tracked_start_checkout'))
+                <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}">{{ __('Checkout') }}</a>
+            @endif --}}
         </div>
     </div>
 @else
-    <span>{{ __('No products in the cart.') }}</span>
+    <span>{{ __('Nessun prodotto nel carrello.') }}</span>
 @endif
