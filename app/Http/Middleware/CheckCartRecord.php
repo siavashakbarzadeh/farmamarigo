@@ -26,7 +26,7 @@ class CheckCartRecord
 
             if ($cartRecord ) {
 
-                dd(Cart::instance('cart')->content()->item == []);
+                dd(Cart::instance('cart')->content()->items == []);
 
             }
             
