@@ -213,7 +213,7 @@
                                         {!! Theme::partial('product-categories-select', ['categories' => $categories, 'indent' => null]) !!}
                                     </select>
                                 </div>
-                                <input type="text" name="q" placeholder="{{ __('Search for items…') }}"
+                                <input type="text" name="q" style="border-radius:0px 50px 50px 0" placeholder="{{ __('Search for items…') }}"
                                     autocomplete="off">
                                 <button type="submit"> <i class="far fa-search"></i> </button>
                             </form>
