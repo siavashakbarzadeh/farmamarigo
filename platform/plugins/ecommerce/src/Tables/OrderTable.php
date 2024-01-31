@@ -3,7 +3,9 @@
 namespace Botble\Ecommerce\Tables;
 
 use BaseHelper;
+use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Ecommerce\Enums\OrderStatusEnum;
+use Botble\Ecommerce\Enums\ProductTypeEnum;
 use Botble\Ecommerce\Repositories\Interfaces\OrderHistoryInterface;
 use Botble\Ecommerce\Repositories\Interfaces\OrderInterface;
 use Botble\Table\Abstracts\TableAbstract;
@@ -17,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Mollie\Api\Types\OrderStatus;
 use OrderHelper;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\DataTables;
@@ -26,6 +29,7 @@ class OrderTable extends TableAbstract
     protected $hasActions = true;
 
     protected $hasFilter = true;
+
 
     public function __construct(DataTables $table, UrlGenerator $urlGenerator, OrderInterface $orderRepository)
     {
@@ -66,8 +70,11 @@ class OrderTable extends TableAbstract
             ->editColumn('user_id', function ($item) {
                 return BaseHelper::clean($item->user->name ?: $item->address->name);
             })
+            ->editColumn('user_codice', function ($item) {
+                return BaseHelper::clean($item->user->codice ?: $item->user->name);
+            })
             ->editColumn('created_at', function ($item) {
-                return BaseHelper::formatDate($item->created_at);
+                return BaseHelper::formatDate($item->created_at, 'd/m/Y H:i');
             });
 
         if (EcommerceHelper::isTaxEnabled()) {
@@ -78,17 +85,19 @@ class OrderTable extends TableAbstract
 
         $data = $data
             ->addColumn('operations', function ($item) {
-                return $this->getOperations('orders.edit', 'orders.destroy', $item);
+                return $this->getOperations('orders.edit', 'orders.destroy', $item,"<a href='https://marigolab.it/public/admin/orders/generate-invoice/$item->id' class='btn btn-icon btn-sm btn-primary'><i class='fa fa-download'></i></a>");
             })
             ->filter(function ($query) {
                 $keyword = $this->request->input('search.value');
                 if ($keyword) {
                     return $query
                         ->whereHas('address', function ($subQuery) use ($keyword) {
-                            return $subQuery->where('name', 'LIKE', '%' . $keyword . '%');
+                            return $subQuery->where('name', 'LIKE', '%' . $keyword . '%')->where('is_finished',1);
                         })
                         ->orWhereHas('user', function ($subQuery) use ($keyword) {
-                            return $subQuery->where('name', 'LIKE', '%' . $keyword . '%');
+                            return $subQuery->where(function ($subQuery1) use ($keyword) {
+                                $subQuery1->orWhere('codice', 'LIKE', '%' . $keyword . '%');
+                            })->where('is_finished',1);
                         })
                         ->orWhere('code', 'LIKE', '%' . $keyword . '%');
                 }
@@ -103,6 +112,7 @@ class OrderTable extends TableAbstract
     {
         $query = $this->repository->getModel()
             ->with(['user', 'payment'])
+            ->where('status',OrderStatusEnum::COMPLETED)
             ->select([
                 'id',
                 'status',
@@ -112,8 +122,8 @@ class OrderTable extends TableAbstract
                 'tax_amount',
                 'shipping_amount',
                 'payment_id',
-            ])
-            ->where('is_finished', 1);
+            ]);
+            
 
         return $this->applyScopes($query);
     }
@@ -130,15 +140,19 @@ class OrderTable extends TableAbstract
                 'title' => trans('plugins/ecommerce::order.customer_label'),
                 'class' => 'text-start',
             ],
+            'user_codice' => [
+                'title' => "Codice Cliente",
+                'class' => 'text-start',
+            ],
             'amount' => [
-                'title' => trans('plugins/ecommerce::order.amount'),
+                'title' => "Imponibile",
                 'class' => 'text-center',
             ],
         ];
 
         if (EcommerceHelper::isTaxEnabled()) {
             $columns['tax_amount'] = [
-                'title' => trans('plugins/ecommerce::order.tax_amount'),
+                'title' => "IVA",
                 'class' => 'text-center',
             ];
         }
@@ -148,22 +162,24 @@ class OrderTable extends TableAbstract
                 'title' => trans('plugins/ecommerce::order.shipping_amount'),
                 'class' => 'text-center',
             ],
-            'payment_method' => [
-                'name' => 'payment_id',
-                'title' => trans('plugins/ecommerce::order.payment_method'),
-                'class' => 'text-start',
-            ],
-            'payment_status' => [
-                'name' => 'payment_id',
-                'title' => trans('plugins/ecommerce::order.payment_status_label'),
-                'class' => 'text-center',
-            ],
+            // 'payment_method' => [
+            //     'name' => 'payment_id',
+            //     'title' => trans('plugins/ecommerce::order.payment_method'),
+            //     'class' => 'text-start',
+            // ],
+            // 'payment_status' => [
+            //     'name' => 'payment_id',
+            //     'title' => trans('plugins/ecommerce::order.payment_status_label'),
+            //     'class' => 'text-center',
+            // ],
             'status' => [
-                'title' => trans('core/base::tables.status'),
+                'title' => 'STATO',
+
                 'class' => 'text-center',
             ],
             'created_at' => [
-                'title' => trans('core/base::tables.created_at'),
+                'title' => 'CREATO_IL',
+
                 'width' => '100px',
                 'class' => 'text-start',
             ],
@@ -172,31 +188,8 @@ class OrderTable extends TableAbstract
         return $columns;
     }
 
-//    public function buttons(): array
-//    {
-//        return $this->addCreateButton(route('orders.create'), 'orders.create');
-//    }
-    public function buttons(): array
-    {
 
 
-        $buttons['create'] = [
-            'link' => route('orders.create'),
-            'text' => 'Creare clienti',
-            'permission' => 'orders.create',
-        ];
-        $buttons['exportsql'] = [
-            'link' => route('ecommerce.customExport.order'),
-            'text' => 'Esportare sql',
-        ];
-
-        $buttons['order-to-db'] = [
-            'link' => route('ecommerce.customExport.order-to-db'),
-            'text' => 'Esportare DB',
-        ];
-        return $buttons;
-
-    }
     public function bulkActions(): array
     {
         return $this->addDeleteAction(route('orders.deletes'), 'orders.destroy', parent::bulkActions());
@@ -206,13 +199,15 @@ class OrderTable extends TableAbstract
     {
         return [
             'status' => [
-                'title' => trans('core/base::tables.status'),
+                'title' => 'STATO',
+
                 'type' => 'select',
                 'choices' => OrderStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', OrderStatusEnum::values()),
             ],
             'created_at' => [
-                'title' => trans('core/base::tables.created_at'),
+                'title' => 'CREATO_IL',
+
                 'type' => 'datePicker',
             ],
         ];
@@ -259,5 +254,26 @@ class OrderTable extends TableAbstract
 
         return parent::saveBulkChangeItem($item, $inputKey, $inputValue);
     }
+    public function buttons(): array
+    {
 
+
+        $buttons['create'] = [
+            'link' => route('orders.create'),
+            'text' => 'Creare clienti',
+            'permission' => 'orders.create',
+        ];
+        $buttons['exportsql'] = [
+            'link' => route('ecommerce.customExport.order'),
+            'text' => 'Esportare sql',
+        ];
+
+        $buttons['order-to-db'] = [
+            'link' => route('ecommerce.customExport.order-to-db'),
+            'text' => 'Esportare DB',
+        ];
+
+        return $buttons;
+
+    }
 }
