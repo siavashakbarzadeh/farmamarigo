@@ -187,8 +187,8 @@
                             @if (EcommerceHelper::isCartEnabled())
                                 <button type="submit"
                                     class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
-                                    type="submit"
-                                    @if ($product->isOutOfStock()) disabled @endif>{{ __('Add to cart') }}</button>
+                                    type="submit" @if ($product->isOutOfStock()) disabled @endif>Aggiungi al
+                                    Carello</button>
                                 {{--                                @if (EcommerceHelper::isQuickBuyButtonEnabled()) --}}
                                 {{--                                    <button class="button button-buy-now ms-2 @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" name="checkout" @if ($product->isOutOfStock()) disabled @endif>{{ __('Buy Now') }}</button> --}}
                                 {{--                                @endif --}}
