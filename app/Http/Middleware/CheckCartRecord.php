@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Botble\Ecommerce\Models\SaveCart;
 use Botble\Ecommerce\Models\Product;
 use Cart;
+use Botble\Ecommerce\Http\Controllers\Customers\LoginController;
+
 
 
 class CheckCartRecord
@@ -22,20 +24,11 @@ class CheckCartRecord
             $user_id = $user->id;
             $cartRecord = SaveCart::where('user_id', $user_id)->first();
 
-            if ($cartRecord) {
-                // Decode the JSON string from the 'cart' column into an array
-                $cartData = json_decode($cartRecord->cart, true); // true to get an associative array
+            if ($cartRecord ) {
 
-                if (json_last_error() === JSON_ERROR_NONE) {
-                    Cart::instance('cart')->destroy();
-                    foreach($cartData['cart'] as $productInRecord){
-                        Cart::instance('cart')->add($productInRecord);
-                    } // Check if JSON decoding was successful
-                    } else {
-                    // Handle the error or ignore the cart data if it's not a valid JSON
-                }
+                dd(Cart::instance('cart')->content());
+
             }
-
             
         }
         return $next($request);

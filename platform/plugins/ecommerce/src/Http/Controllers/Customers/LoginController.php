@@ -148,6 +148,14 @@ class LoginController extends Controller
         $this->sendFailedLoginResponse();
     }
 
+    public static function staticLogout($userId){
+
+        $request->session()->flush();
+        $this->guard()->logout();
+        return $this->loggedOut($request) ?: redirect('/');
+
+    }
+
     public function logout(Request $request)
     {
         $userId=$request->user('customer')->id;
