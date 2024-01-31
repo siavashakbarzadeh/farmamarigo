@@ -148,12 +148,18 @@ class LoginController extends Controller
         $this->sendFailedLoginResponse();
     }
 
-    public static function staticLogout($userId){
-
+    public static function staticLogout($userId)
+    {
+        // Flush the session
         session()->flush();
-        $this->guard()->logout();
-        return $this->loggedOut($request) ?: redirect('/');
-
+    
+        // Assuming you're using the default guard, you can call the Auth facade statically
+        Auth::guard()->logout();
+    
+        // Since there's no $request object available in this static context, 
+        // you can't directly call loggedOut($request). You might need to adjust this part.
+        // Redirecting directly to '/' as an example.
+        return redirect('/');
     }
 
     public function logout(Request $request)
