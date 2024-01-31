@@ -18,15 +18,7 @@ class CheckAuthCustomer
     {
         if (!auth('customer')->user()){
             return redirect('/login');
-        }else{
-                $user_id = auth('customer')->user()->id;
-                $cartRecord = SaveCart::where('user_id', $user_id)->first();
-    
-                if ($cartRecord) {
-                    session(['cart' => $cartRecord->cart]);
-                }
-                return $next($request);
-            }
+        }
     
     }
     
