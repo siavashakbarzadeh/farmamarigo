@@ -576,6 +576,37 @@
         return "La password è forte.";
     }
 
+    $('.discounted-carousel').owlCarousel({
+        autoplay: true,
+        autoplayTimeout: 4000,
+        autoplayHoverPause: true,
+        stagePadding: 0,
+        /*the little visible images at the end of the carousel*/
+        loop: true,
+        rtl: false,
+        lazyLoad: true,
+        autoHeight: true,
+        margin: 10,
+        nav: false,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 2
+            },
+            800: {
+                items: 3
+            },
+            1000: {
+                items: 4
+            },
+            1200: {
+                items: 4
+            }
+        }
+    })
+
 
 
     // Select all input fields in the form
