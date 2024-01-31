@@ -20,11 +20,12 @@ class CheckCartRecord
         if ($user=$request->user('customer')) {
             $user_id = $user->id;
             $cartRecord = SaveCart::where('user_id', $user_id)->first();
-            dd($cartRecord,session('cart'));
+
 
             if ($cartRecord) {
                 session(['cart' => $cartRecord->cart]);
             }
+            dd($cartRecord,session('cart'));
         }
         return $next($request);
     }
