@@ -2,7 +2,7 @@
 
 use Botble\Ecommerce\Models\SaveCart;
 
-class CheckCartRecord
+class CheckCartRecord1
 {
     /**
      * Handle an incoming request.
