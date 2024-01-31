@@ -6,7 +6,6 @@
 
 @if (Cart::instance('cart')->count() > 0)
     @php
-        dd(Cart::instance('cart'));
         $products = get_products([
             'condition' => [
                 [
