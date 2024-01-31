@@ -21,6 +21,8 @@ use App\Http\Controllers\CreaSconto;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\CaptchaHandler;
 use Botble\Ecommerce\Http\Controllers\Fronts\PublicCheckoutController;
+use Botble\Ecommerce\Http\Controllers\Fronts\PublicCartController;
+
 
 
 
@@ -225,3 +227,5 @@ Route::prefix('/admin/ecommerce/mail-log')
         $router->post('/download', [MailLogController::class, 'download'])->name('download');
 
     });
+
+    Route::get('/empty-cart', [PublicCartController::class, 'emptyCart']);

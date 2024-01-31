@@ -166,6 +166,13 @@ class PublicCartController extends Controller
             ]);
     }
 
+    public function emptyCart(){
+        Cart::instance('cart')->destroy();
+        SaveCartController::saveCart(session('cart'));
+        return redirect()->back();
+
+    }
+
     public function getView(HandleApplyPromotionsService $applyPromotionsService)
     {
         if(request()->user('customer')){
