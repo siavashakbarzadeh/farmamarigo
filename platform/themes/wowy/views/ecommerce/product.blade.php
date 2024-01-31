@@ -71,9 +71,9 @@
                     <a class="facebook"
                         href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}"
                         target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a class="twitter"
+                    {{-- <a class="twitter"
                         href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ strip_tags(strip_tags(SeoHelper::getDescription())) }}"
-                        target="_blank"><i class="fab fa-twitter"></i></a>
+                        target="_blank"><i class="fab fa-twitter"></i></a> --}}
                     <a class="linkedin"
                         href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode(url()->current()) }}&summary={{ rawurldecode(strip_tags(SeoHelper::getDescription())) }}"
                         target="_blank"><i class="fab fa-linkedin"></i></a>
