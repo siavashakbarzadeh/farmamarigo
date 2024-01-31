@@ -201,7 +201,7 @@
         </div>
         <div class="shopping-cart-button">
             <a class="col-12" href="{{ route('public.cart') }}"
-                style="color:white !important">{{ __("Controlla e concludi l'ordine") }}</a>
+                style="color:white !important; text-align:center">{{ __("Controlla e concludi l'ordine") }}</a>
             {{-- @if (session('tracked_start_checkout'))
                 <a href="{{ route('public.checkout.information', session('tracked_start_checkout')) }}">{{ __('Checkout') }}</a>
             @endif --}}
