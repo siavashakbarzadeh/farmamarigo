@@ -740,6 +740,7 @@ class PublicCheckoutController
                     'currency' => 'EUR',
                     'order_id' => $order->id,
                     'customer_id' => $currentUserId,
+                    'charge_id'=>$order->id,
                     'payment_channel' => $paymentMethod,
                 ];
                 PaymentHelper::storeLocalPayment($arguments);
