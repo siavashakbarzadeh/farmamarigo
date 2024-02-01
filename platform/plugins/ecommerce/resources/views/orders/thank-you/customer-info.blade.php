@@ -1,3 +1,9 @@
+@php
+    use Botble\Payment\Models\Payment;
+    $payment = Payment::where('order_id', $order->id)->first();
+    $paymentStatus = $payment->status;
+    $paymentChannel = $payment->payment_channel;
+@endphp
 <div class="order-customer-info">
     <h3> {{ __('Customer information') }}</h3>
     @if ($order->address->id)
@@ -33,15 +39,17 @@
     @if (!empty($isShowShipping))
         <p>
             <span class="d-inline-block">{{ __('Shipping method') }}:</span>
-            <span class="order-customer-info-meta">{{ $order->shipping_method_name }} - {{ format_price($order->shipping_amount) }}</span>
+            <span class="order-customer-info-meta">{{ $order->shipping_method_name }} -
+                {{ format_price($order->shipping_amount) }}</span>
         </p>
     @endif
     <p>
+
         <span class="d-inline-block">{{ __('Payment method') }}:</span>
-        <span class="order-customer-info-meta">{{ $order->payment->payment_channel->label() }}</span>
+        <span class="order-customer-info-meta">{{ $paymentChannel }}</span>
     </p>
     <p>
         <span class="d-inline-block">{{ __('Payment status') }}:</span>
-        <span class="order-customer-info-meta" style="text-transform: uppercase">{!! $order->payment->status->toHtml() !!}</span>
+        <span class="order-customer-info-meta" style="text-transform: uppercase">{!! $paymentStatus !!}</span>
     </p>
 </div>

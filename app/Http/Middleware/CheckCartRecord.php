@@ -21,7 +21,6 @@ class CheckCartRecord
     public function handle($request, Closure $next)
     {
         return $next($request);
-
         // if ($user=$request->user('customer')) {
         //     $user_id = $user->id;
         //     $cartRecord = SaveCart::where('user_id', $user_id)->first();
