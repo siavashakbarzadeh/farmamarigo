@@ -733,8 +733,17 @@ class PublicCheckoutController
                     return $response->setError()->setMessage(__('Error initiating PayPal payment'));
                 }
             } else {
-                // Handle other payment methods
-                // ...
+
+                $arguments=[
+                    'account_id' => $currentUserId,
+                    'amount' => $amount,
+                    'currency' => 'EUR',
+                    'order_id' => $order->id,
+                    'customer_id' => $currentUserId,
+                    'payment_channel' => $paymentMethod,
+                ];
+                PaymentHelper::storeLocalPayment($arguments);
+
             }
             $order->update([
                 'is_confirmed' => true,
@@ -801,7 +810,7 @@ class PublicCheckoutController
     private function deleteDuplicateOrders($token)
     {
             // 1. Get all orders with is_finished=2.
-            $order = Order::where('status',OrderStatusEnum::RETURNED)->where('token',$token)->first();
+            $order = Order::where('token',$token)->first();
             if($order!=null){
                 $order->delete();
             }
