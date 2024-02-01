@@ -34,8 +34,9 @@ class CheckCartRecord
             }else{
                 return $next($request);
             }
+        }else{
+            return $next($request);
         }
-        return $next($request);
 
     }
 }
