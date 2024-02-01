@@ -91,7 +91,7 @@ return [
         'featured_image' => 'Immagine in primo piano (opzionale)',
         'product_id' => 'Codice prodotto',
     ],
-    'price' => 'Codice prodotto',
+    'price' => 'Prezzo',
     'quantity' => 'Quantità',
     'type' => 'Tipo',
     'image' => 'Miniatura',
