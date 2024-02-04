@@ -96,7 +96,7 @@
                         @php
                             $wishlist = Botble\Ecommerce\Models\Wishlist::where('customer_id', request()->user('customer')->id)
                                 ->where('product_id', $product->id)
-                                ->get();
+                                ->exist();
                             $w_flag = false;
                             if ($wishlist) {
                                 $w_flag = true;
