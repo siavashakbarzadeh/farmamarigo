@@ -25,7 +25,7 @@
                             class="mb-1">Prodotto</strong>
                         <input autofocus style="width:100% !important;border-radius: 5px;font-size: smaller;"
                             type="text" placeholder="Scrivi codice o nome prodotto..." id='search-consumabili'
-                            name="query" autocomplete="off" style="border-radius:26px !important;">
+                            name="q" autocomplete="off" style="border-radius:26px !important;">
                     </form>
                 </div>
             </div>
