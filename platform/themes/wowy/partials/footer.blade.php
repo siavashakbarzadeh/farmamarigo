@@ -495,6 +495,13 @@
 
     });
 
+    $(document).on("keyup", ".search-consumabili", async function() {
+        await $(this).closest('#products-filter-ajax').submit();
+
+
+    });
+
+
 
     $(document).ready(function() {
         // Handle hover event
