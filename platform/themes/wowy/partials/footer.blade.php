@@ -495,7 +495,7 @@
 
     });
 
-    $(document).on("keyup", ".search-consumabili", async function() {
+    $(document).on("keyup", "#search-consumabili", async function() {
         await $(this).closest('#products-filter-ajax').submit();
 
 
