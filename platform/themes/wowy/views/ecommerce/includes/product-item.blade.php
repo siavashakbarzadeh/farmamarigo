@@ -47,7 +47,6 @@
 
                 </a>
                 @if (isset($offerDetail))
-
                     @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
                         <span
                             class="discount-ev">{{ get_sale_percentage($product->price, $pricelist[0]->final_price) }}</span>
@@ -132,12 +131,30 @@
                         </div>
 
                         @if (auth('customer')->user() !== null)
-                            <div class="col-4" style="text-align: right">
+                            <div class="col-2" style="text-align: right">
                                 <button type="submit"
                                     class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
                                     type="submit" @if ($product->isOutOfStock()) disabled @endif
                                     aria-label='Aggiungi' style='padding:8px 12px !important'>
                                     <i class="far fa-shopping-bag" style="font-size: larger"></i></button>
+                            </div>
+                            <div class="col-2" style="text-align: right">
+                                $wishlist=Botble\Ecommerce\Models\Wishlist::where('customer_id',request()->user('customer')->id)->where('product_id',$product->id)->get();
+                                $w_flag=false;
+                                if($wishlist){
+                                $w_flag=true;
+                                }
+                                @if ($w_flag)
+                                    <a href="#"
+                                        class="action-btn hover-up js-remove-from-wishlist-button wishlistremovebtn"
+                                        data-url="{{ route('public.wishlist.remove', $product->id) }}"><i
+                                            style="color:red" class="fas fa-heart"></i></a>
+                                @else
+                                    <a href="#"
+                                        class="action-btn hover-up js-add-to-wishlist-button wishlistaddbtn"
+                                        data-url="{{ route('public.wishlist.add', $product->id) }}"><i
+                                            class="far fa-heart "></i></a>
+                                @endif
                             </div>
                         @else
                             <div class="col-4 " style="text-align: right">
