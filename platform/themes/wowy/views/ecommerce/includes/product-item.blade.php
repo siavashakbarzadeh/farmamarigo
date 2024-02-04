@@ -131,13 +131,22 @@
                             @endif
                         </div>
 
+                        @if (auth('customer')->user() !== null)
+                            <div class="col-4" style="text-align: right">
+                                <button type="submit"
+                                    class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
+                                    type="submit" @if ($product->isOutOfStock()) disabled @endif
+                                    aria-label='Aggiungi' style='padding:8px 12px !important'>
+                                    <i class="far fa-shopping-bag" style="font-size: larger"></i></button>
+                            </div>
+                        @endif
 
-                        <div class="col-4" style="text-align: right">
-                            <button type="submit"
-                                class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
-                                type="submit" @if ($product->isOutOfStock()) disabled @endif aria-label='Aggiungi'
-                                style='padding:8px 12px !important'>
-                                <i class="far fa-shopping-bag" style="font-size: larger"></i></button>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                Effettua il <a href="/login">LOGIN</a> per acquistare.
+                            </p>
                         </div>
                     </div>
 
