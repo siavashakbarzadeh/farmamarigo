@@ -700,9 +700,18 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
         if(array_key_exists('wishlist',$filters) && is_array($filters['wishlist']) && (array_key_exists('wish',$filters) && $filters['wish']==1)){
             $this->model = $this->model->whereIn('ec_products.id',$filters['wishlist']);
         }
+
         if(array_key_exists('discounted',$filters) && is_array($filters['discounted']) && (array_key_exists('disc',$filters) && $filters['disc']==1)){
             if(count($filters['discounted'])){
                 $this->model = $this->model->whereIn('ec_products.id',$filters['discounted']);
+            }else{
+                $this->model = $this->model->whereRaw('1 = 0');
+            }
+        }
+
+        if(array_key_exists('recenti',$filters) && is_array($filters['recenti'])){
+            if(count($filters['recenti'])){
+                $this->model = $this->model->whereIn('ec_products.id',$filters['recenti']);
             }else{
                 $this->model = $this->model->whereRaw('1 = 0');
             }
@@ -783,116 +792,7 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
                 $attributeId = (int)$attributeId;
             }
 
-            if(array_key_exists('recenti',$filters) && is_array($filters['recenti']) && count($filters['recenti'])){
-                $this->model = $this->model->whereIn('ec_products.id',$filters['recenti']);
 
-                $userId = $filters['user_id'];  // Replace with the user_id you're interested in.
-                $query = "
-                SELECT fk_articolo_id, COUNT(fk_articolo_id) AS frequency
-                FROM cli_acquistato
-                WHERE fk_cliente_id = ?
-                GROUP BY fk_articolo_id
-                ORDER BY frequency DESC, fk_articolo_id;
-                ";
-            
-                $results = DB::connection('mysql2')->select($query, [$userId]);
-
-                $productIds = array_column($results, 'fk_articolo_id'); // Extract the product IDs from the result.
-
-                if(!empty($productIds)){
-                    $this->model = $this->model->join(DB::raw('
-                    (
-                        SELECT DISTINCT
-                            `ec_products`.id,
-                            CASE
-                                WHEN (
-                                    ec_products.sale_type = 0 AND
-                                    ec_products.sale_price <> 0
-                                ) THEN ec_products.sale_price
-                                WHEN (
-                                    ec_products.sale_type = 0 AND
-                                    ec_products.sale_price = 0
-                                ) THEN ec_products.price
-                                WHEN (
-                                    ec_products.sale_type = 1 AND
-                                    (
-                                        ec_products.start_date > ' . esc_sql($now) . ' OR
-                                        ec_products.end_date < ' . esc_sql($now) . '
-                                    )
-                                ) THEN ec_products.price
-                                WHEN (
-                                    ec_products.sale_type = 1 AND
-                                    ec_products.start_date <= ' . esc_sql($now) . ' AND
-                                    ec_products.end_date >= ' . esc_sql($now) . '
-                                ) THEN ec_products.sale_price
-                                WHEN (
-                                    ec_products.sale_type = 1 AND
-                                    ec_products.start_date IS NULL AND
-                                    ec_products.end_date >= ' . esc_sql($now) . '
-                                ) THEN ec_products.sale_price
-                                WHEN (
-                                    ec_products.sale_type = 1 AND
-                                    ec_products.start_date <= ' . esc_sql($now) . ' AND
-                                    ec_products.end_date IS NULL
-                                ) THEN ec_products.sale_price
-                                ELSE ec_products.price
-                            END AS final_price
-                        FROM `ec_products`
-                        WHERE `ec_products`.id IN (' . implode(',', $productIds) . ')
-                    ) AS products_with_final_price
-                '), function ($join) {
-                    return $join->on('products_with_final_price.id', '=', 'ec_products.id');
-                })->orderBy(DB::raw('FIELD(`ec_products`.`id`, ' . implode(',', $productIds) . ')'));
-                }else{
-                    $this->model = $this->model->whereRaw('1 = 0');
-                }
-                
-
-            }else{
-
-
-                $this->model = $this->model->join(DB::raw('
-                (
-                    SELECT DISTINCT
-                        `ec_products`.id,
-                        CASE
-                            WHEN (
-                                ec_products.sale_type = 0 AND
-                                ec_products.sale_price <> 0
-                            ) THEN ec_products.sale_price
-                            WHEN (
-                                ec_products.sale_type = 0 AND
-                                ec_products.sale_price = 0
-                            ) THEN ec_products.price
-                            WHEN (
-                                ec_products.sale_type = 1 AND
-                                (
-                                    ec_products.start_date > ' . esc_sql($now) . ' OR
-                                    ec_products.end_date < ' . esc_sql($now) . '
-                                )
-                            ) THEN ec_products.price
-                            WHEN (
-                                ec_products.sale_type = 1 AND
-                                ec_products.start_date <= ' . esc_sql($now) . ' AND
-                                ec_products.end_date >= ' . esc_sql($now) . '
-                            ) THEN ec_products.sale_price
-                            WHEN (
-                                ec_products.sale_type = 1 AND
-                                ec_products.start_date IS NULL AND
-                                ec_products.end_date >= ' . esc_sql($now) . '
-                            ) THEN ec_products.sale_price
-                            WHEN (
-                                ec_products.sale_type = 1 AND
-                                ec_products.start_date <= ' . esc_sql($now) . ' AND
-                                ec_products.end_date IS NULL
-                            ) THEN ec_products.sale_price
-                            ELSE ec_products.price
-                        END AS final_price
-                    FROM `ec_products`
-                ) AS products_with_final_price
-            '), function ($join) {
-                return $join->on('products_with_final_price.id', '=', 'ec_products.id');
-            });
             
             $this->model = $this->model
                 ->join(
@@ -934,7 +834,7 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
 
         return $this->advancedGet($params);
     }
-}
+
 
     public function getProductsByIds(array $ids, array $params = [])
     {
