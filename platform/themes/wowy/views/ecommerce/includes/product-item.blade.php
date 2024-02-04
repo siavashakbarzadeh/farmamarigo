@@ -142,8 +142,8 @@
                         @else
                             <div class="col-4 " style="text-align: right">
                                 <a class="btn" href="/login"
-                                    style="padding:8px 12px !important; border-radius:50px;">
-                                    <span class="color:white">Login</span>
+                                    style="padding:10px 4px !important; border-radius:50px;">
+                                    <span style="color:white;font-size:smaller;font-weight:600">Login</span>
                                 </a>
                             </div>
                         @endif
