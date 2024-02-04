@@ -142,7 +142,8 @@
                         @else
                             <div class="col-4" style="text-align: right">
                                 <a href="/login">
-                                    <button aria-label='Login' style='padding:8px 12px !important'>
+                                    <button class="btn" aria-label='Login'
+                                        style='padding:8px 12px !important; border-radius:50px;'>
                                         <i class="fas fa-user" style="font-size: larger"></i>
                                     </button>
                                 </a>
