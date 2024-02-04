@@ -10,6 +10,10 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Botble\Ecommerce\Models\Wishlist;
+use Illuminate\Support\Str;
+use Botble\Ecommerce\Models\OffersDetail;
+use Botble\Ecommerce\Models\Offers;
 
 class GetProductService
 {
@@ -143,6 +147,33 @@ class GetProductService
                 'ec_products.is_variation' => 0,
             ], $conditions);
         }
+
+            $wishlist=array();
+            if($request->input('wishlist')==1){
+                $userid=$request->input('userid');
+                $wishlist_ids=Wishlist::where('customer_id',$userid)->pluck('product_id')->toArray();
+                if($wishlist_ids){
+                    $query="SELECT * FROM `ec_products` WHERE product_type='physical' and (";
+                    foreach($wishlist_ids as $wishlist_id){
+                        $query.=" id = ".$wishlist_id." or";
+                    }
+                    $query = rtrim($query, " or");
+                    $wishlist_list=DB::connection('mysql')->select($query." )");
+                    if(!empty($wishlist_list)){
+                        foreach($wishlist_list as $w){
+                            array_push($wishlist,$w->id);
+                        }
+                    }
+                }else{
+
+                }
+            }
+            $discountedProducts=array();
+            if($request->input('discounted')==1){
+                $userid=$request->input('userid');
+                $offerDetail=OffersDetail::where('customer_id',$userid)->where('status','active')->get();
+                $discountedProducts=$offerDetail->pluck('product_id')->unique()->toArray();
+            }
 
         $products = $this->productRepository->filterProducts([
             'keyword' => $queryVar['keyword'],
