@@ -380,10 +380,6 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
         }
 
 
-        if(array_key_exists('wishlist',$filters) && is_array($filters['wishlist']) && (array_key_exists('wish',$filters) && $filters['wish']==1)){
-            $this->model = $this->model->whereIn('ec_products.id',$filters['wishlist']);
-        }
-
         $params = array_merge([
             'condition' => [
                 'ec_products.status' => BaseStatusEnum::PUBLISHED,
@@ -517,6 +513,12 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
         
                     
         }
+
+        
+        if(array_key_exists('wishlist',$filters) && is_array($filters['wishlist']) && (array_key_exists('wish',$filters) && $filters['wish']==1)){
+            $this->model = $this->model->whereIn('ec_products.id',$filters['wishlist']);
+        }
+
         
         else{
             $this->model = $this->model
