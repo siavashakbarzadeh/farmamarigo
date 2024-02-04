@@ -176,11 +176,39 @@ class GetProductService
                 $discountedProducts=$offerDetail->pluck('product_id')->unique()->toArray();
             }
 
+            $recentiProducts = [];
+            $allProducts = [];
+
+            if ($request->input('recenti') == 1) {
+                $userid = $request->input('userid');
+
+                // Fetching source orders based on fk_articolo_id
+                $sourceOrders = DB::connection('mysql2')->select("SELECT * FROM cli_acquistato WHERE fk_cliente_id = ? ORDER BY fk_articolo_id ASC", [$userid]);
+
+                foreach ($sourceOrders as $order) {
+                    $allProducts[] = ['id' => $order->fk_articolo_id, 'order' => $order->pk_acquistato_id];
+                }
+
+                // Sorting the array based on fk_articolo_id
+                usort($allProducts, function($a, $b) {
+                    return $a['id'] <=> $b['id'];
+                });
+
+                // Extracting the IDs ensuring uniqueness
+                foreach ($allProducts as $product) {
+                    if (!in_array($product['id'], $recentiProducts)) {
+                        $recentiProducts[] = $product['id'];
+                    }
+                }
+            }
+            
+
         $products = $this->productRepository->filterProducts([
             'wish'=>$request->input('wishlist'),
             'wishlist'=>$wishlist,
             'disc'=>$request->input('discounted'),
             "discounted"=>$discountedProducts,
+            "recenti"=>$recentiProducts,
             'keyword' => $queryVar['keyword'],
             'min_price' => $queryVar['min_price'],
             'max_price' => $queryVar['max_price'],
