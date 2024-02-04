@@ -140,12 +140,10 @@
                                     <i class="far fa-shopping-bag" style="font-size: larger"></i></button>
                             </div>
                         @else
-                            <div class="col-4" style="text-align: right">
-                                <a href="/login">
-                                    <button class="btn" aria-label='Login'
-                                        style='padding:8px 12px !important; border-radius:50px;'>
-                                        <i class="fas fa-user" style="font-size: larger"></i>
-                                    </button>
+                            <div class="col-4 " style="text-align: right">
+                                <a class="btn" href="/login"
+                                    style="padding:8px 12px !important; border-radius:50px;">
+                                    <i class="fas fa-user"></i>
                                 </a>
                             </div>
                         @endif
