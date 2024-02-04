@@ -92,7 +92,7 @@
                     </h2>
                 </div>
                 <div class="col-4">
-                    <div style="text-align: right">
+                    <div style="text-align: right;margin-top:5px">
                         @php
                             $wishlist = Botble\Ecommerce\Models\Wishlist::where('customer_id', request()->user('customer')->id)
                                 ->where('product_id', $product->id)
