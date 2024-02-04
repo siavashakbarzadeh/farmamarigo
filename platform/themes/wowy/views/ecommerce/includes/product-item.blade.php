@@ -139,18 +139,15 @@
                                     aria-label='Aggiungi' style='padding:8px 12px !important'>
                                     <i class="far fa-shopping-bag" style="font-size: larger"></i></button>
                             </div>
+                        @else
+                            <a href="/login">
+                                <button type="submit" aria-label='Login' style='padding:8px 12px !important'>
+                                    <i class="far fa-right-to-bracket" style="font-size: larger"></i>
+                                </button>
+                            </a>
                         @endif
 
                     </div>
-                    @if (auth('customer')->user() == null)
-                        <div class="row">
-                            <div class="col-12">
-                                <p>
-                                    Effettua il <a href="/login">LOGIN</a> per acquistare.
-                                </p>
-                            </div>
-                        </div>
-                    @endif
 
 
                 </div>
