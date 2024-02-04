@@ -143,7 +143,7 @@
                             <div class="col-4 " style="text-align: right">
                                 <a class="btn" href="/login"
                                     style="padding:8px 12px !important; border-radius:50px;">
-                                    <i class="fas fa-user" style="color:white"></i>
+                                    <span class="color:white">Login</span>
                                 </a>
                             </div>
                         @endif
