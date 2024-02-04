@@ -379,6 +379,11 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
             $filters['max_price'] = (float)$filters['max_price'] / get_current_exchange_rate();
         }
 
+
+        if(array_key_exists('wishlist',$filters) && is_array($filters['wishlist']) && (array_key_exists('wish',$filters) && $filters['wish']==1)){
+            $this->model = $this->model->whereIn('ec_products.id',$filters['wishlist']);
+        }
+
         $params = array_merge([
             'condition' => [
                 'ec_products.status' => BaseStatusEnum::PUBLISHED,
