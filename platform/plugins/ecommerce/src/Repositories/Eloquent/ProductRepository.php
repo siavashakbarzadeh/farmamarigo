@@ -411,7 +411,9 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
             if($productIds){
                 $productIdsString = implode(',', $productIds);
 
-
+                if(array_key_exists('wishlist',$filters) && is_array($filters['wishlist']) && (array_key_exists('wish',$filters) && $filters['wish']==1)){
+                    $this->model = $this->model->whereIn('ec_products.id',$filters['wishlist']);
+                }
 
                 $this->model = $this->model
                 ->distinct()
@@ -515,12 +517,11 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
         }
 
         
-        if(array_key_exists('wishlist',$filters) && is_array($filters['wishlist']) && (array_key_exists('wish',$filters) && $filters['wish']==1)){
-            $this->model = $this->model->whereIn('ec_products.id',$filters['wishlist']);
-        }
+
 
         
         else{
+            
             $this->model = $this->model
             ->distinct()
             ->join(DB::raw('
