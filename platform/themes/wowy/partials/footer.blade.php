@@ -554,17 +554,20 @@
 
     // Setup MutationObserver to watch for changes in the container
     const observer = new MutationObserver(mutations => {
-    mutations.forEach(mutation => {
-        if (mutation.type === 'childList') {
-        // Assuming changes in children imply new content was added
-        adjustCardHeights();
-        }
-    });
+        mutations.forEach(mutation => {
+            if (mutation.type === 'childList') {
+                // Assuming changes in children imply new content was added
+                adjustCardHeights();
+            }
+        });
     });
 
     // Start observing
-    const config = { childList: true, subtree: true };
-    observer.observe(document.querySelector('#your-content-container'), config);
+    const config = {
+        childList: true,
+        subtree: true
+    };
+    observer.observe(document.querySelector('.products-listing'), config);
 
     // Initial call for page load
     adjustCardHeights();
