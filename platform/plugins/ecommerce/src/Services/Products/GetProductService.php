@@ -178,23 +178,35 @@ class GetProductService
 
             $recentiProducts = [];
             $allProducts = [];
-
+            $countProducts = []; // To hold the count of each ID
+            
             if ($request->input('recenti') == 1) {
                 $userid = $request->input('userid');
-
-                // Fetching source orders based on fk_articolo_id
+            
+                // Fetching source orders based on fk_cliente_id
                 $sourceOrders = DB::connection('mysql2')->select("SELECT * FROM cli_acquistato WHERE fk_cliente_id = ? ORDER BY fk_articolo_id ASC", [$userid]);
-
+            
                 foreach ($sourceOrders as $order) {
+                    // Count the occurrences of each product ID
+                    if (!isset($countProducts[$order->fk_articolo_id])) {
+                        $countProducts[$order->fk_articolo_id] = 0;
+                    }
+                    $countProducts[$order->fk_articolo_id]++;
+                    
                     $allProducts[] = ['id' => $order->fk_articolo_id, 'order' => $order->pk_acquistato_id];
                 }
-
-                // Sorting the array based on fk_articolo_id
-                usort($allProducts, function($a, $b) {
-                    return $a['id'] <=> $b['id'];
+            
+                // Sort the products based on the frequency of each ID
+                usort($allProducts, function($a, $b) use ($countProducts) {
+                    // If the counts are equal, sort by ID for consistency
+                    if ($countProducts[$a['id']] == $countProducts[$b['id']]) {
+                        return $a['id'] <=> $b['id'];
+                    }
+                    // Sort by count in descending order
+                    return $countProducts[$b['id']] <=> $countProducts[$a['id']];
                 });
-
-                // Extracting the IDs ensuring uniqueness
+            
+                // Extracting the IDs ensuring uniqueness and maintaining the order based on count
                 foreach ($allProducts as $product) {
                     if (!in_array($product['id'], $recentiProducts)) {
                         $recentiProducts[] = $product['id'];
