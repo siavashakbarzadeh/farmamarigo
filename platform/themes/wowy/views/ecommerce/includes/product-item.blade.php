@@ -110,8 +110,9 @@
                                     class="fas fa-heart"></i></a>
                         @else
                             <a href="#" class="action-btn hover-up js-add-to-wishlist-button wishlistaddbtn"
-                                data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="far fa-heart "
-                                    style="color:white;border:0.5 solid;"></i></a>
+                                data-url="{{ route('public.wishlist.add', $product->id) }}"><i
+                                    class="far fa-heart"></i>
+                            </a>
                         @endif
                     </div>
                 </div>
