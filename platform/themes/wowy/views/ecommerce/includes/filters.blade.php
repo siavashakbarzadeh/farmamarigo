@@ -26,7 +26,7 @@
                         <input autofocus style="width:100% !important;border-radius: 5px;font-size: smaller;"
                             type="text" placeholder="Scrivi codice o nome prodotto..." id='search-consumabili'
                             name="q" autocomplete="off" style="border-radius:26px !important;"
-                            @if (isset(request()->input('q'))) value={{ request()->input('q') }} @endif>
+                            @if (request()->input('q') !== null) value={{ request()->input('q') }} @endif>
                     </form>
                 </div>
             </div>
