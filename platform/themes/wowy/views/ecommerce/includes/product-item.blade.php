@@ -139,11 +139,16 @@
                                     <i class="far fa-shopping-bag" style="font-size: larger"></i></button>
                             </div>
                             <div class="col-2" style="text-align: right">
-                                $wishlist=Botble\Ecommerce\Models\Wishlist::where('customer_id',request()->user('customer')->id)->where('product_id',$product->id)->get();
-                                $w_flag=false;
-                                if($wishlist){
-                                $w_flag=true;
-                                }
+                                @php
+                                    $wishlist = Botble\Ecommerce\Models\Wishlist::where('customer_id', request()->user('customer')->id)
+                                        ->where('product_id', $product->id)
+                                        ->get();
+                                    $w_flag = false;
+                                    if ($wishlist) {
+                                        $w_flag = true;
+                                    }
+                                @endphp
+
                                 @if ($w_flag)
                                     <a href="#"
                                         class="action-btn hover-up js-remove-from-wishlist-button wishlistremovebtn"
