@@ -552,23 +552,27 @@
         cards.forEach(card => card.style.height = `${maxHeight}px`);
     }
 
-    // Setup MutationObserver to watch for changes in the container
-    const observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-            if (mutation.type === 'childList') {
-                // Assuming changes in children imply new content was added
-                adjustCardHeights();
-            }
+
+    if (window.location.pathname.includes('/products')) {
+
+        // Setup MutationObserver to watch for changes in the container
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.type === 'childList') {
+                    // Assuming changes in children imply new content was added
+                    adjustCardHeights();
+                }
+            });
         });
-    });
 
-    // Start observing
-    const config = {
-        childList: true,
-        subtree: true
-    };
-    observer.observe(document.querySelector('.products-listing'), config);
+        // Start observing
+        const config = {
+            childList: true,
+            subtree: true
+        };
+        observer.observe(document.querySelector('.products-listing'), config);
 
+    }
     // Initial call for page load
     adjustCardHeights();
 
