@@ -103,15 +103,15 @@
                             }
                         @endphp
 
-                        @if ($w_flag)
+                        @if ($w_flag == true)
                             <a href="#"
                                 class="action-btn hover-up js-remove-from-wishlist-button wishlistremovebtn"
                                 data-url="{{ route('public.wishlist.remove', $product->id) }}"><i style="color:red"
                                     class="fas fa-heart"></i></a>
                         @else
                             <a href="#" class="action-btn hover-up js-add-to-wishlist-button wishlistaddbtn"
-                                data-url="{{ route('public.wishlist.add', $product->id) }}"><i
-                                    class="far fa-heart "></i></a>
+                                data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="far fa-heart "
+                                    style="color:white;border:0.5 solid;"></i></a>
                         @endif
                     </div>
                 </div>
