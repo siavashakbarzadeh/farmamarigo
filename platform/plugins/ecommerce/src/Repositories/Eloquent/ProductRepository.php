@@ -700,6 +700,13 @@ class ProductRepository extends RepositoriesAbstract implements ProductInterface
         if(array_key_exists('wishlist',$filters) && is_array($filters['wishlist']) && (array_key_exists('wish',$filters) && $filters['wish']==1)){
             $this->model = $this->model->whereIn('ec_products.id',$filters['wishlist']);
         }
+        if(array_key_exists('discounted',$filters) && is_array($filters['discounted']) && (array_key_exists('disc',$filters) && $filters['disc']==1)){
+            if(count($filters['discounted'])){
+                $this->model = $this->model->whereIn('ec_products.id',$filters['discounted']);
+            }else{
+                $this->model = $this->model->whereRaw('1 = 0');
+            }
+        }
 
         // Filter product by min price and max price
         if ($filters['min_price'] !== null || $filters['max_price'] !== null) {
