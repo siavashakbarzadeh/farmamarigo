@@ -142,7 +142,7 @@
                         @else
                             <div class="col-4" style="text-align: right">
                                 <a href="/login">
-                                    <button type="submit" aria-label='Login' style='padding:8px 12px !important'>
+                                    <button aria-label='Login' style='padding:8px 12px !important'>
                                         <i class="fas fa-user" style="font-size: larger"></i>
                                     </button>
                                 </a>
