@@ -142,13 +142,15 @@
                         @endif
 
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <p>
-                                Effettua il <a href="/login">LOGIN</a> per acquistare.
-                            </p>
+                    @if (auth('customer')->user() == null)
+                        <div class="row">
+                            <div class="col-12">
+                                <p>
+                                    Effettua il <a href="/login">LOGIN</a> per acquistare.
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
 
                 </div>
