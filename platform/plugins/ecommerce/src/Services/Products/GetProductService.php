@@ -168,6 +168,7 @@ class GetProductService
 
                 }
             }
+
             $discountedProducts=array();
             if($request->input('discounted')==1){
                 $userid=$request->input('userid');
@@ -176,6 +177,9 @@ class GetProductService
             }
 
         $products = $this->productRepository->filterProducts([
+            'wish'=>$request->input('wishlist'),
+            'wishlist'=>$wishlist,
+            'disc'=>$request->input('discounted'),
             'keyword' => $queryVar['keyword'],
             'min_price' => $queryVar['min_price'],
             'max_price' => $queryVar['max_price'],
