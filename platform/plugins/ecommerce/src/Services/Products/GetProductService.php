@@ -180,6 +180,7 @@ class GetProductService
             'wish'=>$request->input('wishlist'),
             'wishlist'=>$wishlist,
             'disc'=>$request->input('discounted'),
+            "discounted"=>$discountedProducts,
             'keyword' => $queryVar['keyword'],
             'min_price' => $queryVar['min_price'],
             'max_price' => $queryVar['max_price'],
