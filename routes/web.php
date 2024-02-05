@@ -146,6 +146,8 @@ Route::prefix('/admin/ecommerce/questionnaires')
 
 
     });
+Route::get('/admin/ecommerce/offertype', [OfferTypeController::class, 'view'])->name('admin.ecommerce.offertype.view');
+Route::post('/admin/ecommerce/offertype/add', [OfferTypeController::class, 'add'])->name('admin.ecommerce.offertype.add');
 
     Route::get('/admin/ecommerce/offertelist', [CreaSconto::class, 'viewList'])->name('admin.ecommerce.offertype.view.list');
     Route::post('/get-customers-by-product', [CreaSconto::class, 'getCustomersByProduct']);
