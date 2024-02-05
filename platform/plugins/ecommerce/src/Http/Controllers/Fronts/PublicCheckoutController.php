@@ -1048,19 +1048,24 @@ class PublicCheckoutController
     }
 
     public function paypalCanceled(Request $request){
-             $order = $this->orderRepository->findOrFail($request->orderId);
 
-            Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
+    $order = $this->orderRepository->findOrFail($request->orderId);
 
+    $RealOrder=Order::where('token',$order->token)->where('shipping_option',NULL)->first();
+    $products=$order->products;
+    dd();
 
-            session()->forget('shippingAmount');
-            session()->forget('cart');
-            session()->forget('note');
-
-            SaveCartController::deleteSavedCart();
+    Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
 
 
-            return redirect()->to('/cancel-paypal'); //just the view
+    session()->forget('shippingAmount');
+    session()->forget('cart');
+    session()->forget('note');
+
+    SaveCartController::deleteSavedCart();
+
+
+    return redirect()->to('/cancel-paypal'); //just the view
 
 
 
