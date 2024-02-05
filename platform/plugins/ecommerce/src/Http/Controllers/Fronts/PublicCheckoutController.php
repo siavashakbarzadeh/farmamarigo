@@ -1134,7 +1134,8 @@ class PublicCheckoutController
         session([
             'shippingAmount' => $shippingAmount,
             'note'=>$order->description,
-            'tracked_start_checkout'=>$order->token
+            'tracked_start_checkout'=>$order->token,
+            'retry-checkout'=>$order->token
         ]);
         return redirect()->to("/checkout/$order->token");
 
