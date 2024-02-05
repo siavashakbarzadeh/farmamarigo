@@ -1090,8 +1090,6 @@ class PublicCheckoutController
 
             Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
 
-            $this->deleteDuplicateOrders($order->token);
-
             OrderShippingAmount::create(
                 ['shippingAmount' => session()->get('shippingAmount'),
                     'order_id' => $order->id
@@ -1111,7 +1109,6 @@ class PublicCheckoutController
 
             SaveCartController::deleteSavedCart();
 
-            $this->generateInvoice($order);
 
             return redirect()->to('/cancel-paypal'); //just the view
 
