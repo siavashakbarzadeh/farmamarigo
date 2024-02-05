@@ -23,7 +23,7 @@ use App\Http\Controllers\CaptchaHandler;
 use Botble\Ecommerce\Http\Controllers\Fronts\PublicCheckoutController;
 use Botble\Ecommerce\Http\Controllers\Fronts\PublicCartController;
 use App\Http\Controllers\SuggestionController;
-
+use Botble\Ecommerce\Http\Controllers\OfferTypeController;
 
 
 
