@@ -1057,7 +1057,7 @@ class PublicCheckoutController
     $RealOrder->delete();
     $order->update([
         'is_confirmed' => false,
-        'is_finished'=>false,
+        'is_finished'=>true,
         'status' => OrderStatusEnum::PENDING,
     ]);
     OrderShippingAmount::create(
