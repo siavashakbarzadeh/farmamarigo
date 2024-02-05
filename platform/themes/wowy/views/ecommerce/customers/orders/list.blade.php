@@ -63,10 +63,15 @@
                                             </a>
                                             @endif
                                             @if($order->payment_id==NULL)
-                                                <a class='btn btn-primary btn-sm' href="/retry-checkout?orderToken={{ $order->token }}"
+                                            <form method='post' action="https://marigopharma.marigo.collaudo.biz/cart/update" class="form--shopping-cart">
+                                                @csrf
+
+                                            </form>
+                                            {{-- href="/retry-checkout?orderToken={{ $order->token }}" --}}
+                                                <button type="submit" name="checkout" class='btn btn-primary btn-sm'
                                                     style="background-color:#f9844a;color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
                                                     <i class="fa fa-credit-card"></i>
-                                                </a>
+                                                </button>
                                             @endif
 
                                         </div>
