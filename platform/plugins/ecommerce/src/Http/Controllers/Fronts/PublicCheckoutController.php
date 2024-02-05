@@ -1053,7 +1053,7 @@ class PublicCheckoutController
 
     $RealOrder=Order::where('token',$order->token)->where('shipping_option',NULL)->first();
     $products=$order->products;
-    dd();
+    dd($products);
 
     Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
 
