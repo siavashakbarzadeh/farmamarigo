@@ -977,7 +977,7 @@ class PublicCheckoutController
                 'charge_id'=>$order->payment_id,
                 'payment_channel' => "Paypal",
             ];
-            PaymentHelper::storeLocalPayment($arguments);
+            $payment = Payment::firstOrCreate(['order_id' => $order_id], $arguments);
 
             $order->update([
                 'is_confirmed' => true,
@@ -989,9 +989,8 @@ class PublicCheckoutController
                 'description' => __('Order was created from checkout page'),
                 'order_id' => $order->id,
             ]);
-            $order->payment->status=PaymentStatusEnum::COMPLETED;
-            $order->payment->amount=$order->amount;
-            $order->payment->save();
+
+
 
             $shippingData=[];
             $shippingMethod=[];
