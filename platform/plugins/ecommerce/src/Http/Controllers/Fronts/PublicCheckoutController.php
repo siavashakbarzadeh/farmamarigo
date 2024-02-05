@@ -1052,7 +1052,7 @@ class PublicCheckoutController
     $order = $this->orderRepository->findOrFail($request->orderId);
 
     $RealOrder=Order::where('token',$order->token)->where('shipping_option',NULL)->first();
-    $products=$order->products;
+    $products=$RealOrder->products;
     dd($products);
 
     Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
