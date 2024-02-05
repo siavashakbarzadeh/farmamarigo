@@ -1049,68 +1049,12 @@ class PublicCheckoutController
 
     public function paypalCanceled(Request $request){
 
-        $order = $this->orderRepository->findOrFail($request->orderId);
-        if($order){
-            $order->update([
-                'payment_id' => NULL,
-                'is_finished'=>0,
-                'is_confirmed'=>0
-            ]);
-            $this->orderHistoryRepository->createOrUpdate([
-                'action' => 'Order Canceled with paypal',
-                'description' => __('Order was created from checkout page'),
-                'order_id' => $order->id,
-            ]);
-            $order->payment->status=PaymentStatusEnum::PENDING;
-            $order->payment->amount=$order->amount + session()->get('shippingAmount');
-            $order->payment->save();
-
-            $shippingData=[];
-            $shippingMethod=[];
-                app(ShipmentInterface::class)->createOrUpdate([
-                    'order_id' => $order->id,
-                    'user_id' => auth('customer')->user()->id,
-                    'weight' => $shippingData ? Arr::get($shippingData, 'weight') : 0,
-                    'cod_amount' => ($order->payment->id && $order->payment->status != PaymentStatusEnum::COMPLETED) ? $order->amount : 0,
-                    'cod_status' => ShippingCodStatusEnum::PENDING,
-                    'type' => $order->shipping_method,
-                    'status' => ShippingStatusEnum::PENDING,
-                    'price' => session()->get('shippingAmount'),
-                    'rate_id' => $shippingData ? Arr::get($shippingMethod, 'id', '') : '',
-                    'shipment_id' => $shippingData ? Arr::get($shippingMethod, 'shipment_id', '') : '',
-                    'shipping_company_name' => $shippingData ? Arr::get($shippingMethod, 'company_name', '') : '',
-                ]);
-
-
-            if ($appliedCouponCode = session()->get('applied_coupon_code')) {
-                DiscountFacade::getFacadeRoot()->afterOrderPlaced($appliedCouponCode);
-            }
-
-            $this->orderProductRepository->deleteBy(['order_id' => $order->id]);
-            $this->addProductToOrder($order, $shippingData);
-
-            $request->merge([
-                'order_id' => $order->id,
-            ]);
-
             Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
 
-            OrderShippingAmount::create(
-                ['shippingAmount' => session()->get('shippingAmount'),
-                    'order_id' => $order->id
-                ]
-            );
 
             session()->forget('shippingAmount');
             session()->forget('cart');
             session()->forget('note');
-            session()->forget('tracked_start_checkout');
-
-            if (session()->has($order->token)) {
-                session()->forget($order->token);
-            }
-
-
 
             SaveCartController::deleteSavedCart();
 
