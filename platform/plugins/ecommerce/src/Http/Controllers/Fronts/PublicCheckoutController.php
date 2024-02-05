@@ -817,6 +817,10 @@ class PublicCheckoutController
         session()->forget('note');
         session()->forget('tracked_start_checkout');
 
+        if (session()->has($order->token)) {
+            session()->forget($order->token);
+        }
+
 
         $this->generateInvoice($order);
 
@@ -1015,6 +1019,10 @@ class PublicCheckoutController
             session()->forget('cart');
             session()->forget('note');
             session()->forget('tracked_start_checkout');
+            if (session()->has($order->token)) {
+                session()->forget($order->token);
+            }
+
 
 
 
@@ -1087,6 +1095,10 @@ class PublicCheckoutController
             session()->forget('note');
             session()->forget('tracked_start_checkout');
 
+            if (session()->has($order->token)) {
+                session()->forget($order->token);
+            }
+
 
 
             SaveCartController::deleteSavedCart();
@@ -1097,6 +1109,25 @@ class PublicCheckoutController
 
 
         }
+
+    }
+
+    public function retryCheckout(Request $request){
+
+        session()->forget('shippingAmount');
+        session()->forget('cart');
+        session()->forget('note');
+        session()->forget('tracked_start_checkout');
+        SaveCartController::deleteSavedCart();
+        $order=Order::where('token',$request->orderToken)->first();
+        $shippingAmount=OrderShippingAmount::where('order_id',$order->id)->first();
+        session([
+            'shippingAmount' => $shippingAmount,
+            'note'=>$order->description
+        ]);
+        return redirect()->to("/checkout/$order->token")
+
+
 
     }
 
