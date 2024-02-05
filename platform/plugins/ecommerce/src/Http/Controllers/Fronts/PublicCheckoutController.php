@@ -1049,6 +1049,8 @@ class PublicCheckoutController
         if($order){
             $order->update([
                 'payment_id' => NULL,
+                'is_finished'=>0,
+                'is_confirmed'=>0
             ]);
             $this->orderHistoryRepository->createOrUpdate([
                 'action' => 'Order Canceled with paypal',
