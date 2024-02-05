@@ -1118,12 +1118,14 @@ class PublicCheckoutController
         session()->forget('cart');
         session()->forget('note');
         session()->forget('tracked_start_checkout');
+
         SaveCartController::deleteSavedCart();
         $order=Order::where('token',$request->orderToken)->first();
         $shippingAmount=OrderShippingAmount::where('order_id',$order->id)->first();
         session([
             'shippingAmount' => $shippingAmount,
-            'note'=>$order->description
+            'note'=>$order->description,
+            'tracked_start_checkout'=>$order->token
         ]);
         return redirect()->to("/checkout/$order->token");
 
