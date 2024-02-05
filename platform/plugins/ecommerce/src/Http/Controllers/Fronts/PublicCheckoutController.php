@@ -956,7 +956,7 @@ class PublicCheckoutController
             $arguments=[
                 'account_id' => auth('customer')->user()->id,
                 'amount' => $order->amount,
-                'user_id'=>$request->PayerID,
+                'user_id'=>0,
                 'currency' => 'EUR',
                 'order_id' => $order->id,
                 'customer_id' => auth('customer')->user()->id,
