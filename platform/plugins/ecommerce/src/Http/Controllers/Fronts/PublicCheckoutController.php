@@ -1006,7 +1006,7 @@ class PublicCheckoutController
 
             Mail::to($order->user->email)->send(new OrderConfirmed($order));
 
-            $this->deleteDuplicateOrders($order->token);
+            // $this->deleteDuplicateOrders($order->token);
 
             OrderShippingAmount::create(
                 ['shippingAmount' => session()->get('shippingAmount'),
