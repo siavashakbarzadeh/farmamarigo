@@ -1057,7 +1057,7 @@ class PublicCheckoutController
                 'order_id' => $order->id,
             ]);
             $order->payment->status=PaymentStatusEnum::PENDING;
-            $order->payment->amount=$order->amount;
+            $order->payment->amount=$order->amount + session()->get('shippingAmount');
             $order->payment->save();
 
             $shippingData=[];
@@ -1070,7 +1070,7 @@ class PublicCheckoutController
                     'cod_status' => ShippingCodStatusEnum::PENDING,
                     'type' => $order->shipping_method,
                     'status' => ShippingStatusEnum::PENDING,
-                    'price' => $order->shipping_amount,
+                    'price' => session()->get('shippingAmount'),
                     'rate_id' => $shippingData ? Arr::get($shippingMethod, 'id', '') : '',
                     'shipment_id' => $shippingData ? Arr::get($shippingMethod, 'shipment_id', '') : '',
                     'shipping_company_name' => $shippingData ? Arr::get($shippingMethod, 'company_name', '') : '',
@@ -1131,7 +1131,7 @@ class PublicCheckoutController
 
         $shippingAmount=OrderShippingAmount::where('order_id',$order->id)->first();
         session([
-            'shippingAmount' => $shippingAmount,
+            'shippingAmount' => $shippingAmount->shippingAmount,
             'note'=>$order->description,
             'tracked_start_checkout'=>$order->token,
             'retry-checkout'=>$order->token
