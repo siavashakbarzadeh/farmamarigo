@@ -37,14 +37,14 @@
                                 <td>{{ get_order_code($order->id) }}</td>
 {{--                                <td>{{ $order->created_at->format('Y/m/d h:m') }}</td>--}}
                                 <td>{{ \Carbon\Carbon::parse($order->created_at)}}</td>
-                                <td>{{ __(':price for :total item(s)', ['price' => $order->amount_format, 'total' => $order->products_count]) }}</td>
+                                <td >{{ __(':price for :total item(s)', ['price' => $order->amount_format, 'total' => $order->products_count]) }}</td>
 {{--                                <td>{{ 'price' => $order->amount_format 'total' => $order->products_count }}</td>--}}
-<td>
+                                <td style="text-align:center">
                                     @if( $order->is_finished && $order->is_confirmed)
                                        <label class="btn-success p-1 rounded small" >Completato</label>
                                     @endif
                                     @if( $order->is_finished && !$order->is_confirmed)
-                                       <label class="btn-success p-1 rounded small">Mancato Pagamento</label>
+                                       <label class="btn-success p-1 rounded small" style="background-color:#f9844a">Mancato Pagamento</label>
                                     @endif
                                     @if( $order->status=='canceled')
                                        <label class="btn-danger p-1 rounded small">Annullato</label>
