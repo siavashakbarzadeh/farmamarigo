@@ -122,6 +122,7 @@ class PublicCheckoutController
         HandleApplyPromotionsService $applyPromotionsService
     )
     {
+        dd('here');
         if (!EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
