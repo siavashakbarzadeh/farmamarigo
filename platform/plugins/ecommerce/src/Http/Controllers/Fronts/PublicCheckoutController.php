@@ -1427,6 +1427,11 @@ class PublicCheckoutController
         if (!$order) {
             abort(404);
         }
+        session([
+            'note' => $order->description,
+            'shippingAmount'=>$order->shipping_amount
+        ]);
+        
 
         if (session()->has('tracked_start_checkout') && session('tracked_start_checkout') == $token) {
             $sessionCheckoutData = OrderHelper::getOrderSessionData($token);
