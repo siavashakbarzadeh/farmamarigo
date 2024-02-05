@@ -1125,7 +1125,7 @@ class PublicCheckoutController
             'shippingAmount' => $shippingAmount,
             'note'=>$order->description
         ]);
-        return redirect()->to("/checkout/$order->token")
+        return redirect()->to("/checkout/$order->token");
 
 
 
