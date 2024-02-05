@@ -40,14 +40,11 @@
                                 <td>{{ __(':price for :total item(s)', ['price' => $order->amount_format, 'total' => $order->products_count]) }}</td>
 {{--                                <td>{{ 'price' => $order->amount_format 'total' => $order->products_count }}</td>--}}
 <td>
-                                    @if( $order->status=='completed' & $order->shipment->status =='delivering')
+                                    @if( $order->is_finished && $order->is_confirmed)
                                        <label class="btn-success p-1 rounded small" >Completato</label>
                                     @endif
-                                    @if( $order->status=='pending')
-                                       <label class="btn-warning p-1 rounded small">Modificabile</label>
-                                    @endif
-                                    @if( $order->status=='completed' && $order->shipment->status =='pending')
-                                       <label class="btn-success p-1 rounded small">Completato</label>
+                                    @if( $order->is_finished && !$order->is_confirmed)
+                                       <label class="btn-success p-1 rounded small">Mancato Pagamento</label>
                                     @endif
                                     @if( $order->status=='canceled')
                                        <label class="btn-danger p-1 rounded small">Annullato</label>
@@ -59,18 +56,20 @@
 
                                     <div class="row list-order-action">
                                         <div class="col-3">
-                                            @if($order->isInvoiceAvailable())
-                                            <a class='btn btn-primary btn-sm' href="{{ route('customer.print-order', $order->id) }}" 
+                                            @if($order->payment_id!==NULL && $order->isInvoiceAvailable())
+                                            <a class='btn btn-primary btn-sm' href="{{ route('customer.print-order', $order->id) }}"
                                                style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
                                                <i class="fa fa-print"></i>
                                             </a>
-                                            @else
-                                            <a disabled
-                                               style="width: 40px;height: 40px;background-color: #e3e3e3;border: none;border-radius: 50%;color: #a3a3a3 !important;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
-                                               <i class="fa fa-print"></i>
-                                            </a>
                                             @endif
-                                            
+                                            @if($order->payment_id==NULL)
+
+                                            <a class='btn btn-primary btn-sm' href="/checkout/{{ $order->token }}"
+                                                style="background-color:#f9844a;color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
+                                                <i class="fa fa-credit-card"></i>
+                                             </a>
+                                            @endif
+
                                         </div>
                                         <div class="col-3">
                                             <a class="btn btn-info btn-sm"  style="color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;" href="{{ route('customer.orders.view', $order->id) }}"><i class="fa fa-eye"></i></a>
