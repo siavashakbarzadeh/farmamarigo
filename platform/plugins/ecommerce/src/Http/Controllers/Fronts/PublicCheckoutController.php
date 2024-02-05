@@ -619,7 +619,7 @@ class PublicCheckoutController
             }
         }
 
-        
+
 
         if (is_plugin_active('marketplace')) {
             return apply_filters(
@@ -645,7 +645,7 @@ class PublicCheckoutController
 
             session()->put('selected_payment_method', $paymentMethod);
 
-        
+
         }
         $shippingAmount = 0;
 
@@ -798,16 +798,19 @@ class PublicCheckoutController
         session()->forget('shippingAmount');
         session()->forget('cart');
         session()->forget('note');
+        session()->forget('tracked_start_checkout');
+
+
         $this->generateInvoice($order);
 
-        
+
         $this->deleteDuplicateOrders($order->token);
 
         SaveCartController::deleteSavedCart();
 
         return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
     }
-    
+
     private function deleteDuplicateOrders($token)
     {
             // 1. Get all orders with is_finished=2.
@@ -890,32 +893,32 @@ class PublicCheckoutController
     }
 
     }
-    
+
     private function getPaypalAccessToken($clientId, $clientSecret) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.sandbox.paypal.com/v1/oauth2/token');
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_USERPWD, $clientId . ":" . $clientSecret);
         curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
-    
+
         $response = curl_exec($ch);
-    
+
         if (!$response) {
             error_log('CURL Error: ' . curl_error($ch));
             curl_close($ch);
             return null;
         }
-    
+
         curl_close($ch);
         $jsonResponse = json_decode($response, true);
-    
-    
+
+
         return $jsonResponse['access_token'] ?? null;
     }
-    
+
 
 
     public function paypalConfirmed(Request $request){
@@ -953,11 +956,11 @@ class PublicCheckoutController
                     'shipping_company_name' => $shippingData ? Arr::get($shippingMethod, 'company_name', '') : '',
                 ]);
 
-    
+
             if ($appliedCouponCode = session()->get('applied_coupon_code')) {
                 DiscountFacade::getFacadeRoot()->afterOrderPlaced($appliedCouponCode);
             }
-    
+
             $this->orderProductRepository->deleteBy(['order_id' => $order->id]);
             $this->addProductToOrder($order, $shippingData);
 
@@ -966,23 +969,23 @@ class PublicCheckoutController
             ]);
 
             Mail::to($order->user->email)->send(new OrderConfirmed($order));
-    
+
             $this->deleteDuplicateOrders($order->token);
-    
+
             OrderShippingAmount::create(
                 ['shippingAmount' => session()->get('shippingAmount'),
                     'order_id' => $order->id
                 ]
             );
-    
+
             session()->forget('shippingAmount');
             session()->forget('cart');
             session()->forget('note');
-    
+
             SaveCartController::deleteSavedCart();
             $products=$order->products;
             $this->generateInvoice($order);
-    
+
             return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
 
 
