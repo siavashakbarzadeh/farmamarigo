@@ -133,7 +133,6 @@ class PublicCheckoutController
 
         if ($token !== session('tracked_start_checkout')) {
             $order = $this->orderRepository->getFirstBy(['token' => $token, 'is_confirmed' => false]);
-            dd($order);
             if (!$order) {
                 return $response->setNextUrl(route('public.index'));
             }
@@ -151,12 +150,14 @@ class PublicCheckoutController
         }else{
             $products = Cart::instance('cart')->products();
             if (!$products->count()) {
+
                 return $response->setNextUrl(route('public.cart'));
             }
         }
 
 
         foreach ($products as $product) {
+            dd($product);
             if ($product->isOutOfStock()) {
                 return $response
                     ->setError()
