@@ -1398,6 +1398,9 @@ class PublicCheckoutController
 
     public function getCheckoutRecover(string $token, Request $request, BaseHttpResponse $response)
     {
+        if(!isset($token)){
+            $token=$request->orderToken;
+        }
         if (!EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
@@ -1413,7 +1416,7 @@ class PublicCheckoutController
         $order = $this->orderRepository
             ->getFirstBy([
                 'token' => $token,
-                'is_finished' => false,
+                'is_confirmed' => false,
             ], [], ['products', 'address']);
 
         if (!$order) {
