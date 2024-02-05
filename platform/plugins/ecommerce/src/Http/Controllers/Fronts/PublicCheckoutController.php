@@ -146,6 +146,7 @@ class PublicCheckoutController
 
         if(session()->has('retry_checkout')){
             $products=Order::where('token',session('retry-checkout'))->get()->products();
+            dd($products);
         }else{
             $products = Cart::instance('cart')->products();
             if (!$products->count()) {
