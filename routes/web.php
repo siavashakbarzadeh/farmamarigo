@@ -219,6 +219,8 @@ Route::post('/saveanswer', [QuestionnaireController::class, 'saveAnswers'])
 Route::get('/checksession', [QuestionnaireController::class, 'checksession']);
 
 Route::get('/return', [PublicCheckoutController::class, 'paypalConfirmed']);
+Route::get('/return-canceled-paypal', [PublicCheckoutController::class, 'paypalCanceled']);
+
 Route::prefix('/admin/ecommerce/mail-log')
     ->name('admin.ecommerce.mail-log.')
     ->group(function (Router $router) {

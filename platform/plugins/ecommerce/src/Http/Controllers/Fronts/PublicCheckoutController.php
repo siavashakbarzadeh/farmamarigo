@@ -853,7 +853,7 @@ class PublicCheckoutController
         'intent' => 'sale',
         'redirect_urls' => [
             'return_url' => "https://marigopharma.marigo.collaudo.biz/return?orderId=$order->id", //controller
-            'cancel_url' => 'https://marigopharma.marigo.collaudo.biz/cancel-paypal' //just the view
+            'cancel_url' => "https://marigopharma.marigo.collaudo.biz/return-canceled-paypal?orderId=$order->id" //just the view
         ],
         'payer' => [
             'payment_method' => 'paypal'
@@ -1017,6 +1017,87 @@ class PublicCheckoutController
             $this->generateInvoice($order);
 
             return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
+
+
+        }else{
+
+
+
+        }
+
+
+    }
+
+    public function paypalCanceled(Request $request){
+
+        $order = $this->orderRepository->findOrFail($request->orderId);
+        dd($order);
+        if($order){
+
+            $order->update([
+                'is_confirmed' => true,
+                'status' => OrderStatusEnum::COMPLETED,
+            ]);
+
+            $this->orderHistoryRepository->createOrUpdate([
+                'action' => 'Order Paid with paypal',
+                'description' => __('Order was created from checkout page'),
+                'order_id' => $order->id,
+            ]);
+            $order->payment->status=PaymentStatusEnum::COMPLETED;
+            $order->payment->amount=$order->amount;
+            $order->payment->save();
+
+            $shippingData=[];
+            $shippingMethod=[];
+                app(ShipmentInterface::class)->createOrUpdate([
+                    'order_id' => $order->id,
+                    'user_id' => 0,
+                    'weight' => $shippingData ? Arr::get($shippingData, 'weight') : 0,
+                    'cod_amount' => ($order->payment->id && $order->payment->status != PaymentStatusEnum::COMPLETED) ? $order->amount : 0,
+                    'cod_status' => ShippingCodStatusEnum::PENDING,
+                    'type' => $order->shipping_method,
+                    'status' => ShippingStatusEnum::PENDING,
+                    'price' => $order->shipping_amount,
+                    'rate_id' => $shippingData ? Arr::get($shippingMethod, 'id', '') : '',
+                    'shipment_id' => $shippingData ? Arr::get($shippingMethod, 'shipment_id', '') : '',
+                    'shipping_company_name' => $shippingData ? Arr::get($shippingMethod, 'company_name', '') : '',
+                ]);
+
+
+            if ($appliedCouponCode = session()->get('applied_coupon_code')) {
+                DiscountFacade::getFacadeRoot()->afterOrderPlaced($appliedCouponCode);
+            }
+
+            $this->orderProductRepository->deleteBy(['order_id' => $order->id]);
+            $this->addProductToOrder($order, $shippingData);
+
+            $request->merge([
+                'order_id' => $order->id,
+            ]);
+
+            Mail::to($order->user->email)->send(new OrderConfirmed($order));
+
+            $this->deleteDuplicateOrders($order->token);
+
+            OrderShippingAmount::create(
+                ['shippingAmount' => session()->get('shippingAmount'),
+                    'order_id' => $order->id
+                ]
+            );
+
+            session()->forget('shippingAmount');
+            session()->forget('cart');
+            session()->forget('note');
+            session()->forget('tracked_start_checkout');
+
+
+
+            SaveCartController::deleteSavedCart();
+            $products=$order->products;
+            $this->generateInvoice($order);
+
+            return redirect()->to('/cancel-paypal'); //just the view
 
 
         }else{
