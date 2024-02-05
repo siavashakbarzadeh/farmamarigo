@@ -991,7 +991,6 @@ class PublicCheckoutController
             ]);
 
 
-
             $shippingData=[];
             $shippingMethod=[];
                 app(ShipmentInterface::class)->createOrUpdate([
