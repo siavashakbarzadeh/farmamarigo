@@ -835,9 +835,10 @@ class PublicCheckoutController
     private function deleteDuplicateOrders($token)
     {
             // 1. Get all orders with is_finished=2.
-            $order = Order::where('token',$token)->first();
-            if($order!=null){
-                $order->delete();
+            $orderCount = Order::where('token', $token)->count();
+
+            if ($orderCount > 1) {
+                Order::where('token', $token)->delete();
             }
 
     }
