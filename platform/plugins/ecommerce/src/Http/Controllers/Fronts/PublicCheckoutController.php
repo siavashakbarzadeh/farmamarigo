@@ -55,6 +55,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Botble\Ecommerce\Mail\OrderSubmitted;
 use Botble\Ecommerce\Mail\OrderConfirmed;
+use Botble\Ecommerce\Mail\OrderPaymentFailed;
 use Botble\Ecommerce\Http\Controllers\SaveCartController;
 use Botble\Ecommerce\Mail\OrderEdited;
 use Botble\Ecommerce\Models\Invoice;
@@ -726,6 +727,9 @@ class PublicCheckoutController
 
                 if ($paypalPayment!==null) {
                     // Redirect user to PayPal for payment authorization
+                    $order->update([
+                        'payment_id' => $paypalPayment['id'],
+                    ]);
                     $arguments=[
                         'account_id' => $currentUserId,
                         'amount' => $amount,
@@ -744,7 +748,9 @@ class PublicCheckoutController
                     return $response->setError()->setMessage(__('Error initiating PayPal payment'));
                 }
             } else {
-
+                $order->update([
+                    'payment_id' => $order->id
+                ]);
                 $arguments=[
                     'account_id' => $currentUserId,
                     'amount' => $amount,
@@ -948,7 +954,7 @@ class PublicCheckoutController
                 'currency' => 'EUR',
                 'order_id' => $order->id,
                 'customer_id' => auth('customer')->user()->id,
-                'charge_id'=>$order->id,
+                'charge_id'=>$order->payment_id,
                 'payment_channel' => "Paypal",
             ];
             PaymentHelper::storeLocalPayment($arguments);
@@ -1019,26 +1025,22 @@ class PublicCheckoutController
             return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
 
 
-        }else{
-
-
-
         }
-
-
     }
 
     public function paypalCanceled(Request $request){
 
         $order = $this->orderRepository->findOrFail($request->orderId);
         if($order){
-
+            $order->update([
+                'payment_id' => NULL,
+            ]);
             $this->orderHistoryRepository->createOrUpdate([
-                'action' => 'Order Paid with paypal',
+                'action' => 'Order Canceled with paypal',
                 'description' => __('Order was created from checkout page'),
                 'order_id' => $order->id,
             ]);
-            $order->payment->status=PaymentStatusEnum::COMPLETED;
+            $order->payment->status=PaymentStatusEnum::PENDING;
             $order->payment->amount=$order->amount;
             $order->payment->save();
 
@@ -1088,7 +1090,7 @@ class PublicCheckoutController
 
 
             SaveCartController::deleteSavedCart();
-            $products=$order->products;
+
             $this->generateInvoice($order);
 
             return redirect()->to('/cancel-paypal'); //just the view
