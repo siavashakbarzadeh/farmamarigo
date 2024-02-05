@@ -144,10 +144,15 @@ class PublicCheckoutController
 
         $sessionCheckoutData = OrderHelper::getOrderSessionData($token);
 
-        // $products = Cart::instance('cart')->products();
-        // if (!$products->count()) {
-        //     return $response->setNextUrl(route('public.cart'));
-        // }
+        if(session()->has('retry_checkout')){
+            $proucts=Order::where('token',session('retry-checkout'))->get()->products;
+        }else{
+            $products = Cart::instance('cart')->products();
+            if (!$products->count()) {
+                return $response->setNextUrl(route('public.cart'));
+            }
+        }
+
 
         foreach ($products as $product) {
             if ($product->isOutOfStock()) {
