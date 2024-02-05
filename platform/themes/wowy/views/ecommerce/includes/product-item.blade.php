@@ -49,7 +49,7 @@
                 @if (isset($offerDetail))
                     @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
                         <span
-                            class="discount-ev">{{ get_sale_percentage($product->price, $pricelist[0]->final_price) }}</span>
+                            class="discount-ev">{{ get_sale_percentage($product->price, $offerDetail->product_price) }}</span>
                     @elseif ($offerType == 4)
                         <span class="discount-ev">3x2</span>
                     @elseif ($offerType == 5)
