@@ -732,21 +732,6 @@ class PublicCheckoutController
                 $paypalPayment = $this->initiatePaypalPayment($order, $request);
 
                 if ($paypalPayment!==null) {
-                    // Redirect user to PayPal for payment authorization
-                    $order->update([
-                        'payment_id' => $paypalPayment['id'],
-                    ]);
-                    $arguments=[
-                        'account_id' => $currentUserId,
-                        'amount' => $amount,
-                        'currency' => 'EUR',
-                        'order_id' => $order->id,
-                        'customer_id' => $currentUserId,
-                        'charge_id'=>$paypalPayment['id'],
-                        'payment_channel' => $paymentMethod,
-                        'created_at'=>$paypalPayment['create_time'],
-                    ];
-                    PaymentHelper::storeLocalPayment($arguments);
                     return redirect()->to($paypalPayment['approval_url']);
                 } else {
                     // Handle error in initiating payment
@@ -967,7 +952,6 @@ class PublicCheckoutController
 
         $order = $this->orderRepository->findOrFail($request->orderId);
         if($order){
-
             $arguments=[
                 'account_id' => auth('customer')->user()->id,
                 'amount' => $order->amount,
@@ -978,7 +962,7 @@ class PublicCheckoutController
                 'payment_channel' => "Paypal",
                 'status'=>'completed'
             ];
-            $payment = Payment::firstOrCreate(['order_id' => $order->id], $arguments);
+            $payment = Payment::create(['order_id' => $order->id], $arguments);
             $order->update([
                 'is_confirmed' => true,
                 'status' => OrderStatusEnum::COMPLETED,
