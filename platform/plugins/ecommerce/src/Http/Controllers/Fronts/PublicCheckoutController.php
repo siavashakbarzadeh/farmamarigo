@@ -1053,7 +1053,7 @@ class PublicCheckoutController
 
     $RealOrder=Order::where('token',$order->token)->where('shipping_option',NULL)->first();
     $products=$RealOrder->products;
-    $this->addProductToOrder($order, $products);
+    $this->addProductToOrder($order, $products->toArray());
     $RealOrder->delete();
     dd($order->products);
 
