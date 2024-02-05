@@ -16,7 +16,7 @@
     $products->loadMissing(['categories', 'categories.slugable']);
 @endphp
 <div class="row">
-    @if(auth('customer')->user() !== null && request()->is('wishlist') && request()->query('preferiti_page') == '1' )
+    @if(auth('customer')->user() !== null && request()->is('product') && request()->query('preferiti_page') == '1' && request()->query('wishlist') == '1'  )
 
     <div class="col-lg-12 products-listing position-relative">
         <div class="products-listing position-relative">
