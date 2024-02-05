@@ -65,7 +65,37 @@
         <span class="title">Offerte</span>
     </a>
 </li>
+<li class="nav-item" id="3">
+    <a class="nav-link nav-toggle">
+        <i class="fas fa-shipping-fast" aria-hidden="true"></i>
+        <span class="title">Spedizione</span>
+        <span class="arrow "></span>
+    </a>
+    <ul class="sub-menu hidden-ul">
+        <li class="nav-item">
 
+            <a href="{{ route('admin.ecommerce.spedizione.view') }}" class="nav-link">
+                <span class="title">Configurazione</span>
+            </a>
+
+
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.ecommerce.spedizione.create-offer') }}" class="nav-link">
+                <i class=""></i>
+                Create
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.ecommerce.spedizione.list') }}" class="nav-link">
+                <i class=""></i>
+                Coupons List
+            </a>
+        </li>
+
+
+    </ul>
+</li>
 {{--<li class="nav-item" id="3">--}}
 {{--    <a class="nav-link nav-toggle">--}}
 {{--        <i class="fas fa-shipping-fast" aria-hidden="true"></i>--}}
