@@ -1,8 +1,11 @@
 @php
     use Botble\Payment\Models\Payment;
-    $payment = Payment::where('order_id', $order->id)->first();
-    $paymentStatus = $payment->status;
-    $paymentChannel = $payment->payment_channel;
+    if (!$payment) {
+        $payment = Payment::where('order_id', $order->id)->first();
+        $paymentStatus = $payment->status;
+        $paymentChannel = $payment->payment_channel;
+    }
+
 @endphp
 <div class="order-customer-info">
     <h3> {{ __('Customer information') }}</h3>

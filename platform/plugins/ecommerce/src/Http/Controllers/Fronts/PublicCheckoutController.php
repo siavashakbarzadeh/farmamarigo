@@ -976,9 +976,9 @@ class PublicCheckoutController
                 'customer_id' => auth('customer')->user()->id,
                 'charge_id'=>$order->payment_id,
                 'payment_channel' => "Paypal",
+                'status'=>'completed'
             ];
             $payment = Payment::firstOrCreate(['order_id' => $order->id], $arguments);
-
             $order->update([
                 'is_confirmed' => true,
                 'status' => OrderStatusEnum::COMPLETED,
@@ -1045,7 +1045,7 @@ class PublicCheckoutController
             $products=$order->products;
             $this->generateInvoice($order);
 
-            return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
+            return view('plugins/ecommerce::orders.thank-you', compact('order', 'products','payment'));
 
 
         }
