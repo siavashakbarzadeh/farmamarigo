@@ -842,9 +842,8 @@ class PublicCheckoutController
     {
             // 1. Get all orders with is_finished=2.
             $orderCount = Order::where('token', $token)->count();
-
             if ($orderCount > 1) {
-                Order::where('token', $token)->first()->delete();
+                Order::where('token', $token)->where('is_finished',1)->delete();
             }
 
     }
