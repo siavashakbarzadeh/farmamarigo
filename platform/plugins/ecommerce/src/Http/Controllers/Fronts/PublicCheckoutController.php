@@ -1048,6 +1048,7 @@ class PublicCheckoutController
     }
 
     public function paypalCanceled(Request $request){
+             $order = $this->orderRepository->findOrFail($request->orderId);
 
             Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
 
