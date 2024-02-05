@@ -844,7 +844,7 @@ class PublicCheckoutController
             $orderCount = Order::where('token', $token)->count();
 
             if ($orderCount > 1) {
-                Order::where('token', $token)->delete();
+                Order::where('token', $token)->first()->delete();
             }
 
     }
