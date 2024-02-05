@@ -94,26 +94,31 @@
                 <div class="col-4">
                     <div style="text-align: right;margin-top:5px">
                         @php
-                            $wishlist = Botble\Ecommerce\Models\Wishlist::where('customer_id', request()->user('customer')->id)
+                        if(auth('customer')->user() !== null){
+$wishlist = Botble\Ecommerce\Models\Wishlist::where('customer_id', request()->user('customer')->id)
                                 ->where('product_id', $product->id)
                                 ->exists();
                             $w_flag = false;
                             if ($wishlist) {
                                 $w_flag = true;
                             }
-                        @endphp
+                        }
 
-                        @if ($w_flag == true)
+                        @endphp
+                        @if (auth('customer')->user() !== null)
+                            @if ($w_flag == true)
                             <a href="#"
                                 class="action-btn hover-up js-remove-from-wishlist-button wishlistremovebtn"
                                 data-url="{{ route('public.wishlist.remove', $product->id) }}"><i style="color:red"
                                     class="fas fa-heart"></i></a>
-                        @else
-                            <a href="#" class="action-btn hover-up js-add-to-wishlist-button wishlistaddbtn"
-                                data-url="{{ route('public.wishlist.add', $product->id) }}"><i
-                                    class="far fa-heart"></i>
-                            </a>
+                            @else
+                                <a href="#" class="action-btn hover-up js-add-to-wishlist-button wishlistaddbtn"
+                                    data-url="{{ route('public.wishlist.add', $product->id) }}"><i
+                                        class="far fa-heart"></i>
+                                </a>
+                            @endif
                         @endif
+
                     </div>
                 </div>
             </div>
