@@ -37,9 +37,9 @@
                                 <td>{{ get_order_code($order->id) }}</td>
 {{--                                <td>{{ $order->created_at->format('Y/m/d h:m') }}</td>--}}
                                 <td>{{ \Carbon\Carbon::parse($order->created_at)}}</td>
-                                <td style="text-align:center">{{ __(':price for :total item(s)', ['price' => $order->amount_format, 'total' => $order->products_count]) }}</td>
+                                <td >{{ __(':price for :total item(s)', ['price' => $order->amount_format, 'total' => $order->products_count]) }}</td>
 {{--                                <td>{{ 'price' => $order->amount_format 'total' => $order->products_count }}</td>--}}
-<td>
+                                <td style="text-align:center">
                                     @if( $order->is_finished && $order->is_confirmed)
                                        <label class="btn-success p-1 rounded small" >Completato</label>
                                     @endif
