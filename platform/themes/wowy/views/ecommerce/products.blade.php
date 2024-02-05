@@ -14,6 +14,7 @@
     Theme::asset()->container('footer')->usePath()->add('jquery-ui-touch-punch-js', 'js/plugins/jquery.ui.touch-punch.min.js');
 
     $products->loadMissing(['categories', 'categories.slugable']);
+    $request=request();
 @endphp
 <div class="row">
     @if(auth('customer')->user() !== null && $request->is('products') &&
