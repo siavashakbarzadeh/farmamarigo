@@ -841,10 +841,15 @@ class PublicCheckoutController
     private function deleteDuplicateOrders($token)
     {
             // 1. Get all orders with is_finished=2.
-            $order = Order::where('token',$token)->first();
-            if($order!=null){
-                $order->delete();
+            $orders = Order::where('token',$token)->get();
+            foreach($orders as $order){
+                $ShippingAmount=OrderShippingAmount::where('order_id',$order->id)->exists();
+                if(!$ShippingAmount){
+                        $order->delete();
+                }
             }
+
+
 
     }
 
