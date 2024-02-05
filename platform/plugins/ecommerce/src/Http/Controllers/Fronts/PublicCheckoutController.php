@@ -982,6 +982,7 @@ class PublicCheckoutController
             $order->update([
                 'is_confirmed' => true,
                 'status' => OrderStatusEnum::COMPLETED,
+                'payment_id'=>$payment->id
             ]);
 
             $this->orderHistoryRepository->createOrUpdate([
