@@ -879,6 +879,8 @@ class PublicCheckoutController
 
     $responseArray = json_decode($response, true);
 
+    dd($responseArray);
+
     if (isset($responseArray['id'])) {
         // If the payment is created successfully
         foreach ($responseArray['links'] as $link) {
@@ -925,6 +927,17 @@ class PublicCheckoutController
 
         $order = $this->orderRepository->findOrFail($request->orderId);
         if($order){
+
+            $arguments=[
+                'account_id' => auth('customer')->user(),
+                'amount' => $order->amount,
+                'currency' => 'EUR',
+                'order_id' => $order->id,
+                'customer_id' => auth('customer')->user(),
+                'charge_id'=>$order->id,
+                'payment_channel' => "Paypal",
+            ];
+            PaymentHelper::storeLocalPayment($arguments);
 
             $order->update([
                 'is_confirmed' => true,
