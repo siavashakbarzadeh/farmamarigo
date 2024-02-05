@@ -1063,7 +1063,6 @@ class PublicCheckoutController
             return redirect()->to('/cancel-paypal'); //just the view
 
 
-        }
 
     }
 
