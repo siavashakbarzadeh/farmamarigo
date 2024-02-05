@@ -98,7 +98,7 @@
 </li>
 <li class="nav-item" id="4">
 {{--    <a href="{{ route('admin.ecommerce.offertype.view') }}" class="nav-link nav-toggle">--}}
-    <a href="{{  }}" class="nav-link nav-toggle">
+    <a href="" class="nav-link nav-toggle">
         <i class="fab fa-periscope"></i>
         <span class="title">Suggeriti</span>
     </a>
