@@ -977,7 +977,7 @@ class PublicCheckoutController
                 'charge_id'=>$order->payment_id,
                 'payment_channel' => "Paypal",
             ];
-            $payment = Payment::firstOrCreate(['order_id' => $order_id], $arguments);
+            $payment = Payment::firstOrCreate(['order_id' => $order->id], $arguments);
 
             $order->update([
                 'is_confirmed' => true,
