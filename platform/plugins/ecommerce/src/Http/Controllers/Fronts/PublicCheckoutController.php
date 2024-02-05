@@ -1100,7 +1100,6 @@ class PublicCheckoutController
             'tracked_start_checkout'=>$order->token,
             'retry-checkout'=>$order->token
         ]);
-        dd(session()->all());
         return redirect()->to("/checkout/$order->token");
 
 
