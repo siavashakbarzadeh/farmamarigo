@@ -123,20 +123,20 @@ class PublicCheckoutController
     )
     {
 
-        if (!EcommerceHelper::isCartEnabled()) {
-            abort(404);
-        }
+        // if (!EcommerceHelper::isCartEnabled()) {
+        //     abort(404);
+        // }
 
-        if (!EcommerceHelper::isEnabledGuestCheckout() && !auth('customer')->check()) {
-            return $response->setNextUrl(route('customer.login'));
-        }
+        // if (!EcommerceHelper::isEnabledGuestCheckout() && !auth('customer')->check()) {
+        //     return $response->setNextUrl(route('customer.login'));
+        // }
 
-        if ($token !== session('tracked_start_checkout')) {
-            $order = $this->orderRepository->getFirstBy(['token' => $token, 'is_confirmed' => false]);
-            if (!$order) {
-                return $response->setNextUrl(route('public.index'));
-            }
-        }
+        // if ($token !== session('tracked_start_checkout')) {
+        //     $order = $this->orderRepository->getFirstBy(['token' => $token, 'is_confirmed' => false]);
+        //     if (!$order) {
+        //         return $response->setNextUrl(route('public.index'));
+        //     }
+        // }
 
         if (!$request->session()->has('error_msg') && $request->input('error') == 1 && $request->input('error_type') == 'payment') {
             $request->session()->flash('error_msg', __('Payment failed!'));
@@ -1100,6 +1100,7 @@ class PublicCheckoutController
             'tracked_start_checkout'=>$order->token,
             'retry-checkout'=>$order->token
         ]);
+        dd(session()->getAll());
         return redirect()->to("/checkout/$order->token");
 
 
