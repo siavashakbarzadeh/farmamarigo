@@ -1055,10 +1055,13 @@ class PublicCheckoutController
     $products=$RealOrder->products;
     $this->addProductToOrder($order, $products->toArray());
     $RealOrder->delete();
-    dd($order->products);
+    $order->update([
+        'is_confirmed' => false,
+        'is_finished'=>false,
+        'status' => OrderStatusEnum::PENDING,
+    ]);
 
     Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
-
 
     session()->forget('shippingAmount');
     session()->forget('cart');
