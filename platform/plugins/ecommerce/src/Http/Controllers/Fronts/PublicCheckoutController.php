@@ -951,15 +951,17 @@ class PublicCheckoutController
     public function paypalConfirmed(Request $request){
 
         $order = $this->orderRepository->findOrFail($request->orderId);
+        
         if($order){
             $arguments=[
                 'account_id' => auth('customer')->user()->id,
                 'amount' => $order->amount,
+                'user_id'=>$request->PayerID,
                 'currency' => 'EUR',
                 'order_id' => $order->id,
                 'customer_id' => auth('customer')->user()->id,
-                'charge_id'=>$order->payment_id,
-                'payment_channel' => "Paypal",
+                'charge_id'=>$request->paymentId,
+                'payment_channel' => "paypal",
                 'status'=>'completed'
             ];
             $payment = Payment::create($arguments);
