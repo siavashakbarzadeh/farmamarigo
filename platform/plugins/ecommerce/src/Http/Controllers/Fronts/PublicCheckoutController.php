@@ -1024,6 +1024,8 @@ class PublicCheckoutController
 
 
 
+            $RealOrder=Order::where('token',$order->token)->where('shipping_option',NULL)->first();
+            $RealOrder->delete();
 
             SaveCartController::deleteSavedCart();
             $products=$order->products;
