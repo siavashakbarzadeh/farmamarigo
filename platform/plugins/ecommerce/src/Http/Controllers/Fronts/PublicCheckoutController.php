@@ -868,7 +868,12 @@ class PublicCheckoutController
         return null;
     }
         // Set up the payment details
-        $orderTotal = number_format($order->amount, 2, '.', ''); // Format to a decimal string
+        $RealOrder=Order::where('token',$order->token)->where('status','pending')->first();
+        if($RealOrder){
+            $orderTotal=number_format($RealOrder->amount, 2, '.', '');
+        }else{
+            $orderTotal = number_format($order->amount, 2, '.', ''); // Format to a decimal string
+        }
     // Set up the payment details
     $paymentData = [
         'intent' => 'sale',
