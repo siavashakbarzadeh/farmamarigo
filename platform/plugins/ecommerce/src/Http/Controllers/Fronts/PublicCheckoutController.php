@@ -1060,6 +1060,11 @@ class PublicCheckoutController
         'is_finished'=>false,
         'status' => OrderStatusEnum::PENDING,
     ]);
+    OrderShippingAmount::create(
+        ['shippingAmount' => session()->get('shippingAmount'),
+            'order_id' => $order->id
+        ]
+    );
 
     Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
 
