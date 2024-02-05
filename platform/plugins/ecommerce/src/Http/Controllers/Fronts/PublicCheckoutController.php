@@ -1119,8 +1119,10 @@ class PublicCheckoutController
         session()->forget('note');
         session()->forget('tracked_start_checkout');
 
+
         SaveCartController::deleteSavedCart();
         $order=Order::where('token',$request->orderToken)->first();
+        dd($order);
         $shippingAmount=OrderShippingAmount::where('order_id',$order->id)->first();
         session([
             'shippingAmount' => $shippingAmount,
