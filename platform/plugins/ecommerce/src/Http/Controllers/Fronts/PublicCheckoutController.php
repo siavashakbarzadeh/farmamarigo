@@ -722,11 +722,22 @@ class PublicCheckoutController
             $paymentMethod = $request->input('payment_method', session('selected_payment_method'));
 
             if ($paymentMethod == 'paypal') {
-                $paypalPaymentUrl = $this->initiatePaypalPayment($order, $request);
+                $paypalPayment = $this->initiatePaypalPayment($order, $request);
 
-                if (is_string($paypalPaymentUrl)) {
+                if ($paypalPayment!==null) {
                     // Redirect user to PayPal for payment authorization
-                    return redirect()->to($paypalPaymentUrl);
+                    $arguments=[
+                        'account_id' => $currentUserId,
+                        'amount' => $amount,
+                        'currency' => 'EUR',
+                        'order_id' => $order->id,
+                        'customer_id' => $currentUserId,
+                        'charge_id'=>$paypalPayment['id'],
+                        'payment_channel' => $paymentMethod,
+                        'created_at'=>$paypalPayment['create_time'],
+                    ];
+                    PaymentHelper::storeLocalPayment($arguments);
+                    return redirect()->to($paypalPayment['approval_url']);
                 } else {
                     // Handle error in initiating payment
                     // You might want to log this or show an error message
@@ -879,15 +890,18 @@ class PublicCheckoutController
 
     $responseArray = json_decode($response, true);
 
-    dd($responseArray);
 
     if (isset($responseArray['id'])) {
         // If the payment is created successfully
+        $array=[];
         foreach ($responseArray['links'] as $link) {
             if ($link['rel'] == 'approval_url') {
-                return $link['href']; // Return the approval URL
+                $array['approval_url']=$link['href']; // Return the approval URL
             }
         }
+        $array['id']=$responseArray['id'];
+        $array['create_time']=$responseArray['create_time'];
+        return $array;
     } else {
         // Log PayPal response for failed requests
         error_log('PayPal Error: ' . $response);
