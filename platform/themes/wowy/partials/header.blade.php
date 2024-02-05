@@ -160,7 +160,7 @@
                                                             miei ordini</a></div>
                                                     <div class="row" style="width:100%"><a
                                                             class="bg-light item-profile-wrap"
-                                                            href="https://marigopharma.marigo.collaudo.biz/wishlist">I
+                                                            href="https://marigopharma.marigo.collaudo.biz/wishlist?preferiti_page=1">I
                                                             miei preferiti</a></div>
                                                     <div class="row" style="width:100%"> <a
                                                             class="bg-light item-profile-wrap"
