@@ -943,11 +943,11 @@ class PublicCheckoutController
         if($order){
 
             $arguments=[
-                'account_id' => auth('customer')->user(),
+                'account_id' => auth('customer')->user()->id,
                 'amount' => $order->amount,
                 'currency' => 'EUR',
                 'order_id' => $order->id,
-                'customer_id' => auth('customer')->user(),
+                'customer_id' => auth('customer')->user()->id,
                 'charge_id'=>$order->id,
                 'payment_channel' => "Paypal",
             ];
@@ -971,7 +971,7 @@ class PublicCheckoutController
             $shippingMethod=[];
                 app(ShipmentInterface::class)->createOrUpdate([
                     'order_id' => $order->id,
-                    'user_id' => 0,
+                    'user_id' => auth('customer')->user()->id,
                     'weight' => $shippingData ? Arr::get($shippingData, 'weight') : 0,
                     'cod_amount' => ($order->payment->id && $order->payment->status != PaymentStatusEnum::COMPLETED) ? $order->amount : 0,
                     'cod_status' => ShippingCodStatusEnum::PENDING,
@@ -1031,13 +1031,7 @@ class PublicCheckoutController
     public function paypalCanceled(Request $request){
 
         $order = $this->orderRepository->findOrFail($request->orderId);
-        dd($order);
         if($order){
-
-            $order->update([
-                'is_confirmed' => true,
-                'status' => OrderStatusEnum::COMPLETED,
-            ]);
 
             $this->orderHistoryRepository->createOrUpdate([
                 'action' => 'Order Paid with paypal',
@@ -1052,7 +1046,7 @@ class PublicCheckoutController
             $shippingMethod=[];
                 app(ShipmentInterface::class)->createOrUpdate([
                     'order_id' => $order->id,
-                    'user_id' => 0,
+                    'user_id' => auth('customer')->user()->id,
                     'weight' => $shippingData ? Arr::get($shippingData, 'weight') : 0,
                     'cod_amount' => ($order->payment->id && $order->payment->status != PaymentStatusEnum::COMPLETED) ? $order->amount : 0,
                     'cod_status' => ShippingCodStatusEnum::PENDING,
@@ -1076,7 +1070,7 @@ class PublicCheckoutController
                 'order_id' => $order->id,
             ]);
 
-            Mail::to($order->user->email)->send(new OrderConfirmed($order));
+            Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
 
             $this->deleteDuplicateOrders($order->token);
 
@@ -1100,12 +1094,7 @@ class PublicCheckoutController
             return redirect()->to('/cancel-paypal'); //just the view
 
 
-        }else{
-
-
-
         }
-
 
     }
 
