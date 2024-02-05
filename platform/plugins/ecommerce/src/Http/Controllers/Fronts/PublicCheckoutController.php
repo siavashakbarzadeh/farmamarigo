@@ -122,7 +122,7 @@ class PublicCheckoutController
         HandleApplyPromotionsService $applyPromotionsService
     )
     {
-        dd('here');
+
         if (!EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
@@ -133,7 +133,7 @@ class PublicCheckoutController
 
         if ($token !== session('tracked_start_checkout')) {
             $order = $this->orderRepository->getFirstBy(['token' => $token, 'is_confirmed' => false]);
-
+            dd($order);
             if (!$order) {
                 return $response->setNextUrl(route('public.index'));
             }
