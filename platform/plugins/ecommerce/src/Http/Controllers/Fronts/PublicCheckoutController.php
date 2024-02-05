@@ -146,7 +146,6 @@ class PublicCheckoutController
 
         if(session()->has('retry_checkout')){
             $products=Order::where('token',session('retry-checkout'))->get()->products();
-            dd($products);
         }else{
             $products = Cart::instance('cart')->products();
             if (!$products->count()) {
@@ -157,7 +156,6 @@ class PublicCheckoutController
 
 
         foreach ($products as $product) {
-            dd($product);
             if ($product->isOutOfStock()) {
                 return $response
                     ->setError()
