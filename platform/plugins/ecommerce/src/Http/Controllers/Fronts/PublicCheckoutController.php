@@ -962,7 +962,7 @@ class PublicCheckoutController
                 'payment_channel' => "Paypal",
                 'status'=>'completed'
             ];
-            $payment = Payment::create(['order_id' => $order->id], $arguments);
+            $payment = Payment::create($arguments);
             $order->update([
                 'is_confirmed' => true,
                 'status' => OrderStatusEnum::COMPLETED,
