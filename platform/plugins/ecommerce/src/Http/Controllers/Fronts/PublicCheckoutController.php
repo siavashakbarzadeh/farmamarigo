@@ -816,7 +816,7 @@ class PublicCheckoutController
         $this->generateInvoice($order);
 
 
-        $this->deleteDuplicateOrders($order->token);
+        // $this->deleteDuplicateOrders($order->token);
 
         SaveCartController::deleteSavedCart();
 
