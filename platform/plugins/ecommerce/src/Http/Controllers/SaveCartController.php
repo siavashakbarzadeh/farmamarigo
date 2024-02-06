@@ -99,7 +99,6 @@ public static function reCalculateCart($user_id=null) {
                     foreach ($cart->cart as $item) {
                         $product=Product::find($item->id)->first()->is_variation;
                         $AllVariations=Product::where('name',$item->name)->get();
-
                         foreach($AllVariations as $variation){
                             if($variation->is_variation){
                                 $flag=true;
@@ -109,6 +108,8 @@ public static function reCalculateCart($user_id=null) {
                             $productVariation=ProductVariation::where('product_id',$item->id)->first();
                             if($productVariation){
                                 $product_id=$productVariation->configurable_product_id;
+                            }else{
+                                $product_id=$item->id;
                             }
                         }else{
                             $product_id=$item->id;
