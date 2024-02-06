@@ -107,7 +107,6 @@ public static function reCalculateCart($user_id=null) {
                         }
                         if($flag){
                             $product_id=ProductVariation::where('product_id',$item->id)->first()->configurable_product_id;
-                            
                         }else{
                             $product_id=$item->id;
                         }
@@ -116,6 +115,7 @@ public static function reCalculateCart($user_id=null) {
                                             ->where('customer_id', $user_id)
                                             ->where('status', 'active')
                                             ->first();
+                        dd($offerDetail);
                         $price = null;
 
                         if ($offerDetail) {
