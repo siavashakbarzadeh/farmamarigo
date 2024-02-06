@@ -106,7 +106,7 @@ public static function reCalculateCart($user_id=null) {
                                             ->where('customer_id', $user_id)
                                             ->where('status', 'active')
                                             ->first();
-                        dd($offerDetail,$product_id);
+                        dd($offerDetail,$product_id,$item->id);
                         $price = null;
 
                         if ($offerDetail) {
