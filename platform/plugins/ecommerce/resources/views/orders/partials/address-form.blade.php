@@ -1,24 +1,24 @@
 @php
-use Botble\Ecommerce\Models\Address;
-    if(!isset($sessionCheckoutData)){
-        if(auth('customer')->check()){
-            $address=Address::where('customer_id',auth('customer')->user()->id)->first();
-            $sessionCheckoutData=[
-                'name'=>$address->name,
-                'email'=>$address->email,
-                'phone'=>$address->phone,
-                'country'=>$address->country,
-                'state'=>$address->state,
-                'city'=>$address->city,
-                'address'=>$address->address,
-                'zip_code'=>$address->zipCode
-            ]
+    use Botble\Ecommerce\Models\Address;
+    if (!isset($sessionCheckoutData)) {
+        if (auth('customer')->check()) {
+            $address = Address::where('customer_id', auth('customer')->user()->id)->first();
+            $sessionCheckoutData = [
+                'name' => $address->name,
+                'email' => $address->email,
+                'phone' => $address->phone,
+                'country' => $address->country,
+                'state' => $address->state,
+                'city' => $address->city,
+                'address' => $address->address,
+                'zip_code' => $address->zipCode,
+            ];
         }
     }
 @endphp
 <div class="customer-address-payment-form">
 
-    @if (EcommerceHelper::isEnabledGuestCheckout() && ! auth('customer')->check())
+    @if (EcommerceHelper::isEnabledGuestCheckout() && !auth('customer')->check())
         <div class="form-group mb-3">
             <p>{{ __('Already have an account?') }} <a href="{{ route('customer.login') }}">{{ __('Login') }}</a></p>
         </div>
@@ -29,25 +29,33 @@ use Botble\Ecommerce\Models\Address;
             @php
                 $oldSessionAddressId = old('address.address_id', $sessionAddressId);
             @endphp
-            <div class="list-customer-address @if (! $isAvailableAddress) d-none @endif">
+            <div class="list-customer-address @if (!$isAvailableAddress) d-none @endif">
 
                 <br>
-                <div class="address-item-selected @if (! $sessionAddressId) d-none @endif">
+                <div class="address-item-selected @if (!$sessionAddressId) d-none @endif">
                     @if ($isAvailableAddress && $oldSessionAddressId != 'new')
                         @if ($oldSessionAddressId && $addresses->contains('id', $oldSessionAddressId))
-                            @include('plugins/ecommerce::orders.partials.address-item', ['address' => $addresses->firstWhere('id', $oldSessionAddressId)])
+                            @include('plugins/ecommerce::orders.partials.address-item', [
+                                'address' => $addresses->firstWhere('id', $oldSessionAddressId),
+                            ])
                         @elseif ($defaultAddress = get_default_customer_address())
-                            @include('plugins/ecommerce::orders.partials.address-item', ['address' => $defaultAddress])
+                            @include('plugins/ecommerce::orders.partials.address-item', [
+                                'address' => $defaultAddress,
+                            ])
                         @else
-                            @include('plugins/ecommerce::orders.partials.address-item', ['address' => Arr::first($addresses)])
+                            @include('plugins/ecommerce::orders.partials.address-item', [
+                                'address' => Arr::first($addresses),
+                            ])
                         @endif
                     @endif
                 </div>
                 <div class="list-available-address d-none">
                     @if ($isAvailableAddress)
-                        @foreach($addresses as $address)
+                        @foreach ($addresses as $address)
                             <div class="address-item-wrapper" data-id="{{ $address->id }}">
-                                @include('plugins/ecommerce::orders.partials.address-item', compact('address'))
+                                @include(
+                                    'plugins/ecommerce::orders.partials.address-item',
+                                    compact('address'))
                             </div>
                         @endforeach
                     @endif
@@ -79,7 +87,13 @@ use Botble\Ecommerce\Models\Address;
             </div>
             <div class="col-lg-4 col-12">
                 <div class="form-group  @error('address.phone') has-error @enderror">
-                    {!! Form::phoneNumber('address[phone]', old('address.phone', Arr::get($sessionCheckoutData, 'phone')), ['id' => 'address_phone', 'class' => 'form-control address-control-item ' . (!EcommerceHelper::isPhoneFieldOptionalAtCheckout() ? 'address-control-item-required' : '') . ' checkout-input']) !!}
+                    {!! Form::phoneNumber('address[phone]', old('address.phone', Arr::get($sessionCheckoutData, 'phone')), [
+                        'id' => 'address_phone',
+                        'class' =>
+                            'form-control address-control-item ' .
+                            (!EcommerceHelper::isPhoneFieldOptionalAtCheckout() ? 'address-control-item-required' : '') .
+                            ' checkout-input',
+                    ]) !!}
                     {!! Form::error('address.phone', $errors) !!}
                 </div>
             </div>
@@ -90,16 +104,20 @@ use Botble\Ecommerce\Models\Address;
                 <div class="form-group mb-3 @error('address.country') has-error @enderror">
                     @if (EcommerceHelper::isUsingInMultipleCountries())
                         <div class="select--arrow">
-                            <select name="address[country]" class="form-control address-control-item address-control-item-required"
-                                data-form-parent=".customer-address-payment-form" id="address_country" data-type="country">
-                                @foreach(EcommerceHelper::getAvailableCountries() as $countryCode => $countryName)
-                                    <option value="{{ $countryCode }}" @if (old('address.country', Arr::get($sessionCheckoutData, 'country')) == $countryCode) selected @endif>{{ $countryName }}</option>
+                            <select name="address[country]"
+                                class="form-control address-control-item address-control-item-required"
+                                data-form-parent=".customer-address-payment-form" id="address_country"
+                                data-type="country">
+                                @foreach (EcommerceHelper::getAvailableCountries() as $countryCode => $countryName)
+                                    <option value="{{ $countryCode }}"
+                                        @if (old('address.country', Arr::get($sessionCheckoutData, 'country')) == $countryCode) selected @endif>{{ $countryName }}</option>
                                 @endforeach
                             </select>
                             <i class="fas fa-angle-down"></i>
                         </div>
                     @else
-                        <input type="hidden" name="address[country]" id="address_country" value="{{ EcommerceHelper::getFirstCountryId() }}">
+                        <input type="hidden" name="address[country]" id="address_country"
+                            value="{{ EcommerceHelper::getFirstCountryId() }}">
                     @endif
                     {!! Form::error('address.country', $errors) !!}
                 </div>
@@ -109,19 +127,26 @@ use Botble\Ecommerce\Models\Address;
                 <div class="form-group mb-3 @error('address.state') has-error @enderror">
                     @if (EcommerceHelper::loadCountriesStatesCitiesFromPluginLocation())
                         <div class="select--arrow">
-                            <select name="address[state]" class="form-control address-control-item address-control-item-required"
-                                data-form-parent=".customer-address-payment-form" id="address_state" data-type="state" data-url="{{ route('ajax.states-by-country') }}">
+                            <select name="address[state]"
+                                class="form-control address-control-item address-control-item-required"
+                                data-form-parent=".customer-address-payment-form" id="address_state" data-type="state"
+                                data-url="{{ route('ajax.states-by-country') }}">
                                 <option value="">{{ __('Select state...') }}</option>
                                 @if (old('address.country', Arr::get($sessionCheckoutData, 'country')) || !EcommerceHelper::isUsingInMultipleCountries())
-                                    @foreach(EcommerceHelper::getAvailableStatesByCountry(old('address.country', Arr::get($sessionCheckoutData, 'country'))) as $stateId => $stateName)
-                                        <option value="{{ $stateId }}" @if (old('address.state', Arr::get($sessionCheckoutData, 'state')) == $stateId) selected @endif>{{ $stateName }}</option>
+                                    @foreach (EcommerceHelper::getAvailableStatesByCountry(old('address.country', Arr::get($sessionCheckoutData, 'country'))) as $stateId => $stateName)
+                                        <option value="{{ $stateId }}"
+                                            @if (old('address.state', Arr::get($sessionCheckoutData, 'state')) == $stateId) selected @endif>{{ $stateName }}
+                                        </option>
                                     @endforeach
                                 @endif
                             </select>
                             <i class="fas fa-angle-down"></i>
                         </div>
                     @else
-                        <input id="address_state" type="text" class="form-control address-control-item address-control-item-required checkout-input" placeholder="{{ __('State') }}" name="address[state]" value="{{ old('address.state', Arr::get($sessionCheckoutData, 'state')) }}">
+                        <input id="address_state" type="text"
+                            class="form-control address-control-item address-control-item-required checkout-input"
+                            placeholder="{{ __('State') }}" name="address[state]"
+                            value="{{ old('address.state', Arr::get($sessionCheckoutData, 'state')) }}">
                     @endif
                     {!! Form::error('address.state', $errors) !!}
                 </div>
@@ -131,18 +156,25 @@ use Botble\Ecommerce\Models\Address;
                 <div class="form-group  @error('address.city') has-error @enderror">
                     @if (EcommerceHelper::loadCountriesStatesCitiesFromPluginLocation())
                         <div class="select--arrow">
-                            <select name="address[city]" class="form-control address-control-item address-control-item-required" id="address_city" data-type="city" data-url="{{ route('ajax.cities-by-state') }}">
+                            <select name="address[city]"
+                                class="form-control address-control-item address-control-item-required"
+                                id="address_city" data-type="city" data-url="{{ route('ajax.cities-by-state') }}">
                                 <option value="">{{ __('Select city...') }}</option>
                                 @if (old('address.state', Arr::get($sessionCheckoutData, 'state')))
-                                    @foreach(EcommerceHelper::getAvailableCitiesByState(old('address.state', Arr::get($sessionCheckoutData, 'state'))) as $cityId => $cityName)
-                                        <option value="{{ $cityId }}" @if (old('address.city', Arr::get($sessionCheckoutData, 'city')) == $cityId) selected @endif>{{ $cityName }}</option>
+                                    @foreach (EcommerceHelper::getAvailableCitiesByState(old('address.state', Arr::get($sessionCheckoutData, 'state'))) as $cityId => $cityName)
+                                        <option value="{{ $cityId }}"
+                                            @if (old('address.city', Arr::get($sessionCheckoutData, 'city')) == $cityId) selected @endif>{{ $cityName }}
+                                        </option>
                                     @endforeach
                                 @endif
                             </select>
                             <i class="fas fa-angle-down"></i>
                         </div>
                     @else
-                        <input id="address_city" type="text" class="form-control address-control-item address-control-item-required checkout-input" placeholder="{{ __('City') }}" name="address[city]" value="{{ old('address.city', Arr::get($sessionCheckoutData, 'city')) }}">
+                        <input id="address_city" type="text"
+                            class="form-control address-control-item address-control-item-required checkout-input"
+                            placeholder="{{ __('City') }}" name="address[city]"
+                            value="{{ old('address.city', Arr::get($sessionCheckoutData, 'city')) }}">
                     @endif
                     {!! Form::error('address.city', $errors) !!}
                 </div>
@@ -150,7 +182,10 @@ use Botble\Ecommerce\Models\Address;
 
             <div class="col-12">
                 <div class="form-group mb-3 @error('address.address') has-error @enderror">
-                    <input id="address_address" type="text" class="form-control address-control-item address-control-item-required checkout-input" placeholder="{{ __('Address') }}" name="address[address]" value="{{ old('address.address', Arr::get($sessionCheckoutData, 'address')) }}">
+                    <input id="address_address" type="text"
+                        class="form-control address-control-item address-control-item-required checkout-input"
+                        placeholder="{{ __('Address') }}" name="address[address]"
+                        value="{{ old('address.address', Arr::get($sessionCheckoutData, 'address')) }}">
                     {!! Form::error('address.address', $errors) !!}
                 </div>
             </div>
@@ -169,24 +204,29 @@ use Botble\Ecommerce\Models\Address;
         </div>
     </div>
 
-    @if (! auth('customer')->check())
+    @if (!auth('customer')->check())
         <div class="form-group mb-3">
-            <input type="checkbox" name="create_account" value="1" id="create_account" @if (old('create_account') == 1) checked @endif>
-            <label for="create_account" class="control-label ps-2">{{ __('Register an account with above information?') }}</label>
+            <input type="checkbox" name="create_account" value="1" id="create_account"
+                @if (old('create_account') == 1) checked @endif>
+            <label for="create_account"
+                class="control-label ps-2">{{ __('Register an account with above information?') }}</label>
         </div>
 
-        <div class="password-group @if (! $errors->has('password') && ! $errors->has('password_confirmation')) d-none @endif">
+        <div class="password-group @if (!$errors->has('password') && !$errors->has('password_confirmation')) d-none @endif">
             <div class="row">
                 <div class="col-md-6 col-12">
                     <div class="form-group  @error('password') has-error @enderror">
-                        <input id="password" type="password" class="form-control checkout-input" name="password" autocomplete="password" placeholder="{{ __('Password') }}">
+                        <input id="password" type="password" class="form-control checkout-input" name="password"
+                            autocomplete="password" placeholder="{{ __('Password') }}">
                         {!! Form::error('password', $errors) !!}
                     </div>
                 </div>
 
                 <div class="col-md-6 col-12">
                     <div class="form-group @error('password_confirmation') has-error @enderror">
-                        <input id="password-confirm" type="password" class="form-control checkout-input" autocomplete="password-confirmation" placeholder="{{ __('Password confirmation') }}" name="password_confirmation">
+                        <input id="password-confirm" type="password" class="form-control checkout-input"
+                            autocomplete="password-confirmation" placeholder="{{ __('Password confirmation') }}"
+                            name="password_confirmation">
                         {!! Form::error('password_confirmation', $errors) !!}
                     </div>
                 </div>
