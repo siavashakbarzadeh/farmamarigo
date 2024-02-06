@@ -106,7 +106,10 @@ public static function reCalculateCart($user_id=null) {
                             }
                         }
                         if($flag){
-                            $product_id=ProductVariation::where('product_id',$item->id)->first()->configurable_product_id;
+                            $productVariation=ProductVariation::where('product_id',$item->id)->first();
+                            if($productVariation){
+                                $product_id=$productVariation->configurable_product_id;
+                            }
                         }else{
                             $product_id=$item->id;
                         }
