@@ -43,6 +43,18 @@
                                             @foreach (Cart::instance('cart')->content() as $key => $cartItem)
                                                 @php
                                                     $product = $products->find($cartItem->id);
+
+                                                    $offerDetail = OffersDetail::where('product_id', $product->id)
+                                                        ->where('customer_id', $userid)
+                                                        ->where('status', 'active')
+                                                        ->first();
+                                                    if ($offerDetail) {
+                                                        $offer = Offers::find($offerDetail->offer_id);
+                                                        if ($offer) {
+                                                            $offerType = $offer->offer_type;
+                                                        }
+                                                    }
+                                                    $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
                                                 @endphp
 
                                                 @if (!empty($product))
@@ -77,6 +89,24 @@
                                                         <td class="product-des product-name">
                                                             <p class="product-name"><a
                                                                     href="{{ $product->original_product->url }}">{{ $product->name }}
+                                                                    @if ($offerDetail)
+                                                                        @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
+                                                                            <span class="badge badge-secondary"
+                                                                                style="background: #E52728;font-size:smaller">{{ get_sale_percentage($pricelist[0]->final_price, $offerDetail->product_price) }}</span>
+                                                                        @elseif ($offerType == 4)
+                                                                            <span class="badge badge-secondary"
+                                                                                style="background: #E52728;font-size:smaller">3x2</span>
+                                                                        @elseif ($offerType == 5)
+                                                                            <span class="badge badge-secondary"
+                                                                                style="background: #E52728;font-size:smaller"><i
+                                                                                    class="fa fa-link"></i></span>
+                                                                        @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
+                                                                            <span class="badge badge-secondary"
+                                                                                style="background: #E52728;font-size:smaller">{{ get_sale_percentage($pricelist[0]->final_price, $offerDetail->product_price) }}</span>
+                                                                        @endif
+                                                                    @endif
+
+
                                                                     @if ($product->isOutOfStock())
                                                                         <span
                                                                             class="stock-status-label">({!! $product->stock_status_html !!})</span>
