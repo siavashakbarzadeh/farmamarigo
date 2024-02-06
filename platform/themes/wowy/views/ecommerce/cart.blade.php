@@ -40,6 +40,9 @@
                                             @foreach (Cart::instance('cart')->content() as $key => $cartItem)
                                                 @php
                                                     $product = $products->find($cartItem->id);
+                                                    if ($product->is_variation) {
+                                                        $product = Product::where('name', $product->name)->where('is_variation', 0);
+                                                    }
                                                     $userid = auth('customer')->user()->id;
                                                     $offerDetail = OffersDetail::where('product_id', $product->id)
                                                         ->where('customer_id', $userid)
