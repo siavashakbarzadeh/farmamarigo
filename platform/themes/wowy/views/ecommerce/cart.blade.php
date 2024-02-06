@@ -48,6 +48,8 @@
                                                         ->where('customer_id', $userid)
                                                         ->where('status', 'active')
                                                         ->first();
+
+                                                    dd($offersDetail);
                                                     if ($offerDetail) {
                                                         $offer = Offers::find($offerDetail->offer_id);
                                                         if ($offer) {
