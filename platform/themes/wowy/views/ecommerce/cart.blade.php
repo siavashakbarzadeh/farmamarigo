@@ -21,9 +21,10 @@
             <div class="col-12 section--shopping-cart">
                 <form class="form--shopping-cart" method="post" action="{{ route('public.cart.update') }}">
                     @csrf
-                    <div class="row">
-                        <div class="col-8">
-                            @if (count($products) > 0)
+
+                    @if (count($products) > 0)
+                        <div class="row">
+                            <div class="col-8">
                                 <div class="table-responsive">
                                     <table class="table shopping-summery text-center clean table--cart">
                                         <thead>
@@ -222,181 +223,187 @@
                                         </div>
                                     </div>
                                 </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="row mb-50">
+                            </div>
+                            <div class="col-4">
+                                <div class="row mb-50">
 
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="border p-md-4 p-30 border-radius-10 cart-totals">
-                                        {{--                                    <div class="heading_s1 mb-3"> --}}
-                                        {{--                                        <h4>{{ __('Cart Total') }}</h4> --}}
-                                        {{--                                    </div> --}}
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <tbody>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="border p-md-4 p-30 border-radius-10 cart-totals">
+                                            {{--                                    <div class="heading_s1 mb-3"> --}}
+                                            {{--                                        <h4>{{ __('Cart Total') }}</h4> --}}
+                                            {{--                                    </div> --}}
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tbody>
 
-                                                    @if ($couponDiscountAmount > 0 && session('applied_coupon_code'))
+                                                        @if ($couponDiscountAmount > 0 && session('applied_coupon_code'))
+                                                            <tr>
+                                                                <td class="cart_total_label">
+                                                                    {{ __('Coupon code: :code', ['code' => session('applied_coupon_code')]) }}
+                                                                    (<small><a
+                                                                            class="btn-remove-coupon-code text-danger"
+                                                                            data-url="{{ route('public.coupon.remove') }}"
+                                                                            href="javascript:void(0)"
+                                                                            data-processing-text="{{ __('Removing...') }}">{{ __('Remove') }}</a></small>)<span>
+                                                                </td>
+                                                                <td class="cart_total_amount"><span
+                                                                        class="font-lg fw-900 text-brand">{{ format_price($couponDiscountAmount) }}</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                        @if ($promotionDiscountAmount)
+                                                            <tr>
+                                                                <td class="cart_total_label">
+                                                                    {{ __('Discount promotion') }}</td>
+                                                                <td class="cart_total_amount"><span
+                                                                        class="font-lg fw-900 text-brand">{{ format_price($promotionDiscountAmount) }}</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                        @if (auth('customer'))
+                                                            @php
+                                                                session()->forget('shippingAmount');
+                                                                $address = Botble\Ecommerce\Models\Address::where('customer_id', auth('customer')->user()->id)->first();
+                                                                $customerType = auth('customer')->user()->type;
+                                                                $region = $address->state;
+
+                                                                $weight = 0.0;
+                                                                $IVAPERCENTAGE = 1.22;
+                                                                $orderAmount = Cart::instance('cart')->rawTotal();
+                                                                //@dd($region, $customerType, $orderAmount);
+
+                                                                if ($region == ('campania' || 'lazio') && $customerType == ('Farmacia' || 'Parafarmacia' || 'AltroPharma') && $orderAmount < 300) {
+                                                                    $shippingAmount = 10;
+                                                                }
+                                                                if ($region == ('campania' || 'lazio') && $customerType == ('Farmacia' || 'Parafarmacia' || 'AltroPharma') && $orderAmount >= 300) {
+                                                                    $shippingAmount = 5;
+                                                                }
+                                                                if ($customerType == ('Farmacia' || 'Parafarmacia' || 'AltroPharma')) {
+                                                                    $shippingAmount = 10;
+                                                                }
+                                                                $subtotal = Cart::instance('cart')->rawSubTotal();
+                                                                //@dd(Cart::instance('cart')->subTotal());
+
+                                                                //                                                            foreach (Cart::instance('cart')->content() as $key => $cartItem) {
+                                                                //                                                                $product = $products->find($cartItem->id);
+                                                                //                                                                $weight=$weight+($product->weight * $cartItem->qty);
+                                                                //                                                            }
+                                                                //                                                            $shippingAmount=0;//shippingAmount needs to be calculated by products weights and prices
+                                                                //
+                                                                //
+                                                                //
+                                                                //                                                            if(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 350.00){
+                                                                //                                                                if($weight>50000.00){
+                                                                //                                                                    $extraWeight=intval($weight/50000.00);
+                                                                //                                                                    $shippingAmount=(29.00+5*($extraWeight )) *$IVAPERCENTAGE;
+                                                                //                                                                }else{
+                                                                //                                                                    $shippingAmount=29.00*$IVAPERCENTAGE;
+                                                                //                                                                }
+                                                                //                                                            }elseif(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount > 350.00 && Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 600.00 ) {
+                                                                //                                                                if($weight>50000.00){
+                                                                //                                                                    $extraWeight=intval($weight/50000.00);
+                                                                //                                                                    $shippingAmount=(12.90+5*($extraWeight )) *$IVAPERCENTAGE;
+                                                                //                                                                }else{
+                                                                //                                                                    $shippingAmount=12.90*$IVAPERCENTAGE;
+                                                                //                                                                }
+                                                                //                                                            }else{
+                                                                //                                                                if($weight>50000.00){
+                                                                //                                                                    $extraWeight=intval($weight/50000.00);
+                                                                //                                                                    $shippingAmount=(7.90+5*($extraWeight )) *$IVAPERCENTAGE;
+                                                                //                                                                }else{
+                                                                //                                                                    $shippingAmount=7.90*$IVAPERCENTAGE;
+                                                                //                                                                }
+                                                                //                                                            }
+                                                            @endphp
+                                                        @endif
+
+                                                        <input type="hidden" name="shippingAmount"
+                                                            value="{{ $shippingAmount }}">
+
                                                         <tr>
+
                                                             <td class="cart_total_label">
-                                                                {{ __('Coupon code: :code', ['code' => session('applied_coupon_code')]) }}
-                                                                (<small><a class="btn-remove-coupon-code text-danger"
-                                                                        data-url="{{ route('public.coupon.remove') }}"
-                                                                        href="javascript:void(0)"
-                                                                        data-processing-text="{{ __('Removing...') }}">{{ __('Remove') }}</a></small>)<span>
+                                                                {{ __('Subtotale IVA esclusa') }}
                                                             </td>
-                                                            <td class="cart_total_amount"><span
-                                                                    class="font-lg fw-900 text-brand">{{ format_price($couponDiscountAmount) }}</span>
+                                                            <td class="cart_total_amount"><strong><span
+                                                                        class="font-xl fw-900 text-brand">{{ format_price($subtotal) }}</span></strong>
                                                             </td>
                                                         </tr>
-                                                    @endif
-                                                    @if ($promotionDiscountAmount)
+                                                        @if (EcommerceHelper::isTaxEnabled())
+                                                            <tr>
+                                                                <td class="cart_total_label">{{ __('Tax') }}</td>
+                                                                <td class="cart_total_amount"><span
+                                                                        class="font-lg fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawTax()) }}</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                         <tr>
+
                                                             <td class="cart_total_label">
-                                                                {{ __('Discount promotion') }}</td>
-                                                            <td class="cart_total_amount"><span
-                                                                    class="font-lg fw-900 text-brand">{{ format_price($promotionDiscountAmount) }}</span>
+                                                                {{ __('Contributo spese di spedizione e imballagio') }}
+                                                            </td>
+                                                            <td class="cart_total_amount"><strong><span
+                                                                        class="font-xl fw-900 text-brand">{{ format_price($shippingAmount) }}</span></strong>
                                                             </td>
                                                         </tr>
-                                                    @endif
-                                                    @if (auth('customer'))
-                                                        @php
-                                                            session()->forget('shippingAmount');
-                                                            $address = Botble\Ecommerce\Models\Address::where('customer_id', auth('customer')->user()->id)->first();
-                                                            $customerType = auth('customer')->user()->type;
-                                                            $region = $address->state;
-
-                                                            $weight = 0.0;
-                                                            $IVAPERCENTAGE = 1.22;
-                                                            $orderAmount = Cart::instance('cart')->rawTotal();
-                                                            //@dd($region, $customerType, $orderAmount);
-
-                                                            if ($region == ('campania' || 'lazio') && $customerType == ('Farmacia' || 'Parafarmacia' || 'AltroPharma') && $orderAmount < 300) {
-                                                                $shippingAmount = 10;
-                                                            }
-                                                            if ($region == ('campania' || 'lazio') && $customerType == ('Farmacia' || 'Parafarmacia' || 'AltroPharma') && $orderAmount >= 300) {
-                                                                $shippingAmount = 5;
-                                                            }
-                                                            if ($customerType == ('Farmacia' || 'Parafarmacia' || 'AltroPharma')) {
-                                                                $shippingAmount = 10;
-                                                            }
-                                                            $subtotal = Cart::instance('cart')->rawSubTotal();
-                                                            //@dd(Cart::instance('cart')->subTotal());
-
-                                                            //                                                            foreach (Cart::instance('cart')->content() as $key => $cartItem) {
-                                                            //                                                                $product = $products->find($cartItem->id);
-                                                            //                                                                $weight=$weight+($product->weight * $cartItem->qty);
-                                                            //                                                            }
-                                                            //                                                            $shippingAmount=0;//shippingAmount needs to be calculated by products weights and prices
-                                                            //
-                                                            //
-                                                            //
-                                                            //                                                            if(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 350.00){
-                                                            //                                                                if($weight>50000.00){
-                                                            //                                                                    $extraWeight=intval($weight/50000.00);
-                                                            //                                                                    $shippingAmount=(29.00+5*($extraWeight )) *$IVAPERCENTAGE;
-                                                            //                                                                }else{
-                                                            //                                                                    $shippingAmount=29.00*$IVAPERCENTAGE;
-                                                            //                                                                }
-                                                            //                                                            }elseif(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount > 350.00 && Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 600.00 ) {
-                                                            //                                                                if($weight>50000.00){
-                                                            //                                                                    $extraWeight=intval($weight/50000.00);
-                                                            //                                                                    $shippingAmount=(12.90+5*($extraWeight )) *$IVAPERCENTAGE;
-                                                            //                                                                }else{
-                                                            //                                                                    $shippingAmount=12.90*$IVAPERCENTAGE;
-                                                            //                                                                }
-                                                            //                                                            }else{
-                                                            //                                                                if($weight>50000.00){
-                                                            //                                                                    $extraWeight=intval($weight/50000.00);
-                                                            //                                                                    $shippingAmount=(7.90+5*($extraWeight )) *$IVAPERCENTAGE;
-                                                            //                                                                }else{
-                                                            //                                                                    $shippingAmount=7.90*$IVAPERCENTAGE;
-                                                            //                                                                }
-                                                            //                                                            }
-                                                        @endphp
-                                                    @endif
-
-                                                    <input type="hidden" name="shippingAmount"
-                                                        value="{{ $shippingAmount }}">
-
-                                                    <tr>
-
-                                                        <td class="cart_total_label">{{ __('Subtotale IVA esclusa') }}
-                                                        </td>
-                                                        <td class="cart_total_amount"><strong><span
-                                                                    class="font-xl fw-900 text-brand">{{ format_price($subtotal) }}</span></strong>
-                                                        </td>
-                                                    </tr>
-                                                    @if (EcommerceHelper::isTaxEnabled())
                                                         <tr>
-                                                            <td class="cart_total_label">{{ __('Tax') }}</td>
-                                                            <td class="cart_total_amount"><span
-                                                                    class="font-lg fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawTax()) }}</span>
+
+                                                            <td class="cart_total_label">
+                                                                {{ __('Totale IVA inclusa') }}
+                                                            </td>
+                                                            <td class="cart_total_amount"><strong><span
+                                                                        class="font-xl fw-900 text-brand">{{ format_price($shippingAmount + $orderAmount) }}</span></strong>
                                                             </td>
                                                         </tr>
-                                                    @endif
-                                                    <tr>
-
-                                                        <td class="cart_total_label">
-                                                            {{ __('Contributo spese di spedizione e imballagio') }}
-                                                        </td>
-                                                        <td class="cart_total_amount"><strong><span
-                                                                    class="font-xl fw-900 text-brand">{{ format_price($shippingAmount) }}</span></strong>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-
-                                                        <td class="cart_total_label">{{ __('Totale IVA inclusa') }}
-                                                        </td>
-                                                        <td class="cart_total_amount"><strong><span
-                                                                    class="font-xl fw-900 text-brand">{{ format_price($shippingAmount + $orderAmount) }}</span></strong>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <p style="font-size: 9.5pt !important;">Il contributo per le spese di
-                                            spedizione ed imballaggio è calcolato sull'importo dell'ordine al netto di
-                                            eventuali omaggi a cui si ha diritto. <br>
-                                            Questi ultimi saranno stornati dal totale, in fase di gestione dell'ordine.
-                                        </p>
-                                        <p style='font-size: 11pt; color: black'><label for="comunicarci"><b>Hai
-                                                    qualcosa da comunicarci?</b></label></p>
-                                        <textarea id="comunicarci" name="note" rows="5" cols="37" style='min-height: unset!important'
-                                            placeholder="Scrivi qui eventuali note per l'ordine">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <p style="font-size: 9.5pt !important;">Il contributo per le spese di
+                                                spedizione ed imballaggio è calcolato sull'importo dell'ordine al netto
+                                                di
+                                                eventuali omaggi a cui si ha diritto. <br>
+                                                Questi ultimi saranno stornati dal totale, in fase di gestione
+                                                dell'ordine.
+                                            </p>
+                                            <p style='font-size: 11pt; color: black'><label for="comunicarci"><b>Hai
+                                                        qualcosa da comunicarci?</b></label></p>
+                                            <textarea id="comunicarci" name="note" rows="5" cols="37" style='min-height: unset!important'
+                                                placeholder="Scrivi qui eventuali note per l'ordine">
                                                 @if (Session::get('note') != '')
 {{ Session::has('note') ? Session::get('note') : '' }}
 @endif
                                             </textarea>
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                    </div>
-                @else
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="error-container"
-                                style="background-color: #fff;
-                            padding: 20px;text-align: center;
-                            border-radius: 5px;">
-                                <div class="error-icon"
-                                    style="font-size: 90px;
-                                color: #777;
-                                margin-bottom: 20px;">
-                                    <i class="far fa-shopping-cart"></i>
-                                </div>
-                                <p style="font-size: 12pt;
-                                font-weight: 600;">Il suo
-                                    carello è vuoto!</p>
-                            </div>
                         </div>
-                    </div>
-                    @endif
             </div>
         </div>
+    @else
+        <div class="row">
+            <div class="col-12">
+                <div class="error-container"
+                    style="background-color: #fff;
+                            padding: 20px;text-align: center;
+                            border-radius: 5px;">
+                    <div class="error-icon"
+                        style="font-size: 90px;
+                                color: #777;
+                                margin-bottom: 20px;">
+                        <i class="far fa-shopping-cart"></i>
+                    </div>
+                    <p style="font-size: 12pt;
+                                font-weight: 600;">Il suo
+                        carello è vuoto!</p>
+                </div>
+            </div>
+        </div>
+        @endif
+
     </div>
 </section>
 
