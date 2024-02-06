@@ -393,7 +393,7 @@ class OrderHelper
          $found = false;
          
         foreach (Cart::instance('cart')->content() as $item) {
-            if ($item->id == $product->id && $item->options->equals($options)) { // You might need to implement this equals method or an equivalent comparison
+            if ($item->id == $product->id) { // You might need to implement this equals method or an equivalent comparison
                 // Update the quantity of the existing item
                 Cart::instance('cart')->update($item->rowId, $item->qty + $quantityToAdd);
                 $found = true;
