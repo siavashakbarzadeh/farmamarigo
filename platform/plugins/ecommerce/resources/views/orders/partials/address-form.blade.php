@@ -1,20 +1,18 @@
 @php
     use Botble\Ecommerce\Models\Address;
     if (!isset($sessionCheckoutData)) {
-        if (auth('customer')->check()) {
-            $address = Address::where('customer_id', auth('customer')->user()->id)->first();
-            $sessionCheckoutData = [
-                'name' => $address->name,
-                'email' => $address->email,
-                'phone' => $address->phone,
-                'country' => $address->country,
-                'state' => $address->state,
-                'city' => $address->city,
-                'address' => $address->address,
-                'zip_code' => $address->zipCode,
-            ];
-            dd(Arr::get($sessionCheckoutData, 'name'));
-        }
+        $address = Address::where('customer_id', auth('customer')->user()->id)->first();
+        $sessionCheckoutData = [
+            'name' => $address->name,
+            'email' => $address->email,
+            'phone' => $address->phone,
+            'country' => $address->country,
+            'state' => $address->state,
+            'city' => $address->city,
+            'address' => $address->address,
+            'zip_code' => $address->zipCode,
+        ];
+        dd(Arr::get($sessionCheckoutData, 'name'));
     }
 @endphp
 <div class="customer-address-payment-form">
