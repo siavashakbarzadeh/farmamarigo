@@ -168,13 +168,13 @@
                         @if (isset($offerDetail))
                             @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
                                 <span
-                                    class="discount-ev">{{ get_sale_percentage($product->price, $offerDetail->product_price) }}</span>
+                                    class="btn btn-sm">{{ get_sale_percentage($product->price, $offerDetail->product_price) }}</span>
                             @elseif ($offerType == 4)
-                                <span class="discount-ev">3x2</span>
+                                <span class="btn btn-sm">3x2</span>
                             @elseif ($offerType == 5)
-                                <span class="discount-ev"><i class="fa fa-link"></i></span>
+                                <span class="btn btn-sm"><i class="fa fa-link"></i></span>
                             @elseif ($offerType == 6)
-                                <span class="discount-ev">QTY</span>
+                                <span class="btn btn-sm">QTY</span>
                             @endif
 
                         @endif

@@ -20703,3 +20703,7 @@ input.qty-input[type=number] {
     line-height: 1;
     padding: 16px 42px 17px;
 }
+
+.btn-sm {
+    padding: 3px 10px !important;
+}
