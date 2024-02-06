@@ -122,8 +122,9 @@ public static function reCalculateCart($user_id=null) {
                                             ->first();
                         if ($pricelist) {
                             $price = $pricelist->final_price;
+                        }else{
+                            $price=$product->price;
                         }
-                        dd($price);
                         if ($price !== null) {
                             Cart::instance('cart')->add(
                                 $item->id,
