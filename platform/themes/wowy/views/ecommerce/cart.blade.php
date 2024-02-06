@@ -41,7 +41,9 @@
                                                 @php
                                                     $product = $products->find($cartItem->id);
                                                     if ($product->is_variation) {
-                                                        $product = Product::where('name', $product->name)->where('is_variation', 0);
+                                                        $product = Product::where('name', $product->name)
+                                                            ->where('is_variation', 0)
+                                                            ->first();
                                                     }
                                                     $userid = auth('customer')->user()->id;
                                                     $offerDetail = OffersDetail::where('product_id', $product->id)
