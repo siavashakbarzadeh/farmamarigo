@@ -89,59 +89,58 @@ public static function deleteSavedCart(){
 public static function reCalculateCart($user_id=null) {
     if($user_id!==null){
         $cartRecord = SaveCart::where('user_id', $user_id)->first();
-
         if ($cartRecord != null) {
             $cart = json_decode($cartRecord->cart);
+                // Clear the current cart instance before re-adding items
+                Cart::instance('cart')->destroy();
     
-            // Clear the current cart instance before re-adding items
-            Cart::instance('cart')->destroy();
-    
-            if (isset($cart->cart)) {
-                foreach ($cart->cart as $item) {
-                    $product=Product::find($item->id)->first();
-                    if($product->is_variation){
-                        $product_id=Product::where('name',$item->name)->where('is_variation',0)->first()->id;
-                    }else{
-                        $product_id=$item->id;
-                    }
-                    $offerDetail = OffersDetail::where('product_id', $product_id)
-                                           ->where('customer_id', $user_id)
-                                           ->where('status', 'active')
-                                           ->first();
-                    $price = null;
+                if (isset($cart->cart)) {
+                    foreach ($cart->cart as $item) {
+                        $product=Product::find($item->id)->first();
+                        if($product->is_variation){
+                            $product_id=Product::where('name',$item->name)->where('is_variation',0)->first()->id;
+                        }else{
+                            $product_id=$item->id;
+                        }
+                        $offerDetail = OffersDetail::where('product_id', $product_id)
+                                            ->where('customer_id', $user_id)
+                                            ->where('status', 'active')
+                                            ->first();
+                        $price = null;
 
-                    if ($offerDetail) {
-                        $offer = Offers::find($offerDetail->offer_id);
-                        if ($offer && in_array($offer->offer_type, [1, 2, 3])) {
-                            $price = $offerDetail->product_price;
+                        if ($offerDetail) {
+                            $offer = Offers::find($offerDetail->offer_id);
+                            if ($offer && in_array($offer->offer_type, [1, 2, 3])) {
+                                $price = $offerDetail->product_price;
+                            }
+                        }
+                        
+                        if ($price === null) {
+                            $pricelist = DB::connection('mysql')->table('ec_pricelist')
+                                            ->where('customer_id', $user_id)
+                                            ->where('product_id', $product_id)
+                                            ->first();
+                        if ($pricelist) {
+                            $price = $pricelist->final_price;
+                        }
+                        dd($price);
+                        if ($price !== null) {
+                            Cart::instance('cart')->add(
+                                $item->id,
+                                BaseHelper::clean($item->name),
+                                $item->qty,
+                                floatval($price),
+                                [
+                                    'image' => RvMedia::getImageUrl($item->options->image, 'thumb', false, RvMedia::getDefaultImage()),
+                                    'attributes' => '',
+                                    'taxRate' => $item->options->taxRate,
+                                    "options" => [],
+                                    "extras" => []
+                                ]
+                            );
                         }
                     }
-                    
-                    if ($price === null) {
-                        $pricelist = DB::connection('mysql')->table('ec_pricelist')
-                                        ->where('customer_id', $user_id)
-                                        ->where('product_id', $product_id)
-                                        ->first();
-                    if ($pricelist) {
-                        $price = $pricelist->final_price;
-                    }
-                    if ($price !== null) {
-                        Cart::instance('cart')->add(
-                            $item->id,
-                            BaseHelper::clean($item->name),
-                            $item->qty,
-                            floatval($price),
-                            [
-                                'image' => RvMedia::getImageUrl($item->options->image, 'thumb', false, RvMedia::getDefaultImage()),
-                                'attributes' => '',
-                                'taxRate' => $item->options->taxRate,
-                                "options" => [],
-                                "extras" => []
-                            ]
-                        );
-                    }
                 }
-            }
                 return true; // Or some other success response
             } else {
                 return false; // No items in the saved cart
