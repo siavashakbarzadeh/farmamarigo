@@ -121,19 +121,19 @@ public static function reCalculateCart($user_id=null) {
                             if ($offer && in_array($offer->offer_type, [1, 2, 3])) {
                                 $price = $offerDetail->product_price;
                             }
-                        }
-                        dd($price);
-                        
-                        if ($price === null) {
+                        }else{
                             $pricelist = DB::connection('mysql')->table('ec_pricelist')
                                             ->where('customer_id', $user_id)
                                             ->where('product_id', $product_id)
                                             ->first();
-                        if ($pricelist) {
-                            $price = $pricelist->final_price;
-                        }else{
-                            $price=$product->price;
+                            if ($pricelist) {
+                                $price = $pricelist->final_price;
+                            }else{
+                                $price=$product->price;
+                            }
                         }
+                        
+                        
                         if ($price !== null) {
                             Cart::instance('cart')->add(
                                 $item->id,
@@ -150,11 +150,10 @@ public static function reCalculateCart($user_id=null) {
                             );
                         }
                     }
-                }
                 return true; // Or some other success response
-            } else {
-                return false; // No items in the saved cart
-            }
+                } else {
+                    return false; // No items in the saved cart
+                }
         } else {
             return false; // No saved cart record found
         }
