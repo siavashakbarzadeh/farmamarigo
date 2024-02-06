@@ -1,6 +1,6 @@
 @php
     use Botble\Payment\Models\Payment;
-    if (!$payment) {
+    if (!isset($payment)) {
         $payment = Payment::where('order_id', $order->id)->first();
         $paymentStatus = $payment->status;
         $paymentChannel = $payment->payment_channel;
