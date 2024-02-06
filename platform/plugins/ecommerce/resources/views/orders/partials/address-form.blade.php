@@ -13,6 +13,7 @@
                 'address' => $address->address,
                 'zip_code' => $address->zipCode,
             ];
+            dd(Arr::get($sessionCheckoutData, 'name'));
         }
     }
 @endphp
