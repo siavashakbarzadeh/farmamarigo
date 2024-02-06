@@ -19,7 +19,6 @@
         ];
         $sessionCheckoutData = array_merge($sessionCheckoutData, $adding);
     }
-    dd($sessionCheckoutData);
 @endphp
 <div class="customer-address-payment-form">
 
