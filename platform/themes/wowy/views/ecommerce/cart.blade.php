@@ -49,7 +49,7 @@
                                                         ->where('status', 'active')
                                                         ->first();
 
-                                                    dd($offersDetail);
+                                                    dd($offerDetail);
                                                     if ($offerDetail) {
                                                         $offer = Offers::find($offerDetail->offer_id);
                                                         if ($offer) {
