@@ -99,6 +99,7 @@ public static function reCalculateCart($user_id=null) {
                     foreach ($cart->cart as $item) {
                         $product=Product::find($item->id)->first();
                         $AllVariations=Product::where('name',$item->name)->get();
+                        dd($AllVariations);
                         $flag=false;
                         foreach($AllVariations as $variation){
                             if($variation->is_variation){
