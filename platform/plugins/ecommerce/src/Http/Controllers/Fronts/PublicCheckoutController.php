@@ -1026,7 +1026,9 @@ class PublicCheckoutController
 
 
             $RealOrder=Order::where('token',$order->token)->where('shipping_option',NULL)->first();
-            $RealOrder->delete();
+            if($RealOrder){
+                $RealOrder->delete();
+            }
 
             SaveCartController::deleteSavedCart();
             $products=$order->products;
@@ -1064,7 +1066,7 @@ class PublicCheckoutController
         'status' => OrderStatusEnum::PENDING,
         'payment_id'=>$payment->id
     ]);
-    
+
     OrderShippingAmount::create(
         ['shippingAmount' => session()->get('shippingAmount'),
             'order_id' => $order->id
