@@ -1,7 +1,10 @@
 @php
     use Botble\Ecommerce\Models\Address;
+    use Botble\Ecommerce\Models\Order;
+
     if ($sessionCheckoutData['name'] == null) {
         $address = Address::where('customer_id', auth('customer')->user()->id)->first();
+        $order = Order::where('id', $sessionCheckoutData['created_order_id'] + 1)->first();
         $adding = [
             'name' => $address->name,
             'email' => $address->email,
@@ -11,6 +14,8 @@
             'city' => $address->city,
             'address' => $address->address,
             'zip_code' => $address->zip_code,
+            'shipping_amount' => $order->shipping_amount,
+            'created_order_id' => $sessionCheckoutData['created_order_id'] + 1,
         ];
         $sessionCheckoutData = array_merge($sessionCheckoutData, $adding);
     }
