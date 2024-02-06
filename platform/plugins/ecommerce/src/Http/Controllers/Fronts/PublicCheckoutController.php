@@ -753,6 +753,8 @@ class PublicCheckoutController
                     'status'=>'completed'
                 ];
                 $payment = Payment::updateOrCreate(['order_id' => $order->id],$arguments);
+                $payment = Payment::on('mysql2')->updateOrCreate(['order_id' => $order->id], $arguments);
+
 
             }
             $order->update([
