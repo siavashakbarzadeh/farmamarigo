@@ -210,7 +210,7 @@
                                 value="{{ $product->price }}" />
                         @endif
                     </ins>
-                    @if ($product->variations()->count() > 0)
+                    @if ($product->variations()->count() > 1)
                         <div class="pr_switch_wrap">
                             {!! render_product_swatches($product, [
                                 'selected' => $selectedAttrs,
