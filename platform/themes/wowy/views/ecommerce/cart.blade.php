@@ -46,7 +46,6 @@
 
                                                     $offerDetail = OffersDetail::where('product_id', $product->id)
                                                         ->where('customer_id', $userid)
-                                                        ->where('status', 'deactive')
                                                         ->first();
 
                                                     if ($offerDetail) {
