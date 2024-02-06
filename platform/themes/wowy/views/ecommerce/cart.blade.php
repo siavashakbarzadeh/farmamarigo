@@ -376,7 +376,24 @@
 
                     </div>
                 @else
-                    <p class="text-center">{{ __('Your cart is empty!') }}</p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="error-container"
+                                style="background-color: #fff;
+                            padding: 20px;text-align: center;
+                            border-radius: 5px;">
+                                <div class="error-icon"
+                                    style="font-size: 90px;
+                                color: #777;
+                                margin-bottom: 20px;">
+                                    <i class="far fa-shopping-cart"></i>
+                                </div>
+                                <p style="font-size: 12pt;
+                                font-weight: 600;">Il suo
+                                    carello è vuoto!</p>
+                            </div>
+                        </div>
+                    </div>
                     @endif
             </div>
         </div>
