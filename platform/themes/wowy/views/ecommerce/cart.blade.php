@@ -49,8 +49,6 @@
                                                     $offerDetail = OffersDetail::where('product_id', $product->id)
                                                         ->where('customer_id', $userid)
                                                         ->first();
-                                                    dd($offerDetail, $product->id, $userid);
-
                                                     if ($offerDetail) {
                                                         $offer = Offers::find($offerDetail->offer_id);
                                                         if ($offer) {
