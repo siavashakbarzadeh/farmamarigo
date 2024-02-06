@@ -54,6 +54,7 @@
                                                             $offerType = $offer->offer_type;
                                                         }
                                                     }
+                                                    $userid = auth('customer')->user()->id;
                                                     $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
                                                 @endphp
 
