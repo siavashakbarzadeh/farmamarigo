@@ -388,19 +388,35 @@ class OrderHelper
         /**
          * Add cart to session
          */
-        Cart::instance('cart')->add(
-            $product->id,
-            BaseHelper::clean($parentProduct->name ?: $product->name),
-            $request->input('qty', 1),
-            $product->original_price,
-            [
-                'image' => RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage()),
-                'attributes' => $product->is_variation ? $product->variation_attributes : '',
-                'taxRate' => $parentProduct->total_taxes_percentage,
-                'options' => $options,
-                'extras' => $request->input('extras', []),
-            ]
-        );
+
+         $quantityToAdd = $request->input('qty', 1);
+         $found = false;
+         
+        foreach (Cart::instance('cart')->content() as $item) {
+            if ($item->id == $product->id && $item->options->equals($options)) { // You might need to implement this equals method or an equivalent comparison
+                // Update the quantity of the existing item
+                Cart::instance('cart')->update($item->rowId, $item->qty + $quantityToAdd);
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            Cart::instance('cart')->add(
+                $product->id,
+                BaseHelper::clean($parentProduct->name ?: $product->name),
+                $request->input('qty', 1),
+                $product->original_price,
+                [
+                    'image' => RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage()),
+                    'attributes' => $product->is_variation ? $product->variation_attributes : '',
+                    'taxRate' => $parentProduct->total_taxes_percentage,
+                    'options' => $options,
+                    'extras' => $request->input('extras', []),
+                ]
+            );    
+        }
+        
 
         /**
          * prepare data for response
