@@ -10,7 +10,7 @@
             'state' => $address->state,
             'city' => $address->city,
             'address' => $address->address,
-            'zip_code' => $address->zipCode,
+            'zip_code' => $address->zip_code,
         ];
         $sessionCheckoutData = array_merge($sessionCheckoutData, $adding);
     }
