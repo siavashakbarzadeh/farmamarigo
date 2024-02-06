@@ -98,7 +98,13 @@ public static function reCalculateCart($user_id=null) {
     
             if (isset($cart->cart)) {
                 foreach ($cart->cart as $item) {
-                    $offerDetail = OffersDetail::where('product_id', $item->id)
+                    $product=Product::find($item->id)->first();
+                    if($product->is_variation){
+                        $product_id=Product::where('name',$item->name)->where('is_variation',0)->first()->id;
+                    }else{
+                        $product_id=$item->id;
+                    }
+                    $offerDetail = OffersDetail::where('product_id', $product_id)
                                            ->where('customer_id', $user_id)
                                            ->where('status', 'active')
                                            ->first();
@@ -110,10 +116,11 @@ public static function reCalculateCart($user_id=null) {
                             $price = $offerDetail->product_price;
                         }
                     }
+                    
                     if ($price === null) {
                         $pricelist = DB::connection('mysql')->table('ec_pricelist')
                                         ->where('customer_id', $user_id)
-                                        ->where('product_id', $item->id)
+                                        ->where('product_id', $product_id)
                                         ->first();
                     if ($pricelist) {
                         $price = $pricelist->final_price;
