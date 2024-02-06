@@ -1,4 +1,26 @@
 @php
+    use Botble\Ecommerce\Models\OffersDetail;
+    use Botble\Ecommerce\Models\Offers;
+    if (auth('customer')->user() !== null) {
+        $userid = auth('customer')->user()->id;
+        $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+        if (isset($pricelist[0])) {
+            $reserved_price = $pricelist[0]->final_price;
+
+            $offerDetail = OffersDetail::where('product_id', $product->id)
+                ->where('customer_id', $userid)
+                ->where('status', 'active')
+                ->first();
+            if ($offerDetail) {
+                $offer = Offers::find($offerDetail->offer_id);
+                if ($offer) {
+                    $offerType = $offer->offer_type;
+                }
+            }
+        }
+    }
+@endphp
+@php
     $layout = MetaBox::getMetaData($product, 'layout', true);
     $layout = $layout && in_array($layout, array_keys(get_product_single_layouts())) ? $layout : 'product-full-width';
     Theme::layout($layout);
@@ -11,6 +33,7 @@
         ->usePath()
         ->add('lightGallery-js', 'plugins/lightGallery/js/lightgallery.min.js', ['jquery']);
 @endphp
+
 
 <div class="product-detail accordion-detail">
     <div class="row mb-50">
@@ -116,18 +139,32 @@
                                 }
                             }
                         @endphp
-                        <ins><span class="text-brand">
-                                @if (isset($reserved_price))
-                                    @if ($reserved_price !== $product->price)
-                                        {{ format_price($reserved_price) }}
-                                    @else
-                                        {{ format_price($product->front_sale_price_with_taxes) }}
-                                    @endif
-                                @else
-                                    {{ format_price($product->front_sale_price_with_taxes) }}
-
+                        <ins>
+                            @if (isset($reserved_price))
+                                @if (!isset($offerDetail) && $reserved_price !== $product->price)
+                                    <span>{{ format_price($reserved_price) }}</span>
+                                    <input type="hidden" name="product_price" class="hidden-product-id"
+                                        value="{{ $reserved_price }}" />
+                                    <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                                @elseif (isset($offerDetail) &&
+                                        ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
+                                        $offerDetail->product_price !== $product->price)
+                                    <span>{{ format_price($offerDetail->product_price) }}</span>
+                                    <input type="hidden" name="product_price" class="hidden-product-id"
+                                        value="{{ $offerDetail->product_price ? $offerDetail->product_price : $pricelist[0]->final_price }}" />
+                                    <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
+                                @elseif ($offerDetail && ($offerType != 1 || $offerType != 2 || $offerType != 3))
+                                    <span>{{ format_price($reserved_price) }}</span>
+                                    <input type="hidden" name="product_price" class="hidden-product-id"
+                                        value="{{ $reserved_price }}" />
+                                    <span class="old-price">{{ format_price($product->price_with_taxes) }}</span>
                                 @endif
-                            </span></ins>
+                            @else
+                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                    value="{{ $product->front_sale_price_with_taxes }}" />
+                                <span>{{ format_price($product->front_sale_price_with_taxes) }}</span>
+                            @endif
+                        </ins>
 
                         @if (isset($reserved_price))
                             @if ($reserved_price !== $product->price)
@@ -144,7 +181,7 @@
                 <div class="bt-1 border-color-1 mt-15 mb-15"></div>
                 <div class="short-desc mb-30">
                     {{-- {!! apply_filters('ecommerce_before_product_description', null, $product) !!} --}}
-{{--                    {!! BaseHelper::clean($product->description) !!}--}}
+                    {{--                    {!! BaseHelper::clean($product->description) !!} --}}
                     {{-- {!! apply_filters('ecommerce_after_product_description', null, $product) !!} --}}
                 </div>
 
@@ -482,7 +519,7 @@
         <h3 class="section-title style-1 mb-30">{{ __('Related products') }}</h3>
     </div>
 
-    
+
 
 
 
