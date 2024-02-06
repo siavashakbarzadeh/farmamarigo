@@ -92,7 +92,7 @@
                                                                     @if ($offerDetail)
                                                                         @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
                                                                             <span class="badge badge-secondary"
-                                                                                style="background: #E52728;font-size:smaller">{{ get_sale_percentage($pricelist[0]->final_price, $offerDetail->product_price) }}</span>
+                                                                                style="background: #E52728;font-size:smaller">{{ get_sale_percentage($product->price, $offerDetail->product_price) }}</span>
                                                                         @elseif ($offerType == 4)
                                                                             <span class="badge badge-secondary"
                                                                                 style="background: #E52728;font-size:smaller">3x2</span>
