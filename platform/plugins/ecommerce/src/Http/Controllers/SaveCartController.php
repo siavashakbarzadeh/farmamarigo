@@ -98,17 +98,26 @@ public static function reCalculateCart($user_id=null) {
     
             if (isset($cart->cart)) {
                 foreach ($cart->cart as $item) {
-                    $pricelist = DB::connection('mysql')->table('ec_pricelist')
-                    ->where('customer_id', $user_id)
-                    ->where('product_id', $item->id)
-                    ->first();
-    
-                    if($pricelist!==null){
-                        $price=$pricelist->final_price;
-                    }else{
-                        $price=$item->price;
+                    $offerDetail = OffersDetail::where('product_id', $item->id)
+                                           ->where('customer_id', $user_id)
+                                           ->where('status', 'active')
+                                           ->first();
+                    $price = null;
+
+                    if ($offerDetail) {
+                        $offer = Offers::find($offerDetail->offer_id);
+                        if ($offer && in_array($offer->offer_type, [1, 2, 3])) {
+                            $price = $offerDetail->product_price;
+                        }
                     }
-    
+                    if ($price === null) {
+                        $pricelist = DB::connection('mysql')->table('ec_pricelist')
+                                        ->where('customer_id', $user_id)
+                                        ->where('product_id', $item->id)
+                                        ->first();
+                    if ($pricelist) {
+                        $price = $pricelist->final_price;
+                    }
                     if ($price !== null) {
                         Cart::instance('cart')->add(
                             $item->id,
@@ -125,7 +134,7 @@ public static function reCalculateCart($user_id=null) {
                         );
                     }
                 }
-    
+            }
                 return true; // Or some other success response
             } else {
                 return false; // No items in the saved cart
