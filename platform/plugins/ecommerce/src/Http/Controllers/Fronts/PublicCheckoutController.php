@@ -749,7 +749,7 @@ class PublicCheckoutController
                     'currency' => 'EUR',
                     'customer_id' => auth('customer')->user()->id,
                     'charge_id'=>$order->id,
-                    'payment_channel' => "B2B",
+                    'payment_channel' => "bank_transfer",
                     'status'=>'completed'
                 ];
                 $payment = Payment::updateOrCreate(['order_id' => $order->id],$arguments);
