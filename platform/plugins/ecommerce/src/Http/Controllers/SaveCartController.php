@@ -98,7 +98,6 @@ public static function reCalculateCart($user_id=null) {
                     foreach ($cart->cart as $item) {
                         $product=Product::find($item->id)->first();
                         $orHasVariations=Product::where('name',$item->name)->first()->is_variation;
-                        dd($product->is_variation or $orHasVariations);
                         if($product->is_variation){
                             $product_id=Product::where('name',$item->name)->where('is_variation',0)->first()->id;
                         }else{
@@ -108,7 +107,6 @@ public static function reCalculateCart($user_id=null) {
                                             ->where('customer_id', $user_id)
                                             ->where('status', 'active')
                                             ->first();
-                        dd($offerDetail,$product_id,$item->id);
                         $price = null;
 
                         if ($offerDetail) {
