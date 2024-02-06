@@ -1,9 +1,8 @@
 @php
     use Botble\Ecommerce\Models\Address;
-    dd($sessionCheckoutData);
-    if (!isset($sessionCheckoutData)) {
+    if ($sessionCheckoutData['name'] == null) {
         $address = Address::where('customer_id', auth('customer')->user()->id)->first();
-        $sessionCheckoutData = [
+        $adding = [
             'name' => $address->name,
             'email' => $address->email,
             'phone' => $address->phone,
@@ -13,8 +12,9 @@
             'address' => $address->address,
             'zip_code' => $address->zipCode,
         ];
-        dd(Arr::get($sessionCheckoutData, 'name'));
+        $sessionCheckoutData = array_merge($sessionCheckoutData, $adding);
     }
+    dd($sessionCheckoutData);
 @endphp
 <div class="customer-address-payment-form">
 
