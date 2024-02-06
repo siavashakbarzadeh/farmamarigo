@@ -958,13 +958,12 @@ class PublicCheckoutController
                 'amount' => $order->amount,
                 'user_id'=>0,
                 'currency' => 'EUR',
-                'order_id' => $order->id,
                 'customer_id' => auth('customer')->user()->id,
                 'charge_id'=>$request->paymentId,
                 'payment_channel' => "paypal",
                 'status'=>'completed'
             ];
-            $payment = Payment::create($arguments);
+            $payment = Payment::updateOrCreate(['order_id' => $order->id],$arguments);
             $order->update([
                 'is_confirmed' => true,
                 'status' => OrderStatusEnum::COMPLETED,
@@ -1047,11 +1046,25 @@ class PublicCheckoutController
     $products=$RealOrder->products;
     $this->addProductToOrder($order, $products->toArray());
     $RealOrder->delete();
+
+    $arguments=[
+        'account_id' => auth('customer')->user()->id,
+        'amount' => $order->amount,
+        'user_id'=>0,
+        'currency' => 'EUR',
+        'customer_id' => auth('customer')->user()->id,
+        'charge_id'=>$order->id,
+        'payment_channel' => "paypal",
+        'status'=>'pending'
+    ];
+    $payment = Payment::updateOrCreate(['order_id' => $order->id],$arguments);
     $order->update([
         'is_confirmed' => false,
         'is_finished'=>true,
         'status' => OrderStatusEnum::PENDING,
+        'payment_id'=>$payment->id
     ]);
+    
     OrderShippingAmount::create(
         ['shippingAmount' => session()->get('shippingAmount'),
             'order_id' => $order->id

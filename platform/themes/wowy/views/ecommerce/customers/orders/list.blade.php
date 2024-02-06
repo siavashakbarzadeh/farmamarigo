@@ -1,4 +1,7 @@
 @extends(Theme::getThemeNamespace() . '::views.ecommerce.customers.master')
+@php
+    use Botble\Ecommerce\Models\Payment;
+@endphp
 @section('content')
     <div class="card">
         <div class="card-header">
@@ -66,7 +69,10 @@
                                                     <i class="fa fa-print"></i>
                                                 </a>
                                             @endif
-                                            @if ($order->payment_id == null)
+                                            @php
+                                                $payment = Payment::where('order_id', $order->id)->get();
+                                            @endphp
+                                            @if ($payment->payment_channel == 'paypal' && ($payment->status = 'pending'))
                                                 <a class='btn btn-primary btn-sm'
                                                     href="/checkout/{{ $order->token }}/recover"
                                                     style="background-color:#f9844a;color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
