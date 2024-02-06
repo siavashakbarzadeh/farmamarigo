@@ -71,7 +71,6 @@
                                             @endif
                                             @php
                                                 $payment = Payment::where('order_id', $order->id)->first();
-                                                dd($payment);
                                             @endphp
                                             @if ($payment->payment_channel == 'paypal' && ($payment->status = 'pending'))
                                                 <a class='btn btn-primary btn-sm'
