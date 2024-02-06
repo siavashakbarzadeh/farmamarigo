@@ -1,6 +1,6 @@
 @extends(Theme::getThemeNamespace() . '::views.ecommerce.customers.master')
 @php
-    use Botble\Ecommerce\Models\Payment;
+    use Botble\Payment\Models\Payment;
 @endphp
 @section('content')
     <div class="card">
