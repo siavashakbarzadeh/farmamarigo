@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Session;
 use Botble\Ecommerce\Models\OffersDetail;
 use Botble\Ecommerce\Models\Offers;
 use Botble\Ecommerce\Models\Product;
+use Botble\Ecommerce\Models\ProductVariation;
 
 use Illuminate\Support\Facades\DB;
 use RvMedia;
@@ -97,9 +98,15 @@ public static function reCalculateCart($user_id=null) {
                 if (isset($cart->cart)) {
                     foreach ($cart->cart as $item) {
                         $product=Product::find($item->id)->first();
-                        $orHasVariations=Product::where('name',$item->name)->first()->is_variation;
-                        if($product->is_variation){
-                            $product_id=Product::where('name',$item->name)->where('is_variation',0)->first()->id;
+                        $AllVariations=Product::where('name',$item->name)->get();
+                        $flag=false;
+                        foreach($AllVariations as $variation){
+                            if($variation->is_variation){
+                                $flag=true;
+                            }
+                        }
+                        if($flag){
+                            $product_id=ProductVariation::where('product_id',$item->id)->first()->configurable_product_id;
                         }else{
                             $product_id=$item->id;
                         }
