@@ -816,8 +816,12 @@ class PublicCheckoutController
         $this->generateInvoice($order);
 
 
-        // $this->deleteDuplicateOrders($order->token);
-
+        $RealOrder=Order::where('token',$order->token)->where(function($query) {
+            $query->whereNull('shipping_option')
+                  ->orWhere('status', 'pending');})->first();
+        if($RealOrder){
+            $RealOrder->delete();
+        }
         SaveCartController::deleteSavedCart();
 
         return view('plugins/ecommerce::orders.thank-you', compact('order', 'products'));
@@ -941,7 +945,6 @@ class PublicCheckoutController
 
         curl_close($ch);
         $jsonResponse = json_decode($response, true);
-
 
         return $jsonResponse['access_token'] ?? null;
     }
