@@ -7,9 +7,6 @@
     use Botble\Ecommerce\Models\SPC;
     if (request()->user('customer')) {
         $userid = request()->user('customer')->id;
-        if ($userid == 11 || $userid == 13) {
-            $userid = 2621;
-        }
         if (!CarouselProducts::where('customer_id', $userid)->exists()) {
             $discountedProducts = SuggestionController::getProduct($userid);
         } else {
@@ -47,7 +44,7 @@
                                                     $offerDetail = OffersDetail::where('product_id', $product->id)
                                                         ->where('customer_id', $userid)
                                                         ->first();
-                                                    dd($offerDetail);
+                                                    dd($offerDetail,$product->id,$user_id);
 
                                                     if ($offerDetail) {
                                                         $offer = Offers::find($offerDetail->offer_id);
