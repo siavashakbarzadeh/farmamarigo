@@ -1,5 +1,6 @@
 @php
     use Botble\Ecommerce\Models\Address;
+    dd($sessionCheckoutData);
     if (!isset($sessionCheckoutData)) {
         $address = Address::where('customer_id', auth('customer')->user()->id)->first();
         $sessionCheckoutData = [
