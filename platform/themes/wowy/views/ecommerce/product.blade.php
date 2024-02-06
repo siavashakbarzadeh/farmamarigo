@@ -191,7 +191,25 @@
                 <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                 <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
                     @csrf
-
+                    <ins>
+                        @if (isset($reserved_price))
+                            @if (!isset($offerDetail) && $reserved_price !== $product->price)
+                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                    value="{{ $reserved_price }}" />
+                            @elseif (isset($offerDetail) &&
+                                    ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
+                                    $offerDetail->product_price !== $product->price)
+                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                    value="{{ $offerDetail->product_price ? $offerDetail->product_price : $pricelist[0]->final_price }}" />
+                            @elseif ($offerDetail && ($offerType != 1 || $offerType != 2 || $offerType != 3))
+                                <input type="hidden" name="product_price" class="hidden-product-id"
+                                    value="{{ $reserved_price }}" />
+                            @endif
+                        @else
+                            <input type="hidden" name="product_price" class="hidden-product-id"
+                                value="{{ $product->price }}" />
+                        @endif
+                    </ins>
                     @if ($product->variations()->count() > 0)
                         <div class="pr_switch_wrap">
                             {!! render_product_swatches($product, [
@@ -219,7 +237,8 @@
                                         aria-hidden="true"></i></a>
                                 <input type="number" min="1" value="1" name="qty"
                                     class="qty-val qty-input" />
-                                <a href="#" class="qty-up"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+                                <a href="#" class="qty-up"><i class="fa fa-caret-up"
+                                        aria-hidden="true"></i></a>
                             </div>
                         @endif
 
