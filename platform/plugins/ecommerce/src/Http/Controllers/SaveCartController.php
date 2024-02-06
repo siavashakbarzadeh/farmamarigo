@@ -110,7 +110,6 @@ public static function reCalculateCart($user_id=null) {
                         }else{
                             $product_id=$item->id;
                         }
-                        dd($product_id);
                         $offerDetail = OffersDetail::where('product_id', $product_id)
                                             ->where('customer_id', $user_id)
                                             ->where('status', 'active')
