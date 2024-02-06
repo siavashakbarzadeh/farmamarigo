@@ -40,11 +40,11 @@
                                             @foreach (Cart::instance('cart')->content() as $key => $cartItem)
                                                 @php
                                                     $product = $products->find($cartItem->id);
-
+                                                    $userid = auth('customer')->user()->id;
                                                     $offerDetail = OffersDetail::where('product_id', $product->id)
                                                         ->where('customer_id', $userid)
                                                         ->first();
-                                                    dd($offerDetail,$product->id,$user_id);
+                                                    dd($offerDetail, $product->id, $userid);
 
                                                     if ($offerDetail) {
                                                         $offer = Offers::find($offerDetail->offer_id);
@@ -52,7 +52,6 @@
                                                             $offerType = $offer->offer_type;
                                                         }
                                                     }
-                                                    $userid = auth('customer')->user()->id;
                                                     $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
                                                 @endphp
 
