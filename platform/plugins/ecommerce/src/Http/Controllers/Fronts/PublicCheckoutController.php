@@ -743,15 +743,16 @@ class PublicCheckoutController
                     'payment_id' => $order->id
                 ]);
                 $arguments=[
-                    'account_id' => $currentUserId,
-                    'amount' => $amount,
+                    'account_id' => auth('customer')->user()->id,
+                    'amount' => $order->amount,
+                    'user_id'=>0,
                     'currency' => 'EUR',
-                    'order_id' => $order->id,
-                    'customer_id' => $currentUserId,
+                    'customer_id' => auth('customer')->user()->id,
                     'charge_id'=>$order->id,
-                    'payment_channel' => $paymentMethod,
+                    'payment_channel' => "B2B",
+                    'status'=>'completed'
                 ];
-                PaymentHelper::storeLocalPayment($arguments);
+                $payment = Payment::updateOrCreate(['order_id' => $order->id],$arguments);
 
             }
             $order->update([
