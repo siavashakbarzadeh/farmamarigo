@@ -270,7 +270,7 @@
                                                                                 $priceOfProduct = $product->price;
                                                                             }
                                                                         @endphp
-                                                                        {{ get_sale_percentage($offerDetail->product_price, $product->price) }}
+                                                                        {{ get_sale_percentage($offerDetail->product_price, $priceOfProduct) }}
                                                                         solo su questo prodotto</td>
                                                                 </tr>
                                                             @endif
