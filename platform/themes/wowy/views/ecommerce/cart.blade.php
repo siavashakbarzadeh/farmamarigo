@@ -60,7 +60,7 @@
                                                     } else {
                                                         $product_id = $cartItem->id;
                                                     }
-                                                    $product = $products->find($product_id);
+                                                    $product = Product::find($product_id)->first();
                                                     dd($product, $product_id);
 
                                                     $userid = auth('customer')->user()->id;
