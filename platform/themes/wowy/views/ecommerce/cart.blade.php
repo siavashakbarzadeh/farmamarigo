@@ -267,8 +267,7 @@
                                                                 </tr>
                                                             @endif
                                                         @endif
-
-
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                         </tbody>
