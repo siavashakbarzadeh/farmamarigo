@@ -54,10 +54,10 @@
                                                     }
 
                                                     if ($flag) {
-                                                        $productVariation = ProductVariation::where('product_id', $item->id)->first();
-                                                        $product_id = $productVariation ? $productVariation->configurable_product_id : $item->id;
+                                                        $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
+                                                        $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
                                                     } else {
-                                                        $product_id = $item->id;
+                                                        $product_id = $cartItem->id;
                                                     }
                                                     $product = $products->find($product_id);
 
@@ -267,9 +267,9 @@
                                                                 </tr>
                                                             @endif
                                                         @endif
-                                                        @endif
                                                     @endif
-                                                @endforeach
+                                                @endif
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
