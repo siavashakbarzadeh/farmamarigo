@@ -75,7 +75,7 @@
                                                         ->first();
                                                     $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
                                                     if ($pricelist) {
-                                                        $cartItem->price = pricelist[0]->final_price;
+                                                        $cartItem->price = $pricelist[0]->final_price;
                                                     }
                                                     if ($offerDetail) {
                                                         $offer = Offers::find($offerDetail->offer_id);
