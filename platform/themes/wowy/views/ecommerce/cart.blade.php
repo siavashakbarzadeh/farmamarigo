@@ -44,7 +44,7 @@
                                                     $product = Product::find($cartItem->id); // Assuming $item->id is correct
 
                                                     if ($product && $product->is_variation) {
-                                                        $AllVariations = Product::where('name', $item->name)->get();
+                                                        $AllVariations = Product::where('name', $cartItem->name)->get();
                                                         foreach ($AllVariations as $variation) {
                                                             if ($variation->is_variation) {
                                                                 $flag = true;
