@@ -39,6 +39,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $cartTotal = Cart::instance('cart')->rawSubTotal();
+                                                $cartIva = Cart::instance('cart')->rawTax();
+                                                $userid = request()->user('customer')->id;
+                                                if ($userid == 11 || $userid == 13) {
+                                                    $userid = 2621;
+                                                }
+                                            @endphp
                                             @foreach (Cart::instance('cart')->content() as $key => $cartItem)
                                                 @php
                                                     $flag = false; // Reset flag for each item
@@ -62,7 +70,6 @@
                                                     }
                                                     $product = Product::find($product_id)->first();
 
-                                                    $userid = auth('customer')->user()->id;
                                                     $offerDetail = OffersDetail::where('product_id', $product_id)
                                                         ->where('customer_id', $userid)
                                                         ->first();
