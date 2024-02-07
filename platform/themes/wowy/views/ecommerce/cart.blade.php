@@ -263,7 +263,14 @@
                                                                     <td colspan="6">se la quantità di questo prodotto
                                                                         sarà superiore a {{ $offerDetail->quantity }}
                                                                         avrai uno sconto del
-                                                                        {{ get_sale_percentage($product->price, $offerDetail->product_price) }}
+                                                                        @php
+                                                                            if ($pricelist) {
+                                                                                $priceOfProduct = $pricelist[0]->final_price;
+                                                                            } else {
+                                                                                $priceOfProduct = $product->price;
+                                                                            }
+                                                                        @endphp
+                                                                        {{ get_sale_percentage($offerDetail->product_price, $product->price) }}
                                                                         solo su questo prodotto</td>
                                                                 </tr>
                                                             @endif
