@@ -107,8 +107,7 @@
                                                                                 style="background: #E52728;font-size:smaller">{{ get_sale_percentage($pricelist[0]->final_price, $offerDetail->product_price) }}</span>
                                                                         @endif
                                                                     @endif
-
-
+                                                                    
                                                                     @if ($product->isOutOfStock())
                                                                         <span
                                                                             class="stock-status-label">({!! $product->stock_status_html !!})</span>
@@ -270,7 +269,6 @@
                                                                 $weight = 0.0;
                                                                 $IVAPERCENTAGE = 1.22;
                                                                 $orderAmount = Cart::instance('cart')->rawTotal();
-                                                                //@dd($region, $customerType, $orderAmount);
 
                                                                 if ($region == ('campania' || 'lazio') && $customerType == ('Farmacia' || 'Parafarmacia' || 'AltroPharma') && $orderAmount < 300) {
                                                                     $shippingAmount = 10;

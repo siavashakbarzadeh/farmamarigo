@@ -432,24 +432,52 @@ class PublicCheckoutController
 
         if (!isset($sessionData['created_order'])) {
             $currentUserId = 0;
+            $cartTotal=Cart::instance('cart')->rawSubTotal();
+            $cartIva=Cart::instance('cart')->rawTax();
             if (auth('customer')->check()) {
                 $currentUserId = auth('customer')->id();
+                if($currentUserId==11 || $currentUserId==13){
+                    $currentUserId=2621;
+                }
             }
+            foreach(Cart::instance('cart')->content() as $key => $cartItem){
+                $product = $products->find($cartItem->id);
+                $offerDetail=OffersDetail::where('product_id',$cartItem->id)->where('customer_id',$currentUserId)->where('status','active')->first();
+                if($offerDetail){
+                    $offer=Offers::find($offerDetail->offer_id);
+                    if($offer){
+                        $offerType=$offer->offer_type;
+                        if($offerType==4 && $cartItem->qty >=3){
+                            $cartTotal=$cartTotal- ($cartItem->price * floor($cartItem->qty/3));
+                            $tax=str_replace('€', '', $cartItem->tax());
+                                                        $cartIva = $cartIva - (floatval($tax) * floor($cartItem->qty/3));                        }
+                        if($offerType==6 && $cartItem->qty >= $offerDetail->quantity){
 
+                            $cartIva= $cartIva - ((floatval($cartItem->tax()) * $cartItem->qty)) + (($product->tax->percentage * $offerDetail->product_price / 100 * $cartItem->qty));
+                            $cartTotal=$cartTotal- ($cartItem->price* $cartItem->qty) + ($offerDetail->product_price* $cartItem->qty);
+                        }
+
+                    }
+                }
+            }
+            $couponDiscountAmount = Arr::get($sessionData, 'coupon_discount_amount');
+            $amount = ($cartTotal + $cartIva) + (float)(session()->get('shippingAmount')) + ((float)(session()->get('shippingAmount')) * 0.22)  - $couponDiscountAmount;
+            
             $request->merge([
-                'amount' => Cart::instance('cart')->rawTotal(),
+                'amount' => $amount ?: 0,
+                'currency' => $request->input('currency', strtoupper(get_application_currency()->title)),
                 'user_id' => $currentUserId,
-                'shipping_method' => $request->input('shipping_method', ShippingMethodEnum::DEFAULT),
-                'shipping_option' => $request->input('shipping_option'),
-                'shipping_amount' => 0,
-                'tax_amount' => Cart::instance('cart')->rawTax(),
-                'sub_total' => Cart::instance('cart')->rawSubTotal(),
+                'shipping_method' => 'deafult',
+                'shipping_option' => 4,
+                'shipping_amount' => (float)(session()->get('shippingAmount')),
+                'tax_amount' => $cartIva + ((float)(session()->get('shippingAmount')) * 0.22),
+                'sub_total' => $cartTotal,
                 'coupon_code' => session()->get('applied_coupon_code'),
-                'discount_amount' => 0,
-                'status' => OrderStatusEnum::COMPLETED,
-                'is_finished' => true,
+                'discount_amount' => $couponDiscountAmount,
+                'status' => OrderStatusEnum::RETURNED,
                 'token' => $token,
-            ]);
+                'is_finished'=>FALSE
+                ]);
 
             $order = $this->orderRepository->getFirstBy(compact('token'));
 
