@@ -77,6 +77,7 @@
                                                     if ($pricelist) {
                                                         $cartItem->price = $pricelist[0]->final_price;
                                                     }
+                                                    dd(cartItem->price);
                                                     if ($offerDetail) {
                                                         $offer = Offers::find($offerDetail->offer_id);
                                                         if ($offer) {
