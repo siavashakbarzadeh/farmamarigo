@@ -73,6 +73,10 @@
                                                     $offerDetail = OffersDetail::where('product_id', $product_id)
                                                         ->where('customer_id', $userid)
                                                         ->first();
+                                                    $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
+                                                    if (pricelist) {
+                                                        $cartItem->price = pricelist[0]->final_price;
+                                                    }
                                                     if ($offerDetail) {
                                                         $offer = Offers::find($offerDetail->offer_id);
                                                         if ($offer) {
@@ -87,11 +91,10 @@
                                                                 $tax = str_replace('€', '', $cartItem->tax());
                                                                 $tax = str_replace(',', '.', $tax);
                                                                 $cartIva = $cartIva - floatval($tax) * $cartItem->qty + (($product->tax->percentage * $offerDetail->product_price) / 100) * $cartItem->qty;
-                                                                $cartTotal=$cartTotal- ($cartItem->price* $cartItem->qty) + ($offerDetail->product_price* $cartItem->qty);
+                                                                $cartTotal = $cartTotal - $cartItem->price * $cartItem->qty + $offerDetail->product_price * $cartItem->qty;
                                                             }
                                                         }
                                                     }
-                                                    $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
                                                 @endphp
 
                                                 @if (!empty($product))
