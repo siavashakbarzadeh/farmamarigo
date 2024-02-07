@@ -118,7 +118,7 @@
                                                         </td>
                                                         <td class="product-des product-name">
                                                             <p class="product-name"><a
-                                                                    href="{{ $product->original_product->url }}">{{ $product->name }}
+                                                                    href="{{ $product->original_product->url }}">{{ $cartItem->name }}
                                                                     @if ($offerDetail)
                                                                         @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
                                                                             <span class="badge badge-secondary"
