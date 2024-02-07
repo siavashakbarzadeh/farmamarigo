@@ -74,7 +74,7 @@
                                                         ->where('customer_id', $userid)
                                                         ->first();
                                                     $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
-                                                    if (pricelist) {
+                                                    if ($pricelist) {
                                                         $cartItem->price = pricelist[0]->final_price;
                                                     }
                                                     if ($offerDetail) {
