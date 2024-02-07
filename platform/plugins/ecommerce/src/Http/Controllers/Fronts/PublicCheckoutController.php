@@ -441,8 +441,27 @@ class PublicCheckoutController
                 }
             }
             foreach(Cart::instance('cart')->content() as $key => $cartItem){
-                $product = $products->find($cartItem->id);
-                $offerDetail=OffersDetail::where('product_id',$cartItem->id)->where('customer_id',$currentUserId)->where('status','active')->first();
+                $flag = false; // Reset flag for each item
+                $product = Product::find($cartItem->id); // Assuming $item->id is correct
+        
+                if ($product && $product->is_variation) {
+                    $AllVariations = Product::where('name', $item->name)->get();
+                    foreach ($AllVariations as $variation) {
+                        if ($variation->is_variation) {
+                            $flag = true;
+                            break; // Found a variation, no need to continue
+                        }
+                    }
+                }
+        
+                if ($flag) {
+                    $productVariation = ProductVariation::where('product_id', $item->id)->first();
+                    $product_id = $productVariation ? $productVariation->configurable_product_id : $item->id;
+                } else {
+                    $product_id = $item->id;
+                }
+                $product = $products->find($product_id);
+                $offerDetail=OffersDetail::where('product_id',$product_id)->where('customer_id',$currentUserId)->where('status','active')->first();
                 if($offerDetail){
                     $offer=Offers::find($offerDetail->offer_id);
                     if($offer){

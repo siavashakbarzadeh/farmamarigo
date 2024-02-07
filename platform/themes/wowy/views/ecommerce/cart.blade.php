@@ -40,23 +40,50 @@
                                         <tbody>
                                             @foreach (Cart::instance('cart')->content() as $key => $cartItem)
                                                 @php
-                                                    $product = $products->find($cartItem->id);
-                                                    if ($product->is_variation) {
-                                                        $product = Product::where('name', $product->name)
-                                                            ->where('is_variation', 0)
-                                                            ->first();
+                                                    $flag = false; // Reset flag for each item
+                                                    $product = Product::find($cartItem->id); // Assuming $item->id is correct
+
+                                                    if ($product && $product->is_variation) {
+                                                        $AllVariations = Product::where('name', $item->name)->get();
+                                                        foreach ($AllVariations as $variation) {
+                                                            if ($variation->is_variation) {
+                                                                $flag = true;
+                                                                break; // Found a variation, no need to continue
+                                                            }
+                                                        }
                                                     }
+
+                                                    if ($flag) {
+                                                        $productVariation = ProductVariation::where('product_id', $item->id)->first();
+                                                        $product_id = $productVariation ? $productVariation->configurable_product_id : $item->id;
+                                                    } else {
+                                                        $product_id = $item->id;
+                                                    }
+                                                    $product = $products->find($product_id);
+
                                                     $userid = auth('customer')->user()->id;
-                                                    $offerDetail = OffersDetail::where('product_id', $product->id)
+                                                    $offerDetail = OffersDetail::where('product_id', $product_id)
                                                         ->where('customer_id', $userid)
                                                         ->first();
                                                     if ($offerDetail) {
                                                         $offer = Offers::find($offerDetail->offer_id);
                                                         if ($offer) {
                                                             $offerType = $offer->offer_type;
+                                                            if ($offerType == 4 && $cartItem->qty >= 3) {
+                                                                $cartTotal = $cartTotal - $cartItem->price * floor($cartItem->qty / 3);
+                                                                $tax = str_replace('€', '', $cartItem->tax());
+                                                                $tax = str_replace(',', '.', $tax);
+                                                                $cartIva = $cartIva - floatval(floatval($tax) * floor($cartItem->qty / 3));
+                                                            }
+                                                            if ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity) {
+                                                                $tax = str_replace('€', '', $cartItem->tax());
+                                                                $tax = str_replace(',', '.', $tax);
+                                                                $cartIva = $cartIva - floatval($tax) * $cartItem->qty + (($product->tax->percentage * $offerDetail->product_price) / 100) * $cartItem->qty;
+                                                                $cartTotal = $cartTotal - $cartItem->price * $cartItem->qty + $offerDetail->product_price * $cartItem->qty;
+                                                            }
                                                         }
                                                     }
-                                                    $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+                                                    $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
                                                 @endphp
 
                                                 @if (!empty($product))
@@ -107,7 +134,7 @@
                                                                                 style="background: #E52728;font-size:smaller">{{ get_sale_percentage($pricelist[0]->final_price, $offerDetail->product_price) }}</span>
                                                                         @endif
                                                                     @endif
-                                                                    
+
                                                                     @if ($product->isOutOfStock())
                                                                         <span
                                                                             class="stock-status-label">({!! $product->stock_status_html !!})</span>
@@ -163,8 +190,87 @@
                                                                     style="color: red; font-size: 12pt;"></i></a>
                                                         </td>
                                                     </tr>
-                                                @endif
-                                            @endforeach
+                                                    @if ($offerDetail)
+                                                        @if ($offerType == 5)
+                                                            @php
+                                                                $collegati_id = $offerDetail->gift_product_id;
+                                                                $collegati = Product::find($collegati_id);
+                                                            @endphp
+                                                            <tr style="position: relative; background-color:#d7f7d8">
+
+
+                                                                <td class="image product-thumbnail">
+                                                                    {{--  <input type="hidden" name="items[{{ $key }}][rowId]" value="{{ $cartItem->rowId }}">  --}}
+                                                                    <span>
+                                                                        {{-- <img src="{{ $cartItem->options['image'] }}" alt="{{ $product->name }}" /> --}}
+                                                                        <h6>{{ $collegati->sku }}</h6>
+                                                                    </span>
+                                                                </td>
+                                                                <td class="product-des product-name">
+                                                                    <p class="product-name">
+                                                                        <span>{{ $collegati->name }} &nbsp;
+                                                                            @if ($product->isOutOfStock())
+                                                                                <span
+                                                                                    class="stock-status-label">({!! $product->stock_status_html !!})</span>
+                                                                            @endif
+                                                                        </span>
+                                                                    </p>
+                                                                    <p class="mb-0">
+                                                                        <small>{{ $cartItem->options['attributes'] ?? '' }}</small>
+                                                                    </p>
+
+                                                                    @if (!empty($cartItem->options['options']))
+                                                                        {!! render_product_options_info($cartItem->options['options'], $product, true) !!}
+                                                                    @endif
+
+                                                                    @if (!empty($cartItem->options['extras']) && is_array($cartItem->options['extras']))
+                                                                        @foreach ($cartItem->options['extras'] as $option)
+                                                                            @if (!empty($option['key']) && !empty($option['value']))
+                                                                                <p class="mb-0">
+                                                                                    <small>{{ $option['key'] }}:
+                                                                                        <strong>
+                                                                                            {{ $option['value'] }}</strong></small>
+                                                                                </p>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
+                                                                </td>
+                                                                <td class="price">
+
+                                                                    <span>{{ format_price(0) }}</span>
+                                                                    <small
+                                                                        style="display:block"><del>{{ format_price($collegati->price) }}</del></small>
+                                                                </td>
+
+                                                                <td class="text-center">
+                                                                    <div class="detail-qty border radius  m-auto">
+                                                                        <input type="number" disabled min="1"
+                                                                            value="{{ 1 }}"
+                                                                            name="collegati[]"
+                                                                            class="qty-val qty-input" />
+                                                                    </div>
+                                                                </td>
+                                                                <td colspan="2" class="text-right"
+                                                                    data-title="{{ __('Subtotal') }}">
+                                                                </td>
+
+                                                            </tr>
+                                                        @endif
+                                                        @if ($offerDetail)
+                                                            @if ($offerType == 6)
+                                                                <tr class="alert alert-danger">
+                                                                    <td colspan="6">se la quantità di questo prodotto
+                                                                        sarà superiore a {{ $offerDetail->quantity }}
+                                                                        avrai uno sconto del
+                                                                        {{ get_sale_percentage($product->price, $offerDetail->product_price) }}
+                                                                        solo su questo prodotto</td>
+                                                                </tr>
+                                                            @endif
+                                                        @endif
+
+
+                                                    @endif
+                                                @endforeach
                                         </tbody>
                                     </table>
                                 </div>
