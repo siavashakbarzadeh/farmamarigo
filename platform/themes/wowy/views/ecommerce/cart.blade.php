@@ -61,7 +61,7 @@
                                                         $product_id = $cartItem->id;
                                                     }
                                                     $product = $products->find($product_id);
-                                                    dd($product);
+                                                    dd($product, $product_id);
 
                                                     $userid = auth('customer')->user()->id;
                                                     $offerDetail = OffersDetail::where('product_id', $product_id)
