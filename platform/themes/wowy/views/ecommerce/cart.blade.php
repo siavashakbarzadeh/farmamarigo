@@ -87,7 +87,7 @@
                                                                 $tax = str_replace('€', '', $cartItem->tax());
                                                                 $tax = str_replace(',', '.', $tax);
                                                                 $cartIva = $cartIva - floatval($tax) * $cartItem->qty + (($product->tax->percentage * $offerDetail->product_price) / 100) * $cartItem->qty;
-                                                                $cartTotal = $cartTotal - $cartItem->price * $cartItem->qty + $offerDetail->product_price * $cartItem->qty;
+                                                                $cartTotal=$cartTotal- ($cartItem->price* $cartItem->qty) + ($offerDetail->product_price* $cartItem->qty);
                                                             }
                                                         }
                                                     }
