@@ -138,8 +138,15 @@
                                                                                 style="background: #E52728;font-size:smaller"><i
                                                                                     class="fa fa-link"></i></span>
                                                                         @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
+                                                                            @php
+                                                                                if ($pricelist) {
+                                                                                    $priceOfProduct = $pricelist[0]->final_price;
+                                                                                } else {
+                                                                                    $priceOfProduct = $product->price;
+                                                                                }
+                                                                            @endphp
                                                                             <span class="badge badge-secondary"
-                                                                                style="background: #E52728;font-size:smaller">{{ get_sale_percentage($pricelist[0]->final_price, $offerDetail->product_price) }}</span>
+                                                                                style="background: #E52728;font-size:smaller">{{ get_sale_percentage($offerDetail->product_price, $priceOfProduct) }}</span>
                                                                         @endif
                                                                     @endif
 
@@ -189,6 +196,7 @@
                                                             </div>
                                                         </td>
                                                         <td class="text-right" data-title="{{ __('Subtotal') }}">
+
                                                             <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                         </td>
                                                         <td class="action" data-title="{{ __('Remove') }}">
@@ -470,7 +478,7 @@
                                                                 {{ __('Totale IVA inclusa') }}
                                                             </td>
                                                             <td class="cart_total_amount"><strong><span
-                                                                        class="font-xl fw-900 text-brand">{{ format_price($shippingAmount + $orderAmount) }}</span></strong>
+                                                                        class="font-xl fw-900 text-brand">{{ format_price($cartTotal) }}</span></strong>
                                                             </td>
                                                         </tr>
                                                     </tbody>
