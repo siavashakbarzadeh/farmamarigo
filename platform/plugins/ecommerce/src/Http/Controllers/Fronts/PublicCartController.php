@@ -245,6 +245,7 @@ class PublicCartController extends Controller
     
         $data = $request->input('items', []);
         $outOfQuantity = false;
+        $discountTotal = 0; // Total discount applied
     
         foreach ($data as $item) {
             $cartItem = Cart::instance('cart')->get($item['rowId']);
@@ -255,43 +256,17 @@ class PublicCartController extends Controller
     
             $product = $this->productRepository->findById($cartItem->id); 
     
-            if ($product && $product->is_variation) {
-                $AllVariations = Product::where('name', $cartItem->name)->get();
-                foreach ($AllVariations as $variation) {
-                    if ($variation->is_variation) {
-                        $flag = true;
-                        break; // Found a variation, no need to continue
-                    }
-                }
-            }
+            // Check for offer and apply discount if applicable
+            $discountTotal += $this->applyOfferDiscount($cartItem);
     
-            if ($flag) {
-                $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
-                $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
-            } else {
-                $product_id = $cartItem->id;
-            }
-            $userid = request()->user('customer')->id;
-            $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
+            // Update the cart item's price after applying discount
+            Cart::instance('cart')->update($item['rowId'], ['price' => $cartItem->price]);
     
-            if ($pricelist) {
-                $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
+            // Update the cart total after applying discounts
+            $discountedSubTotal = Cart::instance('cart')->subtotal() - $discountTotal;
+            Cart::instance('cart')->setSubTotal($discountedSubTotal);
     
-                if ($offerDetail) {
-                    $offer = Offers::find($offerDetail->offer_id);
-    
-                    if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
-                        // Apply discount for offer type 4 if quantity is 3 or more
-                        $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
-                        $cartItem->price = $discountedPrice;
-                        // Adjust quantity after applying discount
-                        $cartItem->qty = $cartItem->qty - 3 * floor($cartItem->qty / 3);
-                    }
-                } else {
-                    $cartItem->price = $pricelist[0]->final_price;
-                }
-            }
-    
+            // Check for product stock availability
             if ($product) {
                 $originalQuantity = $product->quantity;
                 $product->quantity = (int)$product->quantity - (int)Arr::get($item, 'values.qty', 0) + 1;
@@ -302,14 +277,13 @@ class PublicCartController extends Controller
     
                 if ($product->isOutOfStock()) {
                     $outOfQuantity = true;
-                } else {
-                    Cart::instance('cart')->update($item['rowId'], Arr::get($item, 'values'));
                 }
     
                 $product->quantity = $originalQuantity;
             }
         }
     
+        // Handle out of quantity error
         if ($outOfQuantity) {
             return $response
                 ->setError()
@@ -321,10 +295,12 @@ class PublicCartController extends Controller
                 ->setMessage(__('One or all products are not enough quantity so cannot update!'));
         }
     
-        if(auth('customer')->user()!==null){
+        // Save cart for authenticated users
+        if (auth('customer')->user() !== null) {
             SaveCartController::saveCart(session('cart'));
         }
-        dd(Cart::instance('cart')->content());
+    
+        // Return updated cart details
         return $response
             ->setData([
                 'count' => Cart::instance('cart')->count(),
@@ -332,6 +308,35 @@ class PublicCartController extends Controller
                 'content' => Cart::instance('cart')->content(),
             ])
             ->setMessage(__('Update cart successfully!'));
+    }
+    
+    private function applyOfferDiscount($cartItem)
+    {
+        $discount = 0;
+        $product_id = $cartItem->id;
+        $userid = $this->getCurrentUserId(); // Assuming you have a method to get the current user's ID
+    
+        $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
+    
+        if ($pricelist) {
+            $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
+    
+            if ($offerDetail) {
+                $offer = Offers::find($offerDetail->offer_id);
+    
+                if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
+                    // Apply discount for offer type 4 if quantity is 3 or more
+                    $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
+                    $discount = $discountedPrice;
+                    // Update the cart item's price after applying discount
+                    $cartItem->price -= $discount;
+                }
+            } else {
+                $cartItem->price = $pricelist[0]->final_price;
+            }
+        }
+    
+        return $discount;
     }
     
 
