@@ -330,24 +330,33 @@ class PublicCartController extends Controller
         return floatval($numberString);
     }
 
-    private function applyOfferDiscount($cartItem, $product_id, $userid)
+    private function applyOfferDiscount($cartItem)
     {
+        $discount = 0;
+        $product_id = $cartItem->id;
+        $userid = $this->getCurrentUserId(); // Assuming you have a method to get the current user's ID
+    
         $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
+    
         if ($pricelist) {
             $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
-
+    
             if ($offerDetail) {
                 $offer = Offers::find($offerDetail->offer_id);
+    
                 if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
                     // Apply discount for offer type 4 if quantity is 3 or more
                     $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
-                    // Return the discounted price
-                    return $cartItem->price - $discountedPrice;
+                    $discount = $discountedPrice;
+                    // Update the cart item's price after applying discount
+                    $cartItem->price -= $discount;
                 }
+            } else {
+                $cartItem->price = $pricelist[0]->final_price;
             }
         }
-        // If no discount is applicable, return the original price
-        return $cartItem->price;
+    
+        return $discount;
     }
     
 
