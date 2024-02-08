@@ -190,7 +190,7 @@
                                                                                 {{ $pricelist[0]->final_price }}
                                                                             </del>
                                                                         </span>
-                                                                    @elseif ($offerType == 3)
+                                                                    @elseif ($offerType == 4)
                                                                         <span>{{ format_price($cartItem->price) }}</span>
                                                                     @else
                                                                         <span>{{ format_price($cartItem->price) }}</span>
