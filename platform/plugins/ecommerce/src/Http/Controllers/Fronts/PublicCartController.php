@@ -276,8 +276,10 @@ class PublicCartController extends Controller
             
             // Check for offer and apply discount if applicable
 
-            $discountedPrice = $this->applyOfferDiscount($cartItem, $product_id, $userid);
-    
+            $cartItem->price = $this->applyOfferDiscount($cartItem, $product_id, $userid);
+
+            // Update the cart item
+            Cart::instance('cart')->update($item['rowId'], ['price' => $cartItem->price]);
     
             // Check for product stock availability
             if ($product) {
@@ -292,7 +294,6 @@ class PublicCartController extends Controller
                     $outOfQuantity = true;
                 }else {
                     Cart::instance('cart')->update($item['rowId'], Arr::get($item, 'values'));
-                    Cart::instance('cart')->update($item['rowId'], Arr::get($item, 'values.price',$discountedPrice));
                 }
     
                 $product->quantity = $originalQuantity;
