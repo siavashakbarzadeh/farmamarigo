@@ -248,6 +248,7 @@ class PublicCartController extends Controller
         $discountTotal = 0; // Total discount applied
     
         foreach ($data as $item) {
+
             $cartItem = Cart::instance('cart')->get($item['rowId']);
     
             if (! $cartItem) {
@@ -255,9 +256,26 @@ class PublicCartController extends Controller
             }
     
             $product = $this->productRepository->findById($cartItem->id); 
-    
+            $userid = request()->user('customer')->id;
+            if ($product && $product->is_variation) {
+                        $AllVariations = Product::where('name', $cartItem->name)->get();
+                        foreach ($AllVariations as $variation) {
+                            if ($variation->is_variation) {
+                                $flag = true;
+                                break; // Found a variation, no need to continue
+                            }
+                        }
+                    }
+
+            if ($flag) {
+                $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
+                $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
+            } else {
+                $product_id = $cartItem->id;
+            }
+            
             // Check for offer and apply discount if applicable
-            $discountTotal += $this->applyOfferDiscount($cartItem);
+            $discountTotal += $this->applyOfferDiscount($cartItem,$product_id,$userid);
     
             // Update the cart item's price after applying discount
             Cart::instance('cart')->update($item['rowId'], ['price' => $cartItem->price]);
@@ -310,12 +328,9 @@ class PublicCartController extends Controller
             ->setMessage(__('Update cart successfully!'));
     }
     
-    private function applyOfferDiscount($cartItem)
+    private function applyOfferDiscount($cartItem,$product_id,$userid)
     {
-        $discount = 0;
-        $product_id = $cartItem->id;
-        $userid = $this->getCurrentUserId(); // Assuming you have a method to get the current user's ID
-    
+        $discount = 0;    
         $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
     
         if ($pricelist) {
