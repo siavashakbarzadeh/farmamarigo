@@ -337,9 +337,7 @@ class PublicCartController extends Controller
     
     private function applyOfferDiscount($cartItem,$product_id,$userid)
     {
-        $discount = 0;    
         $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
-        dd($pricelist);
         if ($pricelist) {
             $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
     
@@ -349,17 +347,13 @@ class PublicCartController extends Controller
                 if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
                     // Apply discount for offer type 4 if quantity is 3 or more
                     $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
-                    $discount = $discountedPrice;
                     // Update the cart item's price after applying discount
-                    $cartItem->price -= $discount;
+                    $cartItem->price -= $discountedPrice;
                 }
-            } else {
-                $cartItem->price = $pricelist[0]->final_price;
-            }
-        }
-    
-        return $discount;
+            } 
+            return $cartItem->price;
     }
+}
     
 
     public function getRemove(string $id, BaseHttpResponse $response)
