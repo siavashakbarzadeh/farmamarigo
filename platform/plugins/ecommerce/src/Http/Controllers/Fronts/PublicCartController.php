@@ -324,7 +324,7 @@ class PublicCartController extends Controller
         if(auth('customer')->user()!==null){
             SaveCartController::saveCart(session('cart'));
         }
-    
+        dd(Cart::instance('cart')->content());
         return $response
             ->setData([
                 'count' => Cart::instance('cart')->count(),
