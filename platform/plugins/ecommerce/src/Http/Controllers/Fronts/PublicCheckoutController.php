@@ -465,7 +465,6 @@ class PublicCheckoutController
                 } else {
                     $product_id = $cartItem->id;
                 }
-                $product = $products->find($product_id);
                 $offerDetail=OffersDetail::where('product_id',$product_id)->where('customer_id',$currentUserId)->where('status','active')->first();
                 if($offerDetail){
                     $offer=Offers::find($offerDetail->offer_id);
