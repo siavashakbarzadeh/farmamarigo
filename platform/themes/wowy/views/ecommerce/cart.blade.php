@@ -470,7 +470,7 @@
                                                                 {{ __('Subtotale IVA esclusa') }}
                                                             </td>
                                                             <td class="cart_total_amount"><strong><span
-                                                                        class="font-xl fw-900 text-brand">{{ format_price($subtotal) }}</span></strong>
+                                                                        class="font-xl fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawSubTotal()) }}</span></strong>
                                                             </td>
                                                         </tr>
                                                         @if (EcommerceHelper::isTaxEnabled())
