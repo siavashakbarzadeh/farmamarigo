@@ -271,7 +271,7 @@ class PublicCartController extends Controller
             } else {
                 $product_id = $cartItem->id;
             }
-    
+            $userid = request()->user('customer')->id;
             $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
     
             if ($pricelist) {
