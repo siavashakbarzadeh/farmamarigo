@@ -275,14 +275,11 @@ class PublicCartController extends Controller
             }
             
             // Check for offer and apply discount if applicable
-            $discountTotal += $this->applyOfferDiscount($cartItem,$product_id,$userid);
+            $discountPrice = $this->applyOfferDiscount($cartItem,$product_id,$userid);
     
             // Update the cart item's price after applying discount
-            Cart::instance('cart')->update($item['rowId'], ['price' => $cartItem->price]);
+            Cart::instance('cart')->update($item['rowId'], ['price' => $discountPrice]);
     
-            // Update the cart total after applying discounts
-            $discountedSubTotal = $this->formatToNumber(Cart::instance('cart')->subtotal()) - $discountTotal;
-            Cart::instance('cart')->setSubTotal($discountedSubTotal);
     
             // Check for product stock availability
             if ($product) {
