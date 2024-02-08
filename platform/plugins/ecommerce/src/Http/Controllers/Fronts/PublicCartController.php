@@ -275,10 +275,10 @@ class PublicCartController extends Controller
             }
             
             // Check for offer and apply discount if applicable
-            $discountPrice = $this->applyOfferDiscount($cartItem,$product_id,$userid);
+            $cartItem->price = $this->applyOfferDiscount($cartItem,$product_id,$userid);
     
             // Update the cart item's price after applying discount
-            Cart::instance('cart')->update($item['rowId'], ['price' => $discountPrice]);
+            Cart::instance('cart')->update($item['rowId'], ['price' => $cartItem->price]);
     
     
             // Check for product stock availability
@@ -325,14 +325,6 @@ class PublicCartController extends Controller
             ->setMessage(__('Update cart successfully!'));
     }
 
-    private function formatToNumber($currencyString) {
-        // Remove currency symbols and delimiters
-        $numberString = preg_replace('/[^\d,.-]/', '', $currencyString);
-        // Convert comma to dot if it's used as a decimal separator
-        $numberString = str_replace(',', '.', $numberString);
-        // Convert the cleaned string to a float value
-        return floatval($numberString);
-    }
     
     
     private function applyOfferDiscount($cartItem,$product_id,$userid)
