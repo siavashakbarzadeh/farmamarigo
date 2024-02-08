@@ -69,6 +69,7 @@
                                                     $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
                                                     if ($pricelist) {
                                                         $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
+                                                        dd(offerDetail);
                                                         if ($offerDetail) {
                                                             $offer = Offers::find($offerDetail->offer_id);
                                                             if ($offer) {
