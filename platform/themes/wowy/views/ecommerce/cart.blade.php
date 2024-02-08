@@ -4,17 +4,17 @@
     use Botble\Ecommerce\Models\Offers;
     use Botble\Ecommerce\Models\Product;
     use Botble\Ecommerce\Models\ProductVariation;
-    use Botble\Ecommerce\Models\CarouselProducts;
-    use Botble\Ecommerce\Models\SPC;
-    if (request()->user('customer')) {
-        $userid = request()->user('customer')->id;
-        if (!CarouselProducts::where('customer_id', $userid)->exists()) {
-            $discountedProducts = SuggestionController::getProduct($userid);
-        } else {
-            $productIds = CarouselProducts::where('customer_id', $userid)->pluck('product_id');
-            $discountedProducts = Product::whereIn('id', $productIds)->get();
-        }
-    }
+    // use Botble\Ecommerce\Models\CarouselProducts;
+    // use Botble\Ecommerce\Models\SPC;
+    // if (request()->user('customer')) {
+    //     $userid = request()->user('customer')->id;
+    //     if (!CarouselProducts::where('customer_id', $userid)->exists()) {
+    //         $discountedProducts = SuggestionController::getProduct($userid);
+    //     } else {
+    //         $productIds = CarouselProducts::where('customer_id', $userid)->pluck('product_id');
+    //         $discountedProducts = Product::whereIn('id', $productIds)->get();
+    //     }
+    // }
 @endphp
 <section class="mt-60 mb-20">
     <div class="container">
@@ -22,7 +22,6 @@
             <div class="col-12 section--shopping-cart">
                 <form class="form--shopping-cart" method="post" action="{{ route('public.cart.update') }}">
                     @csrf
-
                     @if (count($products) > 0)
                         <div class="row">
                             <div class="col-8">
@@ -51,7 +50,6 @@
                                                 @php
                                                     $flag = false; // Reset flag for each item
                                                     $product = Product::find($cartItem->id); // Assuming $item->id is correct
-
                                                     if ($product && $product->is_variation) {
                                                         $AllVariations = Product::where('name', $cartItem->name)->get();
                                                         foreach ($AllVariations as $variation) {
@@ -61,7 +59,6 @@
                                                             }
                                                         }
                                                     }
-
                                                     if ($flag) {
                                                         $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
                                                         $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
@@ -70,29 +67,28 @@
                                                     }
                                                     $product = Product::find($product_id)->first();
 
-                                                    $offerDetail = OffersDetail::where('product_id', $product_id)
-                                                        ->where('customer_id', $userid)
-                                                        ->first();
                                                     $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
                                                     if ($pricelist) {
-                                                        $cartItem->price = $pricelist[0]->final_price;
-                                                    }
-                                                    if ($offerDetail) {
-                                                        $offer = Offers::find($offerDetail->offer_id);
-                                                        if ($offer) {
-                                                            $offerType = $offer->offer_type;
-                                                            if ($offerType == 4 && $cartItem->qty >= 3) {
-                                                                $cartTotal = $cartTotal - $cartItem->price * floor($cartItem->qty / 3);
-                                                                $tax = str_replace('€', '', $cartItem->tax());
-                                                                $tax = str_replace(',', '.', $tax);
-                                                                $cartIva = $cartIva - floatval(floatval($tax) * floor($cartItem->qty / 3));
+                                                        $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
+                                                        if ($offerDetail) {
+                                                            $offer = Offers::find($offerDetail->offer_id);
+                                                            if ($offer) {
+                                                                $offerType = $offer->offer_type;
+                                                                if ($offerType == 4 && $cartItem->qty >= 3) {
+                                                                    $cartTotal = $cartTotal - $cartItem->price * floor($cartItem->qty / 3);
+                                                                    $tax = str_replace('€', '', $cartItem->tax());
+                                                                    $tax = str_replace(',', '.', $tax);
+                                                                    $cartIva = $cartIva - floatval(floatval($tax) * floor($cartItem->qty / 3));
+                                                                }
+                                                                if ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity) {
+                                                                    $tax = str_replace('€', '', $cartItem->tax());
+                                                                    $tax = str_replace(',', '.', $tax);
+                                                                    $cartIva = $cartIva - floatval($tax) * $cartItem->qty + (($product->tax->percentage * $offerDetail->product_price) / 100) * $cartItem->qty;
+                                                                    $cartTotal = $cartTotal - $cartItem->price * $cartItem->qty + $offerDetail->product_price * $cartItem->qty;
+                                                                }
                                                             }
-                                                            if ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity) {
-                                                                $tax = str_replace('€', '', $cartItem->tax());
-                                                                $tax = str_replace(',', '.', $tax);
-                                                                $cartIva = $cartIva - floatval($tax) * $cartItem->qty + (($product->tax->percentage * $offerDetail->product_price) / 100) * $cartItem->qty;
-                                                                $cartTotal = $cartTotal - $cartItem->price * $cartItem->qty + $offerDetail->product_price * $cartItem->qty;
-                                                            }
+                                                        } else {
+                                                            $cartItem->price = $pricelist[0]->final_price;
                                                         }
                                                     }
                                                 @endphp
@@ -141,6 +137,7 @@
                                                                                 style="background: #E52728;font-size:smaller"><i
                                                                                     class="fa fa-link"></i></span>
                                                                         @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
+                                                                            {{-- It's okay --}}
                                                                             @php
                                                                                 if ($pricelist) {
                                                                                     $priceOfProduct = $pricelist[0]->final_price;
@@ -169,9 +166,12 @@
                                                             @if (!empty($cartItem->options['extras']) && is_array($cartItem->options['extras']))
                                                                 @foreach ($cartItem->options['extras'] as $option)
                                                                     @if (!empty($option['key']) && !empty($option['value']))
-                                                                        <p class="mb-0"><small>{{ $option['key'] }}:
+                                                                        <p class="mb-0">
+                                                                            <small>{{ $option['key'] }}:
                                                                                 <strong>
-                                                                                    {{ $option['value'] }}</strong></small>
+                                                                                    {{ $option['value'] }}
+                                                                                </strong>
+                                                                            </small>
                                                                         </p>
                                                                     @endif
                                                                 @endforeach
@@ -199,8 +199,19 @@
                                                             </div>
                                                         </td>
                                                         <td class="text-right" data-title="{{ __('Subtotal') }}">
-
-                                                            <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
+                                                            @if ($offerDetail)
+                                                                @if ($offerType == 4 && $cartItem->qty >= 3)
+                                                                    <span>{{ format_price($cartItem->price * ($cartItem->qty - floor($cartItem->qty / 3))) }}</span>
+                                                                    <span><del
+                                                                            style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty) }}</del></span>
+                                                                @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
+                                                                    <span>{{ format_price($offerDetail->product_price * $cartItem->qty) }}</span>
+                                                                @else
+                                                                    <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
+                                                                @endif
+                                                            @else
+                                                                <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
+                                                            @endif
                                                         </td>
                                                         <td class="action" data-title="{{ __('Remove') }}">
                                                             <a href="#" class="text-muted remove-cart-button "
@@ -359,9 +370,6 @@
 
                                     <div class="col-lg-12 col-md-12">
                                         <div class="border p-md-4 p-30 border-radius-10 cart-totals">
-                                            {{--                                    <div class="heading_s1 mb-3"> --}}
-                                            {{--                                        <h4>{{ __('Cart Total') }}</h4> --}}
-                                            {{--                                    </div> --}}
                                             <div class="table-responsive">
                                                 <table class="table">
                                                     <tbody>
