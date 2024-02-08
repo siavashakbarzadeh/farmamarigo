@@ -281,7 +281,7 @@ class PublicCartController extends Controller
             Cart::instance('cart')->update($item['rowId'], ['price' => $cartItem->price]);
     
             // Update the cart total after applying discounts
-            dd($discountTotal);
+            dd($discountTotal,Cart::instance('cart')->subtotal());
             $discountedSubTotal = Cart::instance('cart')->subtotal() - $discountTotal;
             Cart::instance('cart')->setSubTotal($discountedSubTotal);
     
