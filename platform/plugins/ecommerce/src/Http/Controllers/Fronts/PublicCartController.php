@@ -275,8 +275,9 @@ class PublicCartController extends Controller
             }
             
             // Check for offer and apply discount if applicable
+
             $discountedPrice = $this->applyOfferDiscount($cartItem, $product_id, $userid);
-            
+            dd($cartItem->price,$discountedPrice);
             // Update the cart item's price after applying discount
             Cart::instance('cart')->update($item['rowId'], ['price' => $discountedPrice]);
     
