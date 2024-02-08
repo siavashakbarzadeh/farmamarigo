@@ -68,7 +68,7 @@
                                                     $product = Product::find($product_id)->first();
 
                                                     $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
-                                                    dd($pricelist);
+
                                                     if ($pricelist) {
                                                         $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
                                                         if ($offerDetail) {
@@ -200,18 +200,20 @@
                                                             </div>
                                                         </td>
                                                         <td class="text-right" data-title="{{ __('Subtotal') }}">
-                                                            @if ($offerDetail)
-                                                                @if ($offerType == 4 && $cartItem->qty >= 3)
-                                                                    <span>{{ format_price($cartItem->price * ($cartItem->qty - floor($cartItem->qty / 3))) }}</span>
-                                                                    <span><del
-                                                                            style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty) }}</del></span>
-                                                                @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
-                                                                    <span>{{ format_price($offerDetail->product_price * $cartItem->qty) }}</span>
+                                                            @if ($pricelist)
+                                                                @if ($offerDetail)
+                                                                    @if ($offerType == 4 && $cartItem->qty >= 3)
+                                                                        <span>{{ format_price($cartItem->price * ($cartItem->qty - floor($cartItem->qty / 3))) }}</span>
+                                                                        <span><del
+                                                                                style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty) }}</del></span>
+                                                                    @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
+                                                                        <span>{{ format_price($offerDetail->product_price * $cartItem->qty) }}</span>
+                                                                    @else
+                                                                        <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
+                                                                    @endif
                                                                 @else
                                                                     <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                 @endif
-                                                            @else
-                                                                <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                             @endif
                                                         </td>
                                                         <td class="action" data-title="{{ __('Remove') }}">
