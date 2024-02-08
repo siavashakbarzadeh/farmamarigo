@@ -84,6 +84,7 @@
                                                                     $tax = str_replace(',', '.', $tax);
                                                                     $cartIva = $cartIva - floatval($tax) * $cartItem->qty + (($product->tax->percentage * $offerDetail->product_price) / 100) * $cartItem->qty;
                                                                     $cartTotal = $cartTotal - $cartItem->price * $cartItem->qty + $offerDetail->product_price * $cartItem->qty;
+                                                                    $cartItem->price = $offerDetail->product_price;
                                                                 }
                                                             }
                                                         } else {
@@ -207,6 +208,7 @@
                                                                         <span><del
                                                                                 style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty) }}</del></span>
                                                                     @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
+                                                                        {{-- calculation for the  --}}
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                     @else
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
