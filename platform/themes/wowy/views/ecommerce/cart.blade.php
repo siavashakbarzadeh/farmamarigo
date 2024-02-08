@@ -59,7 +59,6 @@
                                                             }
                                                         }
                                                     }
-                                                    dd($cartItem->id);
                                                     if ($flag) {
                                                         $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
                                                         $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
