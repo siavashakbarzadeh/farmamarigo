@@ -205,11 +205,16 @@
                                                                 @if ($offerDetail)
                                                                     @if ($offerType == 4 && $cartItem->qty >= 3)
                                                                         <span>{{ format_price($cartItem->price * ($cartItem->qty - floor($cartItem->qty / 3))) }}</span>
-                                                                        <span><del
-                                                                                style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty) }}</del></span>
+                                                                        <span>
+                                                                            <del
+                                                                                style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty) }}</del>
+                                                                        </span>
                                                                     @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
-                                                                        {{-- calculation for the  --}}
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
+                                                                        <span>
+                                                                            <del
+                                                                                style="display:block;font-size: xx-small">{{ format_price($pricelist->final_price * $cartItem->qty) }}</del>
+                                                                        </span>
                                                                     @else
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                     @endif
