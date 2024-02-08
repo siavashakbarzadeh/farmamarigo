@@ -26,6 +26,7 @@ use Botble\Ecommerce\Models\OffersDetail;
 use Botble\Ecommerce\Models\Offers;
 use Botble\Ecommerce\Models\Product;
 use Botble\Ecommerce\Models\ProductVariants;
+use Botble\Ecommerce\Models\ProductVariation;
 
 class PublicCartController extends Controller
 {
