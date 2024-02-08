@@ -321,26 +321,34 @@ class PublicCartController extends Controller
         ->setMessage(__('Update cart successfully!'));
     }
 
+    private function formatToNumber($currencyString) {
+        // Remove currency symbols and delimiters
+        $numberString = preg_replace('/[^\d,.-]/', '', $currencyString);
+        // Convert comma to dot if it's used as a decimal separator
+        $numberString = str_replace(',', '.', $numberString);
+        // Convert the cleaned string to a float value
+        return floatval($numberString);
+    }
     
     private function applyOfferDiscount($cartItem, $product_id, $userid)
-{
-    $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
-    if ($pricelist) {
-        $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
+    {
+        $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
+        if ($pricelist) {
+            $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
 
-        if ($offerDetail) {
-            $offer = Offers::find($offerDetail->offer_id);
-            if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
-                // Apply discount for offer type 4 if quantity is 3 or more
-                $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
-                // Return the discounted price
-                return $cartItem->price - $discountedPrice;
+            if ($offerDetail) {
+                $offer = Offers::find($offerDetail->offer_id);
+                if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
+                    // Apply discount for offer type 4 if quantity is 3 or more
+                    $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
+                    // Return the discounted price
+                    return $cartItem->price - $discountedPrice;
+                }
             }
         }
+        // If no discount is applicable, return the original price
+        return $cartItem->price;
     }
-    // If no discount is applicable, return the original price
-    return $cartItem->price;
-}
     
 
     public function getRemove(string $id, BaseHttpResponse $response)
