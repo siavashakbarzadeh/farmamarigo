@@ -450,7 +450,7 @@ class PublicCheckoutController
                 $product = Product::find($cartItem->id); // Assuming $item->id is correct
         
                 if ($product && $product->is_variation) {
-                    $AllVariations = Product::where('name', $item->name)->get();
+                    $AllVariations = Product::where('name', $cartItem->name)->get();
                     foreach ($AllVariations as $variation) {
                         if ($variation->is_variation) {
                             $flag = true;
@@ -460,10 +460,10 @@ class PublicCheckoutController
                 }
         
                 if ($flag) {
-                    $productVariation = ProductVariation::where('product_id', $item->id)->first();
-                    $product_id = $productVariation ? $productVariation->configurable_product_id : $item->id;
+                    $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
+                    $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
                 } else {
-                    $product_id = $item->id;
+                    $product_id = $cartItem->id;
                 }
                 $product = $products->find($product_id);
                 $offerDetail=OffersDetail::where('product_id',$product_id)->where('customer_id',$currentUserId)->where('status','active')->first();
