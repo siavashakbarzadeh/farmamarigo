@@ -207,7 +207,7 @@
                                                                         <span><del
                                                                                 style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty) }}</del></span>
                                                                     @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
-                                                                        <span>{{ format_price($offerDetail->product_price * $cartItem->qty) }}</span>
+                                                                        <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                     @else
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                     @endif
