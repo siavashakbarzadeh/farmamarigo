@@ -187,17 +187,13 @@
                                                                         <span>
                                                                             <del
                                                                                 style="display:block;font-size: xx-small">
-                                                                                $pricelist[0]->final_price
+                                                                                {{ $pricelist[0]->final_price }}
                                                                             </del>
                                                                         </span>
                                                                     @elseif (false)
                                                                     @endif
                                                                 @endif
                                                             @else
-                                                            @endif
-                                                            <span>{{ format_price($cartItem->price) }}</span>
-                                                            @if ($product->front_sale_price != $product->price)
-                                                                <small><del>{{ format_price($product->price) }}</del></small>
                                                             @endif
                                                         </td>
 
