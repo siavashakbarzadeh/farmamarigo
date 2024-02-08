@@ -49,9 +49,11 @@
                                             @foreach (Cart::instance('cart')->content() as $key => $cartItem)
                                                 @php
                                                     $flag = false; // Reset flag for each item
-                                                    $product = Product::find($cartItem->id); // Assuming $item->id is correct
+                                                    $product = Product::find($cartItem->id);
+                                                    dd($product); // Assuming $item->id is correct
                                                     if ($product && $product->is_variation) {
                                                         $AllVariations = Product::where('name', $cartItem->name)->get();
+                                                        dd()
                                                         foreach ($AllVariations as $variation) {
                                                             if ($variation->is_variation) {
                                                                 $flag = true;
