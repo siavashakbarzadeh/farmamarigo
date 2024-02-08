@@ -457,38 +457,7 @@
                                                                     $shippingAmount = 10;
                                                                 }
                                                                 $subtotal = Cart::instance('cart')->rawSubTotal();
-                                                                //@dd(Cart::instance('cart')->subTotal());
 
-                                                                //                                                            foreach (Cart::instance('cart')->content() as $key => $cartItem) {
-                                                                //                                                                $product = $products->find($cartItem->id);
-                                                                //                                                                $weight=$weight+($product->weight * $cartItem->qty);
-                                                                //                                                            }
-                                                                //                                                            $shippingAmount=0;//shippingAmount needs to be calculated by products weights and prices
-                                                                //
-                                                                //
-                                                                //
-                                                                //                                                            if(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 350.00){
-                                                                //                                                                if($weight>50000.00){
-                                                                //                                                                    $extraWeight=intval($weight/50000.00);
-                                                                //                                                                    $shippingAmount=(29.00+5*($extraWeight )) *$IVAPERCENTAGE;
-                                                                //                                                                }else{
-                                                                //                                                                    $shippingAmount=29.00*$IVAPERCENTAGE;
-                                                                //                                                                }
-                                                                //                                                            }elseif(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount > 350.00 && Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount <= 600.00 ) {
-                                                                //                                                                if($weight>50000.00){
-                                                                //                                                                    $extraWeight=intval($weight/50000.00);
-                                                                //                                                                    $shippingAmount=(12.90+5*($extraWeight )) *$IVAPERCENTAGE;
-                                                                //                                                                }else{
-                                                                //                                                                    $shippingAmount=12.90*$IVAPERCENTAGE;
-                                                                //                                                                }
-                                                                //                                                            }else{
-                                                                //                                                                if($weight>50000.00){
-                                                                //                                                                    $extraWeight=intval($weight/50000.00);
-                                                                //                                                                    $shippingAmount=(7.90+5*($extraWeight )) *$IVAPERCENTAGE;
-                                                                //                                                                }else{
-                                                                //                                                                    $shippingAmount=7.90*$IVAPERCENTAGE;
-                                                                //                                                                }
-                                                                //                                                            }
                                                             @endphp
                                                         @endif
 
@@ -527,7 +496,7 @@
                                                                 {{ __('Totale IVA inclusa') }}
                                                             </td>
                                                             <td class="cart_total_amount"><strong><span
-                                                                        class="font-xl fw-900 text-brand">{{ format_price($cartTotal) }}</span></strong>
+                                                                        class="font-xl fw-900 text-brand">{{ format_price($cartTotal + Cart::instance('cart')->rawTax() + $shippingAmount) }}</span></strong>
                                                             </td>
                                                         </tr>
                                                     </tbody>
