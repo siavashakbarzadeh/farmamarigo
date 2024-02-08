@@ -258,15 +258,15 @@ class PublicCartController extends Controller
             $product = $this->productRepository->findById($cartItem->id); 
             $userid = request()->user('customer')->id;
             if ($product && $product->is_variation) {
-                        $AllVariations = Product::where('name', $cartItem->name)->get();
-                        foreach ($AllVariations as $variation) {
-                            if ($variation->is_variation) {
-                                $flag = true;
-                                break; // Found a variation, no need to continue
-                            }
-                        }
+                $AllVariations = Product::where('name', $cartItem->name)->get();
+                foreach ($AllVariations as $variation) {
+                    if ($variation->is_variation) {
+                        $flag = true;
+                        break; // Found a variation, no need to continue
                     }
-
+                }
+            }
+            
             if ($flag) {
                 $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
                 $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
@@ -275,10 +275,10 @@ class PublicCartController extends Controller
             }
             
             // Check for offer and apply discount if applicable
-            $cartItem->price = $this->applyOfferDiscount($cartItem,$product_id,$userid);
-    
+            $discountedPrice = $this->applyOfferDiscount($cartItem, $product_id, $userid);
+            
             // Update the cart item's price after applying discount
-            Cart::instance('cart')->update($item['rowId'], ['price' => $cartItem->price]);
+            Cart::instance('cart')->update($item['rowId'], ['price' => $discountedPrice]);
     
     
             // Check for product stock availability
@@ -326,25 +326,24 @@ class PublicCartController extends Controller
     }
 
     
-    
-    private function applyOfferDiscount($cartItem,$product_id,$userid)
-    {
-        $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
-        if ($pricelist) {
-            $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
-    
-            if ($offerDetail) {
-                $offer = Offers::find($offerDetail->offer_id);
-    
-                if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
-                    // Apply discount for offer type 4 if quantity is 3 or more
-                    $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
-                    // Update the cart item's price after applying discount
-                    $cartItem->price -= $discountedPrice;
-                }
-            } 
-            return $cartItem->price;
+    private function applyOfferDiscount($cartItem, $product_id, $userid)
+{
+    $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
+    if ($pricelist) {
+        $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
+
+        if ($offerDetail) {
+            $offer = Offers::find($offerDetail->offer_id);
+            if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
+                // Apply discount for offer type 4 if quantity is 3 or more
+                $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
+                // Return the discounted price
+                return $cartItem->price - $discountedPrice;
+            }
+        }
     }
+    // If no discount is applicable, return the original price
+    return $cartItem->price;
 }
     
 
