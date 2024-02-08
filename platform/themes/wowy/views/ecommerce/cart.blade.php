@@ -557,7 +557,7 @@
     </div>
 </section>
 
-@if (request()->user('customer'))
+{{-- @if (request()->user('customer'))
 
     <div class="row">
         <center>
@@ -576,4 +576,4 @@
         </div>
     </div>
 
-@endif
+@endif --}}
