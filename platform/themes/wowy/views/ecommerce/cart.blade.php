@@ -126,28 +126,30 @@
                                                         <td class="product-des product-name">
                                                             <p class="product-name"><a
                                                                     href="{{ $product->original_product->url }}">{{ $cartItem->name }}
-                                                                    @if ($offerDetail)
-                                                                        @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
-                                                                            <span class="badge badge-secondary"
-                                                                                style="background: #E52728;font-size:smaller">{{ get_sale_percentage($product->price, $offerDetail->product_price) }}</span>
-                                                                        @elseif ($offerType == 4)
-                                                                            <span class="badge badge-secondary"
-                                                                                style="background: #E52728;font-size:smaller">3x2</span>
-                                                                        @elseif ($offerType == 5)
-                                                                            <span class="badge badge-secondary"
-                                                                                style="background: #E52728;font-size:smaller"><i
-                                                                                    class="fa fa-link"></i></span>
-                                                                        @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
-                                                                            {{-- It's okay --}}
-                                                                            @php
-                                                                                if ($pricelist) {
-                                                                                    $priceOfProduct = $pricelist[0]->final_price;
-                                                                                } else {
-                                                                                    $priceOfProduct = $product->price;
-                                                                                }
-                                                                            @endphp
-                                                                            <span class="badge badge-secondary"
-                                                                                style="background: #E52728;font-size:smaller">{{ get_sale_percentage($offerDetail->product_price, $priceOfProduct) }}</span>
+                                                                    @if ($pricelist)
+                                                                        @if ($offerDetail)
+                                                                            @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
+                                                                                <span class="badge badge-secondary"
+                                                                                    style="background: #E52728;font-size:smaller">{{ get_sale_percentage($product->price, $offerDetail->product_price) }}</span>
+                                                                            @elseif ($offerType == 4)
+                                                                                <span class="badge badge-secondary"
+                                                                                    style="background: #E52728;font-size:smaller">3x2</span>
+                                                                            @elseif ($offerType == 5)
+                                                                                <span class="badge badge-secondary"
+                                                                                    style="background: #E52728;font-size:smaller"><i
+                                                                                        class="fa fa-link"></i></span>
+                                                                            @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
+                                                                                {{-- It's okay --}}
+                                                                                @php
+                                                                                    if ($pricelist) {
+                                                                                        $priceOfProduct = $pricelist[0]->final_price;
+                                                                                    } else {
+                                                                                        $priceOfProduct = $product->price;
+                                                                                    }
+                                                                                @endphp
+                                                                                <span class="badge badge-secondary"
+                                                                                    style="background: #E52728;font-size:smaller">{{ get_sale_percentage($offerDetail->product_price, $priceOfProduct) }}</span>
+                                                                            @endif
                                                                         @endif
                                                                     @endif
 
@@ -223,88 +225,96 @@
                                                                     style="color: red; font-size: 12pt;"></i></a>
                                                         </td>
                                                     </tr>
-                                                    @if ($offerDetail)
-                                                        @if ($offerType == 5)
-                                                            @php
-                                                                $collegati_id = $offerDetail->gift_product_id;
-                                                                $collegati = Product::find($collegati_id);
-                                                            @endphp
-                                                            <tr style="position: relative; background-color:#d7f7d8">
-
-
-                                                                <td class="image product-thumbnail">
-                                                                    {{--  <input type="hidden" name="items[{{ $key }}][rowId]" value="{{ $cartItem->rowId }}">  --}}
-                                                                    <span>
-                                                                        {{-- <img src="{{ $cartItem->options['image'] }}" alt="{{ $product->name }}" /> --}}
-                                                                        <h6>{{ $collegati->sku }}</h6>
-                                                                    </span>
-                                                                </td>
-                                                                <td class="product-des product-name">
-                                                                    <p class="product-name">
-                                                                        <span>{{ $collegati->name }} &nbsp;
-                                                                            @if ($product->isOutOfStock())
-                                                                                <span
-                                                                                    class="stock-status-label">({!! $product->stock_status_html !!})</span>
-                                                                            @endif
-                                                                        </span>
-                                                                    </p>
-                                                                    <p class="mb-0">
-                                                                        <small>{{ $cartItem->options['attributes'] ?? '' }}</small>
-                                                                    </p>
-
-                                                                    @if (!empty($cartItem->options['options']))
-                                                                        {!! render_product_options_info($cartItem->options['options'], $product, true) !!}
-                                                                    @endif
-
-                                                                    @if (!empty($cartItem->options['extras']) && is_array($cartItem->options['extras']))
-                                                                        @foreach ($cartItem->options['extras'] as $option)
-                                                                            @if (!empty($option['key']) && !empty($option['value']))
-                                                                                <p class="mb-0">
-                                                                                    <small>{{ $option['key'] }}:
-                                                                                        <strong>
-                                                                                            {{ $option['value'] }}</strong></small>
-                                                                                </p>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    @endif
-                                                                </td>
-                                                                <td class="price">
-
-                                                                    <span>{{ format_price(0) }}</span>
-                                                                    <small
-                                                                        style="display:block"><del>{{ format_price($collegati->price) }}</del></small>
-                                                                </td>
-
-                                                                <td class="text-center">
-                                                                    <div class="detail-qty border radius  m-auto">
-                                                                        <input type="number" disabled min="1"
-                                                                            value="{{ 1 }}"
-                                                                            name="collegati[]"
-                                                                            class="qty-val qty-input" />
-                                                                    </div>
-                                                                </td>
-                                                                <td colspan="2" class="text-right"
-                                                                    data-title="{{ __('Subtotal') }}">
-                                                                </td>
-
-                                                            </tr>
-                                                        @endif
+                                                    @if ($pricelist)
                                                         @if ($offerDetail)
-                                                            @if ($offerType == 6)
-                                                                <tr class="alert alert-danger">
-                                                                    <td colspan="6">se la quantità di questo prodotto
-                                                                        sarà superiore a {{ $offerDetail->quantity }}
-                                                                        avrai uno sconto del
-                                                                        @php
-                                                                            if ($pricelist) {
-                                                                                $priceOfProduct = $pricelist[0]->final_price;
-                                                                            } else {
-                                                                                $priceOfProduct = $product->price;
-                                                                            }
-                                                                        @endphp
-                                                                        {{ get_sale_percentage($offerDetail->product_price, $priceOfProduct) }}
-                                                                        solo su questo prodotto</td>
+                                                            @if ($offerType == 5)
+                                                                @php
+                                                                    $collegati_id = $offerDetail->gift_product_id;
+                                                                    $collegati = Product::find($collegati_id);
+                                                                @endphp
+                                                                <tr
+                                                                    style="position: relative; background-color:#d7f7d8">
+
+
+                                                                    <td class="image product-thumbnail">
+                                                                        {{--  <input type="hidden" name="items[{{ $key }}][rowId]" value="{{ $cartItem->rowId }}">  --}}
+                                                                        <span>
+                                                                            {{-- <img src="{{ $cartItem->options['image'] }}" alt="{{ $product->name }}" /> --}}
+                                                                            <h6>{{ $collegati->sku }}</h6>
+                                                                        </span>
+                                                                    </td>
+                                                                    <td class="product-des product-name">
+                                                                        <p class="product-name">
+                                                                            <span>{{ $collegati->name }} &nbsp;
+                                                                                @if ($product->isOutOfStock())
+                                                                                    <span
+                                                                                        class="stock-status-label">({!! $product->stock_status_html !!})</span>
+                                                                                @endif
+                                                                            </span>
+                                                                        </p>
+                                                                        <p class="mb-0">
+                                                                            <small>{{ $cartItem->options['attributes'] ?? '' }}</small>
+                                                                        </p>
+
+                                                                        @if (!empty($cartItem->options['options']))
+                                                                            {!! render_product_options_info($cartItem->options['options'], $product, true) !!}
+                                                                        @endif
+
+                                                                        @if (!empty($cartItem->options['extras']) && is_array($cartItem->options['extras']))
+                                                                            @foreach ($cartItem->options['extras'] as $option)
+                                                                                @if (!empty($option['key']) && !empty($option['value']))
+                                                                                    <p class="mb-0">
+                                                                                        <small>{{ $option['key'] }}:
+                                                                                            <strong>
+                                                                                                {{ $option['value'] }}</strong></small>
+                                                                                    </p>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </td>
+                                                                    <td class="price">
+
+                                                                        <span>{{ format_price(0) }}</span>
+                                                                        <small
+                                                                            style="display:block"><del>{{ format_price($collegati->price) }}</del></small>
+                                                                    </td>
+
+                                                                    <td class="text-center">
+                                                                        <div class="detail-qty border radius  m-auto">
+                                                                            <input type="number" disabled
+                                                                                min="1"
+                                                                                value="{{ 1 }}"
+                                                                                name="collegati[]"
+                                                                                class="qty-val qty-input" />
+                                                                        </div>
+                                                                    </td>
+                                                                    <td colspan="2" class="text-right"
+                                                                        data-title="{{ __('Subtotal') }}">
+                                                                    </td>
+
                                                                 </tr>
+                                                            @endif
+                                                            @if ($pricelist)
+                                                                @if ($offerDetail)
+                                                                    @if ($offerType == 6)
+                                                                        <tr class="alert alert-danger">
+                                                                            <td colspan="6">se la quantità di questo
+                                                                                prodotto
+                                                                                sarà superiore a
+                                                                                {{ $offerDetail->quantity }}
+                                                                                avrai uno sconto del
+                                                                                @php
+                                                                                    if ($pricelist) {
+                                                                                        $priceOfProduct = $pricelist[0]->final_price;
+                                                                                    } else {
+                                                                                        $priceOfProduct = $product->price;
+                                                                                    }
+                                                                                @endphp
+                                                                                {{ get_sale_percentage($offerDetail->product_price, $priceOfProduct) }}
+                                                                                solo su questo prodotto</td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endif
                                                             @endif
                                                         @endif
                                                     @endif
