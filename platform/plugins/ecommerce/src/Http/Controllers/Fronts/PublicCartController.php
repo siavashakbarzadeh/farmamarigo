@@ -281,8 +281,7 @@ class PublicCartController extends Controller
             Cart::instance('cart')->update($item['rowId'], ['price' => $cartItem->price]);
     
             // Update the cart total after applying discounts
-            dd($discountTotal,Cart::instance('cart')->subtotal());
-            $discountedSubTotal = Cart::instance('cart')->subtotal() - $discountTotal;
+            $discountedSubTotal = $this->formatToNumber(Cart::instance('cart')->subtotal()) - $discountTotal;
             Cart::instance('cart')->setSubTotal($discountedSubTotal);
     
             // Check for product stock availability
@@ -328,6 +327,16 @@ class PublicCartController extends Controller
             ])
             ->setMessage(__('Update cart successfully!'));
     }
+
+    private function formatToNumber($currencyString) {
+        // Remove currency symbols and delimiters
+        $numberString = preg_replace('/[^\d,.-]/', '', $currencyString);
+        // Convert comma to dot if it's used as a decimal separator
+        $numberString = str_replace(',', '.', $numberString);
+        // Convert the cleaned string to a float value
+        return floatval($numberString);
+    }
+    
     
     private function applyOfferDiscount($cartItem,$product_id,$userid)
     {
