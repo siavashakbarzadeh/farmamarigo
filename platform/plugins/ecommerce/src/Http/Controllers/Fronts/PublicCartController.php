@@ -230,49 +230,85 @@ class PublicCartController extends Controller
 
     public function postUpdate(UpdateCartRequest $request, BaseHttpResponse $response)
     {
-
         if (! EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
-        Session::put('note',$request->note);
-        Session::put('shippingAmount',$request->shippingAmount);
+        
+        Session::put('note', $request->note);
+        Session::put('shippingAmount', $request->shippingAmount);
+        
         if ($request->has('checkout')) {
             $token = OrderHelper::getOrderSessionToken();
             return $response->setNextUrl(route('public.checkout.information', $token));
         }
-
+    
         $data = $request->input('items', []);
-
         $outOfQuantity = false;
+    
         foreach ($data as $item) {
             $cartItem = Cart::instance('cart')->get($item['rowId']);
-
+    
             if (! $cartItem) {
                 continue;
             }
-
-            $product = null;
-
-            $product = $this->productRepository->findById($cartItem->id);
-
+    
+            $product = $this->productRepository->findById($cartItem->id); 
+    
+            if ($product && $product->is_variation) {
+                $AllVariations = Product::where('name', $cartItem->name)->get();
+                foreach ($AllVariations as $variation) {
+                    if ($variation->is_variation) {
+                        $flag = true;
+                        break; // Found a variation, no need to continue
+                    }
+                }
+            }
+    
+            if ($flag) {
+                $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
+                $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
+            } else {
+                $product_id = $cartItem->id;
+            }
+    
+            $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
+    
+            if ($pricelist) {
+                $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
+    
+                if ($offerDetail) {
+                    $offer = Offers::find($offerDetail->offer_id);
+    
+                    if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
+                        // Apply discount for offer type 4 if quantity is 3 or more
+                        $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
+                        $cartItem->price = $discountedPrice;
+                        // Adjust quantity after applying discount
+                        $cartItem->qty = $cartItem->qty - 3 * floor($cartItem->qty / 3);
+                    }
+                } else {
+                    $cartItem->price = $pricelist[0]->final_price;
+                }
+            }
+    
             if ($product) {
                 $originalQuantity = $product->quantity;
                 $product->quantity = (int)$product->quantity - (int)Arr::get($item, 'values.qty', 0) + 1;
-
+    
                 if ($product->quantity < 0) {
                     $product->quantity = 0;
                 }
-
+    
                 if ($product->isOutOfStock()) {
                     $outOfQuantity = true;
                 } else {
                     Cart::instance('cart')->update($item['rowId'], Arr::get($item, 'values'));
                 }
-
+    
                 $product->quantity = $originalQuantity;
             }
         }
-
+    
         if ($outOfQuantity) {
             return $response
                 ->setError()
@@ -283,13 +319,11 @@ class PublicCartController extends Controller
                 ])
                 ->setMessage(__('One or all products are not enough quantity so cannot update!'));
         }
-
+    
         if(auth('customer')->user()!==null){
-
             SaveCartController::saveCart(session('cart'));
-
         }
-
+    
         return $response
             ->setData([
                 'count' => Cart::instance('cart')->count(),
@@ -298,6 +332,7 @@ class PublicCartController extends Controller
             ])
             ->setMessage(__('Update cart successfully!'));
     }
+    
 
     public function getRemove(string $id, BaseHttpResponse $response)
     {
