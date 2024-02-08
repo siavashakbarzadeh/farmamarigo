@@ -53,7 +53,6 @@
                                                     dd($product); // Assuming $item->id is correct
                                                     if ($product && $product->is_variation) {
                                                         $AllVariations = Product::where('name', $cartItem->name)->get();
-                                                        dd()
                                                         foreach ($AllVariations as $variation) {
                                                             if ($variation->is_variation) {
                                                                 $flag = true;
