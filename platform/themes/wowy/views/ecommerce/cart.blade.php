@@ -213,7 +213,7 @@
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                         <span>
                                                                             <del
-                                                                                style="display:block;font-size: xx-small">{{ format_price($pricelist->final_price * $cartItem->qty) }}</del>
+                                                                                style="display:block;font-size: xx-small">{{ format_price($pricelist[0]->final_price * $cartItem->qty) }}</del>
                                                                         </span>
                                                                     @else
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
