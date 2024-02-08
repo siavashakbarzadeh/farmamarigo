@@ -285,7 +285,7 @@ class PublicCartController extends Controller
         
         
         // After the foreach loop, update the cart subtotal
-        $rawSubTotal = formatToNumber(Cart::instance('cart')->subtotal());
+        $rawSubTotal = $this->formatToNumber(Cart::instance('cart')->subtotal());
         $discountedSubTotal = $rawSubTotal - $discountTotal;
 
         // Update the session or the cart with the new subtotal
@@ -329,7 +329,7 @@ class PublicCartController extends Controller
         // Convert the cleaned string to a float value
         return floatval($numberString);
     }
-    
+
     private function applyOfferDiscount($cartItem, $product_id, $userid)
     {
         $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
