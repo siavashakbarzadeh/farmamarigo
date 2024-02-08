@@ -180,6 +180,21 @@
                                                             @endif
                                                         </td>
                                                         <td class="price" data-title="{{ __('Price') }}">
+                                                            @if ($pricelist)
+                                                                @if ($offerDetail)
+                                                                    @if ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
+                                                                        <span>{{ format_price($cartItem->price) }}</span>
+                                                                        <span>
+                                                                            <del
+                                                                                style="display:block;font-size: xx-small">
+                                                                                $pricelist[0]->final_price
+                                                                            </del>
+                                                                        </span>
+                                                                    @elseif (false)
+                                                                    @endif
+                                                                @endif
+                                                            @else
+                                                            @endif
                                                             <span>{{ format_price($cartItem->price) }}</span>
                                                             @if ($product->front_sale_price != $product->price)
                                                                 <small><del>{{ format_price($product->price) }}</del></small>
