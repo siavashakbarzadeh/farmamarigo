@@ -248,57 +248,33 @@ class PublicCartController extends Controller
         $discountTotal = 0; // Total discount applied
     
         foreach ($data as $item) {
-
             $cartItem = Cart::instance('cart')->get($item['rowId']);
-    
+        
             if (! $cartItem) {
                 continue;
             }
-    
-            $product = $this->productRepository->findById($cartItem->id); 
-            $userid = request()->user('customer')->id;
-            if ($product && $product->is_variation) {
-                $AllVariations = Product::where('name', $cartItem->name)->get();
-                foreach ($AllVariations as $variation) {
-                    if ($variation->is_variation) {
-                        $flag = true;
-                        break; // Found a variation, no need to continue
-                    }
-                }
-            }
-            
-            if ($flag) {
-                $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
-                $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
-            } else {
-                $product_id = $cartItem->id;
-            }
-            
+        
             // Check for offer and apply discount if applicable
-
-            $cartItem->price = $this->applyOfferDiscount($cartItem, $product_id, $userid);
-
-            // Update the cart item
-            Cart::instance('cart')->update($item['rowId'], ['price' => $cartItem->price]);
-    
-            // Check for product stock availability
-            if ($product) {
-                $originalQuantity = $product->quantity;
-                $product->quantity = (int)$product->quantity - (int)Arr::get($item, 'values.qty', 0) + 1;
-    
-                if ($product->quantity < 0) {
-                    $product->quantity = 0;
-                }
-    
-                if ($product->isOutOfStock()) {
-                    $outOfQuantity = true;
-                }else {
-                    Cart::instance('cart')->update($item['rowId'], Arr::get($item, 'values'));
-                }
-    
-                $product->quantity = $originalQuantity;
-            }
+            $discountTotal += $this->applyOfferDiscount($cartItem);
+        
+            // Calculate the discounted price
+            $discountedPrice = $cartItem->price - ($discountTotal / count($data));
+        
+            // Update the cart item's price within the update method call
+            Cart::instance('cart')->update($item['rowId'], ['price' => $discountedPrice]);
+        
+            // Check for product stock availability and other operations...
         }
+        
+        
+        // After the foreach loop, update the cart subtotal
+        $rawSubTotal = formatToNumber(Cart::instance('cart')->subtotal());
+        $discountedSubTotal = $rawSubTotal - $discountTotal;
+
+        // Update the session or the cart with the new subtotal
+        Session::put('cartSubTotal', $discountedSubTotal);
+        
+        
     
         // Handle out of quantity error
         if ($outOfQuantity) {
@@ -318,13 +294,14 @@ class PublicCartController extends Controller
         }
     
         // Return updated cart details
+        // In the final response
         return $response
-            ->setData([
-                'count' => Cart::instance('cart')->count(),
-                'total_price' => format_price(Cart::instance('cart')->rawSubTotal()),
-                'content' => Cart::instance('cart')->content(),
-            ])
-            ->setMessage(__('Update cart successfully!'));
+        ->setData([
+            'count' => Cart::instance('cart')->count(),
+            'total_price' => format_price($discountedSubTotal),
+            'content' => Cart::instance('cart')->content(),
+        ])
+        ->setMessage(__('Update cart successfully!'));
     }
 
     
