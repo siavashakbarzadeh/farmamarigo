@@ -253,9 +253,26 @@ class PublicCartController extends Controller
             if (! $cartItem) {
                 continue;
             }
-        
+            $product = $this->productRepository->findById($cartItem->id); 
+            $userid = request()->user('customer')->id;
+            if ($product && $product->is_variation) {
+                $AllVariations = Product::where('name', $cartItem->name)->get();
+                foreach ($AllVariations as $variation) {
+                    if ($variation->is_variation) {
+                        $flag = true;
+                        break; // Found a variation, no need to continue
+                    }
+                }
+            }
+            
+            if ($flag) {
+                $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
+                $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
+            } else {
+                $product_id = $cartItem->id;
+            }
             // Check for offer and apply discount if applicable
-            $discountTotal += $this->applyOfferDiscount($cartItem);
+            $discountTotal += $this->applyOfferDiscount($cartItem,$product_id,$userid);
         
             // Calculate the discounted price
             $discountedPrice = $cartItem->price - ($discountTotal / count($data));
