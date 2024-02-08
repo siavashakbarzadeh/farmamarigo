@@ -59,6 +59,11 @@ use Botble\Ecommerce\Mail\OrderPaymentFailed;
 use Botble\Ecommerce\Http\Controllers\SaveCartController;
 use Botble\Ecommerce\Mail\OrderEdited;
 use Botble\Ecommerce\Models\Invoice;
+use Botble\Ecommerce\Models\OffersDetail;
+use Botble\Ecommerce\Models\Offers;
+use Botble\Ecommerce\Models\Product;
+use Botble\Ecommerce\Models\ProductVariants;
+use Botble\Ecommerce\Models\ProductVariation;
 use Illuminate\Support\Facades\DB;
 
 
