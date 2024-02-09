@@ -445,6 +445,9 @@ class CustomImport extends BaseController
                 }
                 foreach ($productsWithoutVariants as $productsWithoutVariant) {
                     $product_name = str_replace('&', 'and', $productsWithoutVariant['nome']);
+                    if($productsWithoutVariant['codice']=='KPL310'){
+                        dd($productsWithoutVariant['nome'],$product_name);
+                    }
                     $price = $productsWithoutVariant['prezzo'];
                     $taxId = $productsWithoutVariant['fk_codice_iva_id'];
                     $productId=$productsWithoutVariant['pk_articolo_id'];
