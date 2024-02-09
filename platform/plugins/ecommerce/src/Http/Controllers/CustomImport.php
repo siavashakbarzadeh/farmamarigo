@@ -422,7 +422,6 @@ class CustomImport extends BaseController
             // Return the product name without the variant as the group key.
             return implode(' ', $words);
         });
-        dd($variants);
         $brandsId = DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id', $products->pluck('fk_fornitore_id')->toArray())->get();
         $brandsId = collect($brandsId)->map(function ($item) {
             return (array)$item;
