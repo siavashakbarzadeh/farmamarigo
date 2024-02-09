@@ -402,11 +402,25 @@ class CustomImport extends BaseController
         $productsWithoutVariants=$products->filter(function ($item) {
             return !strlen($item['variante_1']);
         });
+        $variant_keys = $products->map(function ($item) {
+            if (!empty($item['variante_1'])) { // Check if 'variante_1' has a value
+                $words = explode(' ', $item['nome']);
+                return end($words); // Return the last word
+            }
+            return null; // Return null if 'variante_1' is empty
+        })->filter()->unique();
         $variants = $products->filter(function ($item) {
             return strlen($item['variante_1']);
-        })->groupBy(function ($item) {
-            $i = array_filter(explode(" ", $item['nome']));
-            return implode(" ", array_slice($i, 0, count($i) == 3 ? 1 : 2));
+        })->groupBy(function ($item) use ($variant_keys) {
+            // Split the product name into words.
+            $words = explode(' ', $item['nome']);
+            // Remove the last word if it's a variant key.
+            $lastWord = end($words);
+            if ($variant_keys->contains($lastWord)) {
+                array_pop($words);
+            }
+            // Return the product name without the variant as the group key.
+            return implode(' ', $words);
         });
         dd($variants);
         $brandsId = DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id', $products->pluck('fk_fornitore_id')->toArray())->get();
