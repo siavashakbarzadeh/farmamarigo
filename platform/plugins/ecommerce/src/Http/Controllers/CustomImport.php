@@ -402,9 +402,15 @@ class CustomImport extends BaseController
         $productsWithoutVariants=$products->filter(function ($item) {
             return !strlen($item['variante_1']);
         });
-        $variants = $products->filter(function ($item) {
-            return strlen($item['variante_1']);
-        })->groupBy('nome');
+        $variants = $products->map(function ($item) {
+            // Split the product name into words
+            $words = explode(' ', $item['nome']);
+            // Get the last word of the product name
+            $lastWord = end($words);
+            // Add a 'variant_key' to each item to store the last word
+            $item['variant_key'] = $lastWord;
+            return $item;
+        })->groupBy('variant_key');
         // ->groupBy(function ($item) {
         //     $i = array_filter(explode(" ", $item['nome']));
         //     return implode(" ", array_slice($i, 0, count($i) == 3 ? 1 : 2));
