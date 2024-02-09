@@ -273,6 +273,8 @@ class PublicCartController extends Controller
             }
             // Check for offer and apply discount if applicable
             $discountTotal += $this->applyOfferDiscount($cartItem,$product_id,$userid);
+            
+            dd($discountTotal,$this->applyOfferDiscount($cartItem,$product_id,$userid));
         
             // Calculate the discounted price
             $discountedPrice = $cartItem->price - ($discountTotal / count($data));
