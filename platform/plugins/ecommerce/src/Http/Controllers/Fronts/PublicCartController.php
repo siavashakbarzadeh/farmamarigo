@@ -328,30 +328,38 @@ class PublicCartController extends Controller
         return floatval($numberString);
     }
 
-    private function applyOfferDiscount($cartItem,$product_id,$userid)
-    {
-        $discount = 0;
+    private function applyOfferDiscount($cartItem, $product_id, $userid)
+{
+    $discount = 0; // Initialize discount as zero
     
-        $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
+    // Assuming this retrieves the price list including the original price
+    $pricelist = DB::connection('mysql')->table('ec_pricelist')
+                 ->where('product_id', $product_id)
+                 ->where('customer_id', $userid)
+                 ->first();
     
-        if ($pricelist) {
-            $offerDetail = OffersDetail::where('product_id', $product_id)->where('customer_id', $userid)->first();
+    if ($pricelist) {
+        $offerDetail = OffersDetail::where('product_id', $product_id)
+                                   ->where('customer_id', $userid)
+                                   ->first();
     
-            if ($offerDetail) {
-                $offer = Offers::find($offerDetail->offer_id);
-                if ($offer && $offer->offer_type == 4 && $cartItem->qty >= 3) {
-                    // Apply discount for offer type 4 if quantity is 3 or more
-                    $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
-                    return $discountedPrice;
-                }else{
-                    return 0;
-                }
-            } else {
-                return 0;
+        if ($offerDetail) {
+            $offer = Offers::find($offerDetail->offer_id);
+            if ($offer && $offer->offer_type == 4 && $cartItem->qty >= 3) {
+                // Calculate discount amount (ensure it does not exceed the original price)
+                $discountPerUnit = $pricelist->final_price / 3; // Example discount calculation
+                $totalDiscount = $discountPerUnit * floor($cartItem->qty / 3);
+                
+                // Ensure final price is not negative
+                $discountedPrice = max(0, $cartItem->price - $totalDiscount);
+                
+                return $discountedPrice; // Return the discounted price
             }
         }
-        return $discount;
     }
+    
+    return $cartItem->price; // Return the original price if no discount is applicable
+}
     
 
     public function getRemove(string $id, BaseHttpResponse $response)
