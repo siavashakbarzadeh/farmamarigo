@@ -232,6 +232,11 @@
                                                                             <del
                                                                                 style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty * ($cartItem->qty - floor($cartItem->qty / 3))) }}</del>
                                                                         </span>
+                                                                    @elseif ($offerType == 4 && $cartItem->qty <= 3)
+                                                                        @php
+                                                                            $cartItem->price = $product->price;
+                                                                        @endphp
+                                                                        <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                     @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                         <span>
