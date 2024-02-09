@@ -226,24 +226,24 @@
                                                                     @if ($offerType == 4)
                                                                         @php
                                                                             $originalPrice = $pricelist[0]->final_price;
-        
+
                                                                             // Calculate the total number of items that need to be paid for
                                                                             $paidItemsCount = $cartItem->qty - floor($cartItem->qty / 3);
-                                                                            
+
                                                                             // Calculate the total price for the paid items
                                                                             $totalPriceForPaidItems = $paidItemsCount * $originalPrice;
-                                                                            
+
                                                                             // Calculate the adjusted price per item, taking into account the quantity
                                                                             // This ensures that the cart item's price is adjusted to reflect the effective price after the offer
-                                                                            $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem->qty : 0;
-                                                                            
-                                                                            // Update the cart item's price to the adjusted price per item
+$adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem->qty : 0;
+
+// Update the cart item's price to the adjusted price per item
                                                                             $cartItem->price = $adjustedPricePerItem;
                                                                         @endphp
 
                                                                         <span>{{ format_price($totalPriceForPaidItems) }}</span>
 
-                                                                        @if ($cartItem->qty % 3 == 0 && $cartItem->qty > 0)
+                                                                        @if ($cartItem->qty >= 3 == 0)
                                                                             <span>
                                                                                 <del
                                                                                     style="display:block; font-size: xx-small">
