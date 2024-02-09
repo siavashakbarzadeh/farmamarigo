@@ -300,7 +300,7 @@ class PublicCartController extends Controller
                 ->setError()
                 ->setData([
                     'count' => Cart::instance('cart')->count(),
-                    'total_price' => format_price(Cart::instance('cart')->rawSubTotal()),
+                    'total_price' => format_price($discountedSubTotal),
                     'content' => Cart::instance('cart')->content(),
                 ])
                 ->setMessage(__('One or all products are not enough quantity so cannot update!'));
