@@ -243,7 +243,7 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
 
                                                                         <span>{{ format_price($totalPriceForPaidItems) }}</span>
 
-                                                                        @if ($cartItem->qty >= 3 == 0)
+                                                                        @if ($cartItem->qty >= 3)
                                                                             <span>
                                                                                 <del
                                                                                     style="display:block; font-size: xx-small">
