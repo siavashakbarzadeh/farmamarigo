@@ -403,9 +403,12 @@ class CustomImport extends BaseController
             return !strlen($item['variante_1']);
         });
         $variant_keys = $products->map(function ($item) {
-            $words = explode(' ', $item['nome']);
-            return end($words);
-        })->unique();
+            if (!empty($item['variante_1'])) { // Check if 'variante_1' has a value
+                $words = explode(' ', $item['nome']);
+                return end($words); // Return the last word
+            }
+            return null; // Return null if 'variante_1' is empty
+        })->filter()->unique();
         $variants = $products->map(function ($item) use ($variant_keys) {
             // Split the product name into words.
             $words = explode(' ', $item['nome']);
