@@ -344,22 +344,17 @@ class PublicCartController extends Controller
     
             if ($offerDetail) {
                 $offer = Offers::find($offerDetail->offer_id);
-                dd($offer ,$offer->type ,$cartItem->qty);
-                if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
+                if ($offer && $offer->offer_type == 4 && $cartItem->qty >= 3) {
                     // Apply discount for offer type 4 if quantity is 3 or more
                     $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
-                    dd('here');
                     return $discountedPrice;
                 }else{
-                    dd('here 0');
                     return 0;
                 }
             } else {
-                dd('hereeee????');
                 return 0;
             }
         }
-        dd('wtf here?');
         return $discount;
     }
     
