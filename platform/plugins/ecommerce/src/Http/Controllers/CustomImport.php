@@ -427,7 +427,7 @@ class CustomImport extends BaseController
         })->filter();
         foreach($variants as $variant){
             if($variant['codice']=='KPL310'){
-                dd();
+                dd($variant);
             }
             
         }
