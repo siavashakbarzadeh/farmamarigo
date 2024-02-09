@@ -402,22 +402,30 @@ class CustomImport extends BaseController
         $productsWithoutVariants=$products->filter(function ($item) {
             return !strlen($item['variante_1']);
         });
-        $variants = $products->map(function ($item) {
-            // Split the product name into words
+        $variant_keys = $products->map(function ($item) {
             $words = explode(' ', $item['nome']);
-            // Remove the last word of the product name
-            array_pop($words);
-            // Rejoin the words into a string without the last word
-            $itemNameWithoutLastWord = implode(' ', $words);
-            // Replace the 'nome' with the modified name
-            $item['nome'] = $itemNameWithoutLastWord;
+            return end($words);
+        })->unique();
+        $variants = $products->map(function ($item) use ($variant_keys) {
+            // Split the product name into words.
+            $words = explode(' ', $item['nome']);
+            // Get the last word of the product name.
+            $lastWord = end($words);
+        
+            // Check if the last word is a variant key and remove it.
+            if ($variant_keys->contains($lastWord)) {
+                array_pop($words); // Remove the last word.
+                $item['nome'] = implode(' ', $words); // Rejoin the remaining words.
+            }
+            
+            // Return the modified item.
             return $item;
         });
         // ->groupBy(function ($item) {
         //     $i = array_filter(explode(" ", $item['nome']));
         //     return implode(" ", array_slice($i, 0, count($i) == 3 ? 1 : 2));
         // });
-        dd($variants);
+        dd($variants,$variant_keys);
         $brandsId = DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id', $products->pluck('fk_fornitore_id')->toArray())->get();
         $brandsId = collect($brandsId)->map(function ($item) {
             return (array)$item;
