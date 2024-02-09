@@ -421,8 +421,6 @@ class CustomImport extends BaseController
                 array_pop($words); // Remove the last word.
                 $item['nome'] = implode(' ', $words);
                 return $item;                // Rejoin the remaining words.
-            }else{
-                return null;
             }
             // Return the modified item.
         });
