@@ -409,6 +409,7 @@ class CustomImport extends BaseController
             }
             return null; // Return null if 'variante_1' is empty
         })->filter()->unique();
+
         $variants = $products->map(function ($item) use ($variant_keys) {
             // Split the product name into words.
             $words = explode(' ', $item['nome']);
@@ -418,11 +419,12 @@ class CustomImport extends BaseController
             // Check if the last word is a variant key and remove it.
             if ($variant_keys->contains($lastWord)) {
                 array_pop($words); // Remove the last word.
-                $item['nome'] = implode(' ', $words); // Rejoin the remaining words.
+                $item['nome'] = implode(' ', $words);
+                return $item;                // Rejoin the remaining words.
+            }else{
+                return null;
             }
-            
             // Return the modified item.
-            return $item;
         });
         // ->groupBy(function ($item) {
         //     $i = array_filter(explode(" ", $item['nome']));
