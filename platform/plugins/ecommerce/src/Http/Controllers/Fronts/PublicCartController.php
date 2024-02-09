@@ -353,6 +353,7 @@ class PublicCartController extends Controller
                     dd('here');
                     return $discountedPrice;
                 }else{
+                    dd('here 0');
                     return 0;
                 }
             } else {
