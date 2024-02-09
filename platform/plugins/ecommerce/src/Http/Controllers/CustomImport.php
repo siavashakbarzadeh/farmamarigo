@@ -444,10 +444,7 @@ class CustomImport extends BaseController
                     ]);
                 }
                 foreach ($productsWithoutVariants as $productsWithoutVariant) {
-                    $product_name = str_replace('&', 'and', $productsWithoutVariant['nome']);
-                    if($productsWithoutVariant['codice']=='KPL310'){
-                        dd($productsWithoutVariant['nome'],$product_name);
-                    }
+                    $product_name = str_replace('&', 'and', trim($productsWithoutVariant['nome']));
                     $price = $productsWithoutVariant['prezzo'];
                     $taxId = $productsWithoutVariant['fk_codice_iva_id'];
                     $productId=$productsWithoutVariant['pk_articolo_id'];
@@ -617,7 +614,7 @@ class CustomImport extends BaseController
     private function _generateProduct($productId,$product_name,$product,$price,$brands,$taxId)
     {
         $productItem = new \Botble\Ecommerce\Models\Product([
-            'name' => str_replace('&', 'and', trim($product_name)),
+            'name' => str_replace('&', 'and', $product_name),
             'description' => 'Description',
             'price' => $price,
             'tax_id' => $taxId,
