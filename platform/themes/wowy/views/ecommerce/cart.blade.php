@@ -226,7 +226,6 @@
                                                                     @if ($offerType == 4 && $cartItem->qty >= 3)
                                                                         @php
                                                                             $cartItem->price = $cartItem->price / $cartItem->qty - floor($cartItem->qty / 3);
-                                                                            dd($cartItem->price);
                                                                         @endphp
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                         <span>
