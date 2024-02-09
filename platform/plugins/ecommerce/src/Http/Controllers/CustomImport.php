@@ -402,31 +402,13 @@ class CustomImport extends BaseController
         $productsWithoutVariants=$products->filter(function ($item) {
             return !strlen($item['variante_1']);
         });
-        $variant_keys = $products->map(function ($item) {
-            if (!empty($item['variante_1'])) { // Check if 'variante_1' has a value
-                $words = explode(' ', $item['nome']);
-                return end($words); // Return the last word
-            }
-            return null; // Return null if 'variante_1' is empty
-        })->filter()->unique();
-
-        $variants = $products->map(function ($item) use ($variant_keys) {
-            // Split the product name into words.
-            $words = explode(' ', $item['nome']);
-            // Get the last word of the product name.
-            $lastWord = end($words);
-        
-            // Check if the last word is a variant key and remove it.
-            if ($variant_keys->contains($lastWord)) {
-                array_pop($words); // Remove the last word.
-                $item['nome'] = implode(' ', $words);
-                return $item;
-                // Rejoin the remaining words.
-            }
-            // Return the modified item, regardless of whether the last word was a variant key.
-        })->filter();
-
-
+        $variants = $products->filter(function ($item) {
+            return strlen($item['variante_1']);
+        })->groupBy(function ($item) {
+            $i = array_filter(explode(" ", $item['nome']));
+            return implode(" ", array_slice($i, 0, count($i) == 3 ? 1 : 2));
+        });
+        dd($variants);
         $brandsId = DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id', $products->pluck('fk_fornitore_id')->toArray())->get();
         $brandsId = collect($brandsId)->map(function ($item) {
             return (array)$item;
@@ -483,7 +465,8 @@ class CustomImport extends BaseController
                     }
                     $productItem->categories()->sync([$productsWithoutVariant['fk_linea_id']]);
                 }
-                foreach ($variants as $item) {
+                foreach ($variants as $variantItems) {
+                    foreach ($variantItems as $item) {
                         if ($item['variante_2']) {
                             $order1 = intval(ProductAttribute::query()->where('attribute_set_id', 1)->max('order'));
                             ProductAttribute::query()->firstOrCreate([
@@ -510,6 +493,7 @@ class CustomImport extends BaseController
                                 'order' => $order2 == 0 ? 0 : $order2++,
                             ]);
                         }
+                    }
                 }
                 foreach ($variants as $product_name=>$products) {
                     $variationItems = collect($products)->map(function ($item){
