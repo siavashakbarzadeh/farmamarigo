@@ -241,7 +241,7 @@
                                                                             $cartItem->price = $adjustedPricePerItem;
                                                                         @endphp
 
-                                                                        <span>{{ format_price($totalPrice) }}</span>
+                                                                        <span>{{ format_price($totalPriceForPaidItems) }}</span>
 
                                                                         @if ($cartItem->qty % 3 == 0 && $cartItem->qty > 0)
                                                                             <span>
