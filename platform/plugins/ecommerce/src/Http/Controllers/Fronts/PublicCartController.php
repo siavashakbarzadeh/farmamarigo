@@ -278,6 +278,7 @@ class PublicCartController extends Controller
             $discountedPrice = $cartItem->price - ($discountTotal / count($data));
         
             // Update the cart item's price within the update method call
+            Cart::instance('cart')->update($item['rowId'], Arr::get($item, 'values'));
             Cart::instance('cart')->update($item['rowId'], ['price' => $discountedPrice]);
         
             // Check for product stock availability and other operations...
