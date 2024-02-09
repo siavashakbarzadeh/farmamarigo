@@ -225,15 +225,20 @@
                                                                 @if ($offerDetail)
                                                                     @if ($offerType == 4)
                                                                         @php
-                                                                            // Calculate the number of items that are paid for (every third one is free)
+                                                                            $originalPrice = $pricelist[0]->final_price;
+        
+                                                                            // Calculate the total number of items that need to be paid for
                                                                             $paidItemsCount = $cartItem->qty - floor($cartItem->qty / 3);
-
-                                                                            // Calculate the total price based on the number of paid items
-                                                                            $totalPrice = $pricelist[0]->final_price * $paidItemsCount;
-
-                                                                            // Update the cart item's price to reflect the discount on a per-item basis
-                                                                            // This is for display purposes; actual price adjustment has been done above
-                                                                            $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPrice / $cartItem->qty : 0;
+                                                                            
+                                                                            // Calculate the total price for the paid items
+                                                                            $totalPriceForPaidItems = $paidItemsCount * $originalPrice;
+                                                                            
+                                                                            // Calculate the adjusted price per item, taking into account the quantity
+                                                                            // This ensures that the cart item's price is adjusted to reflect the effective price after the offer
+                                                                            $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem->qty : 0;
+                                                                            
+                                                                            // Update the cart item's price to the adjusted price per item
+                                                                            $cartItem->price = $adjustedPricePerItem;
                                                                         @endphp
 
                                                                         <span>{{ format_price($totalPrice) }}</span>
