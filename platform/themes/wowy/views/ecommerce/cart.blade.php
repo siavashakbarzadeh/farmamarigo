@@ -234,7 +234,7 @@
                                                                         </span>
                                                                     @elseif ($offerType == 4 && $cartItem->qty <= 3)
                                                                         @php
-                                                                            $cartItem->price = $product->price;
+                                                                            $cartItem->price = $pricelist[0]->final_price;
                                                                         @endphp
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                     @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
