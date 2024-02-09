@@ -223,20 +223,29 @@
                                                         <td class="text-right" data-title="{{ __('Subtotal') }}">
                                                             @if ($pricelist)
                                                                 @if ($offerDetail)
-                                                                    @if ($offerType == 4 && $cartItem->qty >= 3)
+                                                                    @if ($offerType == 4)
                                                                         @php
-                                                                            $cartItem->price = $cartItem->price / ($cartItem->qty - floor($cartItem->qty / 3));
+                                                                            // Calculate the number of items that are paid for (every third one is free)
+                                                                            $paidItemsCount = $cartItem->qty - floor($cartItem->qty / 3);
+
+                                                                            // Calculate the total price based on the number of paid items
+                                                                            $totalPrice = $pricelist[0]->final_price * $paidItemsCount;
+
+                                                                            // Update the cart item's price to reflect the discount on a per-item basis
+                                                                            // This is for display purposes; actual price adjustment has been done above
+                                                                            $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPrice / $cartItem->qty : 0;
                                                                         @endphp
-                                                                        <span>{{ format_price($cartItem->price * ($cartItem->qty + 1)) }}</span>
-                                                                        <span>
-                                                                            <del
-                                                                                style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty * ($cartItem->qty - floor($cartItem->qty / 3))) }}</del>
-                                                                        </span>
-                                                                    @elseif ($offerType == 4 && $cartItem->qty <= 3)
-                                                                        @php
-                                                                            $cartItem->price = $pricelist[0]->final_price;
-                                                                        @endphp
-                                                                        <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
+
+                                                                        <span>{{ format_price($totalPrice) }}</span>
+
+                                                                        @if ($cartItem->qty % 3 == 0 && $cartItem->qty > 0)
+                                                                            <span>
+                                                                                <del
+                                                                                    style="display:block; font-size: xx-small">
+                                                                                    {{ format_price($pricelist[0]->final_price * $cartItem->qty) }}
+                                                                                </del>
+                                                                            </span>
+                                                                        @endif
                                                                     @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                         <span>
