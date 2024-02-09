@@ -277,6 +277,7 @@ class PublicCartController extends Controller
         
             // Calculate the discounted price
             $discountedPrice = $cartItem->price - ($discountTotal / count($data));
+            dd($discountedPrice,$discountTotal);
         
             // Update the cart item's price within the update method call
             Cart::instance('cart')->update($item['rowId'], Arr::get($item, 'values'));
