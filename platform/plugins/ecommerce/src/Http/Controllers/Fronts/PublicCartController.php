@@ -253,42 +253,13 @@ class PublicCartController extends Controller
             if (! $cartItem) {
                 continue;
             }
-            $product = $this->productRepository->findById($cartItem->id); 
-            $userid = request()->user('customer')->id;
-            if ($product && $product->is_variation) {
-                $AllVariations = Product::where('name', $cartItem->name)->get();
-                foreach ($AllVariations as $variation) {
-                    if ($variation->is_variation) {
-                        $flag = true;
-                        break; // Found a variation, no need to continue
-                    }
-                }
-            }
             
-            if ($flag) {
-                $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
-                $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
-            } else {
-                $product_id = $cartItem->id;
-            }
-            // Check for offer and apply discount if applicable
-            $discountTotal += $this->applyOfferDiscount($cartItem,$product_id,$userid);
-            
-        
             // Update the cart item's price within the update method call
             Cart::instance('cart')->update($item['rowId'], Arr::get($item, 'values'));
         
             // Check for product stock availability and other operations...
         }
-        
-        
-        // After the foreach loop, update the cart subtotal
-        $rawSubTotal = $this->formatToNumber(Cart::instance('cart')->subtotal());
-        $discountedSubTotal = $rawSubTotal - $discountTotal;
-
-        // Update the session or the cart with the new subtotal
-        Session::put('cartSubTotal', $discountedSubTotal);
-        
+                
         
     
         // Handle out of quantity error
@@ -313,7 +284,7 @@ class PublicCartController extends Controller
         return $response
         ->setData([
             'count' => Cart::instance('cart')->count(),
-            'total_price' => format_price($discountedSubTotal),
+            'total_price' => format_price(Cart::instance('cart')->rawSubTotal()),
             'content' => Cart::instance('cart')->content(),
         ])
         ->setMessage(__('Update cart successfully!'));
