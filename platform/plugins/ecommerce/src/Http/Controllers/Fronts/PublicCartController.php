@@ -361,7 +361,7 @@ class PublicCartController extends Controller
                 return 0;
             }
         }
-        dd('wtf here?')
+        dd('wtf here?');
         return $discount;
     }
     
