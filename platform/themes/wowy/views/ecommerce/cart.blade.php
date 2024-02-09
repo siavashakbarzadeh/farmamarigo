@@ -227,10 +227,10 @@
                                                                         @php
                                                                             $cartItem->price = $cartItem->price / ($cartItem->qty - floor($cartItem->qty / 3));
                                                                         @endphp
-                                                                        <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
+                                                                        <span>{{ format_price($cartItem->price * $cartItem->qty + 1) }}</span>
                                                                         <span>
                                                                             <del
-                                                                                style="display:block;font-size: xx-small">{{ format_price($cartItem->price * ($cartItem->qty - floor($cartItem->qty / 3))) }}</del>
+                                                                                style="display:block;font-size: xx-small">{{ format_price($cartItem->price * $cartItem->qty * ($cartItem->qty - floor($cartItem->qty / 3))) }}</del>
                                                                         </span>
                                                                     @elseif ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
                                                                         <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
