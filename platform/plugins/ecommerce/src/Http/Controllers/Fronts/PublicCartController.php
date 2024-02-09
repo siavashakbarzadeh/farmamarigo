@@ -350,12 +350,12 @@ class PublicCartController extends Controller
                 if ($offer && $offer->type == 4 && $cartItem->qty >= 3) {
                     // Apply discount for offer type 4 if quantity is 3 or more
                     $discountedPrice = $pricelist[0]->final_price * floor($cartItem->qty / 3);
-                    $discount = $discountedPrice;
-                    // Update the cart item's price after applying discount
-                    $cartItem->price -= $discount;
+                    return $discountedPrice;
+                }else{
+                    return 0;
                 }
             } else {
-                $cartItem->price = $pricelist[0]->final_price;
+                return 0;
             }
         }
     
