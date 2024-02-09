@@ -621,6 +621,7 @@ $customerIds = Customer::whereNotNull('codice')->pluck('id');
                     DB::connection('mysql')->table('ec_pricelist')->insert($pricelist);
                 }
             });
+            $pricelist = [];
 
             return view('plugins/ecommerce::customImport.foreign-keys', compact('pricelist'));
     }
