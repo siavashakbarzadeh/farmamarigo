@@ -605,8 +605,8 @@ $customerIds = Customer::whereNotNull('codice')->pluck('id');
         // Process cli_scontistica in chunks
         DB::connection('mysql2')->table('cli_scontistica')
             ->whereIn('fk_cliente_id', $customerIds)
-            ->orderBy('id') // Adjust with the appropriate primary key or indexed column
-            ->chunk(5000, function ($oldRows) {
+            ->orderBy('fk_cliente_id') // Adjust with the appropriate primary key or indexed column
+            ->chunk(15000, function ($oldRows) {
                 $pricelist = [];
 
                 foreach ($oldRows as $oldRow) {
