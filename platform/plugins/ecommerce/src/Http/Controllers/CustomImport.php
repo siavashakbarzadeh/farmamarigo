@@ -602,7 +602,7 @@ class CustomImport extends BaseController
         // Use chunking to process the old rows in batches
         DB::connection('mysql2')->table('cli_scontistica')
             ->orderBy('fk_articolo_id') // Make sure to order by a column for chunking to work properly
-            ->chunk(5000, function ($oldRows) {
+            ->chunk(100000, function ($oldRows) {
                 $pricelist = [];
                 foreach ($oldRows as $oldRow) {
                     $pricelist[] = [
