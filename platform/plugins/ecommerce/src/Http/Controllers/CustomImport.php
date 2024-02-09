@@ -595,7 +595,7 @@ class CustomImport extends BaseController
 
     public function pricelist() {
         set_time_limit(600); // sets maximum execution time to 10 minutes (600 seconds)
-    
+        dd("pricelist");
         // Delete existing records that meet the condition
         DB::connection('mysql')->table('ec_pricelist')->where('customer_id', '!=', 1289419242)->delete();
     
