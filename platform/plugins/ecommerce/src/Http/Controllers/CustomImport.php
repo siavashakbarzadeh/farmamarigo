@@ -425,6 +425,12 @@ class CustomImport extends BaseController
             }
             // Return the modified item, regardless of whether the last word was a variant key.
         })->filter();
+        foreach($variants as $variant){
+            if($variant['codice']=='KPL310'){
+                dd();
+            }
+            
+        }
         // ->groupBy(function ($item) {
         //     $i = array_filter(explode(" ", $item['nome']));
         //     return implode(" ", array_slice($i, 0, count($i) == 3 ? 1 : 2));
