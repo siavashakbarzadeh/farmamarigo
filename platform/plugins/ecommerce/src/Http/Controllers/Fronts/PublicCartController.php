@@ -275,13 +275,8 @@ class PublicCartController extends Controller
             $discountTotal += $this->applyOfferDiscount($cartItem,$product_id,$userid);
             
         
-            // Calculate the discounted price
-            $discountedPrice = $cartItem->price - ($discountTotal / count($data));
-            dd($discountedPrice,$discountTotal);
-        
             // Update the cart item's price within the update method call
             Cart::instance('cart')->update($item['rowId'], Arr::get($item, 'values'));
-            Cart::instance('cart')->update($item['rowId'], ['price' => $discountedPrice]);
         
             // Check for product stock availability and other operations...
         }
