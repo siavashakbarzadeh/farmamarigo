@@ -593,37 +593,36 @@ class CustomImport extends BaseController
         return redirect()->back()->withSuccess('IT WORKS!');
     }
 
-    public function pricelist(){
-        set_time_limit(600);  // sets maximum execution time to 10 minutes (600 seconds)
-
-        $oldRows = DB::connection('mysql2')->select('select * from cli_scontistica');
-        $pricelist = [];
+    public function pricelist() {
+        set_time_limit(600); // sets maximum execution time to 10 minutes (600 seconds)
+    
+        // Delete existing records that meet the condition
         DB::connection('mysql')->table('ec_pricelist')->where('customer_id', '!=', 1289419242)->delete();
-
-
-        foreach($oldRows as $oldRow) {
-            $pricelist[] = [
-                'customer_id' => $oldRow->fk_cliente_id,
-                'product_id'  => $oldRow->fk_articolo_id,
-                'final_price' => $oldRow->prezzo,
-            ];
-
-            // If the size of the pricelist reaches, say, 5000 records, insert them
-            if (count($pricelist) == 5000) {
-                DB::connection('mysql')->table('ec_pricelist')->insert($pricelist);
-                $pricelist = [];  // Reset the pricelist
-            }
-        }
-
-        // Insert any remaining records in the pricelist
-        if (count($pricelist) > 0) {
-            DB::connection('mysql')->table('ec_pricelist')->insert($pricelist);
-        }
-
+    
+        // Use chunking to process the old rows in batches
+        DB::connection('mysql2')->table('cli_scontistica')
+            ->orderBy('id') // Make sure to order by a column for chunking to work properly
+            ->chunk(5000, function ($oldRows) {
+                $pricelist = [];
+                foreach ($oldRows as $oldRow) {
+                    $pricelist[] = [
+                        'customer_id' => $oldRow->fk_cliente_id,
+                        'product_id'  => $oldRow->fk_articolo_id,
+                        'final_price' => $oldRow->prezzo,
+                    ];
+                }
+    
+                // Insert the chunked pricelist records
+                if (count($pricelist) > 0) {
+                    DB::connection('mysql')->table('ec_pricelist')->insert($pricelist);
+                }
+            });
+    
+        // Since chunk handles all the records, there's no need for an additional insert here
+    
         return view('plugins/ecommerce::customImport.foreign-keys', compact('pricelist'));
-
-
     }
+    
 
     private function _generateProduct($productId,$product_name,$product,$price,$brands,$taxId)
     {
