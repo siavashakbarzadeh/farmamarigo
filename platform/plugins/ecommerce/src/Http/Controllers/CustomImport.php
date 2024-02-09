@@ -596,6 +596,8 @@ class CustomImport extends BaseController
 
     public function pricelist() {
         set_time_limit(600); // Extend maximum execution time
+// Assuming 'codice' is not null or empty for relevant customers
+$customerIds = Customer::whereNotNull('codice')->pluck('id');
 
         // Delete pricelist entries for customers not in the fetched list
         DB::connection('mysql')->table('ec_pricelist')->whereNotIn('customer_id', $customerIds)->delete();
