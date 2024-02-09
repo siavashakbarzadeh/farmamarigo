@@ -183,7 +183,7 @@
                                                                 @if ($offerDetail)
                                                                     @if ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
                                                                         @php
-                                                                            $cartItem->price = $$offerDetail->product_price;
+                                                                            $cartItem->price = $offerDetail->product_price;
                                                                         @endphp
                                                                         <span>{{ format_price($cartItem->price) }}</span>
                                                                         <span>
