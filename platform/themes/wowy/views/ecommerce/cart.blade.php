@@ -182,6 +182,9 @@
                                                             @if ($pricelist)
                                                                 @if ($offerDetail)
                                                                     @if ($offerType == 6 && $cartItem->qty >= $offerDetail->quantity)
+                                                                        @php
+                                                                            $cartItem->price = $$offerDetail->product_price;
+                                                                        @endphp
                                                                         <span>{{ format_price($cartItem->price) }}</span>
                                                                         <span>
                                                                             <del
@@ -189,6 +192,11 @@
                                                                                 {{ $pricelist[0]->final_price }}
                                                                             </del>
                                                                         </span>
+                                                                    @elseif ($offerType == 6 && $cartItem->qty < $offerDetail->quantity)
+                                                                        @php
+                                                                            cartItem->price = $pricelist[0]->final_price;
+                                                                        @endphp
+                                                                        <span>{{ format_price($cartItem->price) }}</span>
                                                                     @elseif ($offerType == 4)
                                                                         <span>{{ format_price($pricelist[0]->final_price) }}</span>
                                                                     @else
