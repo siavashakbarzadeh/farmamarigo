@@ -334,7 +334,7 @@ class PublicCartController extends Controller
     {
         $discount = 0;
         $product_id = $cartItem->id;
-        $userid = $this->auth('customer')->user()->id; // Assuming you have a method to get the current user's ID
+        $userid = auth('customer')->user()->id; // Assuming you have a method to get the current user's ID
     
         $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product_id and customer_id=$userid");
     
