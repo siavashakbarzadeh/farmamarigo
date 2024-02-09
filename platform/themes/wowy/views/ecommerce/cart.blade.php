@@ -199,6 +199,14 @@
                                                                         <span>{{ format_price($cartItem->price) }}</span>
                                                                     @elseif ($offerType == 4)
                                                                         <span>{{ format_price($pricelist[0]->final_price) }}</span>
+                                                                    @elseif ($offerType == 3 || $offerType == 2 || $offerType == 1)
+                                                                        <span>{{ format_price($cartItem->price) }}</span>
+                                                                        <span>
+                                                                            <del
+                                                                                style="display:block;font-size: xx-small">
+                                                                                {{ $pricelist[0]->final_price }}
+                                                                            </del>
+                                                                        </span>
                                                                     @else
                                                                         <span>{{ format_price($cartItem->price) }}</span>
                                                                     @endif
