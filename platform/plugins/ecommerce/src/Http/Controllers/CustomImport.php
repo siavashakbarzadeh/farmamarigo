@@ -419,11 +419,11 @@ class CustomImport extends BaseController
             // Check if the last word is a variant key and remove it.
             if ($variant_keys->contains($lastWord)) {
                 array_pop($words); // Remove the last word.
-                $item['nome'] = implode(' ', $words);
-                return $item;                // Rejoin the remaining words.
+                $item['nome'] = implode(' ', $words); // Rejoin the remaining words.
             }
-            // Return the modified item.
-        });
+            // Return the modified item, regardless of whether the last word was a variant key.
+            return $item;
+        })->filter();
         // ->groupBy(function ($item) {
         //     $i = array_filter(explode(" ", $item['nome']));
         //     return implode(" ", array_slice($i, 0, count($i) == 3 ? 1 : 2));
