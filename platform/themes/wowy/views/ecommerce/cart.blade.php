@@ -194,7 +194,7 @@
                                                                         </span>
                                                                     @elseif ($offerType == 6 && $cartItem->qty < $offerDetail->quantity)
                                                                         @php
-                                                                            cartItem->price = $pricelist[0]->final_price;
+                                                                            $cartItem->price = $pricelist[0]->final_price;
                                                                         @endphp
                                                                         <span>{{ format_price($cartItem->price) }}</span>
                                                                     @elseif ($offerType == 4)
