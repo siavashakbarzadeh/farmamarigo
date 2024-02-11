@@ -1,26 +1,32 @@
 @php
-    // use Botble\Ecommerce\Models\Address;
-    // use Botble\Ecommerce\Models\Order;
+    use Botble\Ecommerce\Models\Address;
+    use Botble\Ecommerce\Models\Order;
 
-    // if ($sessionCheckoutData == null) {
-    //     $address = Address::where('customer_id', auth('customer')->user()->id)->first();
-    //     $order = Order::where('id', $sessionCheckoutData['created_order_id'] + 1)->first();
-    //     $adding = [
-    //         'name' => $address->name,
-    //         'email' => $address->email,
-    //         'phone' => $address->phone,
-    //         'country' => $address->country,
-    //         'state' => $address->state,
-    //         'city' => $address->city,
-    //         'address' => $address->address,
-    //         'zip_code' => $address->zip_code,
-    //         'shipping_amount' => $order->shipping_amount,
-    //         'created_order_id' => $sessionCheckoutData['created_order_id'] + 1,
-    //     ];
-    //     $sessionCheckoutData = array_merge($sessionCheckoutData, $adding);
-    // }
-    // dd($sessionCheckoutData);
-    dd(Arr::get($sessionCheckoutData, 'name'));
+    $address = Address::where('customer_id', auth('customer')->user()->id)->first();
+    $order = Order::where('id', $sessionCheckoutData['created_order_id'] + 1)->first();
+    $adding = [
+        'name' => $address->name,
+        'email' => $address->email,
+        'phone' => $address->phone,
+        'country' => $address->country,
+        'state' => $address->state,
+        'city' => $address->city,
+        'address' => $address->address,
+        'zip_code' => $address->zip_code,
+        'shipping_amount' => $order->shipping_amount,
+        'created_order_id' => $sessionCheckoutData['created_order_id'] + 1,
+    ];
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'name', $adding['name']);
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'email', $adding['email']);
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'phone', $adding['phone']);
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'country', $adding['country']);
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'state', $adding['state']);
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'city', $adding['city']);
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'address', $adding['address']);
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'name', $adding['name']);
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'name', $adding['name']);
+    $sessionCheckoutData = array_merge($sessionCheckoutData, 'name', $adding['name']);
+    dd($sessionCheckoutData);
 @endphp
 <div class="customer-address-payment-form">
 
