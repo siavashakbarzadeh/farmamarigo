@@ -1073,10 +1073,12 @@ class PublicCheckoutController
     $order = $this->orderRepository->findOrFail($request->orderId);
 
     $RealOrder=Order::where('token',$order->token)->where('shipping_option',NULL)->first();
-
+    if($RealOrder){
         $products=$RealOrder->products;
         $this->addProductToOrder($order, $products->toArray());
         $RealOrder->delete();
+    }
+        
     
 
     $arguments=[
