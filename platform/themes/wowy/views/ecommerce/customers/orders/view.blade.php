@@ -115,11 +115,11 @@
                                                     }
                                                 @endphp
                                                 <div class="row">
-                                                    <div class="col-4">
+                                                    <div class="col-2">
                                                         <img src="{{ $Image }}" width="50"
                                                             alt="{{ $orderProduct->product_name }}">
                                                     </div>
-                                                    <div class="col-8">
+                                                    <div class="col-10">
                                                         {{ $orderProduct->product_name }} @if ($product && $product->sku)
                                                             ({{ $product->sku }})
                                                         @endif
