@@ -519,8 +519,16 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                             <td class="cart_total_label">
                                                                 {{ __('Contributo spese di spedizione e imballagio') }}
                                                             </td>
-                                                            <td class="cart_total_amount"><strong><span
-                                                                        class="font-xl fw-900 text-brand">{{ format_price($shippingAmount) }}</span></strong>
+                                                            <td class="cart_total_amount">
+                                                                <strong>
+                                                                    <span class="font-xl fw-900 text-brand">
+                                                                        @if (session('applied_spc'))
+                                                                            {{ format_price($first) }}
+                                                                        @else
+                                                                            {{ format_price($shippingAmount) }}
+                                                                        @endif
+                                                                    </span>
+                                                                </strong>
                                                             </td>
                                                         </tr>
                                                         @if (($couponDiscountAmount > 0 && session('applied_coupon_code')) || session('applied_spc'))
