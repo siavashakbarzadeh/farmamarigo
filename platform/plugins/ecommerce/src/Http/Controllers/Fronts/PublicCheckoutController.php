@@ -1564,6 +1564,7 @@ class PublicCheckoutController
                 if($offerDetail){
                     $offer=Offers::find($offerDetail->offer_id);
                     if($offer){
+                        $offerType=$offer->offer_type;
                         if($offerType==5){
                             $data = [
                                 'order_id' => $order->id,
