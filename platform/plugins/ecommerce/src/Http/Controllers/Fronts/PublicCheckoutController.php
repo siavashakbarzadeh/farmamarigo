@@ -879,7 +879,7 @@ class PublicCheckoutController
 
 
         $RealOrder=Order::where('token',$order->token)->where(function($query) {
-            $query->whereNull('shipping_option')
+            $query->where('shipping_method','')
                   ->orWhere('status', 'pending');})->first();
         if($RealOrder){
             $RealOrder->delete();
