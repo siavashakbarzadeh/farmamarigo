@@ -545,11 +545,11 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                             style="color: #E52728 !important">-{{ format_price($couponDiscountAmount) }}</span>
                                                                     </td>
                                                                 @endif
-
                                                         @endif
-                                                        <input type="hidden" name="couponCode"
-                                                            value="{{ $couponcodefinal }} ">
-                                                        </tr>
+
+                    @endif
+                    <input type="hidden" name="couponCode" value="{{ $couponcodefinal }} ">
+                    </tr>
                     @endif
                     <tr>
 
