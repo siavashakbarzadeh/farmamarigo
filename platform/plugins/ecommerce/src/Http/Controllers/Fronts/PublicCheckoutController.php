@@ -65,6 +65,7 @@ use Botble\Ecommerce\Models\Product;
 use Botble\Ecommerce\Models\ProductVariants;
 use Botble\Ecommerce\Models\ProductVariation;
 use Botble\Ecommerce\Models\OrderProduct;
+use Botble\Ecommerce\Models\SPC;
 use Illuminate\Support\Facades\DB;
 
 
@@ -870,9 +871,18 @@ class PublicCheckoutController
         session()->forget('note');
         session()->forget('tracked_start_checkout');
 
+        if(session('applied_spc')){
+            $coupon = SPC::where('code', session('applied_spc'))->where('status', 1)->first();
+            if($coupon->once){
+                $authCustomerId = request()->user('customer')->id;
+                $coupon->customers()->where('customer_id', $authCustomerId)->update(['ec_spc_customers.status' => 0]);
+            }
+        }
         if (session()->has($order->token)) {
             session()->forget($order->token);
         }
+        session()->forget('applied_spc');
+        session()->forget('discount_amount');
 
 
         $this->generateInvoice($order);
@@ -1048,6 +1058,15 @@ class PublicCheckoutController
             if (session()->has($order->token)) {
                 session()->forget($order->token);
             }
+            if(session('applied_spc')){
+                $coupon = SPC::where('code', session('applied_spc'))->where('status', 1)->first();
+                if($coupon->once){
+                    $authCustomerId = request()->user('customer')->id;
+                    $coupon->customers()->where('customer_id', $authCustomerId)->update(['ec_spc_customers.status' => 0]);
+                }
+            }
+            session()->forget('applied_spc');
+            session()->forget('discount_amount');
 
 
 
@@ -1510,7 +1529,11 @@ class PublicCheckoutController
     protected function createOrderFromData(array $data, ?Order $order): Order|null|false
     {
         $data['is_finished'] = true;
-
+        $data['description'] = session('note');
+        if(session('applied_spc') && session('discount_amount')){
+            $data['coupon_code']=session('applied_spc');
+            $data['discount_amount']=(float)(session('discount_amount'));
+        }
         if ($order) {
             $order->fill($data);
             $order = $this->orderRepository->createOrUpdate($order);
