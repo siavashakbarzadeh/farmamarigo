@@ -402,7 +402,8 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                             <button
                                                                 class="col-12 btn btn-rounded btn-sm btn-apply-coupon-code"
                                                                 type="button"
-                                                                data-url="{{ route('public.coupon.apply') }}"><i
+                                                                data-url="{{ route('public.coupon.apply') }}"
+                                                                style="line-height: 3 !important"><i
                                                                     class="far fa-bookmark mr-5"></i>Applica
                                                                 Coupon</button>
                                                         </div>
