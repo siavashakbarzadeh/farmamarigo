@@ -3,7 +3,9 @@
     use Botble\Ecommerce\Models\Order;
 
     $address = Address::where('customer_id', auth('customer')->user()->id)->first();
-    $order = Order::where('id', $sessionCheckoutData['created_order_id'] + 1)->first();
+    $order = Order::where('id', $sessionCheckoutData['created_order_id'] + 1)
+        ->orWhere('id', $sessionCheckoutData['created_order_id'])
+        ->first();
     $adding = [
         'name' => $address->name,
         'email' => $address->email,
