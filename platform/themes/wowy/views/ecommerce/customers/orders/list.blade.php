@@ -49,10 +49,6 @@
                                         $payment = Payment::where('order_id', $order->id)->first();
                                     @endphp
 
-                                    @if ($order->is_finished && $order->is_confirmed)
-                                        <label class="btn-success p-1 rounded small">Completato</label>
-                                    @endif
-
                                     @if ($payment)
                                         @if ($payment->payment_channel == 'paypal' && $payment->status == 'pending')
                                             <label class="btn p-1 rounded small" style="background-color:#f9844a">Mancato
