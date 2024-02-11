@@ -1535,6 +1535,10 @@ class PublicCheckoutController
      */
     public function addProductToOrder(mixed $order, array $shippingData): void
     {
+        if (auth('customer')->check()) {
+            $currentUserId = auth('customer')->id();
+
+        }
         foreach (Cart::instance('cart')->content() as $cartItem) {
             //  aget variant o azin kossher product Id ro begir age collegtati bud yedune behesh ezafe kon 
             $flag = false; // Reset flag for each item
