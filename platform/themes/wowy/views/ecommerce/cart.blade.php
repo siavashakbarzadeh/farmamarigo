@@ -545,69 +545,67 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                             style="color: #E52728 !important">-{{ format_price($couponDiscountAmount) }}</span>
                                                                     </td>
                                                                 @endif
+                                                                <input type="hidden" name="couponCode"
+                                                                    value="{{ $couponcodefinal }} ">
+                                                            </tr>
                                                         @endif
+                                                        <tr>
 
-                    @endif
-                    <input type="hidden" name="couponCode" value="{{ $couponcodefinal }} ">
-                    </tr>
-                    @endif
-                    <tr>
-
-                        <td class="cart_total_label">
-                            {{ __('Totale IVA inclusa') }}
-                        </td>
-                        <td class="cart_total_amount"><strong><span id="total"
-                                    class="font-xl fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() + $shippingAmount - $couponDiscountAmount) }}</span></strong>
-                        </td>
-                    </tr>
-                    </tbody>
-                    </table>
-            </div>
-            <p style="font-size: 9.5pt !important;">Il contributo per le spese di
-                spedizione ed imballaggio è calcolato sull'importo dell'ordine al netto
-                di
-                eventuali omaggi a cui si ha diritto. <br>
-                Questi ultimi saranno stornati dal totale, in fase di gestione
-                dell'ordine.
-            </p>
-            <p style='font-size: 11pt; color: black'><label for="comunicarci"><b>Hai
-                        qualcosa da comunicarci?</b></label></p>
-            <textarea id="comunicarci" name="note" rows="5" cols="37" style='min-height: unset!important'
-                placeholder="Scrivi qui eventuali note per l'ordine">
+                                                            <td class="cart_total_label">
+                                                                {{ __('Totale IVA inclusa') }}
+                                                            </td>
+                                                            <td class="cart_total_amount"><strong><span id="total"
+                                                                        class="font-xl fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() + $shippingAmount - $couponDiscountAmount) }}</span></strong>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <p style="font-size: 9.5pt !important;">Il contributo per le spese di
+                                                spedizione ed imballaggio è calcolato sull'importo dell'ordine al netto
+                                                di
+                                                eventuali omaggi a cui si ha diritto. <br>
+                                                Questi ultimi saranno stornati dal totale, in fase di gestione
+                                                dell'ordine.
+                                            </p>
+                                            <p style='font-size: 11pt; color: black'><label for="comunicarci"><b>Hai
+                                                        qualcosa da comunicarci?</b></label></p>
+                                            <textarea id="comunicarci" name="note" rows="5" cols="37" style='min-height: unset!important'
+                                                placeholder="Scrivi qui eventuali note per l'ordine">
                                                 @if (Session::get('note') != '')
 {{ Session::has('note') ? Session::get('note') : '' }}
 @endif
                                             </textarea>
 
-        </div>
-    </div>
-    </div>
-    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
-    </div>
-    </div>
-    </div>
-@else
-    <div class="row">
-        <div class="col-12">
-            <div class="error-container"
-                style="background-color: #fff;
-                            padding: 20px;text-align: center;
-                            border-radius: 5px;">
-                <div class="error-icon"
-                    style="font-size: 90px;
-                                color: #777;
-                                margin-bottom: 20px;">
-                    <i class="far fa-shopping-cart"></i>
-                </div>
-                <p style="font-size: 12pt;
-                                font-weight: 600;">Il suo
-                    carello è vuoto!</p>
+                        </div>
             </div>
         </div>
-    </div>
-    @endif
+    @else
+        <div class="row">
+            <div class="col-12">
+                <div class="error-container"
+                    style="background-color: #fff;
+                            padding: 20px;text-align: center;
+                            border-radius: 5px;">
+                    <div class="error-icon"
+                        style="font-size: 90px;
+                                color: #777;
+                                margin-bottom: 20px;">
+                        <i class="far fa-shopping-cart"></i>
+                    </div>
+                    <p style="font-size: 12pt;
+                                font-weight: 600;">Il suo
+                        carello è vuoto!</p>
+                </div>
+            </div>
+        </div>
+        @endif
 
     </div>
 </section>
