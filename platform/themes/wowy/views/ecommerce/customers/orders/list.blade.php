@@ -48,9 +48,14 @@
                                     @if ($order->is_finished && $order->is_confirmed)
                                         <label class="btn-success p-1 rounded small">Completato</label>
                                     @endif
-                                    @if ($order->is_finished && !$order->is_confirmed)
-                                        <label class="btn-success p-1 rounded small"
-                                            style="background-color:#f9844a">Mancato Pagamento</label>
+                                    @if ($payment)
+                                        @if ($payment->payment_channel == 'paypal' && $payment->status == 'pending')
+                                            <label class="btn p-1 rounded small" style="background-color:#f9844a">In
+                                                Attesa</label>
+                                        @else
+                                            <label class="btn p-1 rounded small" style="background-color:#f9844a">Mancato
+                                                Pagamento</label>
+                                        @endif
                                     @endif
                                     @if ($order->status == 'canceled')
                                         <label class="btn-danger p-1 rounded small">Annullato</label>
