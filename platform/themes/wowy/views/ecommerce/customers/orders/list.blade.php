@@ -45,24 +45,29 @@
                                 </td>
                                 {{--                                <td>{{ 'price' => $order->amount_format 'total' => $order->products_count }}</td> --}}
                                 <td style="text-align:center">
-                                    @if ($order->is_finished && $order->is_confirmed)
-                                        <label class="btn-success p-1 rounded small">Completato</label>
-                                    @endif
                                     @php
                                         $payment = Payment::where('order_id', $order->id)->first();
                                     @endphp
+
+                                    @if ($order->is_finished && $order->is_confirmed)
+                                        <label class="btn-success p-1 rounded small">Completato</label>
+                                    @endif
+
                                     @if ($payment)
                                         @if ($payment->payment_channel == 'paypal' && $payment->status == 'pending')
-                                            <label class="btn p-1 rounded small" style="background-color:#f9844a">In
-                                                Attesa</label>
-                                        @else
                                             <label class="btn p-1 rounded small" style="background-color:#f9844a">Mancato
                                                 Pagamento</label>
+                                        @elseif ($payment->payment_channel != 'paypal' && $payment->status == 'completed')
+                                            <label class="btn-success p-1 rounded small">Completato</label>
                                         @endif
+                                    @else
+                                        <label class="btn p-1 rounded small" style="background-color:#f9844a">In
+                                            Attesa</label>
                                     @endif
                                     @if ($order->status == 'canceled')
                                         <label class="btn-danger p-1 rounded small">Annullato</label>
                                     @endif
+
                                 </td>
                                 <td style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
 
