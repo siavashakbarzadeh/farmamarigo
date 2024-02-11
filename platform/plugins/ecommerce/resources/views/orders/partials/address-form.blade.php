@@ -28,7 +28,6 @@
     $sessionCheckoutData = Arr::set($sessionCheckoutData, 'name', $adding['name']);
     $sessionCheckoutData = Arr::set($sessionCheckoutData, 'name', $adding['name']);
     $sessionCheckoutData = Arr::set($sessionCheckoutData, 'name', $adding['name']);
-    dd($sessionCheckoutData);
 @endphp
 <div class="customer-address-payment-form">
 
