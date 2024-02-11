@@ -1541,6 +1541,31 @@ class PublicCheckoutController
 
         }
         foreach (Cart::instance('cart')->content() as $cartItem) {
+            
+
+            $data = [
+                'order_id' => $order->id,
+                'product_id' => $cartItem->id,
+                'product_name' => $cartItem->name,
+                'product_image' => $product->original_product->image,
+                'qty' => $cartItem->qty,
+                'weight' => $shippingData ? Arr::get($shippingData, 'weight') : 0,
+                'price' => $cartItem->price,
+                'tax_amount' => $cartItem->tax,
+                'options' => [],
+                'product_type' => $product ? $product->product_type : null,
+            ];
+
+            if (optional($cartItem->options)->extras) {
+                $data['options'] = $cartItem->options->extras;
+            }
+
+            if (optional($cartItem->options)->options) {
+                $data['product_options'] = $cartItem->options['options'];
+            }
+
+            $this->orderProductRepository->create($data);
+
             //  aget variant o azin kossher product Id ro begir age collegtati bud yedune behesh ezafe kon 
             $flag = false; // Reset flag for each item
                 $product = Product::find($cartItem->id); // Assuming $item->id is correct
@@ -1586,28 +1611,6 @@ class PublicCheckoutController
 
                 }
 
-            $data = [
-                'order_id' => $order->id,
-                'product_id' => $cartItem->id,
-                'product_name' => $cartItem->name,
-                'product_image' => $product->original_product->image,
-                'qty' => $cartItem->qty,
-                'weight' => $shippingData ? Arr::get($shippingData, 'weight') : 0,
-                'price' => $cartItem->price,
-                'tax_amount' => $cartItem->tax,
-                'options' => [],
-                'product_type' => $product ? $product->product_type : null,
-            ];
-
-            if (optional($cartItem->options)->extras) {
-                $data['options'] = $cartItem->options->extras;
-            }
-
-            if (optional($cartItem->options)->options) {
-                $data['product_options'] = $cartItem->options['options'];
-            }
-
-            $this->orderProductRepository->create($data);
         }
     }
 }
