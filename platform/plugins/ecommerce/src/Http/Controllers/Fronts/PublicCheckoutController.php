@@ -154,7 +154,6 @@ class PublicCheckoutController
         }else{
             $products = Cart::instance('cart')->products();
             if (!$products->count()) {
-
                 return $response->setNextUrl(route('public.cart'));
             }
         }

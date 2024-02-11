@@ -40,6 +40,7 @@ background-color: rgba(0,0,0,0.4);">
             'class' => 'checkout-form payment-checkout-form',
             'id' => 'checkout-form',
         ]) !!}
+
         <input type="hidden" name="checkout-token" id="checkout-token" value="{{ $token }}">
 
         <div class="container" id="main-checkout-product-info">
@@ -179,6 +180,7 @@ background-color: rgba(0,0,0,0.4);">
                                     <div class="col-6">
                                         <p><strong>Totale IVA Inclusa </strong>:</p>
                                     </div>
+                                    @dd(Cart::instance('cart')->rawTotal())
                                     <div class="col-6 float-end">
                                         <p class="total-text raw-total-text"
                                             data-price="{{ format_price(Cart::instance('cart')->rawTotal(), null, true) }}">
