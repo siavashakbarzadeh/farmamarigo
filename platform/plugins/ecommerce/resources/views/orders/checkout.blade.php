@@ -184,7 +184,7 @@ background-color: rgba(0,0,0,0.4);">
                                     <div class="col-6 float-end">
                                         <p class="total-text raw-total-text"
                                             data-price="{{ format_price(Cart::instance('cart')->rawTotal(), null, true) }}">
-                                            {{ $promotionDiscountAmount + $couponDiscountAmount - floatval(Session::get('shippingAmount')) > Cart::instance('cart')->rawTotal() ? format_price(0) : format_price(Cart::instance('cart')->rawTotal() - $promotionDiscountAmount - $couponDiscountAmount + floatval(Session::get('shippingAmount'))) }}
+                                            {{ $promotionDiscountAmount + $couponDiscountAmount - floatval(Session::get('shippingAmount')) > (Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax()) ? format_price(0) : Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() - $promotionDiscountAmount - $couponDiscountAmount + floatval(Session::get('shippingAmount'))) }}
                                         </p>
                                     </div>
                                 </div>
