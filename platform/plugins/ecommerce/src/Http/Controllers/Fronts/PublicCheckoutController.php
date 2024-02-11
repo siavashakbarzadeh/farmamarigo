@@ -1541,7 +1541,8 @@ class PublicCheckoutController
 
         }
         foreach (Cart::instance('cart')->content() as $cartItem) {
-            
+            $product = Product::find($cartItem->id); // Assuming $item->id is correct
+
 
             $data = [
                 'order_id' => $order->id,
@@ -1568,7 +1569,6 @@ class PublicCheckoutController
 
             //  aget variant o azin kossher product Id ro begir age collegtati bud yedune behesh ezafe kon 
             $flag = false; // Reset flag for each item
-                $product = Product::find($cartItem->id); // Assuming $item->id is correct
         
                 if ($product && $product->is_variation) {
                     $AllVariations = Product::where('name', $cartItem->name)->get();
