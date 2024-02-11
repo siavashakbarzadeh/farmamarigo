@@ -114,35 +114,43 @@
                                                         $Image = $defaultImgUrl;
                                                     }
                                                 @endphp
-                                                <img src="{{ $Image }}" width="50"
-                                                    alt="{{ $orderProduct->product_name }}">
-                                                {{ $orderProduct->product_name }} @if ($product && $product->sku)
-                                                    ({{ $product->sku }})
-                                                @endif
-                                                @if ($product && $product->is_variation)
-                                                    <p>
-                                                        <small>
-                                                            @php $attributes = get_product_attributes($product->id) @endphp
-                                                            @if (!empty($attributes))
-                                                                @foreach ($attributes as $attribute)
-                                                                    {{ $attribute->attribute_set_title }}:
-                                                                    {{ $attribute->title }}@if (!$loop->last)
-                                                                        ,
-                                                                    @endif
-                                                                @endforeach
-                                                            @endif
-                                                        </small>
-                                                    </p>
-                                                @endif
-
-                                                @if (!empty($orderProduct->options) && is_array($orderProduct->options))
-                                                    @foreach ($orderProduct->options as $option)
-                                                        @if (!empty($option['key']) && !empty($option['value']))
-                                                            <p class="mb-0"><small>{{ $option['key'] }}: <strong>
-                                                                        {{ $option['value'] }}</strong></small></p>
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <img src="{{ $Image }}" width="50"
+                                                            alt="{{ $orderProduct->product_name }}">
+                                                    </div>
+                                                    <div class="col-8">
+                                                        {{ $orderProduct->product_name }} @if ($product && $product->sku)
+                                                            ({{ $product->sku }})
                                                         @endif
-                                                    @endforeach
-                                                @endif
+                                                        @if ($product && $product->is_variation)
+                                                            <p>
+                                                                <small>
+                                                                    @php $attributes = get_product_attributes($product->id) @endphp
+                                                                    @if (!empty($attributes))
+                                                                        @foreach ($attributes as $attribute)
+                                                                            {{ $attribute->attribute_set_title }}:
+                                                                            {{ $attribute->title }}@if (!$loop->last)
+                                                                                ,
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
+                                                                </small>
+                                                            </p>
+                                                        @endif
+
+                                                        @if (!empty($orderProduct->options) && is_array($orderProduct->options))
+                                                            @foreach ($orderProduct->options as $option)
+                                                                @if (!empty($option['key']) && !empty($option['value']))
+                                                                    <p class="mb-0"><small>{{ $option['key'] }}: <strong>
+                                                                                {{ $option['value'] }}</strong></small></p>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+
                                             </td>
 
                                             <td class="align-middle">{{ $orderProduct->amount_format }}</td>
