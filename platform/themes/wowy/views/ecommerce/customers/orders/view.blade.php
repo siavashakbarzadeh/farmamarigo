@@ -78,8 +78,8 @@
                                     <tr>
                                         <th>#</th>
                                         <th>{{ __('Product') }}</th>
-                                        <th>{{ __('Amount') }}</th>
-                                        <th style="width: 100px">{{ __('Quantity') }}</th>
+                                        <th>{{ __('Importo') }}</th>
+                                        <th style="width: 100px">{{ __('Quantità') }}</th>
                                         <th class="price text-right">{{ __('Total') }}</th>
                                     </tr>
                                 </thead>
