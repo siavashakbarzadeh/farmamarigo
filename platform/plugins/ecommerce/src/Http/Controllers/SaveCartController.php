@@ -122,27 +122,35 @@ public static function reCalculateCart($user_id=null) {
                 
                         // Logic to determine the price
                         // First, check for active offers
-                        $offerDetail = OffersDetail::where('product_id', $product_id)
-                                                    ->where('customer_id', $user_id)
-                                                    ->where('status', 'active')
-                                                    ->first();
+                        // $offerDetail = OffersDetail::where('product_id', $product_id)
+                        //                             ->where('customer_id', $user_id)
+                        //                             ->where('status', 'active')
+                        //                             ->first();
                 
-                        if ($offerDetail) {
-                            $offer = Offers::find($offerDetail->offer_id);
-                            if ($offer && in_array($offer->offer_type, [1, 2, 3])) {
-                                $price = $offerDetail->product_price;
-                            }
-                        } else {
-                            $pricelist = DB::connection('mysql')->table('ec_pricelist')
-                                            ->where('customer_id', $user_id)
-                                            ->where('product_id', $product_id)
-                                            ->first();
-                            if ($pricelist) {
-                                $price = $pricelist->final_price;
-                            } else if ($product) {
-                                $price = $product->price; // Ensure product is not null
-                            }
+                        // if ($offerDetail) {
+                        //     $offer = Offers::find($offerDetail->offer_id);
+                        //     if ($offer && in_array($offer->offer_type, [1, 2, 3])) {
+                        //         $price = $offerDetail->product_price;
+                        //     }elseif($offer && $offerType==4){
+                        //         //$offerType 3x2
+                                
+
+                        //     }elseif($offer && $offerType==5){
+                        //         //collegati
+                        //     }elseif($offer && $offerType=6){
+                        //         //Quantity
+                        //     }
+                        // } else
+                        $pricelist = DB::connection('mysql')->table('ec_pricelist')
+                                        ->where('customer_id', $user_id)
+                                        ->where('product_id', $product_id)
+                                        ->first();
+                        if ($pricelist) {
+                            $price = $pricelist->final_price;
+                        } else if ($product) {
+                            $price = $product->price; // Ensure product is not null
                         }
+                        
                 
                         // Add to cart only if price is determined
                         if ($price !== null) {
@@ -168,9 +176,7 @@ public static function reCalculateCart($user_id=null) {
         } else {
             return false; // No saved cart record found
         }
-
-}
-
+    }
 }
 
 public static function logout($user_id){
