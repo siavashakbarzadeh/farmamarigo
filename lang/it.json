@@ -405,7 +405,6 @@
     "Pay for your order at :site_title": "Paga il tuo ordine su :site_title",
     "Payment Type": "Modalità di pagamento",
     "default_payment_method": "metodo di pagamento predefinito",
-
     "Payment description": "Descrizione del pagamento",
     "Payment failed!": "Pagamento fallito!",
     "Payment method": "Metodo di pagamento",
@@ -582,7 +581,7 @@
     "Submit Return Request": "Invia richiesta di reso",
     "Submit Review": "invia recensione",
     "Subscribe": "Iscriviti",
-    "Subscribe to newsletter successfully!": "Iscriviti alla newsletter con successo!",
+    "Subscribe to newsletter successfully!": "Ti sei iscritto alla newsletter con successo!",
     "Subtitle": "Sottotitolo",
     "Subtitle :number": "Sottotitolo :number",
     "Subtotal": "totale parziale",
@@ -723,7 +722,6 @@
     "to write review!": "scrivere una recensione!",
     "when shipping fee less than or equal": "quando la tassa di spedizione è inferiore o uguale",
     "✅ Purchased :time": "✅ Acquistato :time",
-    "Added product :product to cart successfully!":":product aggiunto al carrello!",
-    "Added product :product to compare list successfully!":"Aggiunto prodotto :product nella lista di confronto con successo!"
-
+    "Added product :product to cart successfully!": ":product aggiunto al carrello!",
+    "Added product :product to compare list successfully!": "Aggiunto prodotto :product nella lista di confronto con successo!"
 }
