@@ -463,15 +463,7 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                 </td>
                                                             </tr>
                                                         @endif
-                                                        @if ($promotionDiscountAmount)
-                                                            <tr>
-                                                                <td class="cart_total_label">
-                                                                    {{ __('Discount promotion') }}</td>
-                                                                <td class="cart_total_amount"><span
-                                                                        class="font-lg fw-900 text-brand">{{ format_price($promotionDiscountAmount) }}</span>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
+
                                                         @if (auth('customer'))
                                                             @php
                                                                 session()->forget('shippingAmount');
@@ -526,6 +518,19 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                         class="font-xl fw-900 text-brand">{{ format_price($shippingAmount) }}</span></strong>
                                                             </td>
                                                         </tr>
+                                                        @if ($promotionDiscountAmount)
+                                                            <tr>
+                                                                <td class="cart_total_label">
+                                                                    {{ __('Discount promotion') }}</td>
+                                                                <td class="cart_total_amount"><span
+                                                                        class="font-lg fw-900 text-brand">{{ format_price($promotionDiscountAmount) }}</span>
+                                                                </td>
+                                                                @if (session()->get('applied_coupon_code'))
+                                                                    <input type="hidden" name="couponCode"
+                                                                        value={{ session()->get('applied_coupon_code') }}>
+                                                                @endif
+                                                            </tr>
+                                                        @endif
                                                         <tr>
 
                                                             <td class="cart_total_label">
