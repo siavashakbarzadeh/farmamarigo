@@ -1111,6 +1111,10 @@ class PublicCheckoutController
     session()->forget('shippingAmount');
     session()->forget('cart');
     session()->forget('note');
+    session()->forget('tracked_start_checkout');
+    if (session()->has($order->token)) {
+        session()->forget($order->token);
+    }
 
     SaveCartController::deleteSavedCart();
 
