@@ -529,7 +529,7 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                             <td class="cart_total_label">
                                                                 {{ __('Totale IVA inclusa') }}
                                                             </td>
-                                                            <td class="cart_total_amount"><strong><span
+                                                            <td class="cart_total_amount"><strong><span id="total"
                                                                         class="font-xl fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() + $shippingAmount - $couponDiscountAmount) }}</span></strong>
                                                             </td>
                                                         </tr>
