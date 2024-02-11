@@ -1,25 +1,25 @@
 @php
-    use Botble\Ecommerce\Models\Address;
-    use Botble\Ecommerce\Models\Order;
+    // use Botble\Ecommerce\Models\Address;
+    // use Botble\Ecommerce\Models\Order;
 
-    if ($sessionCheckoutData == null) {
-        $address = Address::where('customer_id', auth('customer')->user()->id)->first();
-        $order = Order::where('id', $sessionCheckoutData['created_order_id'] + 1)->first();
-        $adding = [
-            'name' => $address->name,
-            'email' => $address->email,
-            'phone' => $address->phone,
-            'country' => $address->country,
-            'state' => $address->state,
-            'city' => $address->city,
-            'address' => $address->address,
-            'zip_code' => $address->zip_code,
-            'shipping_amount' => $order->shipping_amount,
-            'created_order_id' => $sessionCheckoutData['created_order_id'] + 1,
-        ];
-        $sessionCheckoutData = array_merge($sessionCheckoutData, $adding);
-    }
-    dd($sessionCheckoutData);
+    // if ($sessionCheckoutData == null) {
+    //     $address = Address::where('customer_id', auth('customer')->user()->id)->first();
+    //     $order = Order::where('id', $sessionCheckoutData['created_order_id'] + 1)->first();
+    //     $adding = [
+    //         'name' => $address->name,
+    //         'email' => $address->email,
+    //         'phone' => $address->phone,
+    //         'country' => $address->country,
+    //         'state' => $address->state,
+    //         'city' => $address->city,
+    //         'address' => $address->address,
+    //         'zip_code' => $address->zip_code,
+    //         'shipping_amount' => $order->shipping_amount,
+    //         'created_order_id' => $sessionCheckoutData['created_order_id'] + 1,
+    //     ];
+    //     $sessionCheckoutData = array_merge($sessionCheckoutData, $adding);
+    // }
+    // dd($sessionCheckoutData);
 @endphp
 <div class="customer-address-payment-form">
 
