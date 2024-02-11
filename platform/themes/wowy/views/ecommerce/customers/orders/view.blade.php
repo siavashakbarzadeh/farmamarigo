@@ -77,7 +77,6 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>{{ __('Image') }}</th>
                                         <th>{{ __('Product') }}</th>
                                         <th>{{ __('Amount') }}</th>
                                         <th style="width: 100px">{{ __('Quantity') }}</th>
@@ -117,8 +116,6 @@
                                                 @endphp
                                                 <img src="{{ $Image }}" width="50"
                                                     alt="{{ $orderProduct->product_name }}">
-                                            </td>
-                                            <td class="align-middle">
                                                 {{ $orderProduct->product_name }} @if ($product && $product->sku)
                                                     ({{ $product->sku }})
                                                 @endif
@@ -147,6 +144,7 @@
                                                     @endforeach
                                                 @endif
                                             </td>
+
                                             <td class="align-middle">{{ $orderProduct->amount_format }}</td>
                                             <td class="align-middle">{{ $orderProduct->qty }}</td>
                                             <td class="money text-right align-middle">
