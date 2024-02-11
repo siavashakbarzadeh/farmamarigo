@@ -909,81 +909,81 @@ class PublicCheckoutController
 
     private function initiatePaypalPayment($order, $request) {
         $clientId = 'ASBmAoiN-ML8YpSOcxrpMyrG9Aa7V35LxHrBHCYmqdYRR-eWtLWZ3xyd3HpSOB7_q5Eogl8xXgAFSzot'; // Your Sandbox Client ID
-    $clientSecret = 'ELAKp4zsYrVzRKakVO_hhNwS0ARd7wa9zz5N-KjEVn75P3T18n1GGXteuOUXMSrQmLv7wNo0S1bLMzrz'; // Your Sandbox Secret
+        $clientSecret = 'ELAKp4zsYrVzRKakVO_hhNwS0ARd7wa9zz5N-KjEVn75P3T18n1GGXteuOUXMSrQmLv7wNo0S1bLMzrz'; // Your Sandbox Secret
 
-    // Get an access token from PayPal
-    $accessToken = $this->getPaypalAccessToken($clientId, $clientSecret);
+        // Get an access token from PayPal
+        $accessToken = $this->getPaypalAccessToken($clientId, $clientSecret);
 
-    if (!$accessToken) {
-        dd('Failed to retrieve PayPal access token');
-        return null;
-    }
-        // Set up the payment details
-        $RealOrder=Order::where('token',$order->token)->where('status','pending')->first();
-        if($RealOrder){
-            $orderTotal=number_format($RealOrder->amount, 2, '.', '');
-        }else{
-            $orderTotal = number_format($order->amount, 2, '.', ''); // Format to a decimal string
+        if (!$accessToken) {
+            dd('Failed to retrieve PayPal access token');
+            return null;
         }
-    // Set up the payment details
-    $paymentData = [
-        'intent' => 'sale',
-        'redirect_urls' => [
-            'return_url' => "https://marigopharma.marigo.collaudo.biz/return?orderId=$order->id", //controller
-            'cancel_url' => "https://marigopharma.marigo.collaudo.biz/return-canceled-paypal?orderId=$order->id" //just the view
-        ],
-        'payer' => [
-            'payment_method' => 'paypal'
-        ],
-        'transactions' => [
-            [
-                'amount' => [
-                    'total' => $orderTotal, // Make sure this is a correctly formatted string
-                    'currency' => 'EUR'
-                ],
-                'description' => 'Purchase from My Store'
-            ]
-        ]
-    ];
-
-    // Send the payment creation request to PayPal
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://api.sandbox.paypal.com/v1/payments/payment'); // Make sure to use the sandbox URL
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($paymentData));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json'
-    ]);
-
-    $response = curl_exec($ch);
-    if (curl_errno($ch)) {
-        error_log('CURL Error: ' . curl_error($ch));
-        curl_close($ch);
-        return null;
-    }
-    curl_close($ch);
-
-    $responseArray = json_decode($response, true);
-
-
-    if (isset($responseArray['id'])) {
-        // If the payment is created successfully
-        $array=[];
-        foreach ($responseArray['links'] as $link) {
-            if ($link['rel'] == 'approval_url') {
-                $array['approval_url']=$link['href']; // Return the approval URL
+            // Set up the payment details
+            $RealOrder=Order::where('token',$order->token)->where('status','pending')->first();
+            if($RealOrder){
+                $orderTotal=number_format($RealOrder->amount, 2, '.', '');
+            }else{
+                $orderTotal = number_format($order->amount, 2, '.', ''); // Format to a decimal string
             }
+        // Set up the payment details
+        $paymentData = [
+            'intent' => 'sale',
+            'redirect_urls' => [
+                'return_url' => "https://marigopharma.marigo.collaudo.biz/return?orderId=$order->id", //controller
+                'cancel_url' => "https://marigopharma.marigo.collaudo.biz/return-canceled-paypal?orderId=$order->id" //just the view
+            ],
+            'payer' => [
+                'payment_method' => 'paypal'
+            ],
+            'transactions' => [
+                [
+                    'amount' => [
+                        'total' => $orderTotal, // Make sure this is a correctly formatted string
+                        'currency' => 'EUR'
+                    ],
+                    'description' => 'Purchase from My Store'
+                ]
+            ]
+        ];
+
+        // Send the payment creation request to PayPal
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.sandbox.paypal.com/v1/payments/payment'); // Make sure to use the sandbox URL
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($paymentData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $accessToken,
+            'Content-Type: application/json'
+        ]);
+
+        $response = curl_exec($ch);
+        if (curl_errno($ch)) {
+            error_log('CURL Error: ' . curl_error($ch));
+            curl_close($ch);
+            return null;
         }
-        $array['id']=$responseArray['id'];
-        $array['create_time']=$responseArray['create_time'];
-        return $array;
-    } else {
-        // Log PayPal response for failed requests
-        error_log('PayPal Error: ' . $response);
-        return null;
-    }
+        curl_close($ch);
+
+        $responseArray = json_decode($response, true);
+
+
+        if (isset($responseArray['id'])) {
+            // If the payment is created successfully
+            $array=[];
+            foreach ($responseArray['links'] as $link) {
+                if ($link['rel'] == 'approval_url') {
+                    $array['approval_url']=$link['href']; // Return the approval URL
+                }
+            }
+            $array['id']=$responseArray['id'];
+            $array['create_time']=$responseArray['create_time'];
+            return $array;
+        } else {
+            // Log PayPal response for failed requests
+            error_log('PayPal Error: ' . $response);
+            return null;
+        }
 
     }
 
@@ -1036,50 +1036,10 @@ class PublicCheckoutController
                 'payment_id'=>$payment->id
             ]);
 
-            $this->orderHistoryRepository->createOrUpdate([
-                'action' => 'Order Paid with paypal',
-                'description' => __('Order was created from checkout page'),
-                'order_id' => $order->id,
-            ]);
 
-
-            $shippingData=[];
-            $shippingMethod=[];
-                app(ShipmentInterface::class)->createOrUpdate([
-                    'order_id' => $order->id,
-                    'user_id' => auth('customer')->user()->id,
-                    'weight' => $shippingData ? Arr::get($shippingData, 'weight') : 0,
-                    'cod_amount' => ($order->payment->id && $order->payment->status != PaymentStatusEnum::COMPLETED) ? $order->amount : 0,
-                    'cod_status' => ShippingCodStatusEnum::PENDING,
-                    'type' => $order->shipping_method,
-                    'status' => ShippingStatusEnum::PENDING,
-                    'price' => $order->shipping_amount,
-                    'rate_id' => $shippingData ? Arr::get($shippingMethod, 'id', '') : '',
-                    'shipment_id' => $shippingData ? Arr::get($shippingMethod, 'shipment_id', '') : '',
-                    'shipping_company_name' => $shippingData ? Arr::get($shippingMethod, 'company_name', '') : '',
-                ]);
-
-
-            if ($appliedCouponCode = session()->get('applied_coupon_code')) {
-                DiscountFacade::getFacadeRoot()->afterOrderPlaced($appliedCouponCode);
-            }
-
-            $this->orderProductRepository->deleteBy(['order_id' => $order->id]);
-            $this->addProductToOrder($order, $shippingData);
-
-            $request->merge([
-                'order_id' => $order->id,
-            ]);
 
             Mail::to($order->user->email)->send(new OrderConfirmed($order));
 
-            // $this->deleteDuplicateOrders($order->token);
-
-            OrderShippingAmount::create(
-                ['shippingAmount' => session()->get('shippingAmount'),
-                    'order_id' => $order->id
-                ]
-            );
 
             session()->forget('shippingAmount');
             session()->forget('cart');
