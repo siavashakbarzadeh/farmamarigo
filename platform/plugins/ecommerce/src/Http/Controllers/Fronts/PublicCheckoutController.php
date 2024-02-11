@@ -1536,6 +1536,7 @@ class PublicCheckoutController
     public function addProductToOrder(mixed $order, array $shippingData): void
     {
         foreach (Cart::instance('cart')->content() as $cartItem) {
+            //  aget variant o azin kossher product Id ro begir age collegtati bud yedune behesh ezafe kon 
             $product = $this->productRepository->findById($cartItem->id);
 
             $data = [
