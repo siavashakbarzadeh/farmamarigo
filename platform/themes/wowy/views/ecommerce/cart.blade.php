@@ -542,7 +542,9 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                 </td>
                                                                 @if (session('applied_spc') || session('applied_coupon_code'))
                                                                     <td><span class="font-lg fw-900 text-brand"
-                                                                            style="color: #E52728 !important">-{{ format_price($couponDiscountAmount) }}</span>
+                                                                            style="color: #E52728 !important">
+                                                                            -{{ format_price($couponDiscountAmount) }}
+                                                                        </span>
                                                                     </td>
                                                                 @endif
                                                                 <input type="hidden" name="couponCode"
@@ -554,8 +556,16 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                             <td class="cart_total_label">
                                                                 {{ __('Totale IVA inclusa') }}
                                                             </td>
-                                                            <td class="cart_total_amount"><strong><span id="total"
-                                                                        class="font-xl fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() + $shippingAmount - $couponDiscountAmount) }}</span></strong>
+                                                            <td class="cart_total_amount"><strong>
+                                                                    <span id="total"
+                                                                        class="font-xl fw-900 text-brand">
+                                                                        @if (session('applied_spc'))
+                                                                            {{ format_price(Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() + $shippingAmount) }}
+                                                                        @else
+                                                                            {{ format_price(Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() + $shippingAmount - $couponDiscountAmount) }}
+                                                                        @endif
+                                                                    </span>
+                                                                </strong>
                                                             </td>
                                                         </tr>
                                                     </tbody>
