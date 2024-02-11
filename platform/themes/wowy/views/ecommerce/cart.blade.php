@@ -525,6 +525,7 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                 <td class="cart_total_amount"><span
                                                                         class="font-lg fw-900 text-brand">{{ format_price($promotionDiscountAmount) }}</span>
                                                                 </td>
+                                                                @dd(session()->get('applied_coupon_code'))
                                                                 @if (session()->get('applied_coupon_code'))
                                                                     <input type="hidden" name="couponCode"
                                                                         value={{ session()->get('applied_coupon_code') }}>
