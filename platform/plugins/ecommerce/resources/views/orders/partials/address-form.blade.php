@@ -2,7 +2,7 @@
     use Botble\Ecommerce\Models\Address;
     use Botble\Ecommerce\Models\Order;
 
-    if ($sessionCheckoutData['name'] == null) {
+    if ($sessionCheckoutData == null) {
         $address = Address::where('customer_id', auth('customer')->user()->id)->first();
         $order = Order::where('id', $sessionCheckoutData['created_order_id'] + 1)->first();
         $adding = [
