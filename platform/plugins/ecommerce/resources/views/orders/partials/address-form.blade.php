@@ -20,6 +20,7 @@
     //     $sessionCheckoutData = array_merge($sessionCheckoutData, $adding);
     // }
     // dd($sessionCheckoutData);
+    dd(Arr::get($sessionCheckoutData, 'name'));
 @endphp
 <div class="customer-address-payment-form">
 
