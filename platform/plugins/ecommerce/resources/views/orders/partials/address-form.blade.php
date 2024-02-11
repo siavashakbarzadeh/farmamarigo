@@ -15,7 +15,7 @@
         'city' => $address->city,
         'address' => $address->address,
         'zip_code' => $address->zip_code,
-        'shipping_amount' => $order->shipping_amount ? $order->shipping_amount : $request->session()->get('shippingAmount', '10.9'),
+        'shipping_amount' => $order->shipping_amount ? $order->shipping_amount : session()->get('shippingAmount', '10.9'),
         'created_order_id' => $sessionCheckoutData['created_order_id'] + 1,
     ];
     $sessionCheckoutData = Arr::set($sessionCheckoutData, 'name', $adding['name']);
