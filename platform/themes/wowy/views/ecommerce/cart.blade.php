@@ -4,8 +4,7 @@
     use Botble\Ecommerce\Models\Offers;
     use Botble\Ecommerce\Models\Product;
     use Botble\Ecommerce\Models\ProductVariation;
-    // use Botble\Ecommerce\Models\CarouselProducts;
-    // use Botble\Ecommerce\Models\SPC;
+    use Botble\Ecommerce\Models\SPC;
     // if (request()->user('customer')) {
     //     $userid = request()->user('customer')->id;
     //     if (!CarouselProducts::where('customer_id', $userid)->exists()) {
@@ -396,7 +395,8 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                         <div class="form-group col-lg-9">
                                                             <input class="font-medium coupon-code" type="text"
                                                                 name="coupon_code" value="{{ old('coupon_code') }}"
-                                                                placeholder="{{ __('Enter coupon code') }}">
+                                                                @if (($couponDiscountAmount > 0 && session('applied_coupon_code')) || session('applied_spc')) disabled readonly @endif
+                                                                placeholder="{{ __('Hai un codice coupon? Inseriscilo qui.') }}">
                                                         </div>
                                                         <div class="form-group col-lg-3">
                                                             <button
@@ -473,6 +473,22 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                 }
                                                                 $subtotal = Cart::instance('cart')->rawSubTotal();
 
+                                                                if (session('applied_spc')) {
+                                                                    $coupon = SPC::where('code', session('applied_spc'))->where('status', 1)->first();
+
+                                                                    if ($coupon->min_order != null && $cartTotal < $coupon->min_order) {
+                                                                        session()->forget('applied_spc');
+                                                                        session()->forget('discount_amount');
+                                                                    } else {
+                                                                        if ($coupon->type == 1) {
+                                                                            $shippingAmount = $shippingAmount * ((100 - $coupon->amount) / 100);
+                                                                        } elseif ($coupon->type == 2) {
+                                                                            $shippingAmount = $coupon->amount >= $shippingAmount ? 0 : $shippingAmount - $coupon->amount;
+                                                                        } else {
+                                                                            $shippingAmount = 0;
+                                                                        }
+                                                                    }
+                                                                }
                                                             @endphp
                                                         @endif
 
@@ -505,12 +521,19 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                         class="font-xl fw-900 text-brand">{{ format_price($shippingAmount) }}</span></strong>
                                                             </td>
                                                         </tr>
-                                                        @if ($couponDiscountAmount > 0 && session('applied_coupon_code'))
+                                                        @if (($couponDiscountAmount > 0 && session('applied_coupon_code')) || session('applied_spc'))
                                                             <tr>
+                                                                @php
+                                                                    if (session('applied_coupon_code')) {
+                                                                        $couponcodefinal = session('applied_coupon_code');
+                                                                    } else {
+                                                                        $couponcodefinal = session('applied_spc');
+                                                                    }
+                                                                @endphp
                                                                 <td class="cart_total_label">
-                                                                    {{ __('Coupon code: :code', ['code' => session('applied_coupon_code')]) }}
+                                                                    {{ __('Coupon code: :code', ['code' => ['code' => $couponcodefinal]]) }}
                                                                     (<small><a
-                                                                            class="btn-remove-coupon-code text-danger"
+                                                                            class="btn-remove-coupon-code btn-remove-spc text-danger"
                                                                             data-url="{{ route('public.coupon.remove') }}"
                                                                             href="javascript:void(0)"
                                                                             data-processing-text="{{ __('Removing...') }}">{{ __('Remove') }}</a></small>)<span>
@@ -521,7 +544,7 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                         -{{ format_price($couponDiscountAmount) }}</span>
                                                                 </td>
                                                                 <input type="hidden" name="couponCode"
-                                                                    value="{{ session('applied_coupon_code') }}">
+                                                                    value="{{ $couponcodefinal }} ">
                                                             </tr>
                                                         @endif
                                                         <tr>
