@@ -94,12 +94,10 @@ public static function reCalculateCart($user_id=null) {
             $cart = json_decode($cartRecord->cart);
                 // Clear the current cart instance before re-adding items
                 Cart::instance('cart')->destroy();
-    
                 if (isset($cart->cart)) {
                     foreach ($cart->cart as $item) {
                         $flag = false; // Reset flag for each item
                         $product = Product::find($item->id); // Assuming $item->id is correct
-                
                         if ($product && $product->is_variation) {
                             $AllVariations = Product::where('name', $item->name)->get();
                             foreach ($AllVariations as $variation) {
@@ -109,24 +107,20 @@ public static function reCalculateCart($user_id=null) {
                                 }
                             }
                         }
-                
                         if ($flag) {
                             $productVariation = ProductVariation::where('product_id', $item->id)->first();
                             $product_id = $productVariation ? $productVariation->configurable_product_id : $item->id;
                         } else {
                             $product_id = $item->id;
                         }
-                
                         // Reset price for each item
                         $price = null;
-                
                         // Logic to determine the price
                         // First, check for active offers
                         $offerDetail = OffersDetail::where('product_id', $product_id)
                                                     ->where('customer_id', $user_id)
                                                     ->where('status', 'active')
                                                     ->first();
-                
                         if ($offerDetail) {
                             $price=null;
                         }else{
@@ -141,8 +135,6 @@ public static function reCalculateCart($user_id=null) {
                             }
                         }
                         
-                        
-                
                         // Add to cart only if price is determined
                         if ($price !== null) {
                             Cart::instance('cart')->add(

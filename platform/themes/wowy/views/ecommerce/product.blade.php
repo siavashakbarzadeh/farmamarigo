@@ -176,9 +176,7 @@
                             @elseif ($offerType == 6)
                                 <span class="btn-sm btn-danger ml-5">QTY</span>
                             @endif
-
                         @endif
-
                     </div>
                 </div>
                 <div class="bt-1 border-color-1 mt-15 mb-15"></div>
@@ -187,7 +185,6 @@
                     {{--                    {!! BaseHelper::clean($product->description) !!} --}}
                     {{-- {!! apply_filters('ecommerce_after_product_description', null, $product) !!} --}}
                 </div>
-
                 <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                 <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
                     @csrf
@@ -224,9 +221,7 @@
                             @endif
                         </div>
                     @endif
-
                     {!! render_product_options($product) !!}
-
                     {!! apply_filters(ECOMMERCE_PRODUCT_DETAIL_EXTRA_HTML, null, $product) !!}
                     <input type="hidden" name="id" class="hidden-product-id"
                         value="{{ $product->is_variation || !$product->defaultVariation->product_id ? $product->id : $product->defaultVariation->product_id }}" />
@@ -241,7 +236,6 @@
                                         aria-hidden="true"></i></a>
                             </div>
                         @endif
-
                         <div class="product-extra-link2 @if (EcommerceHelper::isQuickBuyButtonEnabled()) has-buy-now-button @endif">
                             @if (EcommerceHelper::isCartEnabled())
                                 <button type="submit"
