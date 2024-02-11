@@ -540,7 +540,7 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                             href="javascript:void(0)"
                                                                             data-processing-text="{{ __('Removing...') }}">{{ __('Remove') }}</a></small>)<span>
                                                                 </td>
-                                                                @if (session('discount_amount') || session('applied_coupon_code'))
+                                                                @if (session('applied_spc') || session('applied_coupon_code'))
                                                                     <td><span class="font-lg fw-900 text-brand"
                                                                             style="color: #E52728 !important">-{{ format_price($couponDiscountAmount) }}</span>
                                                                     </td>
