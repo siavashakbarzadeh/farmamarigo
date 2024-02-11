@@ -1537,7 +1537,48 @@ class PublicCheckoutController
     {
         foreach (Cart::instance('cart')->content() as $cartItem) {
             //  aget variant o azin kossher product Id ro begir age collegtati bud yedune behesh ezafe kon 
-            $product = $this->productRepository->findById($cartItem->id);
+            $flag = false; // Reset flag for each item
+                $product = Product::find($cartItem->id); // Assuming $item->id is correct
+        
+                if ($product && $product->is_variation) {
+                    $AllVariations = Product::where('name', $cartItem->name)->get();
+                    foreach ($AllVariations as $variation) {
+                        if ($variation->is_variation) {
+                            $flag = true;
+                            break; // Found a variation, no need to continue
+                        }
+                    }
+                }
+        
+                if ($flag) {
+                    $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
+                    $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
+                } else {
+                    $product_id = $cartItem->id;
+                }
+                $offerDetail=OffersDetail::where('product_id',$product_id)->where('customer_id',$currentUserId)->where('status','active')->first();
+                if($offerDetail){
+                    $offer=Offers::find($offerDetail->offer_id);
+                    if($offer){
+                        if($offerType==5){
+                            $data = [
+                                'order_id' => $order->id,
+                                'product_id' => $offerDetail->gift_product_id,
+                                'product_name' => Product::find($offerDetail->gift_product_id)->name,
+                                'product_image' => $product->original_product->image,
+                                'qty' => 1,
+                                'weight' => $shippingData ? Arr::get($shippingData, 'weight') : 0,
+                                'price' => 0,
+                                'tax_amount' => $cartItem->tax,
+                                'options' => [],
+                                'product_type' => $product ? $product->product_type : null,
+                                'offer_id'=>$offerDetail->offer_id
+                            ];
+                            OrderProduct::create($data);
+                        }
+                    }
+
+                }
 
             $data = [
                 'order_id' => $order->id,
