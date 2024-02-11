@@ -275,6 +275,8 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                 @else
                                                                     <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                                 @endif
+                                                            @else
+                                                                <span>{{ format_price($cartItem->price * $cartItem->qty) }}</span>
                                                             @endif
                                                         </td>
                                                         <td class="action" data-title="{{ __('Remove') }}">
