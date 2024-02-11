@@ -531,7 +531,7 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                     }
                                                                 @endphp
                                                                 <td class="cart_total_label">
-                                                                    {{ __('Coupon code: :code', ['code' => ['code' => $couponcodefinal]]) }}
+                                                                    {{ __('Coupon code: :code', ['code' => $couponcodefinal]) }}
                                                                     (<small><a
                                                                             class="btn-remove-coupon-code btn-remove-spc text-danger"
                                                                             data-url="{{ route('public.coupon.remove') }}"
