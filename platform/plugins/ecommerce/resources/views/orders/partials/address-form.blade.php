@@ -18,16 +18,16 @@
         'shipping_amount' => $order->shipping_amount,
         'created_order_id' => $sessionCheckoutData['created_order_id'] + 1,
     ];
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'name', $adding['name']);
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'email', $adding['email']);
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'phone', $adding['phone']);
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'country', $adding['country']);
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'state', $adding['state']);
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'city', $adding['city']);
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'address', $adding['address']);
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'name', $adding['name']);
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'name', $adding['name']);
-    $sessionCheckoutData = array_merge($sessionCheckoutData, 'name', $adding['name']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'name', $adding['name']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'email', $adding['email']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'phone', $adding['phone']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'country', $adding['country']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'state', $adding['state']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'city', $adding['city']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'address', $adding['address']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'name', $adding['name']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'name', $adding['name']);
+    $sessionCheckoutData = Arr::set($sessionCheckoutData, 'name', $adding['name']);
     dd($sessionCheckoutData);
 @endphp
 <div class="customer-address-payment-form">
