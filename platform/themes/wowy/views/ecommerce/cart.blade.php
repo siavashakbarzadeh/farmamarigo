@@ -448,21 +448,7 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                 <table class="table">
                                                     <tbody>
 
-                                                        @if ($couponDiscountAmount > 0 && session('applied_coupon_code'))
-                                                            <tr>
-                                                                <td class="cart_total_label">
-                                                                    {{ __('Coupon code: :code', ['code' => session('applied_coupon_code')]) }}
-                                                                    (<small><a
-                                                                            class="btn-remove-coupon-code text-danger"
-                                                                            data-url="{{ route('public.coupon.remove') }}"
-                                                                            href="javascript:void(0)"
-                                                                            data-processing-text="{{ __('Removing...') }}">{{ __('Remove') }}</a></small>)<span>
-                                                                </td>
-                                                                <td class="cart_total_amount"><span
-                                                                        class="font-lg fw-900 text-brand">{{ format_price($couponDiscountAmount) }}</span>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
+
 
                                                         @if (auth('customer'))
                                                             @php
@@ -518,18 +504,23 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
                                                                         class="font-xl fw-900 text-brand">{{ format_price($shippingAmount) }}</span></strong>
                                                             </td>
                                                         </tr>
-                                                        @if ($promotionDiscountAmount)
+                                                        @if ($couponDiscountAmount > 0 && session('applied_coupon_code'))
                                                             <tr>
                                                                 <td class="cart_total_label">
-                                                                    {{ __('Discount promotion') }}</td>
-                                                                <td class="cart_total_amount"><span
-                                                                        class="font-lg fw-900 text-brand">{{ format_price($promotionDiscountAmount) }}</span>
+                                                                    {{ __('Coupon code: :code', ['code' => session('applied_coupon_code')]) }}
+                                                                    (<small><a
+                                                                            class="btn-remove-coupon-code text-danger"
+                                                                            data-url="{{ route('public.coupon.remove') }}"
+                                                                            href="javascript:void(0)"
+                                                                            data-processing-text="{{ __('Removing...') }}">{{ __('Remove') }}</a></small>)<span>
                                                                 </td>
-                                                                @dd(session()->get('applied_coupon_code'))
-                                                                @if (session()->get('applied_coupon_code'))
-                                                                    <input type="hidden" name="couponCode"
-                                                                        value={{ session()->get('applied_coupon_code') }}>
-                                                                @endif
+                                                                <td class="cart_total_amount"><span
+                                                                        class="font-lg fw-900 text-brand"
+                                                                        style="color: #E52728">
+                                                                        -{{ format_price($couponDiscountAmount) }}</span>
+                                                                </td>
+                                                                <input type="hidden" name="couponCode"
+                                                                    value="{{ session('applied_coupon_code') }}">
                                                             </tr>
                                                         @endif
                                                         <tr>
