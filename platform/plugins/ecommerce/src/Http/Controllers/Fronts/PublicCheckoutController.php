@@ -1608,9 +1608,7 @@ class PublicCheckoutController
                             OrderProduct::create($data);
                         }
                     }
-
                 }
-
         }
     }
 }
