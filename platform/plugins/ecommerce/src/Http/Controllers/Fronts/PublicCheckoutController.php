@@ -64,6 +64,7 @@ use Botble\Ecommerce\Models\Offers;
 use Botble\Ecommerce\Models\Product;
 use Botble\Ecommerce\Models\ProductVariants;
 use Botble\Ecommerce\Models\ProductVariation;
+use Botble\Ecommerce\Models\OrderProduct;
 use Illuminate\Support\Facades\DB;
 
 
