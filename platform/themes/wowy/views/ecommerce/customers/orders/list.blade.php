@@ -81,7 +81,6 @@
                                                     </a>
                                                 @endif
                                             @else
-                                                <i class="fa-solid fa-hourglass-start"></i>
                                                 <a class='btn btn-primary btn-sm'
                                                     href="/checkout/{{ $order->token }}/recover"
                                                     style="background-color:#f9844a;color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
