@@ -1125,6 +1125,12 @@ class PublicCheckoutController
         ]
     );
 
+    $RealOrder=Order::where('token',$order->token)->where(function($query) {
+        $query->where('status','returned');})->first();
+    if($RealOrder){
+        $RealOrder->delete();
+    }
+
     Mail::to($order->user->email)->send(new OrderPaymentFailed($order));
 
     session()->forget('shippingAmount');
