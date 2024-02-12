@@ -39,7 +39,7 @@ class TaxTable extends TableAbstract
             ->eloquent($this->query())
             ->editColumn('title', function ($item) {
                 if (! Auth::user()->hasPermission('tax.edit')) {
-                    return BaseHelper::clean($item->title);
+                    return BaseHelper::clean($item->nome);
                 }
 
                 return Html::link(route('tax.edit', $item->id), BaseHelper::clean($item->title));
@@ -67,9 +67,8 @@ class TaxTable extends TableAbstract
     {
         $query = $this->repository->getModel()->select([
             'id',
-            'title',
+            'nome',
             'percentage',
-            'priority',
             'status',
             'created_at',
         ]);
@@ -85,16 +84,12 @@ class TaxTable extends TableAbstract
                 'width' => '20px',
                 'class' => 'text-start',
             ],
-            'title' => [
+            'nome' => [
                 'title' => trans('core/base::tables.name'),
                 'class' => 'text-start',
             ],
             'percentage' => [
                 'title' => trans('plugins/ecommerce::tax.percentage'),
-                'class' => 'text-center',
-            ],
-            'priority' => [
-                'title' => trans('plugins/ecommerce::tax.priority'),
                 'class' => 'text-center',
             ],
             'status' => [
@@ -122,7 +117,7 @@ class TaxTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'title' => [
+            'nome' => [
                 'title' => trans('core/base::tables.name'),
                 'type' => 'text',
                 'validate' => 'required|max:120',

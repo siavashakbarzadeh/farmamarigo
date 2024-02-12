@@ -95,7 +95,6 @@ class LoginController extends Controller
                 'address'=>$address->address,
                 'cap'=>$address->zip_code,
                 'regione'=>$address->state,
-
             ]);
             Mail::to('a.allahverdi@icoa.it')->send(new UserRegisteredNotif($user));
             return redirect('/login?verify_message=neutral');
