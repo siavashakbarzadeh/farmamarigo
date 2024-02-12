@@ -749,7 +749,7 @@ class PublicCheckoutController
         }
 
         $amount = Cart::instance('cart')->rawTotal() + ((float)(session()->get('shippingAmount'))*0.22) - $promotionDiscountAmount - $couponDiscountAmount;
-
+        dd($amount);
         $request->merge([
             'amount' => $amount ?: 0,
             'currency' => $request->input('currency', strtoupper(get_application_currency()->title)),
