@@ -471,7 +471,7 @@
                                                                 if ($customerType == ('Farmacia' || 'Parafarmacia' || 'AltroPharma')) {
                                                                     $shippingAmount = 10;
                                                                 }
-                                                                session('shippingAmount',$shippingAmount);
+                                                                session(['shippingAmount' => $shippingAmount]);
                                                                 $subtotal = Cart::instance('cart')->rawSubTotal();
 
                                                                 if (session('applied_spc')) {
