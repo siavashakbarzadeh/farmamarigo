@@ -196,7 +196,7 @@ class CreaSconto extends BaseController
     {
         // Retrieve product IDs from the request
         $productsInput = $request->input('products');
-    
+
         // Group product and variant IDs
         $productAndVariantIdsGrouped = [];
         foreach ($productsInput as $productId) {
@@ -209,7 +209,7 @@ class CreaSconto extends BaseController
                 $productAndVariantIdsGrouped[] = $group;
             }
         }
-    
+
         // Retrieve and intersect customer IDs for each product group
         $customerGroups = [];
         foreach ($productAndVariantIdsGrouped as $group) {
@@ -223,21 +223,21 @@ class CreaSconto extends BaseController
             $groupCustomerIds = array_unique($groupCustomerIds); // Remove duplicate customer IDs within the group
             $customerGroups[] = $groupCustomerIds;
         }
-    
+
         // Find the intersecting customer IDs across all groups
         $commonCustomerIds = count($customerGroups) ? call_user_func_array('array_intersect', $customerGroups) : [];
-    
+
         // Fetch customer details along with regions and agents
         $customers = Customer::findMany($commonCustomerIds);
         $regioneIds = $customers->pluck('region_id')->unique();
         $agentIds = $customers->pluck('agent_id')->unique();
-    
+
         // Fetch Regions
         $regione = Regione::findMany($regioneIds)->sortBy('name')->values()->all();
-    
+
         // Fetch Agents
         $agents = Agent::findMany($agentIds)->sortBy('nome')->values()->all();
-    
+
         // Prepare the data to return
         $data = [
             'incustomers' => $customers->sortBy('name')->values()->all(),
@@ -245,10 +245,10 @@ class CreaSconto extends BaseController
             'agents' => $agents,
             'count' => count($customers)
         ];
-    
+
         return $data;
     }
-    
+
 
 
     private function array_sort_by_column(&$array, $column, $direction = SORT_ASC) {
