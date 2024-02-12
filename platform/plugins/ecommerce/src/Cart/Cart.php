@@ -7,6 +7,7 @@ use Botble\Ecommerce\Cart\Contracts\Buyable;
 use Botble\Ecommerce\Cart\Exceptions\CartAlreadyStoredException;
 use Botble\Ecommerce\Cart\Exceptions\UnknownModelException;
 use Botble\Ecommerce\Repositories\Interfaces\ProductInterface;
+use Botble\Ecommerce\Models\SPC;
 use Carbon\Carbon;
 use Closure;
 use EcommerceHelper;
@@ -606,33 +607,8 @@ class Cart
         if (! EcommerceHelper::isTaxEnabled()) {
             return 0;
         }
-        $shippingAmount=0;
-        if(session('shippingAmount')){
-            if (session('applied_spc')) {
-                $coupon = SPC::where('code', session('applied_spc'))->where('status', 1)->first();
 
-                if ($coupon->min_order != null && Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() + $shippingAmount < $coupon->min_order) {
-                    session()->forget('applied_spc');
-                    session()->forget('discount_amount');
-                } else {
-                    $first = $shippingAmount;
-                    if ($coupon->type == 1) {
-                        $shippingAmount = $shippingAmount * ((100 - $coupon->amount) / 100);
-                    } elseif ($coupon->type == 2) {
-                        $shippingAmount = $coupon->amount >= $shippingAmount ? 0 : $shippingAmount - $coupon->amount;
-                    } else {
-                        $shippingAmount = 0;
-                    }
-                    $couponDiscountAmount = $first - $shippingAmount;
-                }
-            }else{
-                $shippingAmount=session('shippingAmount');
-            }
-        }
-        $shippingAmount = floatval($shippingAmount);
-        $total = $this->rawTax() + ($shippingAmount * 0.22);
-
-        return format_price($total);
+        return format_price($this->rawTax());
 
     }
 
@@ -642,17 +618,50 @@ class Cart
      * @return float
      */
     public function rawTax()
-    {
-        if (! EcommerceHelper::isTaxEnabled()) {
-            return 0;
-        }
-
-        $content = $this->getContent();
-
-        return $content->reduce(function ($tax, CartItem $cartItem) {
-            return $tax + ($cartItem->qty * $cartItem->tax);
-        }, 0);
+{
+    if (!EcommerceHelper::isTaxEnabled()) {
+        return 0;
     }
+
+    $content = $this->getContent();
+
+    // Calculate tax from cart items
+    $itemsTax = $content->reduce(function ($tax, CartItem $cartItem) {
+        return $tax + ($cartItem->qty * $cartItem->tax);
+    }, 0);
+
+    // Retrieve the shipping amount from session
+    $shippingAmount=0;
+    if(session('shippingAmount')){
+        $shippingAmount=session('shippingAmount');
+        if (session('applied_spc')) {
+            $coupon = SPC::where('code', session('applied_spc'))->where('status', 1)->first();
+
+            if ($coupon->min_order != null && Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() + $shippingAmount < $coupon->min_order) {
+                session()->forget('applied_spc');
+                session()->forget('discount_amount');
+            } else {
+                $first = $shippingAmount;
+                if ($coupon->type == 1) {
+                    $shippingAmount = $shippingAmount * ((100 - $coupon->amount) / 100);
+                } elseif ($coupon->type == 2) {
+                    $shippingAmount = $coupon->amount >= $shippingAmount ? 0 : $shippingAmount - $coupon->amount;
+                } else {
+                    $shippingAmount = 0;
+                }
+                $couponDiscountAmount = $first - $shippingAmount;
+            }
+        }
+    }
+    $shippingAmount = floatval($shippingAmount);
+    // Assuming the tax rate for shipping is the same as for cart items (22%)
+    $shippingTax = $shippingAmount * 0.22;
+
+    // Add shipping tax to items tax
+    $totalTax = $itemsTax + $shippingTax;
+
+    return $totalTax;
+}
 
     /**
      * Get the subtotal (total - tax) of the items in the cart.
