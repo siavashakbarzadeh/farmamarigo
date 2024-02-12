@@ -186,6 +186,7 @@
                     {{-- {!! apply_filters('ecommerce_after_product_description', null, $product) !!} --}}
                 </div>
                 <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                @if(auth('customer')->user() !== null)
                 <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
                     @csrf
                     <ins>
@@ -277,6 +278,20 @@
                     </div>
             </div>
             </form>
+            @else
+            <div class="row">
+                <div class="col-12">
+                    <p class="alert alert-warning">
+                        Devi effettuare il login per acquistare il prodotto!
+                    </p>
+                    <a class="btn" href="/login"
+                        style="padding:10px 4px !important; border-radius:50px;">
+                        <span style="color:white;font-size:smaller;font-weight:600">Login</span>
+                    </a>
+                </div>
+
+            </div>
+            @endif
             <ul class="product-meta font-xs color-grey mt-50">
                 @if ($product->sku)
                     <li class="mb-5"><span class="d-inline-block" id="product-sku">Codice</span>:
