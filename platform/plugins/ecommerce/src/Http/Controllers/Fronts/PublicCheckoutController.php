@@ -748,8 +748,8 @@ class PublicCheckoutController
             $currentUserId = auth('customer')->id();
         }
 
-        $amount = Cart::instance('cart')->rawTotal() + ((float)(session()->get('shippingAmount'))*0.22) - $promotionDiscountAmount - $couponDiscountAmount;
-        dd($amount);
+        $amount = Cart::instance('cart')->rawTotal() + (float)(session()->get('shippingAmount')) - $promotionDiscountAmount - $couponDiscountAmount;
+
         $request->merge([
             'amount' => $amount ?: 0,
             'currency' => $request->input('currency', strtoupper(get_application_currency()->title)),
@@ -840,7 +840,7 @@ class PublicCheckoutController
                 ]);
                 $arguments=[
                     'account_id' => auth('customer')->user()->id,
-                    'amount' => $order->amount,
+                    'amount' => $order->amount ,
                     'user_id'=>0,
                     'currency' => 'EUR',
                     'customer_id' => auth('customer')->user()->id,
@@ -1533,6 +1533,9 @@ class PublicCheckoutController
         if(session('applied_spc') && session('discount_amount')){
             $data['coupon_code']=session('applied_spc');
             $data['discount_amount']=(float)(session('discount_amount'));
+        }
+        if(session('shippingAmount')){
+         $data['amount']+= $data['amount'] + (session('shippingAmount')*0.22);
         }
         if ($order) {
             $order->fill($data);
