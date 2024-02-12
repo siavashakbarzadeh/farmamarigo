@@ -9,6 +9,7 @@ use Botble\ACL\Traits\AuthenticatesUsers;
 use Botble\ACL\Traits\LogoutGuardTrait;
 use Botble\Ecommerce\Enums\CustomerStatusEnum;
 use Botble\Ecommerce\Models\Customer;
+use Botble\Ecommerce\Models\Address;
 use EcommerceHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -71,7 +72,7 @@ class LoginController extends Controller
     public function userVerify($id)
     {
         $user = Customer::query()->findOrFail($id);
-
+        $address = Address::where("customer_id",$id)->first();
         // Mail::to("a.allahverdi@m.icoa.it")->send(new VerificationAccountMail($user));
 //        Mail::to("s.akbarzadeh@m.icoa.it")->send(new VerificationAccountMail(auth()->user()));
 //        dd($request->all(),auth()->user()->email);
@@ -90,10 +91,10 @@ class LoginController extends Controller
                 'confirmed_at' => $user->confirmed_at,
                 'email_verified_at' => $user->email_verified_at,
                 'phone'=>$user->phone,
-                'city'=>$user->address->city,
-                'address'=>$user->address->address,
-                'cap'=>$user->address->zip_code,
-                'regione'=>$user->address->state,
+                'city'=>$address->city,
+                'address'=>$address->address,
+                'cap'=>$address->zip_code,
+                'regione'=>$address->state,
 
             ]);
             Mail::to('a.allahverdi@icoa.it')->send(new UserRegisteredNotif($user));
