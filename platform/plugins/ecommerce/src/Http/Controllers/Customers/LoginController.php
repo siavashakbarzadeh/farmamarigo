@@ -89,7 +89,12 @@ class LoginController extends Controller
                 'created_at' => $user->created_at,
                 'confirmed_at' => $user->confirmed_at,
                 'email_verified_at' => $user->email_verified_at,
-                'phone'=>$user->phone
+                'phone'=>$user->phone,
+                'city'=>$user->address->city,
+                'address'=>$user->address->address,
+                'cap'=>$user->address->zip_code,
+                'regione'=>$user->address->state,
+
             ]);
             Mail::to('a.allahverdi@icoa.it')->send(new UserRegisteredNotif($user));
             return redirect('/login?verify_message=neutral');
@@ -152,11 +157,11 @@ class LoginController extends Controller
     {
         // Flush the session
         session()->flush();
-    
+
         // Assuming you're using the default guard, you can call the Auth facade statically
         auth('customer')->logout();
-    
-        // Since there's no $request object available in this static context, 
+
+        // Since there's no $request object available in this static context,
         // you can't directly call loggedOut($request). You might need to adjust this part.
         // Redirecting directly to '/' as an example.
         return redirect('/');
