@@ -507,14 +507,7 @@
                                                                         class="font-xl fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawSubTotal()) }}</span></strong>
                                                             </td>
                                                         </tr>
-                                                        @if (EcommerceHelper::isTaxEnabled())
-                                                            <tr>
-                                                                <td class="cart_total_label">{{ __('Tax') }}</td>
-                                                                <td class="cart_total_amount"><span
-                                                                        class="font-lg fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawTax()) }}</span>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
+
                                                         <tr>
 
                                                             <td class="cart_total_label">
@@ -532,6 +525,7 @@
                                                                 </strong>
                                                             </td>
                                                         </tr>
+
                                                         @if (($couponDiscountAmount > 0 && session('applied_coupon_code')) || session('applied_spc'))
                                                             <tr>
                                                                 @php
@@ -558,6 +552,14 @@
                                                                 @endif
                                                                 <input type="hidden" name="couponCode"
                                                                     value="{{ $couponcodefinal }} ">
+                                                            </tr>
+                                                        @endif
+                                                        @if (EcommerceHelper::isTaxEnabled())
+                                                            <tr>
+                                                                <td class="cart_total_label">{{ __('Tax') }}</td>
+                                                                <td class="cart_total_amount"><span
+                                                                        class="font-lg fw-900 text-brand">{{ format_price(Cart::instance('cart')->rawTax()) }}</span>
+                                                                </td>
                                                             </tr>
                                                         @endif
                                                         <tr>
