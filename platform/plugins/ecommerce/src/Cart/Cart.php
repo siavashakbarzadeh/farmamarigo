@@ -606,8 +606,34 @@ class Cart
         if (! EcommerceHelper::isTaxEnabled()) {
             return 0;
         }
+        $shippingAmount=0;
+        if(session('shippingAmount')){
+            if (session('applied_spc')) {
+                $coupon = SPC::where('code', session('applied_spc'))->where('status', 1)->first();
 
-        return format_price($this->rawTax());
+                if ($coupon->min_order != null && Cart::instance('cart')->rawSubTotal() + Cart::instance('cart')->rawTax() + $shippingAmount < $coupon->min_order) {
+                    session()->forget('applied_spc');
+                    session()->forget('discount_amount');
+                } else {
+                    $first = $shippingAmount;
+                    if ($coupon->type == 1) {
+                        $shippingAmount = $shippingAmount * ((100 - $coupon->amount) / 100);
+                    } elseif ($coupon->type == 2) {
+                        $shippingAmount = $coupon->amount >= $shippingAmount ? 0 : $shippingAmount - $coupon->amount;
+                    } else {
+                        $shippingAmount = 0;
+                    }
+                    $couponDiscountAmount = $first - $shippingAmount;
+                }
+            }else{
+                $shippingAmount=session('shippingAmount');
+            }
+        }
+        $shippingAmount = floatval($shippingAmount);
+        $total = $this->rawTax() + ($shippingAmount * 0.22);
+
+        return format_price($total);
+
     }
 
     /**
