@@ -449,7 +449,7 @@ class PublicCheckoutController
             foreach(Cart::instance('cart')->content() as $key => $cartItem){
                 $flag = false; // Reset flag for each item
                 $product = Product::find($cartItem->id); // Assuming $item->id is correct
-        
+
                 if ($product && $product->is_variation) {
                     $AllVariations = Product::where('name', $cartItem->name)->get();
                     foreach ($AllVariations as $variation) {
@@ -459,7 +459,7 @@ class PublicCheckoutController
                         }
                     }
                 }
-        
+
                 if ($flag) {
                     $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
                     $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
@@ -486,7 +486,7 @@ class PublicCheckoutController
             }
             $couponDiscountAmount = Arr::get($sessionData, 'coupon_discount_amount');
             $amount = ($cartTotal + $cartIva) + (float)(session()->get('shippingAmount')) + ((float)(session()->get('shippingAmount')) * 0.22)  - $couponDiscountAmount;
-            
+
             $request->merge([
                 'amount' => $amount ?: 0,
                 'currency' => $request->input('currency', strtoupper(get_application_currency()->title)),
@@ -748,7 +748,7 @@ class PublicCheckoutController
             $currentUserId = auth('customer')->id();
         }
 
-        $amount = Cart::instance('cart')->rawTotal() + (float)(session()->get('shippingAmount')) - $promotionDiscountAmount - $couponDiscountAmount;
+        $amount = Cart::instance('cart')->rawTotal() + ((float)(session()->get('shippingAmount'))*0.22) - $promotionDiscountAmount - $couponDiscountAmount;
 
         $request->merge([
             'amount' => $amount ?: 0,
@@ -788,7 +788,7 @@ class PublicCheckoutController
                 'description' => __('Order was created from checkout page'),
                 'order_id' => $order->id,
             ]);
-    
+
             if ($isAvailableShipping) {
                 app(ShipmentInterface::class)->createOrUpdate([
                     'order_id' => $order->id,
@@ -804,11 +804,11 @@ class PublicCheckoutController
                     'shipping_company_name' => $shippingData ? Arr::get($shippingMethod, 'company_name', '') : '',
                 ]);
             }
-    
+
             if ($appliedCouponCode = session()->get('applied_coupon_code')) {
                 DiscountFacade::getFacadeRoot()->afterOrderPlaced($appliedCouponCode);
             }
-    
+
             $this->orderProductRepository->deleteBy(['order_id' => $order->id]);
             $this->addProductToOrder($order, $shippingData);
             $request->merge([
@@ -1026,7 +1026,7 @@ class PublicCheckoutController
     public function paypalConfirmed(Request $request){
 
         $order = $this->orderRepository->findOrFail($request->orderId);
-        
+
         if($order){
             $arguments=[
                 'account_id' => auth('customer')->user()->id,
@@ -1097,8 +1097,8 @@ class PublicCheckoutController
         $this->addProductToOrder($order, $products->toArray());
         $RealOrder->delete();
     }
-        
-    
+
+
 
     $arguments=[
         'account_id' => auth('customer')->user()->id,
@@ -1489,7 +1489,7 @@ class PublicCheckoutController
             'note' => $order->description,
             'shippingAmount'=>$order->shipping_amount
         ]);
-        
+
 
         if (session()->has('tracked_start_checkout') && session('tracked_start_checkout') == $token) {
             $sessionCheckoutData = OrderHelper::getOrderSessionData($token);
@@ -1590,9 +1590,9 @@ class PublicCheckoutController
 
             $this->orderProductRepository->create($data);
 
-            //  aget variant o azin kossher product Id ro begir age collegtati bud yedune behesh ezafe kon 
+            //  aget variant o azin kossher product Id ro begir age collegtati bud yedune behesh ezafe kon
             $flag = false; // Reset flag for each item
-        
+
                 if ($product && $product->is_variation) {
                     $AllVariations = Product::where('name', $cartItem->name)->get();
                     foreach ($AllVariations as $variation) {
@@ -1602,7 +1602,7 @@ class PublicCheckoutController
                         }
                     }
                 }
-        
+
                 if ($flag) {
                     $productVariation = ProductVariation::where('product_id', $cartItem->id)->first();
                     $product_id = $productVariation ? $productVariation->configurable_product_id : $cartItem->id;
