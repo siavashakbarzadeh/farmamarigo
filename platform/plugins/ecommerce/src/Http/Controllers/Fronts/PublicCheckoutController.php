@@ -1535,7 +1535,7 @@ class PublicCheckoutController
             $data['discount_amount']=(float)(session('discount_amount'));
         }
         if(session('shippingAmount')){
-         $data['amount']+= $data['amount'] + (session('shippingAmount')*0.22);
+         $data['amount']+=(session('shippingAmount')*0.22);
         }
         if ($order) {
             $order->fill($data);
