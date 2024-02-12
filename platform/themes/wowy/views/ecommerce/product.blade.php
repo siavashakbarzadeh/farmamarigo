@@ -284,7 +284,7 @@
                     <p class="alert alert-warning">
                         Devi effettuare il login per acquistare il prodotto!
                     </p>
-                    <a class="btn" href="/login"
+                    <a class="btn col-4" href="/login"
                         style="padding:10px 4px !important; border-radius:50px;">
                         <span style="color:white;font-size:smaller;font-weight:600">Login</span>
                     </a>
