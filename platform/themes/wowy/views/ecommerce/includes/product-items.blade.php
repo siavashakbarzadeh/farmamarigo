@@ -49,13 +49,11 @@
                     <h4>
                         Cambiare combinazione di filtri e riprovare.
                     </h4>
-
                 </div>
             </div>
         </div>
     @endforelse
 </div>
-
 @if ($products->total() > 0)
     <br>
     {!! $products->withQueryString()->onEachSide(1)->links(Theme::getThemeNamespace() . '::partials.custom-pagination') !!}
