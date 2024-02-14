@@ -495,12 +495,6 @@
 
     });
 
-    $(document).on("keyup", "#search-consumabili", async function() {
-        await $(this).closest('#products-filter-ajax').submit();
-
-
-    });
-
     $(document).ready(function() {
         // Debounce function to limit the rate of function execution
         function debounce(func, delay) {
