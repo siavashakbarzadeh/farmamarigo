@@ -82,7 +82,7 @@ class PublicController extends Controller
                 ])
                 ->sendUsingTemplate('notice', null, $args);
 
-            return $response->setMessage(__('Send message successfully!'));
+            return $response->setMessage("Il suo messaggio è stato inviato con successo!");
         } catch (Exception $exception) {
             info($exception->getMessage());
 
