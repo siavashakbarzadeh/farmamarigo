@@ -188,7 +188,7 @@
                                                                         <span>
                                                                             <del
                                                                                 style="display:block;font-size: xx-small">
-                                                                                {{ $pricelist[0]->final_price }}
+                                                                                {{ $product->price }}
                                                                             </del>
                                                                         </span>
                                                                     @elseif ($offerType == 6 && $cartItem->qty < $offerDetail->quantity)
@@ -203,7 +203,7 @@
                                                                         <span>
                                                                             <del
                                                                                 style="display:block;font-size: xx-small">
-                                                                                {{ $pricelist[0]->final_price }}
+                                                                                {{ $product->price }}
                                                                             </del>
                                                                         </span>
                                                                     @else
@@ -246,9 +246,9 @@
 
                                                                             // Calculate the adjusted price per item, taking into account the quantity
                                                                             // This ensures that the cart item's price is adjusted to reflect the effective price after the offer
-                                                                            $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem->qty : 0;
+$adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem->qty : 0;
 
-                                                                            // Update the cart item's price to the adjusted price per item
+// Update the cart item's price to the adjusted price per item
                                                                             $cartItem->price = $adjustedPricePerItem;
                                                                         @endphp
 
