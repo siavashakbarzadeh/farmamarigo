@@ -94,23 +94,7 @@
                                     @endif
 
                                     @if (is_plugin_active('ecommerce'))
-                                        @if (count($currencies) > 1)
-                                            <li>
-                                                <a class="language-dropdown-active" href="#"> <i
-                                                        class="fa fa-coins"></i>
-                                                    {{ get_application_currency()->title }} <i
-                                                        class="fa fa-chevron-down"></i></a>
-                                                <ul class="language-dropdown">
-                                                    @foreach ($currencies as $currency)
-                                                        @if ($currency->id !== get_application_currency_id())
-                                                            <li><a
-                                                                    href="{{ route('public.change-currency', $currency->title) }}">{{ $currency->title }}</a>
-                                                            </li>
-                                                        @endif
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                        @endif
+
                                         @if (auth('customer')->check())
                                             <li>
                                                 <i class="fa fa-user mr-5"
@@ -417,21 +401,7 @@
                             </div>
                         @endif
 
-                        @if (count($currencies) > 1)
-                            <div class="single-mobile-header-info">
-                                <a class="mobile-language-active" href="#">{{ __('Currency') }} <span><i
-                                            class="far fa-angle-down"></i></span></a>
-                                <div class="lang-curr-dropdown lang-dropdown-active">
-                                    <ul>
-                                        @foreach ($currencies as $currency)
-                                            <li><a
-                                                    href="{{ route('public.change-currency', $currency->title) }}">{{ $currency->title }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        @endif
+
 
                         @if (is_plugin_active('ecommerce'))
                             <div class="single-mobile-header-info">
