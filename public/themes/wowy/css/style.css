@@ -1394,6 +1394,10 @@ label {
     padding-top: 100px
 }
 
+.hero-slider-content-2 a {
+    color: white !important
+}
+
 .hero-slider-1.style-2 .single-slider-img {
     bottom: 0;
     position: absolute;
