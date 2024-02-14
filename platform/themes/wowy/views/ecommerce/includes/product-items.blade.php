@@ -25,7 +25,9 @@
     @include(Theme::getThemeNamespace() . '::views/ecommerce/includes/sort')
 </div>
 
-
+<input type="hidden" name="page" data-value="{{ $products->currentPage() }}">
+<input type="hidden" name="sort-by" value="{{ request()->input('sort-by') }}">
+<input type="hidden" name="num" value="{{ request()->input('num') }}">
 
 <div class="row">
     @forelse ($products as $product)
