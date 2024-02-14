@@ -218,7 +218,7 @@
 <table class="line-items-container">
     <thead>
     <tr>
-        <th class="heading-description">{{ 'plugins/ecommerce::products.form.product'|trans }}</th>
+        <th class="heading-description">Prodotto (Codice)</th>
         <th class="heading-description">{{ 'plugins/ecommerce::products.form.options'|trans }}</th>
         <th class="heading-quantity">{{ 'plugins/ecommerce::products.form.quantity'|trans }}</th>
         <th class="heading-price">{{ 'plugins/ecommerce::products.form.price'|trans }}</th>
