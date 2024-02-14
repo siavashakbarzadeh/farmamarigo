@@ -516,8 +516,8 @@
         // Event handler with debounce for the keyup event
         $('#search-consumabili').on('keyup', debounce(function() {
             $(this).closest('#products-filter-ajax')
-        .submit(); // Or any other function you want to execute
-        }, 500)); // Delay of 500 milliseconds
+                .submit(); // Or any other function you want to execute
+        }, 1500)); // Delay of 500 milliseconds
     });
 
 
