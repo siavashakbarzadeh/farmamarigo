@@ -58,7 +58,7 @@
                                         <input class="form-control email-controll-registration" name="email"
                                             id="txt-email" type="email" value="{{ old('email') }}"
                                             placeholder="Inserisci la tua email ">
-                                        <span id='realtime-email-error' style='color:red'></span>
+                                        <span id='realtime-email-error' class="invalid-feedback"></span>
                                         @if ($errors->has('email'))
                                             <span class="text-danger">{{ $errors->first('email') }}</span>
                                         @endif
