@@ -124,8 +124,8 @@
                                                             href="https://marigopharma.marigo.collaudo.biz/storage/2124-condizioni-generali-di-vendita-webview.pdf">Condizioni
                                                             Generali</a></div>
                                                     <div class="row" style="width:100%"><a
-                                                            style="background: #51B448;color:white"
-                                                            class="bg-primary item-profile-wrap"
+                                                            style="background: #51B448;color:white !important"
+                                                            class="item-profile-wrap"
                                                             href="https://marigopharma.marigo.collaudo.biz/customer/logout">Esci</a>
                                                     </div>
 
