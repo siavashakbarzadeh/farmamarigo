@@ -501,24 +501,24 @@
 
     });
 
-    function debounce(func, wait) {
-        let timeout;
-
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
+    $(document).ready(function() {
+        // Debounce function to limit the rate of function execution
+        function debounce(func, delay) {
+            let debounceTimer;
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => func.apply(context, args), delay);
             };
+        }
 
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    // Your keyup event with debouncing
-    $(document).on("keyup", "#search-consumabili", debounce(async function() {
-        await $(this).closest('#products-filter-ajax').submit();
-    }, 500)); // Adjust 500 to however many milliseconds you want to wait
+        // Event handler with debounce for the keyup event
+        $('#search-consumabili').on('keyup', debounce(function() {
+            $(this).closest('#products-filter-ajax')
+        .submit(); // Or any other function you want to execute
+        }, 500)); // Delay of 500 milliseconds
+    });
 
 
 
