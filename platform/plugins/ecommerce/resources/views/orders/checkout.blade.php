@@ -101,7 +101,7 @@ background-color: rgba(0,0,0,0.4);">
                                             </td>
                                             <td>{{ $product->cartItem->qty }}</td>
                                             <td>
-                                                {{ format_price($product->cartItem->price) }}
+                                                {{ format_price($product->cartItem->price * $product->cartItem->qty) }}
 
                                             </td>
                                         </tr>
