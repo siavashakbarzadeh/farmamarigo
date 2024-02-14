@@ -57,16 +57,16 @@
                                     <label for="txt-email"
                                         class="required">{{ __('La tua email o il tuo codice cliente') }}</label>
                                     <input name="email" id="txt-email" type="email" value="{{ old('email') }}"
-                                        placeholder="{{ __('Please enter your email address') }}">
+                                        placeholder="Inserisci la tua email o il tuo codice cliente">
                                     @if ($errors->has('email'))
                                         <span class="text-danger">{{ $errors->first('email') }}</span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="txt-password1" class="required">{{ __('Password') }}</label>
+                                    <label for="txt-password1" class="required">Password</label>
                                     <div class="form__password" style="position: relative">
                                         <input type="password" name="password" id="txt-password1"
-                                            placeholder="{{ __('Please enter your password') }}">
+                                            placeholder="Inserisci la tua password">
                                         <i id="toggle-password" class="fas fa-eye"
                                             style="position: absolute;top:15px;right:15px;cursor: pointer;"></i>
                                     </div>
@@ -91,7 +91,7 @@
                                             </div>
                                             <div class="form__password">
                                                 <input type="text" id="captcha-login"
-                                                    placeholder="{{ __('Risultato della somma') }}">
+                                                    placeholder="Scrivi il risultato della somma a fianco">
                                             </div>
                                             <span class="text-danger captcha-error"></span>
                                         </div>
