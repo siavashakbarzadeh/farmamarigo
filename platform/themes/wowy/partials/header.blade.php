@@ -60,7 +60,7 @@
         <div class="header header-top-ptb-1 d-none d-lg-block">
             <div class="container">
                 <div class="row align-items-center ">
-                    <div class="col-xl-8 col-lg-8 col-md-8 ">
+                    <div class="col-xl-7 col-lg-7 col-md-7 ">
                         <div class="header-info">
                             <ul>
                                 @if (theme_option('hotline'))
@@ -82,42 +82,11 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-1 col-lg-1 col-md-1">
-                        <div class="text-center">
-                            @if (theme_option('header_messages'))
-                                <div id="news-flash" class="d-inline-block">
-                                    <ul>
-                                        @foreach (json_decode(theme_option('header_messages'), true) as $headerMessage)
-                                            @if (count($headerMessage) == 4)
-                                                <li>
-                                                    @if ($headerMessage[0]['value'])
-                                                        <i
-                                                            class="{{ $headerMessage[0]['value'] }} d-inline-block mr-5"></i>
-                                                    @endif
 
-                                                    @if ($headerMessage[1]['value'])
-                                                        <span class="d-inline-block">
-                                                            {!! BaseHelper::clean($headerMessage[1]['value']) !!}
-                                                        </span>
-                                                    @endif
-                                                    @if ($headerMessage[2]['value'] && $headerMessage[3]['value'])
-                                                        <a class="active d-inline-block"
-                                                            href="{{ url($headerMessage[2]['value']) }}">{!! BaseHelper::clean($headerMessage[3]['value']) !!}</a>
-                                                    @endif
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
-                    @php $currencies = is_plugin_active('ecommerce') ? get_all_currencies() : []; @endphp
 
                     @if (is_plugin_active('ecommerce') || is_plugin_active('language'))
                         <div
-                            class="d-flex justify-content-end align-items-center col-lg-3 col-xl-3 col-md-3 float-end ">
+                            class="d-flex justify-content-end align-items-center col-lg-5 col-xl-5 col-md-5 float-end ">
                             <div class="header-info header-info-right">
                                 <ul>
                                     @if (is_plugin_active('language'))
