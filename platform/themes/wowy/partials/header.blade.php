@@ -64,17 +64,21 @@
                         <div class="header-info">
                             <ul>
                                 @if (theme_option('hotline'))
-                                    <li><i class="fa fa-phone-alt mr-5"></i><a style="text-transform:capitalize"
+                                    <li><i class="fa fa-phone-alt mr-5"></i><a
+                                            style="text-transform:capitalize !important"
                                             href="tel:{{ theme_option('hotline') }}">{{ theme_option('hotline') }}</a>
                                     </li>
                                 @endif
 
                                 @if (is_plugin_active('ecommerce') && EcommerceHelper::isOrderTrackingEnabled())
-                                    <li><i class="fa fa-phone-alt mr-3"></i><a style="text-transform:capitalize"
+                                    <li><i class="fa fa-phone-alt mr-3"></i><a
+                                            style="text-transform:capitalize !important"
                                             href="tel:+39 0815344611">{{ __('+39 0815344611') }}</a></li>
-                                    <li><i class="fa fa-envelope mr-5"></i><a style="text-transform:capitalize"
+                                    <li><i class="fa fa-envelope mr-5"></i><a
+                                            style="text-transform:capitalize !important"
                                             href="">{{ __('info@marigopharma.it ') }}</a></li>
-                                    <li><i class="fa fa-map-pin mr-5"></i><a style="text-transform:capitalize"
+                                    <li><i class="fa fa-map-pin mr-5"></i><a
+                                            style="text-transform:capitalize !important"
                                             href="">{{ __('Via Bagnulo, 168 - Piano di Sorrento (NA)') }}</a>
                                     </li>
                                 @endif
