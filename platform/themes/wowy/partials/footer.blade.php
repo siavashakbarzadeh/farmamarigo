@@ -501,6 +501,25 @@
 
     });
 
+    function debounce(func, wait) {
+        let timeout;
+
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Your keyup event with debouncing
+    $(document).on("keyup", "#search-consumabili", debounce(async function() {
+        await $(this).closest('#products-filter-ajax').submit();
+    }, 500)); // Adjust 500 to however many milliseconds you want to wait
+
 
 
     $(document).ready(function() {
