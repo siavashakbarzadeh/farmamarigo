@@ -16,6 +16,7 @@ class InvoiceItem extends BaseModel
         'reference_type',
         'reference_id',
         'name',
+        'sku',
         'description',
         'image',
         'qty',
