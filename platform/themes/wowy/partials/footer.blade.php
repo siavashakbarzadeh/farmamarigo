@@ -511,7 +511,7 @@
         $('#search-consumabili').on('keyup', debounce(function() {
             $(this).closest('#products-filter-ajax')
                 .submit(); // Or any other function you want to execute
-        }, 1500)); // Delay of 500 milliseconds
+        }, 800)); // Delay of 500 milliseconds
     });
 
 
