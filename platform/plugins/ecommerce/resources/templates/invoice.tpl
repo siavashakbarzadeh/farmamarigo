@@ -167,7 +167,7 @@
         <td>
             {% if invoice.created_at %}
                 <p>
-                    <strong>{{ invoice.created_at|date('F d, Y') }}</strong>
+                    <strong>{{ invoice.formatted_date }}</strong>
                 </p>
             {% endif %}
             <p>

@@ -32,6 +32,7 @@ class Invoice extends BaseModel
         'payment_id',
         'status',
         'paid_at',
+        "formatted_date",
         'shipping_method',
         'shipping_option',
         'coupon_code',
