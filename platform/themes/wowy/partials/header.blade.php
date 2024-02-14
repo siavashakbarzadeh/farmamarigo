@@ -135,7 +135,7 @@
                                                 </ul>
                                             </li>
                                         @else
-                                            <li>
+                                            <li style='font-size:larger'>
                                                 <i class="fa fa-user mr-5"
                                                     style="color: rgb(0, 92, 158) !important"></i>
                                                 <a
