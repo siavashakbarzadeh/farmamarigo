@@ -228,11 +228,11 @@
     <tbody>
     {% for item in invoice.items %}
         <tr>
-            <td>{{ item.name }}</td>
+            <td>{{ item.name }} ({{item.sku}})</td>
             <td>{{ item.options }}</td>
             <td>{{ item.qty }}</td>
-            <td class="right">{{ item.amount|price_format }}</td>
-            <td class="bold">{{ item.sub_total|price_format }}</td>
+            <td class="right">{{ item.sub_total|price_format }}</td>
+            <td class="bold">{{ item.amount|price_format }}</td>
         </tr>
     {% endfor %}
 
