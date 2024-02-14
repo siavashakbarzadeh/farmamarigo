@@ -188,7 +188,7 @@
                                                                         <span>
                                                                             <del
                                                                                 style="display:block;font-size: xx-small">
-                                                                                {{ $product->price }}
+                                                                                {{ format_price($product->price) }}
                                                                             </del>
                                                                         </span>
                                                                     @elseif ($offerType == 6 && $cartItem->qty < $offerDetail->quantity)
@@ -203,7 +203,7 @@
                                                                         <span>
                                                                             <del
                                                                                 style="display:block;font-size: xx-small">
-                                                                                {{ $product->price }}
+                                                                                {{ format_price($product->price) }}
                                                                             </del>
                                                                         </span>
                                                                     @else
