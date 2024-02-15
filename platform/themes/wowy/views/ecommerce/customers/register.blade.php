@@ -208,7 +208,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="txt-password" class="required">Captcha</label>
+                                        <label for="txt-password" class="required">Somma</label>
                                         <div class="row">
                                             <div class="col-12 captcha" style="position: relative">
                                                 <div class="captcha-value"
