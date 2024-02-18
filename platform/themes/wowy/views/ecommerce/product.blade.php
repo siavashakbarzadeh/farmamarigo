@@ -78,7 +78,7 @@
                     @endif
                 </div>
                 <!-- THUMBNAILS -->
-                @if ($responseCode == 200)
+                @if ($responseCode == 200 && count($productImages) > 1)
                     <div class="slider-nav-thumbnails pl-15 pr-15">
                         @foreach ($productImages as $img)
                             <div><img src="{{ RvMedia::getImageUrl($img, 'thumb') }}" alt="{{ $product->name }}"></div>
