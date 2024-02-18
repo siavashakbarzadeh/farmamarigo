@@ -546,15 +546,14 @@
         // Create a URLSearchParams object
         const urlParams = new URLSearchParams(window.location.search);
         // For categories
-        console.log(urlParams.getAll('categories[]'));
-        if (urlParams.has('categories[]')) {
-            const categories = urlParams.getAll('categories[]');
-            console.log(categories);
-            categories.forEach(function(categoryId) {
-                $(`.category-check[value="${categoryId}"]`).prop('checked', true);
-            });
-        }
-        // You can add similar logic for brands if needed
+        const categories = urlParams.getAll('categories[]');
+        categories.forEach(function(categoryId) {
+            $(`#category-filter-"${categoryId}"`).prop('checked', true);
+        });
+        const brands = urlParams.getAll('brands[]');
+        brand.forEach(function(categoryId) {
+            $(`#brand-filter-"${categoryId}"`).prop('checked', true);
+        });
     }
 
     // Call the function on page load
