@@ -27,7 +27,7 @@
         @if (false)
             <hr>
             <div class="form-group mb-3">
-                <label class="control-label">{{ trans('plugins/ecommerce::products.up_selling_products') }}</label>
+                <label class="control-label">{{ trans('plugins/ecommerce::products.related_products') }}</label>
                 <input type="hidden" name="up_sale_products"
                     value="@if ($product) {{ implode(',', $product->upSales()->allRelatedIds()->toArray()) }} @endif" />
                 <div class="box-search-advance product">
