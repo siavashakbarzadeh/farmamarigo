@@ -530,8 +530,10 @@
         // Create a URLSearchParams object
         const urlParams = new URLSearchParams(window.location.search);
         // For categories
+
         if (urlParams.has('categories[]')) {
             const categories = urlParams.getAll('categories[]');
+            console.log(categories);
             categories.forEach(function(categoryId) {
                 $(`.category-check[value="${categoryId}"]`).prop('checked', true);
             });
