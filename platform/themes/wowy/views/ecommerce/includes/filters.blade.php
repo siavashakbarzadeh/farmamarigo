@@ -116,7 +116,7 @@
                                             </div>
                                             <div class="col-10">
                                                 <label class=" category-check-labels form-check-label"
-                                                    for="brand-filter-{{ $category->id }}"><span
+                                                    for="category-filter-{{ $category->id }}"><span
                                                         class="d-inline-block">{{ $category->name }}</span> </label>
                                             </div>
                                         </div>
