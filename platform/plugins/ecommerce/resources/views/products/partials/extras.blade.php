@@ -5,7 +5,7 @@
     <div class="widget-body">
 
         <div class="form-group mb-3">
-            <label class="control-label">{{ trans('plugins/ecommerce::products.cross_selling_products') }}</label>
+            <label class="control-label">{{ trans('plugins/ecommerce::products.related_products') }}</label>
             <input type="hidden" name="cross_sale_products"
                 value="@if ($product) {{ implode(',', $product->crossSales()->allRelatedIds()->toArray()) }} @endif" />
             <div class="box-search-advance product">
