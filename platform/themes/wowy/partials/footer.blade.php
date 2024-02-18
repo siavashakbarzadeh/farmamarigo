@@ -550,7 +550,7 @@
         categories.forEach(function(categoryId) {
             var checkbox = $('#category-filter-' + categoryId);
             // Toggle the checked property
-            checkbox.prop('checked', !checkbox.prop('checked'));
+            checkbox.attr('checked', !checkbox.attr('checked'));
         });
         const brands = urlParams.getAll('brands[]');
         brands.forEach(function(brandId) {
@@ -559,7 +559,7 @@
             var checkbox = $('#brand-filter-' + brandId);
 
             // Toggle the checked property
-            checkbox.prop('checked', !checkbox.prop('checked'));
+            checkbox.attr('checked', !checkbox.attr('checked'));
         });
     }
 
