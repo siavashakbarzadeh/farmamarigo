@@ -506,10 +506,12 @@
         };
     }
 
-    // Event handler with debounce for the keyup event
-    $('#search-consumabili').on('keyup', debounce(function() {
-        $(this).closest('#products-filter-ajax')
-            .submit(); // Or any other function you want to execute
+    // Adjusted event handler with delegation for dynamically loaded elements
+    $('body').on('keyup', '#search-consumabili', debounce(function() {
+        // Ensure this element's closest form or the specific AJAX container is correctly targeted
+        // If `#products-filter-ajax` is the form ID, you might want to use .closest('form') to ensure you're submitting the correct form
+        $(this).closest('form')
+    .submit(); // Adjusted to use 'form' assuming `#products-filter-ajax` is a form
     }, 800));
 
     $(document).on('click', '.category-check', function() {
