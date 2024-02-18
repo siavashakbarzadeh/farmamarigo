@@ -547,6 +547,8 @@
             <h3 class="section-title style-1 mb-30">{{ __('Related products') }}</h3>
         </div>
         @php
+            use Botble\Ecommerce\Models\Product;
+
             if ($product->categories->isNotEmpty()) {
                 // Get the first category's ID from the product
     $categoryId = $product->categories[0]->id;
