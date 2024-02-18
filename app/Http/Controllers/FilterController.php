@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Botble\Ecommerce\Models\Brand;
-use Botble\Ecommerce\Models\Category;
+use Botble\Ecommerce\Models\ProductCategory;
 
 
 
@@ -44,12 +44,12 @@ class FilterController extends BaseController
         // Similarly, update categories based on selected brands if any brand is selected
         // If no brands are selected, get all categories
         if (!empty($brandIds)) {
-            $categories = Category::whereHas('products', function ($query) use ($brandIds) {
+            $categories = ProductCategory::whereHas('products', function ($query) use ($brandIds) {
                 $query->whereIn('brand_id', $brandIds)
                       ->where('status', "published");
             })->get();
         } else {
-            $categories = Category::whereIn('id',$categoryIds);
+            $categories = ProductCategory::whereIn('id',$categoryIds);
         }
 
         // Compact both brands and categories into the response
