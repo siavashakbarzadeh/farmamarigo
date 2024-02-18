@@ -549,11 +549,11 @@
         const categories = urlParams.getAll('categories[]');
         categories.forEach(function(categoryId) {
             console.log('category', categoryId)
-            $(`#category-filter-${categoryId}`).attr('checked', true);
+            $('#category-filter-' + categoryId).attr('checked', true);
         });
         const brands = urlParams.getAll('brands[]');
         brands.forEach(function(brandId) {
-            $(`#brand-filter-${brandId}`).attr('checked', true);
+            $('#category-filter-' + brandId).attr('checked', true);
             console.log('brand', brandId)
         });
     }
