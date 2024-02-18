@@ -50,7 +50,14 @@ class FilterController extends BaseController
                 })->get();
             }
             if(!empty($brandIds)){
-                $categories = ProductCategory::whereIn('products',$categoryIds)->get();
+                if (!empty($categoryIds)) {
+                    $categories = ProductCategory::whereIn('products',$categoryIds)->get();
+
+                }else{
+                    $categories = ProductCategory::whereHas('products', function ($query) {
+                        $query->where('status', "published");
+                    })->get();
+                }
             }else{
                 $categories = ProductCategory::whereHas('products', function ($query) {
                     $query->where('status', "published");
@@ -72,7 +79,13 @@ class FilterController extends BaseController
                 })->get();
             }
             if(!empty($categoryIds)){
-                $brands = Brand::whereIn('id',$brandIds)->get();
+                if(!empty($brandIds)){
+                    $brands = Brand::whereIn('id',$brandIds)->get();
+                }else{
+                    $brands = Brand::whereHas('products', function ($query) {
+                        $query->where('status', "published");
+                    })->get();
+                }
             }else{
                 $brands = Brand::whereHas('products', function ($query) {
                     $query->where('status', "published");
