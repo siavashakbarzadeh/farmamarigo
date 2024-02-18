@@ -115,7 +115,7 @@
                                                     @if (in_array($category->id, request()->input('categories', []))) checked @endif>
                                             </div>
                                             <div class="col-10">
-                                                <label class=" category-check form-check-label"
+                                                <label class=" category-check-labels form-check-label"
                                                     for="brand-filter-{{ $category->id }}"><span
                                                         class="d-inline-block">{{ $category->name }}</span> </label>
                                             </div>
@@ -169,7 +169,7 @@
                                             @if (in_array($brand->id, request()->input('brands', []))) checked @endif>
                                     </div>
                                     <div class="col-10">
-                                        <label class=" brands-check form-check-label"
+                                        <label class=" brands-check-label form-check-label"
                                             for="brand-filter-{{ $brand->id }}"><span
                                                 class="d-inline-block">{{ $brand->name }}</span> </label>
                                     </div>
