@@ -60,7 +60,7 @@ class FilterController extends BaseController
 
         // Compact both brands and categories into the response
         return response()->json([
-            'html' => view('ecommerce.includes.filters', compact('brands','categories'))->render(),
+            'html' => view('theme.wowy::views.ecommerce.includes.filters', compact('brands','categories'))->render(),
         ]);
     }
 
