@@ -548,16 +548,16 @@
         // For categories
         const categories = urlParams.getAll('categories[]');
         categories.forEach(function(categoryId) {
+            console.log('category', categoryId)
+
             var checkbox = $('#category-filter-' + categoryId);
             // Toggle the checked property
             checkbox.attr('checked', !checkbox.attr('checked'));
         });
         const brands = urlParams.getAll('brands[]');
         brands.forEach(function(brandId) {
-
             console.log('brand', brandId)
             var checkbox = $('#brand-filter-' + brandId);
-
             // Toggle the checked property
             checkbox.attr('checked', !checkbox.attr('checked'));
         });
