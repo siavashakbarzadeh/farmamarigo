@@ -81,7 +81,7 @@
         @if ($categories)
             <div class="col-lg-12 mb-4 widget-filter-item">
                 @php
-                    $categories->get();
+
                     $categories = $categories->sortBy(function ($category) {
                         return strtolower($category['name']); // Use array access if your collection contains arrays
                     });
