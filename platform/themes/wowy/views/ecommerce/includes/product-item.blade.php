@@ -26,39 +26,40 @@
         <div class="product-img-action-wrap">
             <div class="product-img product-img-zoom">
                 <a href="{{ $product->url }}">
-                    @php
-                        $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
-                        $productImgUrl = RvMedia::getImageUrl($product->images[0]);
-                        $ch = curl_init($productImgUrl);
-                        curl_setopt($ch, CURLOPT_NOBODY, true);
-                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-                        curl_exec($ch);
-                        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                        curl_close($ch);
+                    <a href="{{ $product->url }}">
+                        @php
+                            $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
+                            $productImgUrl = RvMedia::getImageUrl($product->images[0]);
+                            $ch = curl_init($productImgUrl);
+                            curl_setopt($ch, CURLOPT_NOBODY, true);
+                            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                            curl_exec($ch);
+                            $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
 
-                        if ($responseCode == 200) {
-                            $Image = $productImgUrl;
-                        } else {
-                            $Image = $defaultImgUrl;
-                        }
-                    @endphp
+                            if ($responseCode == 200) {
+                                $Image = $productImgUrl;
+                            } else {
+                                $Image = $defaultImgUrl;
+                            }
+                        @endphp
 
-                    <img class="default-img" src="{{ $Image }}" alt="{{ $product->name }}">
+                        <img class="default-img" src="{{ $Image }}" alt="{{ $product->name }}">
 
-                </a>
-                @if (isset($offerDetail))
-                    @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
-                        <span
-                            class="discount-ev">{{ get_sale_percentage($product->price, $offerDetail->product_price) }}</span>
-                    @elseif ($offerType == 4)
-                        <span class="discount-ev">3x2</span>
-                    @elseif ($offerType == 5)
-                        <span class="discount-ev"><i class="fa fa-link"></i></span>
-                    @elseif ($offerType == 6)
-                        <span class="discount-ev">QTY</span>
+                    </a>
+                    @if (isset($offerDetail))
+                        @if ($offerType == 1 || $offerType == 2 || $offerType == 3)
+                            <span
+                                class="discount-ev">{{ get_sale_percentage($product->price, $offerDetail->product_price) }}</span>
+                        @elseif ($offerType == 4)
+                            <span class="discount-ev">3x2</span>
+                        @elseif ($offerType == 5)
+                            <span class="discount-ev"><i class="fa fa-link"></i></span>
+                        @elseif ($offerType == 6)
+                            <span class="discount-ev">QTY</span>
+                        @endif
+
                     @endif
-
-                @endif
             </div>
             <div class="product-badges product-badges-position product-badges-mrg">
                 @if ($product->isOutOfStock())
@@ -86,12 +87,12 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-8">
+                <div class="col-9">
                     <h2>
                         <a href="{{ $product->url }}">{{ $product->name }}</a>
                     </h2>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div style="text-align: right;margin-top:5px">
                         @php
                             if (auth('customer')->user() !== null) {
