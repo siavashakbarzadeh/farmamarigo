@@ -541,6 +541,39 @@
             </div>
         @endforeach
     </div>
+@else
+    <div class="row mt-60">
+        <div class="col-12">
+            <h3 class="section-title style-1 mb-30">{{ __('Related products') }}</h3>
+        </div>
+        @php
+            if ($product->categories->isNotEmpty()) {
+                // Get the first category's ID from the product
+    $categoryId = $product->categories[0]->id;
+
+    // Get 4 random products from the same category
+    $randomProducts = Product::whereHas('categories', function ($query) use ($categoryId) {
+        $query->where('id', $categoryId);
+                })
+                    ->inRandomOrder()
+                    ->take(4)
+                    ->get();
+            } else {
+                // Fallback logic if the product has no categories
+                // For example, get any 4 random products
+                $randomProducts = Product::inRandomOrder()->take(4)->get();
+            }
+        @endphp
+        @foreach ($randomProducts as $randomProduct)
+            <div class="col-lg-{{ 12 / ($layout == 'product-full-width' ? 4 : 3) }} col-md-4 col-12 col-sm-6">
+                @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.product-item', [
+                    'product' => $randomProduct,
+                ])
+            </div>
+        @endforeach
+    </div>
+
+
 @endif
 
 </div>
