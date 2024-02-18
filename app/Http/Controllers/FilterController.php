@@ -6,6 +6,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Request;
+use Botble\Ecommerce\Models\Brand;
+use Botble\Ecommerce\Models\Category;
+
+
 
 class FilterController extends BaseController
 {
@@ -27,7 +33,7 @@ class FilterController extends BaseController
         if (!empty($categoryIds)) {
             $brands = Brand::whereHas('products', function ($query) use ($categoryIds) {
                 $query->whereIn('category_id', $categoryIds)
-                      ->where('status', BaseStatusEnum::PUBLISHED); 
+                      ->where('status', "published"); 
             })->get();
         } else {
             $brands = Brand::whereIn('id',$brandIds);
@@ -38,7 +44,7 @@ class FilterController extends BaseController
         if (!empty($brandIds)) {
             $categories = Category::whereHas('products', function ($query) use ($brandIds) {
                 $query->whereIn('brand_id', $brandIds)
-                      ->where('status', BaseStatusEnum::PUBLISHED);
+                      ->where('status', "published");
             })->get();
         } else {
             $categories = Category::whereIn('id',$categoryIds);
