@@ -517,11 +517,27 @@
     });
 
     $(document).on('click', '.category-check', function() {
-        updateFilters('category');
+        // Clear any existing timeout to prevent multiple triggers
+        if (window.categoryTimeout) {
+            clearTimeout(window.categoryTimeout);
+        }
+
+        // Set a new timeout
+        window.categoryTimeout = setTimeout(function() {
+            updateFilters('category');
+        }, 800); // Delay of 500 milliseconds
     });
 
     $(document).on('click', '.brands-check', function() {
-        updateFilters('brand');
+        // Clear any existing timeout to prevent multiple triggers
+        if (window.brandTimeout) {
+            clearTimeout(window.brandTimeout);
+        }
+
+        // Set a new timeout
+        window.brandTimeout = setTimeout(function() {
+            updateFilters('brand');
+        }, 800); // Delay of 500 milliseconds
     });
 
     function checkCheckboxesBasedOnURL() {
