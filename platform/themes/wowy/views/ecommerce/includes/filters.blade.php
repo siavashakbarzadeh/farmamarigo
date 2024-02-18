@@ -78,7 +78,7 @@
                 </div>
             </div>
         @endif
-        @if (count($categories) > 0)
+        @if ($categories)
             <div class="col-lg-12 mb-4 widget-filter-item">
                 @php
                     $categories = $categories->sortBy(function ($category) {
