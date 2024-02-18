@@ -525,7 +525,7 @@
             var categoryIds = $('.cat-che:checked').map(function() {
                 return $(this).val(); // Assuming the value of the checkbox contains the ID
             }).get();
-
+            console.log(categoryIds);
             // Collect all checked brand IDs
             var brandIds = $('.brands-check:checked').map(function() {
                 return $(this).val(); // Assuming the value of the checkbox contains the ID
