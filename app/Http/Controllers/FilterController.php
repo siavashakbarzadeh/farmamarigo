@@ -32,8 +32,10 @@ class FilterController extends BaseController
         // If no categories are selected, get all brands
         if (!empty($categoryIds)) {
             $brands = Brand::whereHas('products', function ($query) use ($categoryIds) {
-                $query->whereIn('category_id', $categoryIds)
-                      ->where('status', "published"); 
+                $query->whereHas('categories', function ($subQuery) use ($categoryIds) {
+                    $subQuery->whereIn('id', $categoryIds);
+                })
+                ->where('status', "published");
             })->get();
         } else {
             $brands = Brand::whereIn('id',$brandIds);
