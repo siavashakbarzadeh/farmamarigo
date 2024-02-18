@@ -49,7 +49,9 @@ class FilterController extends BaseController
                     $query->where('status', "published");
                 })->get();
             }
-            $categories = ProductCategory::all();
+            $categories = ProductCategory::whereHas('products', function ($query) {
+                $query->where('status', "published");
+            })->get();
             return response()->json([
                 'html' => view('theme.wowy::views.ecommerce.includes.filters', compact('brands','categories'))->render(),
             ]);
@@ -64,7 +66,9 @@ class FilterController extends BaseController
                     $query->where('status', "published");
                 })->get();
             }
-            $brands = Brand::all();
+            $brands = Brand::whereHas('products', function ($query) {
+                $query->where('status', "published");
+            })->get();
             return response()->json([
                 'html' => view('theme.wowy::views.ecommerce.includes.filters', compact('brands','categories'))->render(),
             ]);
