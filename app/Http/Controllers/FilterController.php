@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Botble\Ecommerce\Models\Brand;
 use Botble\Ecommerce\Models\ProductCategory;
+use Illuminate\Support\Facades\DB;
+
 
 
 
