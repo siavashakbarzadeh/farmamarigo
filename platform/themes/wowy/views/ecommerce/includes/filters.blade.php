@@ -258,9 +258,8 @@
 
     <div class="widget mt-3 row">
         <div class="container">
-            <button class="btn btn-danger col-12 clear_filter dib clear_all_filter"
-                style="font-size: small; border-radius: 25px; text-transform: none;"
-                href="/products">{{ __('Cancella filtri') }}</button>
+            <a class="btn btn-danger col-12" style="font-size: small; border-radius: 25px; text-transform: none;"
+                href="/products">{{ __('Cancella filtri') }}</a>
         </div>
     </div>
 </div>
