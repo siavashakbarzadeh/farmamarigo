@@ -51,7 +51,7 @@ class FilterController extends BaseController
             }
             if(!empty($brandIds)){
                 if (!empty($categoryIds)) {
-                    $categories = ProductCategory::whereIn('products',$categoryIds)->get();
+                    $categories = ProductCategory::whereIn('id',$categoryIds)->get();
 
                 }else{
                     $categories = ProductCategory::whereHas('products', function ($query) {
