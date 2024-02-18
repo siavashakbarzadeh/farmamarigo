@@ -1,6 +1,8 @@
 @php
     use Botble\Ecommerce\Models\OffersDetail;
     use Botble\Ecommerce\Models\Offers;
+    use Botble\Ecommerce\Models\Product;
+
     if (auth('customer')->user() !== null) {
         $userid = auth('customer')->user()->id;
         $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
@@ -547,8 +549,6 @@
             <h3 class="section-title style-1 mb-30">{{ __('Related products') }}</h3>
         </div>
         @php
-            use Botble\Ecommerce\Models\Product;
-
             if ($product->categories->isNotEmpty()) {
                 // Get the first category's ID from the product
     $categoryId = $product->categories[0]->id;
