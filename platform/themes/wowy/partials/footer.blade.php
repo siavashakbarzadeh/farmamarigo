@@ -585,11 +585,25 @@
                 });
         });
 
-
-
-
-
     });
+
+    function checkCheckboxesBasedOnURL() {
+        // Get the full URL
+        const url = window.location.href;
+        // Create a URLSearchParams object
+        const urlParams = new URLSearchParams(window.location.search);
+        // For categories
+        if (urlParams.has('categories[]')) {
+            const categories = urlParams.getAll('categories[]');
+            categories.forEach(function(categoryId) {
+                $(`.category-check[value="${categoryId}"]`).prop('checked', true);
+            });
+        }
+        // You can add similar logic for brands if needed
+    }
+
+    // Call the function on page load
+    checkCheckboxesBasedOnURL();
 
 
 
