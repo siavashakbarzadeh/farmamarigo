@@ -45,9 +45,11 @@ class FilterController extends BaseController
                     });
                 })->get();
             } else {
-                $brands = Brand::whereIn('id',$brandIds)->get();
+                $brands = Brand::whereHas('products', function ($query) {
+                    $query->where('status', "published");
+                })->get();
             }
-            $categories = ProductCategory::whereIn('id',$categoryIds)->get();
+            $categories = ProductCategory::all();
             return response()->json([
                 'html' => view('theme.wowy::views.ecommerce.includes.filters', compact('brands','categories'))->render(),
             ]);
@@ -58,9 +60,11 @@ class FilterController extends BaseController
                           ->where('status', "published");
                 })->get();
             } else {
-                $categories = ProductCategory::whereIn('id',$categoryIds)->get();
+                $categories = ProductCategory::whereHas('products', function ($query) {
+                    $query->where('status', "published");
+                })->get();
             }
-            $brands = Brand::whereIn('id',$brandIds)->get();
+            $brands = Brand::all();
             return response()->json([
                 'html' => view('theme.wowy::views.ecommerce.includes.filters', compact('brands','categories'))->render(),
             ]);
