@@ -25,9 +25,7 @@
     $layout = $layout && in_array($layout, array_keys(get_product_single_layouts())) ? $layout : 'product-full-width';
     Theme::layout($layout);
 
-    Theme::asset()
-        ->usePath()
-        ->add('lightGallery-css', 'plugins/lightGallery/css/lightgallery.min.css');
+    Theme::asset()->usePath()->add('lightGallery-css', 'plugins/lightGallery/css/lightgallery.min.css');
     Theme::asset()
         ->container('footer')
         ->usePath()
@@ -186,106 +184,106 @@
                     {{-- {!! apply_filters('ecommerce_after_product_description', null, $product) !!} --}}
                 </div>
                 <div class="bt-1 border-color-1 mt-30 mb-30"></div>
-                @if(auth('customer')->user() !== null)
-                <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
-                    @csrf
-                    <ins>
-                        @if (isset($reserved_price))
-                            @if (!isset($offerDetail) && $reserved_price !== $product->price)
+                @if (auth('customer')->user() !== null)
+                    <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
+                        @csrf
+                        <ins>
+                            @if (isset($reserved_price))
+                                @if (!isset($offerDetail) && $reserved_price !== $product->price)
+                                    <input type="hidden" name="product_price" class="hidden-product-id"
+                                        value="{{ $reserved_price }}" />
+                                @elseif (isset($offerDetail) &&
+                                        ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
+                                        $offerDetail->product_price !== $product->price)
+                                    <input type="hidden" name="product_price" class="hidden-product-id"
+                                        value="{{ $offerDetail->product_price ? $offerDetail->product_price : $pricelist[0]->final_price }}" />
+                                @elseif ($offerDetail && ($offerType != 1 || $offerType != 2 || $offerType != 3))
+                                    <input type="hidden" name="product_price" class="hidden-product-id"
+                                        value="{{ $reserved_price }}" />
+                                @endif
+                            @else
                                 <input type="hidden" name="product_price" class="hidden-product-id"
-                                    value="{{ $reserved_price }}" />
-                            @elseif (isset($offerDetail) &&
-                                    ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
-                                    $offerDetail->product_price !== $product->price)
-                                <input type="hidden" name="product_price" class="hidden-product-id"
-                                    value="{{ $offerDetail->product_price ? $offerDetail->product_price : $pricelist[0]->final_price }}" />
-                            @elseif ($offerDetail && ($offerType != 1 || $offerType != 2 || $offerType != 3))
-                                <input type="hidden" name="product_price" class="hidden-product-id"
-                                    value="{{ $reserved_price }}" />
+                                    value="{{ $product->price }}" />
                             @endif
-                        @else
-                            <input type="hidden" name="product_price" class="hidden-product-id"
-                                value="{{ $product->price }}" />
-                        @endif
-                    </ins>
-                    @if ($product->variations()->count() > 1)
-                        <div class="pr_switch_wrap">
-                            {!! render_product_swatches($product, [
-                                'selected' => $selectedAttrs,
-                                'view' => Theme::getThemeNamespace() . '::views.ecommerce.attributes.swatches-renderer',
-                            ]) !!}
-                        </div>
-                        <div class="number-items-available"
-                            style="@if (!$product->isOutOfStock()) display: none; @endif margin-bottom: 10px;">
-                            @if ($product->isOutOfStock())
-                                <span class="text-danger">({{ __('Out of stock') }})</span>
-                            @endif
-                        </div>
-                    @endif
-                    {!! render_product_options($product) !!}
-                    {!! apply_filters(ECOMMERCE_PRODUCT_DETAIL_EXTRA_HTML, null, $product) !!}
-                    <input type="hidden" name="id" class="hidden-product-id"
-                        value="{{ $product->is_variation || !$product->defaultVariation->product_id ? $product->id : $product->defaultVariation->product_id }}" />
-                    <div class="detail-extralink">
-                        @if (EcommerceHelper::isCartEnabled())
-                            <div class="detail-qty border radius">
-                                <a href="#" class="qty-down"><i class="fa fa-caret-down"
-                                        aria-hidden="true"></i></a>
-                                <input type="number" min="1" value="1" name="qty"
-                                    class="qty-val qty-input" />
-                                <a href="#" class="qty-up"><i class="fa fa-caret-up"
-                                        aria-hidden="true"></i></a>
+                        </ins>
+                        @if ($product->variations()->count() > 1)
+                            <div class="pr_switch_wrap">
+                                {!! render_product_swatches($product, [
+                                    'selected' => $selectedAttrs,
+                                    'view' => Theme::getThemeNamespace() . '::views.ecommerce.attributes.swatches-renderer',
+                                ]) !!}
+                            </div>
+                            <div class="number-items-available"
+                                style="@if (!$product->isOutOfStock()) display: none; @endif margin-bottom: 10px;">
+                                @if ($product->isOutOfStock())
+                                    <span class="text-danger">({{ __('Out of stock') }})</span>
+                                @endif
                             </div>
                         @endif
-                        <div class="product-extra-link2 @if (EcommerceHelper::isQuickBuyButtonEnabled()) has-buy-now-button @endif">
+                        {!! render_product_options($product) !!}
+                        {!! apply_filters(ECOMMERCE_PRODUCT_DETAIL_EXTRA_HTML, null, $product) !!}
+                        <input type="hidden" name="id" class="hidden-product-id"
+                            value="{{ $product->is_variation || !$product->defaultVariation->product_id ? $product->id : $product->defaultVariation->product_id }}" />
+                        <div class="detail-extralink">
                             @if (EcommerceHelper::isCartEnabled())
-                                <button type="submit"
-                                    class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
-                                    type="submit" @if ($product->isOutOfStock()) disabled @endif>Aggiungi al
-                                    Carello</button>
-                                {{--                                @if (EcommerceHelper::isQuickBuyButtonEnabled()) --}}
-                                {{--                                    <button class="button button-buy-now ms-2 @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" name="checkout" @if ($product->isOutOfStock()) disabled @endif>{{ __('Buy Now') }}</button> --}}
-                                {{--                                @endif --}}
-                                <div class='d-inline' id="wishlistAction">
-                                    @if (request()->user('customer'))
-                                        @php
-                                            $wishlist = Botble\Ecommerce\Models\Wishlist::where('customer_id', request()->user('customer')->id)->get();
-                                            $w_flag = false;
-                                            foreach ($wishlist as $w) {
-                                                if ($w->product_id == $product->id) {
-                                                    $w_flag = true;
-                                                }
-                                            }
-                                            $userid = request()->user('customer')->id;
-                                        @endphp
-                                        @if ($w_flag)
-                                            <a aria-label="{{ __('Rimuovi') }}" href="#"
-                                                class="action-btn hover-up js-remove-from-wishlist-button"
-                                                data-url="{{ route('public.wishlist.remove', $product->id) }}"><i
-                                                    style="color:red" class="fas fa-heart"></i></a>
-                                        @else
-                                            <a aria-label="Aggiungi" href="#"
-                                                class="action-btn hover-up js-add-to-wishlist-button"
-                                                data-url="{{ route('public.wishlist.add', $product->id) }}"><i
-                                                    class="far fa-heart"></i></a>
-                                        @endif
-                                    @endif
+                                <div class="detail-qty border radius">
+                                    <a href="#" class="qty-down"><i class="fa fa-caret-down"
+                                            aria-hidden="true"></i></a>
+                                    <input type="number" min="1" value="1" name="qty"
+                                        class="qty-val qty-input" />
+                                    <a href="#" class="qty-up"><i class="fa fa-caret-up"
+                                            aria-hidden="true"></i></a>
+                                </div>
                             @endif
-                        </div>
-                        <!-- @if (EcommerceHelper::isCompareEnabled())
+                            <div
+                                class="product-extra-link2 @if (EcommerceHelper::isQuickBuyButtonEnabled()) has-buy-now-button @endif">
+                                @if (EcommerceHelper::isCartEnabled())
+                                    <button type="submit"
+                                        class="button button-add-to-cart @if ($product->isOutOfStock()) btn-disabled @endif"
+                                        type="submit" @if ($product->isOutOfStock()) disabled @endif>Aggiungi al
+                                        Carello</button>
+                                    {{--                                @if (EcommerceHelper::isQuickBuyButtonEnabled()) --}}
+                                    {{--                                    <button class="button button-buy-now ms-2 @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" name="checkout" @if ($product->isOutOfStock()) disabled @endif>{{ __('Buy Now') }}</button> --}}
+                                    {{--                                @endif --}}
+                                    <div class='d-inline' id="wishlistAction">
+                                        @if (request()->user('customer'))
+                                            @php
+                                                $wishlist = Botble\Ecommerce\Models\Wishlist::where('customer_id', request()->user('customer')->id)->get();
+                                                $w_flag = false;
+                                                foreach ($wishlist as $w) {
+                                                    if ($w->product_id == $product->id) {
+                                                        $w_flag = true;
+                                                    }
+                                                }
+                                                $userid = request()->user('customer')->id;
+                                            @endphp
+                                            @if ($w_flag)
+                                                <a aria-label="{{ __('Rimuovi') }}" href="#"
+                                                    class="action-btn hover-up js-remove-from-wishlist-button"
+                                                    data-url="{{ route('public.wishlist.remove', $product->id) }}"><i
+                                                        style="color:red" class="fas fa-heart"></i></a>
+                                            @else
+                                                <a aria-label="Aggiungi" href="#"
+                                                    class="action-btn hover-up js-add-to-wishlist-button"
+                                                    data-url="{{ route('public.wishlist.add', $product->id) }}"><i
+                                                        class="far fa-heart"></i></a>
+                                            @endif
+                                        @endif
+                                @endif
+                            </div>
+                            <!-- @if (EcommerceHelper::isCompareEnabled())
 <a aria-label="{{ __('Add To Compare') }}" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}"><i class="far fa-exchange-alt"></i></a>
 @endif -->
-                    </div>
+                        </div>
             </div>
             </form>
-            @else
+        @else
             <div class="row">
                 <div class="col-12">
                     <p class="alert alert-warning">
                         Devi effettuare il login per acquistare il prodotto!
                     </p>
-                    <a class="btn col-4" href="/login"
-                        style="padding:10px 4px !important; border-radius:50px;">
+                    <a class="btn col-4" href="/login" style="padding:10px 4px !important; border-radius:50px;">
                         <span style="color:white;font-size:smaller;font-weight:600">Login</span>
                     </a>
                 </div>
@@ -533,7 +531,7 @@
 @if (count($crossSellProducts) > 0)
     <div class="row mt-60">
         <div class="col-12">
-            <h3 class="section-title style-1 mb-30">{{ __('You may also like') }}</h3>
+            <h3 class="section-title style-1 mb-30">{{ __('Related products') }}</h3>
         </div>
         @foreach ($crossSellProducts as $crossProduct)
             <div class="col-lg-{{ 12 / ($layout == 'product-full-width' ? 4 : 3) }} col-md-4 col-12 col-sm-6">
@@ -545,18 +543,4 @@
     </div>
 @endif
 
-<div class="row mt-60" id="related-products">
-    <div class="col-12">
-        <h3 class="section-title style-1 mb-30">{{ __('Related products') }}</h3>
-    </div>
-
-
-
-
-
-
-
-    <related-products-component url="{{ route('public.ajax.related-products', $product->id) }}"
-        :limit="{{ $layout == 'product-full-width' ? 4 : 3 }}"></related-products-component>
-</div>
 </div>
