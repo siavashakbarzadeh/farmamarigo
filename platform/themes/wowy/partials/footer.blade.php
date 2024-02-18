@@ -525,7 +525,7 @@
         // Set a new timeout
         window.categoryTimeout = setTimeout(function() {
             updateFilters('category');
-        }, 800); // Delay of 500 milliseconds
+        }, 5000); // Delay of 500 milliseconds
     });
 
     $(document).on('click', '.brands-check', function() {
@@ -537,7 +537,7 @@
         // Set a new timeout
         window.brandTimeout = setTimeout(function() {
             updateFilters('brand');
-        }, 800); // Delay of 500 milliseconds
+        }, 5000); // Delay of 500 milliseconds
     });
 
     function checkCheckboxesBasedOnURL() {
