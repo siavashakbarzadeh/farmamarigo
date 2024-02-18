@@ -544,7 +544,7 @@
         @endforeach
     </div>
 @else
-    <div class="row mt-60">
+    <div class="row mt-60 products-listing">
         <div class="col-12">
             <h3 class="section-title style-1 mb-30">{{ __('Related products') }}</h3>
         </div>
