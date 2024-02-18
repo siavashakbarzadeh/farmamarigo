@@ -530,7 +530,7 @@
         // Create a URLSearchParams object
         const urlParams = new URLSearchParams(window.location.search);
         // For categories
-        console.log(urlParams);
+        console.log(urlParams.getAll('categories%5B%5D'));
         if (urlParams.has('categories%5B%5D')) {
             const categories = urlParams.getAll('categories%5B%5D');
             console.log(categories);
