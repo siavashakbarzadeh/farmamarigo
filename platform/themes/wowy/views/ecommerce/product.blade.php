@@ -551,11 +551,12 @@
         @php
             if ($product->categories->isNotEmpty()) {
                 // Get the first category's ID from the product
-    $categoryId = $product->categories[0]->id;
+    $firstCategoryId = $product->categories[0]->id;
 
     // Get 4 random products from the same category
-    $randomProducts = Product::whereHas('categories', function ($query) use ($categoryId) {
-        $query->where('id', $categoryId);
+    $randomProducts = Product::whereHas('categories', function ($query) use ($firstCategoryId) {
+        // Specify the table name if 'id' is ambiguous, e.g., categories.id
+        $query->where('categories.id', $firstCategoryId);
                 })
                     ->inRandomOrder()
                     ->take(4)
