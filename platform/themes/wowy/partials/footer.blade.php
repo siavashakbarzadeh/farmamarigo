@@ -511,7 +511,7 @@
         // Ensure this element's closest form or the specific AJAX container is correctly targeted
         // If `#products-filter-ajax` is the form ID, you might want to use .closest('form') to ensure you're submitting the correct form
         $(this).closest('form')
-    .submit(); // Adjusted to use 'form' assuming `#products-filter-ajax` is a form
+            .submit(); // Adjusted to use 'form' assuming `#products-filter-ajax` is a form
     }, 800));
 
     $(document).on('click', '.category-check', function() {
@@ -643,7 +643,7 @@
 
 
     if (window.location.pathname.includes('/products')) {
-
+        console.log('products')
         // Setup MutationObserver to watch for changes in the container
         const observer = new MutationObserver(mutations => {
             mutations.forEach(mutation => {
