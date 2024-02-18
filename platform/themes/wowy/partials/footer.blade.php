@@ -513,7 +513,7 @@
                 .submit(); // Or any other function you want to execute
         }, 800)); // Delay of 500 milliseconds
 
-        $('.cat-che').on('click', function() {
+        $('.category-check').on('click', function() {
             updateFilters('category');
         });
 
@@ -522,10 +522,10 @@
         }, 800));
 
         function updateFilters(type) {
-            var categoryIds = $('.cat-che:checked').map(function() {
+            var categoryIds = $('.category-check:checked').map(function() {
                 return $(this).val(); // Assuming the value of the checkbox contains the ID
             }).get();
-            console.log(categoryIds);
+
             // Collect all checked brand IDs
             var brandIds = $('.brands-check:checked').map(function() {
                 return $(this).val(); // Assuming the value of the checkbox contains the ID
