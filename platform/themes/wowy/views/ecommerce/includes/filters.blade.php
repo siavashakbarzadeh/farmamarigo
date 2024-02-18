@@ -109,7 +109,7 @@
                                         <div class="row"
                                             style="border: 1px solid #F5F5F5;border-right: 0;border-left: 0;border-top: 0; margin-top:5px">
                                             <div class="col-1" style="align-self: center">
-                                                <input class="category-check form-check-input" name="categories[]"
+                                                <input class="category-check cat-che form-check-input" name="categories[]"
                                                     type="checkbox" id="category-filter-{{ $category->id }}"
                                                     value="{{ $category->id }}"
                                                     @if (in_array($category->id, request()->input('categories', []))) checked @endif>

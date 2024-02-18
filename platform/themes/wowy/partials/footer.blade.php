@@ -513,7 +513,7 @@
                 .submit(); // Or any other function you want to execute
         }, 800)); // Delay of 500 milliseconds
 
-        $('.category-check').on('click', function() {
+        $('.cat-che').on('click', function() {
             updateFilters('category');
         });
 
@@ -522,7 +522,7 @@
         });
 
         function updateFilters(type) {
-            var categoryIds = $('.category-check:checked').map(function() {
+            var categoryIds = $('.cat-che:checked').map(function() {
                 return $(this).val(); // Assuming the value of the checkbox contains the ID
             }).get();
 
