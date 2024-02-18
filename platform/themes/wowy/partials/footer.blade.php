@@ -495,26 +495,22 @@
 
     });
 
-    $(document).ready(function() {
-        // Debounce function to limit the rate of function execution
-        function debounce(func, delay) {
-            let debounceTimer;
-            return function() {
-                const context = this;
-                const args = arguments;
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => func.apply(context, args), delay);
-            };
-        }
+    // Debounce function to limit the rate of function execution
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function() {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
+    }
 
-        // Event handler with debounce for the keyup event
-        $('#search-consumabili').on('keyup', debounce(function() {
-            $(this).closest('#products-filter-ajax')
-                .submit(); // Or any other function you want to execute
-        }, 800)); // Delay of 500 milliseconds
-
-
-    });
+    // Event handler with debounce for the keyup event
+    $('#search-consumabili').on('keyup', debounce(function() {
+        $(this).closest('#products-filter-ajax')
+            .submit(); // Or any other function you want to execute
+    }, 800));
 
     $(document).on('click', '.category-check', function() {
         // Clear any existing timeout to prevent multiple triggers
