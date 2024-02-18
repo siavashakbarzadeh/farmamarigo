@@ -17,6 +17,7 @@ use Botble\Ecommerce\Jobs\OrderSubmittedJob;
 use Botble\Ecommerce\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\SPCController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\CreaSconto;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\CaptchaHandler;
@@ -239,3 +240,4 @@ Route::prefix('/admin/ecommerce/mail-log')
 
 
     Route::post('/saveInteraction', [SuggestionController::class, 'saveInteraction']);
+    Route::post('/updateFilter', [FilterController::class, 'updateFilter']);

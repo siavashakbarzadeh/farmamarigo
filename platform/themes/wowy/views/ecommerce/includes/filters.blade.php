@@ -1,17 +1,18 @@
 @php
-    Theme::asset()
-        ->usePath()
-        ->add('custom-scrollbar-css', 'plugins/mcustom-scrollbar/jquery.mCustomScrollbar.css');
+    Theme::asset()->usePath()->add('custom-scrollbar-css', 'plugins/mcustom-scrollbar/jquery.mCustomScrollbar.css');
     Theme::asset()
         ->container('footer')
         ->usePath()
         ->add('custom-scrollbar-js', 'plugins/mcustom-scrollbar/jquery.mCustomScrollbar.js', ['jquery']);
 
-    $categories = ProductCategoryHelper::getActiveTreeCategories();
+    if (!isset($categories)) {
+        $categories = ProductCategoryHelper::getActiveTreeCategories();
 
-    if (Route::currentRouteName() != 'public.products' && request()->input('categories', [])) {
-        $categories = $categories->whereIn('id', (array) request()->input('categories', []));
+        if (Route::currentRouteName() != 'public.products' && request()->input('categories', [])) {
+            $categories = $categories->whereIn('id', (array) request()->input('categories', []));
+        }
     }
+
 @endphp
 
 <div class="shop-product-filter-header">
@@ -113,7 +114,7 @@
                                                     @if (in_array($category->id, request()->input('categories', []))) checked @endif>
                                             </div>
                                             <div class="col-10">
-                                                <label class=" brands-check form-check-label"
+                                                <label class=" category-check form-check-label"
                                                     for="brand-filter-{{ $category->id }}"><span
                                                         class="d-inline-block">{{ $category->name }}</span> </label>
                                             </div>
@@ -139,7 +140,9 @@
                 ->unique();
 
             // Retrieve brands that are used in products
-            $brands = Brand::whereIn('id', $brandIds)->get();
+            if (!isset($brands)) {
+                $brands = Brand::whereIn('id', $brandIds)->get();
+            }
         @endphp
         <div class="col-12 mb-5 widget-filter-item">
             <div class="accordion my-2" id="brandsAccordionWrapper ">

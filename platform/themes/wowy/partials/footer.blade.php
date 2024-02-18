@@ -512,6 +512,40 @@
             $(this).closest('#products-filter-ajax')
                 .submit(); // Or any other function you want to execute
         }, 800)); // Delay of 500 milliseconds
+
+        $('.filter-category').on('click', function() {
+
+            updateFilters('category');
+        });
+
+        $('.filter-brand').on('click', function() {
+            updateFilters('brand');
+        });
+
+        function updateFilters(type) {
+            var categoryIds = $('.category-check:checked').map(function() {
+                return $(this).val(); // Assuming the value of the checkbox contains the ID
+            }).get();
+
+            // Collect all checked brand IDs
+            var brandIds = $('.brands-check:checked').map(function() {
+                return $(this).val(); // Assuming the value of the checkbox contains the ID
+            }).get();
+
+            $.ajax({
+                url: '/updateFilter',
+                type: 'POST',
+                data: {
+                    type: type,
+                    brandIds: brandIds,
+                    categoryIds: categoryIds,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    $('#products-filter-ajax').html(response.html);
+                }
+            });
+        }
     });
 
 
