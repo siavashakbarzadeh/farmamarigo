@@ -556,7 +556,7 @@
     // Get 4 random products from the same category
     $randomProducts = Product::whereHas('categories', function ($query) use ($firstCategoryId) {
         // Specify the table name if 'id' is ambiguous, e.g., categories.id
-        $query->where('categories.id', $firstCategoryId);
+        $query->where('category_id', $firstCategoryId);
                 })
                     ->inRandomOrder()
                     ->take(4)
