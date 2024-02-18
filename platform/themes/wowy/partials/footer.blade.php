@@ -513,11 +513,11 @@
                 .submit(); // Or any other function you want to execute
         }, 800)); // Delay of 500 milliseconds
 
-        $('.category-check').on('click', function() {
+        $(document).on('click', '.category-check', function() {
             updateFilters('category');
         });
 
-        $('.brands-check').on('click', function() {
+        $(document).on('click', '.brands-check', function() {
             updateFilters('brand');
         });
 
