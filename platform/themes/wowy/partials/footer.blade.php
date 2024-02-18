@@ -553,7 +553,7 @@
         });
         const brands = urlParams.getAll('brands[]');
         brands.forEach(function(brandId) {
-            $('#category-filter-' + brandId).attr('checked', true);
+            $('#brand-filter-' + brandId).attr('checked', true);
             console.log('brand', brandId)
         });
     }
