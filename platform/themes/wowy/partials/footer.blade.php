@@ -517,9 +517,9 @@
             updateFilters('category');
         });
 
-        $('.brands-check').on('click', debounce(function() {
+        $('.brands-check').on('click', function() {
             updateFilters('brand');
-        }, 800));
+        });
 
         function updateFilters(type) {
             var categoryIds = $('.category-check:checked').map(function() {
