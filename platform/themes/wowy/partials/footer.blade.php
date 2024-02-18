@@ -579,11 +579,11 @@
                 categoryIds: categoryIds,
                 _token: '{{ csrf_token() }}'
             },
-            success: function(response) {
-                $('#products-filter-ajax').html(response.html);
+            success: async function(response) {
+                await $('#products-filter-ajax').html(response.html);
+                checkCheckboxesBasedOnURL();
             }
         });
-        checkCheckboxesBasedOnURL();
 
     }
 
