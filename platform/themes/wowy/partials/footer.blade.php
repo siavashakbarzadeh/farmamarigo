@@ -551,8 +551,8 @@
             $(`#category-filter-"${categoryId}"`).prop('checked', true);
         });
         const brands = urlParams.getAll('brands[]');
-        brand.forEach(function(categoryId) {
-            $(`#brand-filter-"${categoryId}"`).prop('checked', true);
+        brands.forEach(function(brandId) {
+            $(`#brand-filter-"${brandId}"`).prop('checked', true);
         });
     }
 
