@@ -524,6 +524,23 @@
         updateFilters('brand');
     });
 
+    function checkCheckboxesBasedOnURL() {
+        // Get the full URL
+        const url = window.location.href;
+        // Create a URLSearchParams object
+        const urlParams = new URLSearchParams(window.location.search);
+        // For categories
+        if (urlParams.has('categories[]')) {
+            const categories = urlParams.getAll('categories[]');
+            categories.forEach(function(categoryId) {
+                $(`.category-check[value="${categoryId}"]`).prop('checked', true);
+            });
+        }
+        // You can add similar logic for brands if needed
+    }
+
+    // Call the function on page load
+
     function updateFilters(type) {
         var categoryIds = $('.category-check:checked').map(function() {
             return $(this).val(); // Assuming the value of the checkbox contains the ID
@@ -547,6 +564,8 @@
                 $('#products-filter-ajax').html(response.html);
             }
         });
+        checkCheckboxesBasedOnURL();
+
     }
 
 
@@ -587,23 +606,7 @@
 
     });
 
-    function checkCheckboxesBasedOnURL() {
-        // Get the full URL
-        const url = window.location.href;
-        // Create a URLSearchParams object
-        const urlParams = new URLSearchParams(window.location.search);
-        // For categories
-        if (urlParams.has('categories[]')) {
-            const categories = urlParams.getAll('categories[]');
-            categories.forEach(function(categoryId) {
-                $(`.category-check[value="${categoryId}"]`).prop('checked', true);
-            });
-        }
-        // You can add similar logic for brands if needed
-    }
 
-    // Call the function on page load
-    checkCheckboxesBasedOnURL();
 
 
 
