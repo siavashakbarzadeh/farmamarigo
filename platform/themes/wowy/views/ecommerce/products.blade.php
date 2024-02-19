@@ -46,7 +46,7 @@
             </div>
         </div>
     @else
-        <div class="col-12">
+        <div class="col-12 related-listing">
             @if (request()->user('customer'))
 
                 <div class="row">
