@@ -5,7 +5,7 @@
     use Botble\Ecommerce\Models\Product;
     use Botble\Ecommerce\Models\ProductVariation;
     use Botble\Ecommerce\Models\SPC;
-    use Botble\Ecommerce\Models\CarouselProduct;
+    use Botble\Ecommerce\Models\CarouselProducts;
     if (request()->user('customer')) {
         $userid = request()->user('customer')->id;
         if (!CarouselProducts::where('customer_id', $userid)->exists()) {
