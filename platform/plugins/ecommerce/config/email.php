@@ -52,7 +52,7 @@ return [
         'customer_cancel_order' => [
             'title' => 'plugins/ecommerce::email.order_cancellation_title',
             'description' => 'plugins/ecommerce::email.order_cancellation_description',
-            'subject' => 'Order cancelled {{ order_id }}',
+            'subject' => 'Ordine {{ order_id }} annullato',
             'can_off' => true,
             'variables' => [
                 'customer_name' => 'plugins/ecommerce::ecommerce.customer_name',

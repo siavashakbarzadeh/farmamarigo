@@ -1,12 +1,13 @@
+
 {{ header }}
 
-<h2>Your order has been cancelled</h2>
+<h2>Il suo ordine è stato annullato</h2>
 
-<p>Hi {{ customer_name }},</p>
-<p>Your order <strong>{{ order_id }}</strong> has been canceled as you requested and your payment was cancelled too.</p>
+<p style='font-size:18px;'>Gentile {{ customer_name }},</p>
+<p style='font-size:17px;'>il tuo ordine <strong>{{ order_id }}</strong> è stato cancellato, come da tua richiesta.</p>
 
 <br />
 
-<p>If you have any question, please contact us via <a href="mailto:{{ site_admin_email }}">{{ site_admin_email }}</a></p>
+<p style='font-size:17px;'>Per qualsiasi informazione, contattaci compilando <a href='https://marigopharma.marigo.collaudo.biz/contact'>il modulo richiesta informazioni </a>sul nostro sito web</p>
 
 {{ footer }}
