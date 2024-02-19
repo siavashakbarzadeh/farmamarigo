@@ -1,11 +1,5 @@
 @php
-    use App\Http\Controllers\SuggestionController;
-    use Botble\Ecommerce\Models\OffersDetail;
-    use Botble\Ecommerce\Models\Offers;
-    use Botble\Ecommerce\Models\Product;
-    use Botble\Ecommerce\Models\ProductVariation;
-    use Botble\Ecommerce\Models\SPC;
-    use Botble\Ecommerce\Models\CarouselProducts;
+
     $layout = theme_option('product_list_layout');
 
     $requestLayout = request()->input('layout');
@@ -15,15 +9,6 @@
 
     $layout = $layout && in_array($layout, array_keys(get_product_single_layouts())) ? $layout : 'product-full-width';
 
-    if (request()->user('customer')) {
-        $userid = request()->user('customer')->id;
-        if (!CarouselProducts::where('customer_id', $userid)->exists()) {
-            $discountedProducts = SuggestionController::getProduct($userid);
-        } else {
-            $productIds = CarouselProducts::where('customer_id', $userid)->pluck('product_id');
-            $discountedProducts = Product::whereIn('id', $productIds)->get();
-        }
-    }
 @endphp
 
 <div class="list-content-loading">
@@ -47,27 +32,7 @@
 <input type="hidden" name="num" value="{{ request()->input('num') }}">
 
 <div class="row">
-    <div class="col-12">
-        @if (request()->user('customer'))
 
-            <div class="row">
-                <center>
-                    <h4 class="title-discounted mb-30" style="color:#005BA1; ">
-                        <i class="fas fa-circle" style="animation:pulse-blue 2s infinite;border-radius:10px"></i> &nbsp;
-                        &nbsp;
-                        Pensiamo che questi prodotti potrebbero interessarti
-                    </h4>
-                </center>
-                <div class="owl-carousel owl-theme discounted-carousel ">
-                    @foreach ($discountedProducts as $discountedProduct)
-                        @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.cart-related-product-items',
-                            ['product' => $discountedProduct]
-                        )
-                    @endforeach
-                </div>
-            </div>
-        @endif
-    </div>
     @forelse ($products as $product)
         <div class="col-lg-{{ 12 / ($layout != 'product-full-width' ? 3 : 4) }} col-md-4">
             @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.product-item',
