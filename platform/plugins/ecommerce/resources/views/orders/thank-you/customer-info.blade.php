@@ -14,7 +14,7 @@
         $paymentChannelName = 'PayPal';
     }
 
-    if ($paymentStatus == 'complete') {
+    if ($paymentStatus == 'completed') {
         $paymentStatusName = 'Completato';
     } else {
         $paymentStatusName = 'In attessa';
