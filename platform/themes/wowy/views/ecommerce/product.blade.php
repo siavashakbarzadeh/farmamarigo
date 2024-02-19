@@ -145,22 +145,31 @@
                                     <span>{{ format_price($reserved_price) }}</span>
                                     <input type="hidden" name="product_price" class="hidden-product-id"
                                         value="{{ $reserved_price }}" />
-                                    <span class="old-price">{{ format_price($product->price_with_taxes) }} prezzo da
-                                        listino</span>
+                                    <span class="old-price">{{ format_price($product->price_with_taxes) }} </span><span
+                                        style="color: #888;
+                                    font-size: 16px;
+                                    font-weight: 500;">prezzo
+                                        da listino</span>
                                 @elseif (isset($offerDetail) &&
                                         ($offerType == 1 || $offerType == 2 || $offerType == 3) &&
                                         $offerDetail->product_price !== $product->price)
                                     <span>{{ format_price($offerDetail->product_price) }}</span>
                                     <input type="hidden" name="product_price" class="hidden-product-id"
                                         value="{{ $offerDetail->product_price ? $offerDetail->product_price : $pricelist[0]->final_price }}" />
-                                    <span class="old-price">{{ format_price($product->price_with_taxes) }} prezzo da
-                                        listino</span>
+                                    <span class="old-price">{{ format_price($product->price_with_taxes) }}</span><span
+                                        style="color: #888;
+                                    font-size: 16px;
+                                    font-weight: 500;">prezzo
+                                        da listino</span>
                                 @elseif ($offerDetail && ($offerType != 1 || $offerType != 2 || $offerType != 3))
                                     <span>{{ format_price($reserved_price) }}</span>
                                     <input type="hidden" name="product_price" class="hidden-product-id"
                                         value="{{ $reserved_price }}" />
-                                    <span class="old-price">{{ format_price($product->price_with_taxes) }} prezzo da
-                                        listino</span>
+                                    <span class="old-price">{{ format_price($product->price_with_taxes) }} </span><span
+                                        style="color: #888;
+                                    font-size: 16px;
+                                    font-weight: 500;">prezzo
+                                        da listino</span>
                                 @endif
                             @else
                                 <input type="hidden" name="product_price" class="hidden-product-id"
