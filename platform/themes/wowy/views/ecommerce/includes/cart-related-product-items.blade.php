@@ -29,7 +29,7 @@
 
 @if ($product)
 
-    <div class="product-cart-wrap cart-related-wrap mb-30">
+    <div class="product-cart-wrap mb-30">
         <div class="row">
             <div class="col-5">
                 <div class="product-img-action-wrap">
@@ -92,7 +92,7 @@
             <div class="col-7">
 
 
-                <div class="product-content-wrap">
+                <div class="product-content-wrap cart-related-wrap">
                     @php $category = $product->categories->sortByDesc('id')->first(); @endphp
                     <h6><a href="{{ $product->url }}">{{ $product->name }}</a></h6>
                     {{-- @if (EcommerceHelper::isReviewEnabled())
