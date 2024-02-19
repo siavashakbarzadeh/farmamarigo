@@ -5,6 +5,7 @@
     use Botble\Ecommerce\Models\Product;
     use Botble\Ecommerce\Models\ProductVariation;
     use Botble\Ecommerce\Models\SPC;
+    use Botble\Ecommerce\Models\CarouselProducts;
     $layout = theme_option('product_list_layout');
 
     $requestLayout = request()->input('layout');
