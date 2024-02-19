@@ -8,16 +8,27 @@
         $paymentStatus = $payment->status;
         $paymentChannel = $payment->payment_channel;
     }
+    if ($paymentChannel == 'bank_transfer') {
+        $paymentChannelName = 'Come da condizioni contrattuali';
+    } else {
+        $paymentChannelName = 'PayPal';
+    }
+
+    if ($paymentStatus == 'complete') {
+        $paymentStatusName = 'Completato';
+    } else {
+        $paymentStatusName = 'In attessa';
+    }
 
 @endphp
 <div class="order-customer-info">
     <h3> {{ __('Customer information') }}</h3>
     <p>
         <span class="d-inline-block">{{ __('Payment method') }}:</span>
-        <span class="order-customer-info-meta">{{ $paymentChannel }}</span>
+        <span class="order-customer-info-meta">{{ $paymentChannelName }}</span>
     </p>
     <p>
         <span class="d-inline-block">{{ __('Payment status') }}:</span>
-        <span class="order-customer-info-meta" style="text-transform: uppercase">{!! $paymentStatus !!}</span>
+        <span class="order-customer-info-meta" style="text-transform: uppercase">{!! $paymentStatusName !!}</span>
     </p>
 </div>
