@@ -382,17 +382,7 @@ class CustomImport extends BaseController
                     'order' => '0',
                 ]
             );
-            $row = DB::connection('mysql')->table('slugs')->updateOrInsert(
-                [
-                    'reference_id' => $brand->pk_fornitore_id,
-                    'key'=>'/products?brands[]='.$brand->pk_fornitore_id
-                ]
-                ,
-                [
-                    'reference_type'=>'Botble\Ecommerce\Models\Brand',
-                    'prefix' => '',
-                ]
-            );
+            
             if ($row == true) {
                 array_push($brands_updated, $row);
             }
