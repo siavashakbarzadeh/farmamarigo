@@ -641,6 +641,33 @@
         cards.forEach(card => card.style.height = `${maxHeight}px`);
     }
 
+    function adjustCardHeights1() {
+        const cards = document.querySelectorAll('.cart-related-wrap h6');
+        const maxHeight = Math.max(...Array.from(cards).map(card => card.offsetHeight));
+        cards.forEach(card => card.style.height = `${maxHeight}px`);
+    }
+    if (window.location.pathname.includes('/products')) {
+        // Setup MutationObserver to watch for changes in the container
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.type === 'childList') {
+                    // Assuming changes in children imply new content was added
+                    adjustCardHeights1();
+                }
+            });
+        });
+
+        // Start observing
+        const config = {
+            childList: true,
+            subtree: true
+        };
+        observer.observe(document.querySelector('.related-listing'), config);
+
+    }
+    // Initial call for page load
+    adjustCardHeights1();
+
 
     if (window.location.pathname.includes('/products')) {
         console.log('products')

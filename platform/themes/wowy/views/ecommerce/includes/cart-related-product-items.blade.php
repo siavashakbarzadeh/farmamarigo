@@ -26,15 +26,10 @@
     }
 
 @endphp
-<style>
-    .old-price {
-        color: red !important
-    }
-</style>
 
 @if ($product)
 
-    <div class="product-cart-wrap mb-30">
+    <div class="product-cart-wrap cart-related-wrap mb-30">
         <div class="row">
             <div class="col-5">
                 <div class="product-img-action-wrap">
