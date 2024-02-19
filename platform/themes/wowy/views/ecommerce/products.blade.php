@@ -46,29 +46,30 @@
             </div>
         </div>
     @else
-    <div class="col-12">
-        @if (request()->user('customer'))
+        <div class="col-12">
+            @if (request()->user('customer'))
 
-            <div class="row">
-                <center>
-                    <h4 class="title-discounted mb-30" style="color:#005BA1; ">
-                        <i class="fas fa-circle" style="animation:pulse-blue 2s infinite;border-radius:10px"></i>
-                        &nbsp;
-                        &nbsp;
-                        Pensiamo che questi prodotti potrebbero interessarti
-                    </h4>
-                </center>
-                <div class="owl-carousel owl-theme discounted-carousel ">
-                    @foreach ($discountedProducts as $discountedProduct)
-                        @include(Theme::getThemeNamespace() .
-                                '::views.ecommerce.includes.cart-related-product-items',
-                            ['product' => $discountedProduct]
-                        )
-                    @endforeach
+                <div class="row">
+                    <center>
+                        <h4 class="title-discounted mb-30" style="color:#005BA1; ">
+                            <i class="fas fa-circle" style="animation:pulse-blue 2s infinite;border-radius:10px"></i>
+                            &nbsp;
+                            &nbsp;
+                            Pensiamo che questi prodotti potrebbero interessarti
+                        </h4>
+                    </center>
+                    {{-- <div class="owl-carousel owl-theme discounted-carousel "> --}}
+                    <div class="">
+                        @foreach ($discountedProducts as $discountedProduct)
+                            @include(Theme::getThemeNamespace() .
+                                    '::views.ecommerce.includes.cart-related-product-items',
+                                ['product' => $discountedProduct]
+                            )
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        @endif
-    </div>
+            @endif
+        </div>
         <div class="col-lg-3">
             <!-- <a class="shop-filter-toogle" href="#">
             <span class="fal fa-2x  fa-filter mr-5  ml-0"></span>
