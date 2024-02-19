@@ -5,6 +5,7 @@
     use Botble\Ecommerce\Models\Product;
     use Botble\Ecommerce\Models\ProductVariation;
     use Botble\Ecommerce\Models\SPC;
+    use Botble\Ecommerce\Models\CarouselProduct;
     if (request()->user('customer')) {
         $userid = request()->user('customer')->id;
         if (!CarouselProducts::where('customer_id', $userid)->exists()) {
@@ -628,5 +629,28 @@ $adjustedPricePerItem = $cartItem->qty > 0 ? $totalPriceForPaidItems / $cartItem
         </div>
         @endif
 
+    </div>
+    <div class="col-12 related-listing">
+        @if (request()->user('customer'))
+
+            <div class="row">
+                <center>
+                    <h4 class="title-discounted mb-30" style="color:#005BA1; ">
+                        <i class="fas fa-circle" style="animation:pulse-blue 2s infinite;border-radius:10px"></i>
+                        &nbsp;
+                        &nbsp;
+                        Pensiamo che questi prodotti potrebbero interessarti
+                    </h4>
+                </center>
+                {{-- <div class="owl-carousel owl-theme discounted-carousel "> --}}
+                <div class="owl-carousel owl-theme discounted-carousel ">
+                    @foreach ($discountedProducts as $discountedProduct)
+                        @include(Theme::getThemeNamespace() . '::views.ecommerce.includes.cart-related-product-items',
+                            ['product' => $discountedProduct]
+                        )
+                    @endforeach
+                </div>
+            </div>
+        @endif
     </div>
 </section>
