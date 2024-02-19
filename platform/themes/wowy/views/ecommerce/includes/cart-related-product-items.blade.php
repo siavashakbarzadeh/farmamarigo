@@ -94,7 +94,7 @@
 
                 <div class="product-content-wrap">
                     @php $category = $product->categories->sortByDesc('id')->first(); @endphp
-                    <h2><a href="{{ $product->url }}">{{ $product->name }}</a></h2>
+                    <h4><a href="{{ $product->url }}">{{ $product->name }}</a></h4>
 
                     {{-- @if (EcommerceHelper::isReviewEnabled())
                         <div class="rating_wrap">
