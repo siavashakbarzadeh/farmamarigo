@@ -113,7 +113,7 @@
                     @if ($product->brand->id)
                         <div class="pro-details-brand">
                             <span class="d-inline-block">Produttore:</span> <a
-                                href="{{ $product->brand->url }}">{{ $product->brand->name }}</a>
+                                href="{{ $product->brand->website }}">{{ $product->brand->name }}</a>
                         </div>
                     @endif
 
