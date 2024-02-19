@@ -377,6 +377,7 @@ class CustomImport extends BaseController
                 ]
                 ,
                 [
+                    'website'=>'/products?brands[]='.$brand->$brand->pk_fornitore_id,
                     'status' => 'published',
                     'order' => '0',
                 ]
