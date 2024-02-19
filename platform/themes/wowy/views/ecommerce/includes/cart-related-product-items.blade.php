@@ -26,6 +26,11 @@
     }
 
 @endphp
+<style>
+    .old-price {
+        color: red !important
+    }
+</style>
 
 @if ($product)
 
@@ -95,7 +100,6 @@
                 <div class="product-content-wrap">
                     @php $category = $product->categories->sortByDesc('id')->first(); @endphp
                     <h4><a href="{{ $product->url }}">{{ $product->name }}</a></h4>
-
                     {{-- @if (EcommerceHelper::isReviewEnabled())
                         <div class="rating_wrap">
                             <div class="rating">
@@ -104,9 +108,7 @@
                             <span class="rating_num">({{ $product->reviews_count }})</span>
                         </div>
                     @endif --}}
-
                     <!-- {!! apply_filters('ecommerce_before_product_price_in_listing', null, $product) !!} -->
-
                 </div>
             </div>
             <div class="col-12">
