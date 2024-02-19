@@ -92,7 +92,7 @@
             <div class="col-7">
 
 
-                <div class="product-content-wrap cart-related-wrap">
+                <div class="product-content-wrap ">
                     @php $category = $product->categories->sortByDesc('id')->first(); @endphp
                     <h6><a href="{{ $product->url }}">{{ $product->name }}</a></h6>
                     {{-- @if (EcommerceHelper::isReviewEnabled())
