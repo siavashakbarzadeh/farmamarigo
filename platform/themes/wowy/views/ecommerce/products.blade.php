@@ -59,7 +59,7 @@
                         </h4>
                     </center>
                     {{-- <div class="owl-carousel owl-theme discounted-carousel "> --}}
-                    <div class="col-3">
+                    <div class="owl-carousel owl-theme discounted-carousel ">
                         @foreach ($discountedProducts as $discountedProduct)
                             @include(Theme::getThemeNamespace() .
                                     '::views.ecommerce.includes.cart-related-product-items',
