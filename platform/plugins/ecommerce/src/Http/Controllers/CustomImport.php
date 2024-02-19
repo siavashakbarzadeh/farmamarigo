@@ -373,10 +373,9 @@ class CustomImport extends BaseController
             $row = DB::connection('mysql')->table('ec_brands')->updateOrInsert(
                 [
                     'id' => $brand->pk_fornitore_id,
-                    'name' => $brand->nome,
-                ]
-                ,
+                ],
                 [
+                    'name' => $brand->nome,
                     'website'=>'/products?brands[]='.$brand->pk_fornitore_id,
                     'status' => 'published',
                     'order' => '0',
