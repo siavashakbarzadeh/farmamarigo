@@ -219,7 +219,6 @@
     <thead>
     <tr>
         <th class="heading-description">Prodotto (Codice)</th>
-        <th class="heading-description">{{ 'plugins/ecommerce::products.form.options'|trans }}</th>
         <th class="heading-quantity">{{ 'plugins/ecommerce::products.form.quantity'|trans }}</th>
         <th class="heading-price">{{ 'plugins/ecommerce::products.form.price'|trans }}</th>
         <th class="heading-subtotal">{{ 'plugins/ecommerce::products.form.total'|trans }}</th>
@@ -229,7 +228,6 @@
     {% for item in invoice.items %}
         <tr>
             <td>{{ item.name }} ({{item.sku}})</td>
-            <td>{{ item.options }}</td>
             <td>{{ item.qty }}</td>
             <td class="right">{{ item.sub_total|price_format }}</td>
             <td class="bold">{{ item.amount|price_format }}</td>
