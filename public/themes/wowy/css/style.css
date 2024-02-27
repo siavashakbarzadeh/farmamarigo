@@ -4382,10 +4382,12 @@ h6.post-title {
 }
 
 .header-top-ptb-1 {
-    background-color: #f2f3f8;
-    border-bottom: 1px solid #f2f2f2;
-    font-size: 13px;
-    padding: 7px 0
+    background-color: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    font-size: 11px;
+    font-weight: 300;
+    padding: 9px 0;
+    text-transform: uppercase;
 }
 
 .header-info-right {
@@ -14591,10 +14593,12 @@ h6.post-title {
 }
 
 .header-top-ptb-1 {
-    background-color: #f2f3f8;
-    border-bottom: 1px solid #f2f2f2;
-    font-size: 13px;
-    padding: 7px 0
+    background-color: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    font-size: 11px;
+    font-weight: 300;
+    padding: 9px 0;
+    text-transform: uppercase;
 }
 
 .header-info-right {
