@@ -121,8 +121,8 @@
     //         itemsDesktopSmall : [979,3]
     // })
     $('.featured-brands-carousel').owlCarousel({
-        autoplay: false,
-        // autoplayTimeout: 2000,
+        autoplay: true,
+        autoplayTimeout: 2000,
         autoplayHoverPause: true,
         stagePadding: 50,
         /*the little visible images at the end of the carousel*/

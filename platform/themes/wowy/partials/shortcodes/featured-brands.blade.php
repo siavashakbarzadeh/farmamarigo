@@ -9,7 +9,7 @@
             {{--        <div class=" owl-carousel owl-theme brands-carousel "> --}}
 
             @foreach ($brands as $brand)
-                <div class="col-6">
+                <div class="col-6" style="display: flex !important;height: 150px;align-items: center;">
                     <a class="displayManufacturer" href="/products?brands[]={{ $brand->id }}">
                         <img class="displayManufacturerImg" src="{{ RvMedia::getImageUrl($brand->logo) }}">
                     </a>
