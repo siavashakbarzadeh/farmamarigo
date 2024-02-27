@@ -93,7 +93,8 @@
                                                 <input type="text" id="captcha-login"
                                                     placeholder="Scrivi il risultato della somma a fianco">
                                             </div>
-                                            <span class="text-danger captcha-error"></span>
+                                            <span class="text-danger captcha-error"
+                                                style="color:red;font-size:0.8em;text-align:left;margin-left:20px"></span>
                                         </div>
                                     </div>
                                 </div>
