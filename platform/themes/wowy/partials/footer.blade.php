@@ -304,13 +304,13 @@
 
                 } else {
                     // Handle CAPTCHA validation failure
-                    $('.captcha-error').html('Invalid CAPTCHA');
+                    $('.captcha-error').html('La somma non è corretta');
                 }
             })
             .catch(error => {
                 if (error.response && error.response.status === 422) {
                     // Handle specific error here for CAPTCHA
-                    $('.captcha-error').html('CAPTCHA is not correct');
+                    $('.captcha-error').html('La somma non è corretta!');
                     refreshRegisterFormCaptcha();
                 }
             });
