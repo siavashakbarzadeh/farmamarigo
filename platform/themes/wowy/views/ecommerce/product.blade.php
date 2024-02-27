@@ -295,10 +295,10 @@
             <div class="row">
                 <div class="col-12">
                     <p class="alert alert-warning">
-                        Devi effettuare il login per acquistare il prodotto!
+                        Accedi per acquistare!
                     </p>
                     <a class="btn col-4" href="/login" style="padding:10px 4px !important; border-radius:50px;">
-                        <span style="color:white;font-size:smaller;font-weight:600">Login</span>
+                        <span style="color:white;font-size:smaller;font-weight:600">Accedi</span>
                     </a>
                 </div>
 

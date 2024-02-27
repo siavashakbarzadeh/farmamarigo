@@ -181,7 +181,7 @@
                             <div class="col-4 " style="text-align: right">
                                 <a class="btn" href="/login"
                                     style="padding:10px 4px !important; border-radius:50px;">
-                                    <span style="color:white;font-size:smaller;font-weight:600">Login</span>
+                                    <span style="color:white;font-size:smaller;font-weight:600">Accedi</span>
                                 </a>
                             </div>
                         @endif
