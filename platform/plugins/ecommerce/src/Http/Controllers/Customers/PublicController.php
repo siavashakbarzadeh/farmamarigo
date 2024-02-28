@@ -258,6 +258,7 @@ class PublicController extends Controller
                                                     ->where('status', 'active')
                                                     ->first();
                         if ($offerDetail) {
+                            dd('offerdetail');
                             $price=$offerDetail->product_price;
                         }else{
                             $pricelist = DB::connection('mysql')->table('ec_pricelist')
@@ -265,8 +266,12 @@ class PublicController extends Controller
                             ->where('product_id', $product_id)
                             ->first();
                             if ($pricelist) {
+                                dd('pricelist');
+
                                 $price = $pricelist->final_price;
                             } else if ($product) {
+                                dd('product price');
+
                                 $price = $product->price; // Ensure product is not null
                             }
                         }
