@@ -304,8 +304,7 @@ class PublicController extends Controller
                     ->setMessage(__('Product :product is out of stock!', ['product' => $product->original_product->name ?: $product->name]));
             }
 
-            $productRequest = new Request();
-            $productRequest->merge(['qty' => $orderProduct->qty]);
+
 
 
             $flag = false; // Reset flag for each item
@@ -350,13 +349,15 @@ class PublicController extends Controller
 
 
 
+            $productRequest = new Request();
+            $productRequest->merge([
+                'qty' => $orderProduct->qty,
+                'price'=>$price
+            ]);
 
-
-            $product->price=$price;
-            dd($price);
-            dd($product,$productRequest);
             $cartItems = OrderHelper::handleAddCart($product, $productRequest);
         }
+        dd($cartItems);
         return $response
             ->setNextUrl(route('public.cart'))
             ->setMessage(__(
