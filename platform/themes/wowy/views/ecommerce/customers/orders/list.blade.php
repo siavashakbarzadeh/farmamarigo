@@ -76,11 +76,13 @@
 
                                             @if ($payment)
                                                 @if ($payment->payment_channel == 'paypal' && $payment->status == 'pending')
-                                                    <a class='btn btn-primary btn-sm'
-                                                        href="/checkout/{{ $order->token }}/recover"
+                                                <form action="{{ route('customer.orders.reorder', $order->id) }}" method="post"
+                                                class="col-3">
+                                                        <button class='btn btn-primary btn-sm'
                                                         style="background-color:#f9844a;color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
                                                         <i class="fa fa-credit-card"></i>
-                                                    </a>
+                                                        </button>
+                                                    </form>
                                                 @else
                                                     <a class='btn btn-primary btn-sm'
                                                         href="{{ route('customer.print-order', $order->id) }}"
@@ -89,11 +91,10 @@
                                                     </a>
                                                 @endif
                                             @else
-                                                <a class='btn btn-primary btn-sm'
-                                                    href="/checkout/{{ $order->token }}/recover"
+                                                <button  class='btn btn-primary btn-sm'
                                                     style="background-color:#f9844a;color:white !important;width:40px;height:40px;border-radius: 50%;text-align: center;display: flex;flex-direction: row;justify-content: center;align-items: center;">
                                                     <i class="fa fa-hourglass-start"></i>
-                                                </a>
+                                                </button>
                                             @endif
 
                                         </div>
