@@ -226,10 +226,9 @@ class PublicController extends Controller
             abort(404);
         }
         
-        dd($order->products);
 
         OrderHelper::reArrange($order->products);
-        
+
         return $response
             ->setNextUrl(route('public.cart'))
             ->setMessage(__(
