@@ -301,6 +301,7 @@ class PublicController extends Controller
 
             $productRequest = new Request();
             $productRequest->merge(['qty' => $orderProduct->qty]);
+            dd($productRequest);
             $cartItems = OrderHelper::handleAddCart($product, $productRequest);
         }
         return $response
