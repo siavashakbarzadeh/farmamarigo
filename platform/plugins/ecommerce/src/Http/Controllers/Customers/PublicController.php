@@ -280,7 +280,7 @@ class PublicController extends Controller
                                 $taxRate=Tax::find(Product::find($item->product_id)->tax_id)->percentage;
                                 Cart::instance('cart')->add(
                                     $item->product_id,
-                                    BaseHelper::clean($item->product_name),
+                                    $item->product_name,
                                     $item->qty,
                                     floatval($price),
                                     [
