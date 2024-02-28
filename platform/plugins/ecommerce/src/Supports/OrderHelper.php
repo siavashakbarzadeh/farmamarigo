@@ -377,6 +377,7 @@ class OrderHelper
 
     public function handleAddCart(Product $product, Request $request): array
     {
+        dd($request);
         $parentProduct = $product->original_product;
 
         $image = $product->image ?: $parentProduct->image;
