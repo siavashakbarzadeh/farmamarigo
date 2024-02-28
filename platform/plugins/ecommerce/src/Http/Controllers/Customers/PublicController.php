@@ -231,6 +231,7 @@ class PublicController extends Controller
                 Session::put('order_id',$order->id);
                 Session::put('note',$order->description);
                 foreach ($order->products as $item) {
+                    dd($item);
 
                     $flag = false; // Reset flag for each item
                         $product = Product::find($item->id); // Assuming $item->id is correct
