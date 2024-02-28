@@ -402,7 +402,6 @@ class OrderHelper
 
         $cartItemsCollection = collect($cartItems);
 
-        dd($cartItemsCollection);
 
         session(['cart.cart' => $cartItemsCollection]);
         return $cartItems;
