@@ -9,9 +9,8 @@ use Cart;
 use Botble\Ecommerce\Models\Product;
 use Botble\Ecommerce\Models\ProductVariation;
 use Botble\Ecommerce\Models\OffersDetail;
-use Botble\Ecommerce\Models\Offers  ;
-use Botble\Ecommerce\Models\Tax  ;
-
+use Botble\Ecommerce\Models\Offers;
+use Botble\Ecommerce\Models\Tax;
 use Illuminate\Support\Facades\DB;
 
 use Botble\Ecommerce\Enums\OrderStatusEnum;
@@ -260,19 +259,38 @@ class PublicController extends Controller
                                                     ->where('status', 'active')
                                                     ->first();
                         if ($offerDetail) {
+
+
+
+                            $offer = Offers::find($offerDetail->offer_id);
+                            if ($offer && in_array($offer->offer_type, [1, 2, 3])) {
+                                $price = $offerDetail->product_price;
+                            }
                             $price=$offerDetail->product_price;
+
+
+                            //if offertype = takhfifi bud price age na
+                            // connected
+                            // 3ta 2ta
+                            // age be quantity resid in takhfif
+
+
+
+
+
+
+
+
                         }else{
                             $pricelist = DB::connection('mysql')->table('ec_pricelist')
                             ->where('customer_id', $order->user_id)
                             ->where('product_id', $product_id)
                             ->first();
                             if ($pricelist) {
-
                                 $price = $pricelist->final_price;
                             } else {
                                 $price = $product->price; // Ensure product is not null
                             }
-
                         }
 
 
