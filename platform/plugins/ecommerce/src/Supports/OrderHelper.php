@@ -464,7 +464,6 @@ class OrderHelper
         foreach (Cart::instance('cart')->content() as $item) {
             $cartItems[] = $item;
         }
-
         return $cartItems;
     }
 
