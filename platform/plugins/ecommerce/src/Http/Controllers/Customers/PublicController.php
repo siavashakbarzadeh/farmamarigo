@@ -225,16 +225,23 @@ class PublicController extends Controller
         if (! EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
-        
+        session()->forget('tracked_start_checkout');
+        session()->forget('order_id');
+        session()->forget('note');
+        session()->forget('shippingAmount');
 
-        $cartItems=OrderHelper::reArrange($order->products);
-        
+        session(['shippingAmount' => $order->shipping_amount]);
+        session(['note' => $order->description]);
+        session(['order_id' => $order->id]);
+        session(['tracked_start_checkout' => $order->token]);
 
-        return $response
-            ->setNextUrl(route('public.cart'))
-            ->setMessage(__(
-                'Added product to cart successfully!'
-            ));
+
+
+
+        $cartItems=OrderHelper::reArrange($order);
+
+        return redirect()->route('checkout', ['token' => $order->token]);
+
     }
 
     public function getViewOrder(int $id)

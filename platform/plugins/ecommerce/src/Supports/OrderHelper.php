@@ -376,38 +376,7 @@ class OrderHelper
     }
 
 
-    public function reArrange($orderProducts){
-        Cart::instance('cart')->destroy();
 
-        foreach($orderProducts as $product){
-            Cart::instance('cart')->add(
-                $product->id,
-                BaseHelper::clean($product->product_name),
-                $product->qty,
-                $product->price,
-                [
-                    'image' => RvMedia::getImageUrl($product->product_image, 'thumb', false, RvMedia::getDefaultImage()),
-                    'attributes' => '',
-                    'taxRate' => $product->tax_amount,
-                    'options' => $product->options,
-                    'extras' => [],
-                ]
-            );
-        }
-        $cartItems = [];
-
-        foreach (Cart::instance('cart')->content() as $item) {
-            $cartItems[] = $item;
-        }
-
-        $cartItemsCollection = collect($cartItems);
-
-
-        session(['cart.cart' => $cartItemsCollection]);
-        return $cartItems;
-
-
-    }
 
     public function handleAddCart(Product $product, Request $request): array
     {
