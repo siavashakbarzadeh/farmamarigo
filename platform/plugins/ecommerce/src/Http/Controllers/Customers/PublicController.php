@@ -293,7 +293,6 @@ class PublicController extends Controller
                                 );
                         }
                 }
-                dd(session('cart.cart'));
                 return redirect('/cart');
             });
         } catch (Throwable $e) {
