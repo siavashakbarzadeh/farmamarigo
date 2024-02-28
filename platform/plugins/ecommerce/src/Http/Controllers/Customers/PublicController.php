@@ -229,7 +229,6 @@ class PublicController extends Controller
         abort_if($order->user_id != request()->user('customer')->id, Response::HTTP_FORBIDDEN);
         try {
             return DB::transaction(function () use ($order) {
-                Session::put('note',$order->description);
                 foreach ($order->products as $item) {
 
                     $flag = false; // Reset flag for each item
