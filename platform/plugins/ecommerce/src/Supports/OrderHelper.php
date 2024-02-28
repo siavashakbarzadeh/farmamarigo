@@ -375,6 +375,40 @@ class OrderHelper
         session()->forget('tracked_start_checkout');
     }
 
+
+    public function reArrange($orderProducts){
+        Cart::instance('cart')->destroy();
+        session()->forget('applied_coupon_code');
+        session()->forget('order_id');
+        session()->forget(md5('checkout_address_information_' . $token));
+        session()->forget('tracked_start_checkout');
+
+        foreach($orderProducts as $product){
+            Cart::instance('cart')->add(
+                $product->id,
+                BaseHelper::clean($product->product_name),
+                $product->qty,
+                $product->price,
+                [
+                    'image' => RvMedia::getImageUrl($product->product_image, 'thumb', false, RvMedia::getDefaultImage()),
+                    'attributes' => '',
+                    'taxRate' => $product->tax_amount,
+                    'options' => $product->options, 
+                    'extras' => [],
+                ]
+            );  
+        }
+        $cartItems = [];
+
+        foreach (Cart::instance('cart')->content() as $item) {
+            $cartItems[] = $item;
+        }
+        
+        return $cartItems;
+
+
+    }
+
     public function handleAddCart(Product $product, Request $request): array
     {
 
