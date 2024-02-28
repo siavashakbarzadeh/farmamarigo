@@ -227,7 +227,7 @@ class PublicController extends Controller
         }
         
 
-        OrderHelper::reArrange($order->products);
+        $cartItems=OrderHelper::reArrange($order->products);
 
         return $response
             ->setNextUrl(route('public.cart'))

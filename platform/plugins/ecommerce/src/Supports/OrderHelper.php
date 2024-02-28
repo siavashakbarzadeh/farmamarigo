@@ -395,7 +395,6 @@ class OrderHelper
             );  
         }
         $cartItems = [];
-        dd(Cart::instance('cart')->content()); 
         
         foreach (Cart::instance('cart')->content() as $item) {
             $cartItems[] = $item;
