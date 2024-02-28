@@ -47,7 +47,7 @@ use SeoHelper;
 use Theme;
 
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class PublicController extends Controller
