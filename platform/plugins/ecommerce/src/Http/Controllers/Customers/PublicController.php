@@ -273,7 +273,6 @@ class PublicController extends Controller
 
                         }
 
-                        dd($price);
 
                         // Add to cart only if price is determined
                         if ($price !== null) {
