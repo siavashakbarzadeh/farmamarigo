@@ -274,6 +274,7 @@ class PublicController extends Controller
 
                         // Add to cart only if price is determined
                         if ($price !== null) {
+                            dd('price is not null');
                                 $taxRate=Tax::find(Product::find($item->product_id)->tax_id)->percentage;
                                 Cart::instance('cart')->add(
                                     $item->product_id,
