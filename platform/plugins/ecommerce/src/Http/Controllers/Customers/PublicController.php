@@ -228,7 +228,7 @@ class PublicController extends Controller
         abort_if($order->user_id != request()->user('customer')->id, Response::HTTP_FORBIDDEN);
         try {
             return DB::transaction(function () use ($order) {
-                Session::put('cart_order',$order->id);
+                Session::put('order_id',$order->id);
                 Session::put('note',$order->description);
                 foreach ($order->products as $item) {
 
@@ -255,11 +255,10 @@ class PublicController extends Controller
                         // First, check for active offers
                         $offerDetail = OffersDetail::where('product_id', $product_id)
                                                     ->where('customer_id', $order->user_id)
-
                                                     ->where('status', 'active')
                                                     ->first();
                         if ($offerDetail) {
-                            $price=null;
+                            $price=$offerDetail->product_price;
                         }else{
                             $pricelist = DB::connection('mysql')->table('ec_pricelist')
                             ->where('customer_id', $order->user_id)
