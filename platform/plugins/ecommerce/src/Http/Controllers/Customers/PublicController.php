@@ -218,6 +218,7 @@ class PublicController extends Controller
 
     public function reorder($id,Request $request,BaseHttpResponse $response)
     {
+        Cart::instance('cart')->destroy();
         $order = $this->orderRepository->getFirstBy(
             [
                 'id' => $id,
