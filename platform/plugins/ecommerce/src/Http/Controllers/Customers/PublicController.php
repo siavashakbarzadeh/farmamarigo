@@ -301,6 +301,52 @@ class PublicController extends Controller
 
             $productRequest = new Request();
             $productRequest->merge(['qty' => $orderProduct->qty]);
+
+
+            $flag = false; // Reset flag for each item
+            $tempProduct = Product::find($product->id); // Assuming $item->id is correct
+            if ($tempProduct && $tempProduct->is_variation) {
+                $AllVariations = Product::where('name', $item->name)->get();
+                foreach ($AllVariations as $variation) {
+                    if ($variation->is_variation) {
+                        $flag = true;
+                        break; // Found a variation, no need to continue
+                    }
+                }
+            }
+            if ($flag) {
+                $productVariation = ProductVariation::where('product_id', $product->id)->first();
+                $product_id = $productVariation ? $productVariation->configurable_product_id : $prouct->id;
+            } else {
+                $product_id = $product->id;
+            }
+            // Reset price for each item
+            $price = null;
+            // Logic to determine the price
+            // First, check for active offers
+            $offerDetail = OffersDetail::where('product_id', $product_id)
+                                        ->where('customer_id', $user_id)
+                                        ->where('status', 'active')
+                                        ->first();
+            if ($offerDetail) {
+                $price=null;
+            }else{
+                $pricelist = DB::connection('mysql')->table('ec_pricelist')
+                ->where('customer_id', $user_id)
+                ->where('product_id', $product_id)
+                ->first();
+                if ($pricelist) {
+                    $price = $pricelist->final_price;
+                } else if ($product) {
+                    $price = $product->price; // Ensure product is not null
+                }
+            }
+
+
+
+
+
+            $product->price=$price;
             dd($product,$productRequest);
             $cartItems = OrderHelper::handleAddCart($product, $productRequest);
         }
