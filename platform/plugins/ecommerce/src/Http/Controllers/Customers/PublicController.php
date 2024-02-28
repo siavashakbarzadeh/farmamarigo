@@ -310,7 +310,7 @@ class PublicController extends Controller
             $flag = false; // Reset flag for each item
             $tempProduct = Product::find($product->id); // Assuming $item->id is correct
             if ($tempProduct && $tempProduct->is_variation) {
-                $AllVariations = Product::where('name', $item->name)->get();
+                $AllVariations = Product::where('name', $product->name)->get();
                 foreach ($AllVariations as $variation) {
                     if ($variation->is_variation) {
                         $flag = true;
