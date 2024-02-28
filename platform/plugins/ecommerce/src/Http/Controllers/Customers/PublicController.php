@@ -236,11 +236,7 @@ class PublicController extends Controller
         session(['tracked_start_checkout' => $order->token]);
 
 
-
-
-
-
-        return redirect()->route('/checkout/' . $order->token);
+        return redirect('/checkout/' . $order->token);
 
     }
 
