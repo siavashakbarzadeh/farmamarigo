@@ -231,12 +231,11 @@ class PublicController extends Controller
                 Session::put('order_id',$order->id);
                 Session::put('note',$order->description);
                 foreach ($order->products as $item) {
-                    dd($item);
 
                     $flag = false; // Reset flag for each item
-                        $product = Product::find($item->id); // Assuming $item->id is correct
+                        $product = Product::find($item->product_id); // Assuming $item->id is correct
                         if ($product && $product->is_variation) {
-                            $AllVariations = Product::where('name', $item->name)->get();
+                            $AllVariations = Product::where('name', $item->product_name)->get();
                             foreach ($AllVariations as $variation) {
                                 if ($variation->is_variation) {
                                     $flag = true;
@@ -245,10 +244,10 @@ class PublicController extends Controller
                             }
                         }
                         if ($flag) {
-                            $productVariation = ProductVariation::where('product_id', $item->id)->first();
-                            $product_id = $productVariation ? $productVariation->configurable_product_id : $item->id;
+                            $productVariation = ProductVariation::where('product_id', $item->product_id)->first();
+                            $product_id = $productVariation ? $productVariation->configurable_product_id : $item->product_id;
                         } else {
-                            $product_id = $item->id;
+                            $product_id = $item->product_id;
                         }
                         // Reset price for each item
                         $price = null;
@@ -259,7 +258,6 @@ class PublicController extends Controller
                                                     ->where('status', 'active')
                                                     ->first();
                         if ($offerDetail) {
-                            dd('offerdetail');
                             $price=$offerDetail->product_price;
                         }else{
                             $pricelist = DB::connection('mysql')->table('ec_pricelist')
@@ -267,11 +265,9 @@ class PublicController extends Controller
                             ->where('product_id', $product_id)
                             ->first();
                             if ($pricelist) {
-                                dd('pricelist');
 
                                 $price = $pricelist->final_price;
                             } else {
-                                dd($product);
                                 $price = $product->price; // Ensure product is not null
                             }
 
