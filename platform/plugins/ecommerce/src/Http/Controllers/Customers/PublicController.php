@@ -269,9 +269,8 @@ class PublicController extends Controller
                                 dd('pricelist');
 
                                 $price = $pricelist->final_price;
-                            } else if ($product) {
-                                dd('product price');
-
+                            } else($product) {
+                                dd('product price',$product);
                                 $price = $product->price; // Ensure product is not null
                             }
                         }
