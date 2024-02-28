@@ -353,6 +353,7 @@ class PublicController extends Controller
 
 
             $product->price=$price;
+            dd($price);
             dd($product,$productRequest);
             $cartItems = OrderHelper::handleAddCart($product, $productRequest);
         }
