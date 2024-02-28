@@ -9,6 +9,9 @@ use Cart;
 use Botble\Ecommerce\Models\Product;
 use Botble\Ecommerce\Models\ProductVariation;
 use Botble\Ecommerce\Models\OffersDetail;
+use Botble\Ecommerce\Models\Offers  ;
+Cart
+
 use Illuminate\Support\Facades\DB;
 
 use Botble\Ecommerce\Enums\OrderStatusEnum;
@@ -43,6 +46,10 @@ use OrderReturnHelper;
 use RvMedia;
 use SeoHelper;
 use Theme;
+
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Response;
+
 
 class PublicController extends Controller
 {
@@ -219,26 +226,84 @@ class PublicController extends Controller
             ['ec_orders.*'],
             ['address', 'products']
         );
-        if (!$order) {
-            abort(404);
+        abort_if($order->user_id != request()->user('customer')->id, Response::HTTP_FORBIDDEN);
+        try {
+            return DB::transaction(function () use ($order) {
+                Session::put('cart_order',$order->id);
+                Session::put('note',$order->description);
+                foreach ($order->products as $item) {
+
+                    $flag = false; // Reset flag for each item
+                        $product = Product::find($item->id); // Assuming $item->id is correct
+                        if ($product && $product->is_variation) {
+                            $AllVariations = Product::where('name', $item->name)->get();
+                            foreach ($AllVariations as $variation) {
+                                if ($variation->is_variation) {
+                                    $flag = true;
+                                    break; // Found a variation, no need to continue
+                                }
+                            }
+                        }
+                        if ($flag) {
+                            $productVariation = ProductVariation::where('product_id', $item->id)->first();
+                            $product_id = $productVariation ? $productVariation->configurable_product_id : $item->id;
+                        } else {
+                            $product_id = $item->id;
+                        }
+                        // Reset price for each item
+                        $price = null;
+                        // Logic to determine the price
+                        // First, check for active offers
+                        $offerDetail = OffersDetail::where('product_id', $product_id)
+                                                    ->where('customer_id', $order->user_id)
+
+                                                    ->where('status', 'active')
+                                                    ->first();
+                        if ($offerDetail) {
+                            $price=null;
+                        }else{
+                            $pricelist = DB::connection('mysql')->table('ec_pricelist')
+                            ->where('customer_id', $order->user_id)
+                            ->where('product_id', $product_id)
+                            ->first();
+                            if ($pricelist) {
+                                $price = $pricelist->final_price;
+                            } else if ($product) {
+                                $price = $product->price; // Ensure product is not null
+                            }
+                        }
+
+                        // Add to cart only if price is determined
+                        if ($price !== null) {
+                                $taxRate=Tax::find(Product::find($item->product_id)->tax_id)->percentage;
+                                Cart::instance('cart')->add(
+                                    $item->product_id,
+                                    BaseHelper::clean($item->product_name),
+                                    $item->qty,
+                                    floatval($price),
+                                    [
+                                        'image' => RvMedia::getImageUrl($item->product_image, 'thumb', false, RvMedia::getDefaultImage()),
+                                        'attributes' => '',
+                                        'taxRate' => $taxRate,
+                                        "options" => [],
+                                        "extras" => []
+                                    ]
+                                );
+                        }
+                }
+                return redirect('/cart');
+            });
+        } catch (Throwable $e) {
+            dd($e);
         }
-        if (! EcommerceHelper::isCartEnabled()) {
-            abort(404);
-        }
-        session()->forget('tracked_start_checkout');
-        session()->forget('order_id');
-        session()->forget('note');
-        session()->forget('shippingAmount');
-
-        session(['shippingAmount' => $order->shipping_amount]);
-        session(['note' => $order->description]);
-        session(['order_id' => $order->id]);
-        session(['tracked_start_checkout' => $order->token]);
-
-
-        return redirect('/checkout/' . $order->token);
 
     }
+
+
+
+
+
+
 
     public function getViewOrder(int $id)
     {

@@ -391,10 +391,7 @@ class OrderHelper
         if ($request->input('options')) {
             $options = $this->getProductOptionData($request->input('options'));
         }
-        if($request->input('price'))
-        {
-            $pricelist=$request->input('price');
-        }
+
 
         /**
          * Add cart to session
@@ -417,7 +414,7 @@ class OrderHelper
                 $product->id,
                 BaseHelper::clean($parentProduct->name ?: $product->name),
                 $request->input('qty', 1),
-                isset($pricelist)?$pricelist:$product->original_price,
+                $product->original_price,
                 [
                     'image' => RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage()),
                     'attributes' => $product->is_variation ? $product->variation_attributes : '',
