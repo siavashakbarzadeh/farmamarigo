@@ -379,7 +379,6 @@ class OrderHelper
     public function reArrange($orderProducts){
         Cart::instance('cart')->destroy();
 
-        dd($orderProducts);
         foreach($orderProducts as $product){
             Cart::instance('cart')->add(
                 $product->id,
@@ -396,7 +395,8 @@ class OrderHelper
             );  
         }
         $cartItems = [];
-
+        dd(Cart::instance('cart')->content()); 
+        
         foreach (Cart::instance('cart')->content() as $item) {
             $cartItems[] = $item;
         }
