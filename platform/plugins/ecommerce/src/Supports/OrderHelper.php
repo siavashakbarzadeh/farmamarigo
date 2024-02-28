@@ -389,18 +389,20 @@ class OrderHelper
                     'image' => RvMedia::getImageUrl($product->product_image, 'thumb', false, RvMedia::getDefaultImage()),
                     'attributes' => '',
                     'taxRate' => $product->tax_amount,
-                    'options' => $product->options, 
+                    'options' => $product->options,
                     'extras' => [],
                 ]
-            );  
+            );
         }
         $cartItems = [];
-        
+
         foreach (Cart::instance('cart')->content() as $item) {
             $cartItems[] = $item;
         }
 
-        session(['cart.cart' => $cartItems]);
+        $cartItemsCollection = collect($cartItems);
+
+        session(['cart.cart' => $cartItemsCollection]);
         return $cartItems;
 
 
@@ -430,7 +432,7 @@ class OrderHelper
 
          $quantityToAdd = $request->input('qty', 1);
          $found = false;
-         
+
         foreach (Cart::instance('cart')->content() as $item) {
             if ($item->id == $product->id) { // You might need to implement this equals method or an equivalent comparison
                 // Update the quantity of the existing item
@@ -453,9 +455,9 @@ class OrderHelper
                     'options' => $options,
                     'extras' => $request->input('extras', []),
                 ]
-            );    
+            );
         }
-        
+
 
         /**
          * prepare data for response
