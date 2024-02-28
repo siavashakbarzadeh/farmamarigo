@@ -378,9 +378,6 @@ class OrderHelper
 
     public function reArrange($orderProducts){
         Cart::instance('cart')->destroy();
-        session()->forget('applied_coupon_code');
-        session()->forget('order_id');
-        session()->forget('tracked_start_checkout');
 
         foreach($orderProducts as $product){
             Cart::instance('cart')->add(
