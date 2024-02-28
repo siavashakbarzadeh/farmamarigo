@@ -377,7 +377,6 @@ class OrderHelper
 
     public function handleAddCart(Product $product, Request $request): array
     {
-        dd($request->input('price'));
         $parentProduct = $product->original_product;
 
         $image = $product->image ?: $parentProduct->image;
@@ -387,9 +386,7 @@ class OrderHelper
         }
         if($request->input('price'))
         {
-
             $pricelist=$request->input('price');
-
         }
 
         /**
@@ -413,7 +410,7 @@ class OrderHelper
                 $product->id,
                 BaseHelper::clean($parentProduct->name ?: $product->name),
                 $request->input('qty', 1),
-                $pricelist?$pricelist:$product->original_price,
+                isset($pricelist)?$pricelist:$product->original_price,
                 [
                     'image' => RvMedia::getImageUrl($image, 'thumb', false, RvMedia::getDefaultImage()),
                     'attributes' => $product->is_variation ? $product->variation_attributes : '',
