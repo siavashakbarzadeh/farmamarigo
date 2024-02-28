@@ -400,6 +400,7 @@ class OrderHelper
             $cartItems[] = $item;
         }
 
+        session(['cart.cart' => $cart]);
         return $cartItems;
 
 
