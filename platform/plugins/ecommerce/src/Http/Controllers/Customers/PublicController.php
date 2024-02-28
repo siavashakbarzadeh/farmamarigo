@@ -357,7 +357,6 @@ class PublicController extends Controller
 
             $cartItems = OrderHelper::handleAddCart($product, $productRequest);
         }
-        dd($cartItems);
         return $response
             ->setNextUrl(route('public.cart'))
             ->setMessage(__(
