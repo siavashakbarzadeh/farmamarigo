@@ -10,6 +10,7 @@ use Botble\Ecommerce\Models\Product;
 use Botble\Ecommerce\Models\ProductVariation;
 use Botble\Ecommerce\Models\OffersDetail;
 use Botble\Ecommerce\Models\Offers  ;
+use Botble\Ecommerce\Models\Tax  ;
 
 use Illuminate\Support\Facades\DB;
 
