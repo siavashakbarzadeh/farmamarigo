@@ -327,6 +327,7 @@ class PublicController extends Controller
             $price = null;
             // Logic to determine the price
             // First, check for active offers
+            $user_id=auth('customer')->user()->id;
             $offerDetail = OffersDetail::where('product_id', $product_id)
                                         ->where('customer_id', $user_id)
                                         ->where('status', 'active')
