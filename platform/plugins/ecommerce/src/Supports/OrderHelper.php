@@ -377,6 +377,10 @@ class OrderHelper
 
     public function handleAddCart(Product $product, Request $request): array
     {
+
+        //$request->input('reorder')
+
+
         $parentProduct = $product->original_product;
 
         $image = $product->image ?: $parentProduct->image;

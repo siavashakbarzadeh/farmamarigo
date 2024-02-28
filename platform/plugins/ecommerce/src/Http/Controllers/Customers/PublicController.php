@@ -225,7 +225,12 @@ class PublicController extends Controller
         if (! EcommerceHelper::isCartEnabled()) {
             abort(404);
         }
+        
+        dd($order->products);
+
         foreach ($order->products as $orderProduct) {
+
+
 
             $product = $this->productRepository->findById($orderProduct->product->id);
 
@@ -352,7 +357,8 @@ class PublicController extends Controller
             $productRequest = new Request();
             $productRequest->merge([
                 'qty' => $orderProduct->qty,
-                'price'=>$price
+                'price'=>$price,
+                'reorder'=>1
             ]);
 
             $cartItems = OrderHelper::handleAddCart($product, $productRequest);
