@@ -380,7 +380,6 @@ class OrderHelper
         Cart::instance('cart')->destroy();
         session()->forget('applied_coupon_code');
         session()->forget('order_id');
-        session()->forget(md5('checkout_address_information_' . $token));
         session()->forget('tracked_start_checkout');
 
         foreach($orderProducts as $product){
@@ -403,7 +402,7 @@ class OrderHelper
         foreach (Cart::instance('cart')->content() as $item) {
             $cartItems[] = $item;
         }
-        
+
         return $cartItems;
 
 
