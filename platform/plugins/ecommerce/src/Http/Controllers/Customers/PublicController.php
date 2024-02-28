@@ -240,7 +240,8 @@ class PublicController extends Controller
 
         $cartItems=OrderHelper::reArrange($order);
 
-        return redirect()->route('checkout', ['token' => $order->token]);
+
+        return redirect()->route('/checkout/' . $order->token);
 
     }
 
