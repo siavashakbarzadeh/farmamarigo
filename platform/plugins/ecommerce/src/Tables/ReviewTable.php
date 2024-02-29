@@ -151,7 +151,7 @@ class ReviewTable extends TableAbstract
                                 return $subQuery->where('ec_products.name', 'LIKE', '%' . $keyword . '%');
                             })
                             ->orWhereHas('user', function ($subQuery) use ($keyword) {
-                                return $subQuery->where('ec_customers.name', 'LIKE', '%' . $keyword . '%');
+                                return $subQuery->where('ec_customers.codice', 'LIKE', '%' . $keyword . '%');
                             })
                             ->orWhere('comment', 'LIKE', '%' . $keyword . '%');
                     });
