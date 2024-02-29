@@ -433,7 +433,6 @@ class CreaSconto extends BaseController
         $offer_starting_date=$request->start_date;
         $offer_expiring_date=$request->expiring_date;
         $offer_type=$request->offer_type;
-        $active=1;
 
         $offer=new Offers();
         $offer->offer_name=$offer_name;
@@ -441,7 +440,7 @@ class CreaSconto extends BaseController
         $offer->offer_starting_date=$offer_starting_date;
         $offer->offer_expiring_date=$offer_expiring_date;
         $offer->offer_type=$offer_type;
-        $offer->active=$active;
+        $offer->active=1;
 
         $offer->save();
 
