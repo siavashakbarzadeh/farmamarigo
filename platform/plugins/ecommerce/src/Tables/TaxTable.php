@@ -71,7 +71,7 @@ class TaxTable extends TableAbstract
             'percentage',
             'status',
             'created_at',
-        ]);
+            ])->orderBy('percentage', 'desc');
 
         return $this->applyScopes($query);
     }
