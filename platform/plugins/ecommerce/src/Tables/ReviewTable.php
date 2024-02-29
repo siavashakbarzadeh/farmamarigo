@@ -53,7 +53,7 @@ class ReviewTable extends TableAbstract
                 return null;
             })
             ->editColumn('customer_id', function ($item) {
-                return Html::link(route('customers.edit', $item->user->id), BaseHelper::clean($item->user->name))->toHtml();
+                return BaseHelper::clean($item->user->name)->toHtml();
             })
             ->editColumn('star', function ($item) {
                 return view('plugins/ecommerce::reviews.partials.rating', ['star' => $item->star])->render();
