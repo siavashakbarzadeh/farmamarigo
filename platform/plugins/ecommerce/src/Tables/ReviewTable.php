@@ -52,9 +52,9 @@ class ReviewTable extends TableAbstract
 
                 return null;
             })
-            ->editColumn('customer_id', function ($item) {
-                return BaseHelper::clean($item->user->name)->toHtml();
-            })
+            // ->editColumn('customer_id', function ($item) {
+            //     return BaseHelper::clean($item->user->name)->toHtml();
+            // })
             ->editColumn('star', function ($item) {
                 return view('plugins/ecommerce::reviews.partials.rating', ['star' => $item->star])->render();
             })
@@ -150,9 +150,9 @@ class ReviewTable extends TableAbstract
                             ->whereHas('product', function ($subQuery) use ($keyword) {
                                 return $subQuery->where('ec_products.name', 'LIKE', '%' . $keyword . '%');
                             })
-                            ->orWhereHas('user', function ($subQuery) use ($keyword) {
-                                return $subQuery->where('ec_customers.name', 'LIKE', '%' . $keyword . '%');
-                            })
+                            // ->orWhereHas('user', function ($subQuery) use ($keyword) {
+                            //     return $subQuery->where('ec_customers.name', 'LIKE', '%' . $keyword . '%');
+                            // })
                             ->orWhere('comment', 'LIKE', '%' . $keyword . '%');
                     });
                 }
@@ -171,7 +171,7 @@ class ReviewTable extends TableAbstract
                 'star',
                 'comment',
                 'product_id',
-                'customer_id',
+                // 'customer_id',
                 'status',
                 'created_at',
                 'images',
@@ -193,10 +193,10 @@ class ReviewTable extends TableAbstract
                 'title' => trans('plugins/ecommerce::review.product'),
                 'class' => 'text-start',
             ],
-            'customer_id' => [
-                'title' => trans('plugins/ecommerce::review.user'),
-                'class' => 'text-start',
-            ],
+            // 'customer_id' => [
+            //     'title' => trans('plugins/ecommerce::review.user'),
+            //     'class' => 'text-start',
+            // ],
             'star' => [
                 'title' => trans('plugins/ecommerce::review.star'),
                 'class' => 'text-center',
