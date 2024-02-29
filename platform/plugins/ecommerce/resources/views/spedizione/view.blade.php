@@ -27,11 +27,9 @@
             </tbody>
         </table>
     </div>
-    <h2>Shipping Cost</h2>
-    {{-- <p>The shipping cost is: {{ $shippingCost }}</p> --}}
-    <div class="container mt-5">
 
-
+    <div class="alert alert-warning mt-10">
+        data la complessità di questi campi, per modificarne uno qualsiasi contattare gli sviluppatori.
     </div>
 
 </div>
