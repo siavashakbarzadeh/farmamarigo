@@ -82,7 +82,9 @@ class OrderIncompleteTable extends OrderTable
     public function query(): Relation|Builder|QueryBuilder
     {
         $query = $this->repository->getModel()
-            ->where('is_finished',0)
+            ->where('status','returned')
+            ->orWhere('status','pending')
+            ->orWhere('status','canceled')
             ->select([
                 'id',
                 'user_id',
@@ -91,7 +93,7 @@ class OrderIncompleteTable extends OrderTable
                 'amount',
             ])
             ->with(['user']);
-            
+
 
         return $this->applyScopes($query);
     }
