@@ -229,7 +229,8 @@ background-color: rgba(0,0,0,0.4);">
                                             <div class="payment-checkout-form">
                                                 <input type="hidden" name="shipping_option"
                                                     value="{{ old('shipping_option', $defaultShippingOption) }}">
-                                                <input type="hidden" name="shipping_method" value="default">
+                                                <input type="hidden" name="shipping_method"
+                                                    value={{ $defaultShippingMethod }}>
 
                                             </div>
                                         @else
