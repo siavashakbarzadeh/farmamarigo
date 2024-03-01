@@ -693,7 +693,7 @@ class PublicCheckoutController
 
         $isAvailableShipping = EcommerceHelper::isAvailableShipping($products);
 
-        $shippingMethodInput = $request->input('shipping_method', ShippingMethodEnum::DEFAULT);
+        $shippingMethodInput = $request->input('shipping_method', 'default');
 
         $promotionDiscountAmount = $handleApplyPromotionsService->execute($token);
         $couponDiscountAmount = Arr::get($sessionData, 'coupon_discount_amount');
@@ -754,8 +754,8 @@ class PublicCheckoutController
             'amount' => $amount ?: 0,
             'currency' => $request->input('currency', strtoupper(get_application_currency()->title)),
             'user_id' => $currentUserId,
-            'shipping_method' => $isAvailableShipping ? $shippingMethodInput : '',
-            'shipping_option' => $isAvailableShipping ? $request->input('shipping_option') : null,
+            'shipping_method' => 'default',
+            'shipping_option' => 3,
             'shipping_amount' => (float)(session()->get('shippingAmount')),
             'tax_amount' => Cart::instance('cart')->rawTax(),
             'sub_total' => Cart::instance('cart')->rawSubTotal(),
@@ -796,7 +796,7 @@ class PublicCheckoutController
                     'weight' => $shippingData ? Arr::get($shippingData, 'weight') : 0,
                     'cod_amount' => ($order->payment->id && $order->payment->status != PaymentStatusEnum::COMPLETED) ? $order->amount : 0,
                     'cod_status' => ShippingCodStatusEnum::PENDING,
-                    'type' => $order->shipping_method,
+                    'type' => 'default',
                     'status' => ShippingStatusEnum::PENDING,
                     'price' => $order->shipping_amount,
                     'rate_id' => $shippingData ? Arr::get($shippingMethod, 'id', '') : '',
@@ -1204,8 +1204,8 @@ class PublicCheckoutController
             'discount_amount' => $order->discount_amount,
             'sub_total' => $order->sub_total + ($order->tax_amount),
             'amount' => $order->amount,
-            'shipping_method' => $order->shipping_method,
-            'shipping_option' => $order->shipping_option,
+            'shipping_method' => 'default',
+            'shipping_option' => 3,
             'coupon_code' => $order->coupon_code,
             'discount_description' => $order->discount_description,
             "formatted_date"=> $formatted_date,
@@ -1504,8 +1504,8 @@ class PublicCheckoutController
                 'state' => $order->address->state,
                 'city' => $order->address->city,
                 'zip_code' => $order->address->zip_code,
-                'shipping_method' => $order->shipping_method,
-                'shipping_option' => $order->shipping_option,
+                'shipping_method' => 'default',
+                'shipping_option' => 3,
                 'shipping_amount' => $order->shipping_amount,
             ];
         }

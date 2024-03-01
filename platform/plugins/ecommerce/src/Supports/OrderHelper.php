@@ -723,8 +723,8 @@ class OrderHelper
 
         $data = array_merge([
             'amount' => Cart::instance('cart')->rawTotalByItems($cartItems),
-            'shipping_method' => $request->input('shipping_method', ShippingMethodEnum::DEFAULT),
-            'shipping_option' => $request->input('shipping_option'),
+            'shipping_method' => $request->input('shipping_method', 'default'),
+            'shipping_option' => $request->input('shipping_option',3),
             'tax_amount' => Cart::instance('cart')->rawTaxByItems($cartItems),
             'sub_total' => Cart::instance('cart')->rawSubTotalByItems($cartItems),
             'coupon_code' => session()->get('applied_coupon_code'),
