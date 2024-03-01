@@ -229,8 +229,38 @@ background-color: rgba(0,0,0,0.4);">
                                             <div class="payment-checkout-form">
                                                 <input type="hidden" name="shipping_option"
                                                     value="{{ old('shipping_option', $defaultShippingOption) }}">
-                                                <input type="hidden" name="shipping_method"
-                                                    value={{ $defaultShippingMethod }}>
+                                                    <ul class="list-group list_payment_method">
+                                                        @foreach ($shipping as $shippingKey => $shippingItems)
+                                                            @foreach ($shippingItems as $shippingOption => $shippingItem)
+                                                                @include(
+                                                                    'plugins/ecommerce::orders.partials.shipping-option',
+                                                                    [
+                                                                        'shippingItem' => $shippingItem,
+                                                                        'attributes' => [
+                                                                            'id' =>
+                                                                                'shipping-method-' .
+                                                                                $shippingKey .
+                                                                                '-' .
+                                                                                $shippingOption,
+                                                                            'name' => 'shipping_method',
+                                                                            'class' => 'magic-radio',
+                                                                            'checked' =>
+                                                                                old(
+                                                                                    'shipping_method',
+                                                                                    $defaultShippingMethod) == $shippingKey &&
+                                                                                old(
+                                                                                    'shipping_option',
+                                                                                    $defaultShippingOption) == $shippingOption,
+                                                                            'disabled' => Arr::get(
+                                                                                $shippingItem,
+                                                                                'disabled'),
+                                                                            'data-option' => $shippingOption,
+                                                                        ],
+                                                                    ]
+                                                                )
+                                                            @endforeach
+                                                        @endforeach
+                                                    </ul>
 
                                             </div>
                                         @else
