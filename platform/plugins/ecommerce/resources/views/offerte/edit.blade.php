@@ -351,7 +351,7 @@
             if(isChecked) var status='active';
             else var status='deactive';
             axios
-            .post("https://marigolab.it/admin/ecommerce/offerte/deactiveProductInoffer", {product_id:productTableId,offer_id:offerId,status_to:status})
+            .post("https://https://www.marigopharma.it/admin/ecommerce/offerte/deactiveProductInoffer", {product_id:productTableId,offer_id:offerId,status_to:status})
             .then((response) => {
                 location.reload();
             })
@@ -403,7 +403,7 @@
                 var totalCheckedToggleSwitches = customerTable.find('.toggle-switch:checked').length;
                 if(totalCheckedToggleSwitches!=0){
                     axios
-                    .post("https://marigolab.it/admin/ecommerce/offerte/deactiveCustomerInoffer", {
+                    .post("https://marigopharma.marigo.collaudo.biz/admin/ecommerce/offerte/deactiveCustomerInoffer", {
                         product_id: productTableId,
                         customer_id:customerId,
                         offer_id: offerId,
@@ -437,7 +437,7 @@
     $(document).on('change', '.editExpiringdate', function(evt) {
         var offerId=$('.offer-id-hidden').val();
         const newDate = this.value;
-        axios.post('https://marigolab.it/admin/ecommerce/offerte/updateExpirationDate', {
+        axios.post('https://marigopharma.marigo.collaudo.biz/admin/ecommerce/offerte/updateExpirationDate', {
             offer_id: offerId,
             expiration_date: newDate
         })
