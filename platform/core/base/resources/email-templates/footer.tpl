@@ -75,9 +75,9 @@
                                                                             </tr>
                                                                             <tr style='border:0;'>
                                                                                 <td valign="top" align="center" style=" display:block;border:0;font-size: 13px;line-height: 15px; text-align: center; font-family: Arial,Tahoma, Helvetica, sans-serif;color: #a7a9ac;font-weight: normal;border-collapse: collapse;">
-                                                                                    <a href='https://www.instagram.com/marigo_pharma/' ><img src='https://marigopharma.marigo.collaudo.biz/public/storage/instagram-3-2.png' style='margin:10px;filter: invert(100%);' width='20' height='20'></a>
-                                                                                    <a href='https://www.facebook.com/marigopharma/' ><img src='https://marigopharma.marigo.collaudo.biz/public/storage/facebook-3.png' style='margin:10px;filter: invert(100%);' width='20' height='20' ></a>
-                                                                                    <a href='https://www.linkedin.com/company/marigo-italia'  ><img src='https://marigopharma.marigo.collaudo.biz/public/storage/linkedin-3.png' style='margin:10px;filter: invert(100%);' width='20' height='20' ></a>
+                                                                                    <a href='https://www.instagram.com/marigo_pharma/' ><img src='https://marigolab.it/public/storage/instagram-3-2.png' style='margin:10px;filter: invert(100%);' width='20' height='20'></a>
+                                                                                    <a href='https://www.facebook.com/marigopharma/' ><img src='https://marigolab.it/public/storage/facebook-3.png' style='margin:10px;filter: invert(100%);' width='20' height='20' ></a>
+                                                                                    <a href='https://www.linkedin.com/company/marigo-italia'  ><img src='https://marigolab.it/public/storage/linkedin-3.png' style='margin:10px;filter: invert(100%);' width='20' height='20' ></a>
                                                                                 </td>
                                                                             </tr>
                                                                             </tbody>

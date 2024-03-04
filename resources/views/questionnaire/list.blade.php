@@ -36,8 +36,7 @@
                 {{ $Q->title }}
             </td>
             <td>
-
-                <a class="btn btn-primary mr-2" href="https://marigopharma.marigo.collaudo.biz/admin/ecommerce/questionnaire/viewQuestionnaire?id={{ $Q->id }}" class="viewQuestionnaire"><i class="fa fa-eye"></i></a>
+                <a class="btn btn-primary mr-2" href="https://marigolab.it/admin/ecommerce/questionnaire/viewQuestionnaire?id={{ $Q->id }}" class="viewQuestionnaire"><i class="fa fa-eye"></i></a>
                 <button class="btn btn-danger" class="removeQuestionnaire" data-value={{ $Q->id }}><i class="fa fa-trash"></i></button>
             </td>
         </tr>
