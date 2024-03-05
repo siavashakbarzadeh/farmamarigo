@@ -34,7 +34,7 @@ class VerificationAccountMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Verification Account Mail',
+            subject: 'Verifica indirizzo email',
         );
     }
 

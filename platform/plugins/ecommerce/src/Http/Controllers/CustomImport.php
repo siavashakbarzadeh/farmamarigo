@@ -397,41 +397,42 @@ class CustomImport extends BaseController
         // UPDATE BRANDS
 
 //    $products=DB::connection('mysql2')->select('SELECT * FROM `art_articolo` WHERE categoria=6 OR categoria=15 OR categoria=17;');
-        $products = DB::connection('mysql2')->table("art_articolo")->whereIn('categoria', [6, 15, 17])->whereIn('fk_linea_id', [443, 441, 439, 383, 295, 124])->get();
-        $products = $products->map(function ($item) {
-            return (array)$item;
-        });
-        $productsWithoutVariants=$products->filter(function ($item) {
-            return !strlen($item['variante_1']);
-        });
-        $variant_keys = $products->map(function ($item) {
-            if (!empty($item['variante_1'])) { // Check if 'variante_1' has a value
-                $words = explode(' ', $item['nome']);
-                return end($words); // Return the last word
-            }
-            return null; // Return null if 'variante_1' is empty
-        })->filter()->unique();
-        $variants = $products->filter(function ($item) {
-            return strlen($item['variante_1']);
-        })->groupBy(function ($item) use ($variant_keys) {
-            // Split the product name into words.
-            $words = explode(' ', $item['nome']);
-            // Remove the last word if it's a variant key.
-            $lastWord = end($words);
-            if ($variant_keys->contains($lastWord)) {
-                array_pop($words);
-            }
-            // Return the product name without the variant as the group key.
-            return implode(' ', $words);
-        });
-        $brandsId = DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id', $products->pluck('fk_fornitore_id')->toArray())->get();
-        $brandsId = collect($brandsId)->map(function ($item) {
-            return (array)$item;
-        })->pluck('fk_fornitore_id')->unique();
-        $brands = DB::connection('mysql2')->table("acq_fornitore")->get();
-        $brands = collect($brands)->map(function ($item) {
-            return (array)$item;
-        })->pluck('nome', 'pk_fornitore_id');
+            $products = DB::connection('mysql2')->table("art_articolo")->whereIn('categoria', [6, 15, 17])->whereIn('fk_linea_id', [443, 441, 439, 383, 295, 124])->get();
+            $products = $products->map(function ($item) {
+                return (array)$item;
+            });
+            $productsWithoutVariants=$products->filter(function ($item) {
+                return !strlen($item['variante_1']);
+            });
+            $variant_keys = $products->map(function ($item) {
+                if (!empty($item['variante_1'])) { // Check if 'variante_1' has a value
+                    $words = explode(' ', $item['nome']);
+                    return end($words); // Return the last word
+                }
+                return null; // Return null if 'variante_1' is empty
+            })->filter()->unique();
+            $variants = $products->filter(function ($item) {
+                return $item['variante_1'];
+            });
+            // ->groupBy(function ($item) use ($variant_keys) {
+            //     // Split the product name into words.
+            //     $words = explode(' ', $item['nome']);
+            //     // Remove the last word if it's a variant key.
+            //     $lastWord = end($words);
+            //     if ($variant_keys->contains($lastWord)) {
+            //         array_pop($words);
+            //     }
+            //     // Return the product name without the variant as the group key.
+            //     return implode(' ', $words);
+            // });
+            $brandsId = DB::connection('mysql2')->table("art_articolo")->select('fk_fornitore_id')->where('fk_fornitore_id', $products->pluck('fk_fornitore_id')->toArray())->get();
+            $brandsId = collect($brandsId)->map(function ($item) {
+                return (array)$item;
+            })->pluck('fk_fornitore_id')->unique();
+            $brands = DB::connection('mysql2')->table("acq_fornitore")->get();
+            $brands = collect($brands)->map(function ($item) {
+                return (array)$item;
+            })->pluck('nome', 'pk_fornitore_id');
 
         Product::truncate();
         \Illuminate\Support\Facades\DB::table('ec_products_translations')->truncate();
