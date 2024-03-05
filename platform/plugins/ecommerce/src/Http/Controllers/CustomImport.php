@@ -408,29 +408,14 @@ class CustomImport extends BaseController
             $variants = $products->filter(function ($item) {
                 return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
             })->groupBy(function ($item) {
-                // Extract 'variante_1' value
-                $variante_1 = $item['variante_1'];
-                
-                // Count the number of words in the product name
-                $numberOfWords = str_word_count($item['nome']);
-                
-                // Group products based on the number of words in the name
-                return $numberOfWords . '_' . $variante_1;
-            });
-            $mergedVariants = collect([]);
-            $variants->each(function ($items, $key) use ($mergedVariants) {
-                // Group items with similar structures in the product names
-                $groups = collect($items)->groupBy(function ($item) {
-                    return $item['nome']; // Replace digits with '%'
-                });
-
-                // Merge items within each group
-                $groups->each(function ($groupItems, $groupKey) use ($mergedVariants) {
-                    $mergedVariants->put($groupKey, $groupItems->merge($mergedVariants->get($groupKey, collect())));
-                });
+                // Extract the common part of the names by removing the variant values
+                $commonName = preg_replace('/\s*\+\d+,\d+/', '', $item['nome']);
+            
+                // Group products based on the common part of the names
+                return $commonName;
             });
 
-            dd($mergedVariants);
+            dd($variants);
 
             
             // ->groupBy(function ($item) use ($variant_keys) {
