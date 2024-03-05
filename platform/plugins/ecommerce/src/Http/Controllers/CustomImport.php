@@ -412,16 +412,20 @@ class CustomImport extends BaseController
                 $variante_1 = $item['variante_1'];
                 return $variante_1;
             });
-            
+
             $variants->each(function ($items, $variante_1) use ($productsWithoutVariants) {
                 // Check if any item in the group contains "KIT" or "Kit" in its name
                 $containsKit = $items->contains(function ($item) {
                     return stripos($item['nome'], 'KIT') !== false || stripos($item['nome'], 'Kit') !== false;
                 });
             
-                // If any item contains "KIT" or "Kit", add them to $productsWithoutVariants
+                // If any item contains "KIT" or "Kit", remove it from the group and add to $productsWithoutVariants
                 if ($containsKit) {
                     $productsWithoutVariants = $productsWithoutVariants->merge($items);
+                    // Remove items containing "KIT" or "Kit" from the group
+                    $items = $items->reject(function ($item) {
+                        return stripos($item['nome'], 'KIT') !== false || stripos($item['nome'], 'Kit') !== false;
+                    });
                 }
             });
             
