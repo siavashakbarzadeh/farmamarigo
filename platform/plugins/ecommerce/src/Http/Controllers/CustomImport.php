@@ -419,10 +419,7 @@ class CustomImport extends BaseController
             });
             $mergedVariants = collect([]);
             $variants->each(function ($items, $key) use ($mergedVariants) {
-                // Group items with similar structures in the product names
-                $groups = collect($items)->groupBy(function ($item) {
-                    return preg_replace('/\d/', '%', $item['nome']); // Replace digits with '%'
-                });
+                // Group items with similar structures in the product name
 
                 // Merge items within each group
                 $groups->each(function ($groupItems, $groupKey) use ($mergedVariants) {
