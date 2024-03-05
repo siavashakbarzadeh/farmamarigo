@@ -413,6 +413,33 @@ class CustomImport extends BaseController
                 return $variante_1;
             });
             
+            $mergedVariants = collect([]);
+            $variants->each(function ($items, $key) use ($mergedVariants) {
+                // Group by variante_2
+                $groupedByVariante2 = $items->groupBy('variante_2');
+
+                // Check if there's only one group and all items have the same variante_2
+                if ($groupedByVariante2->count() === 1 && !empty($key)) {
+                    // Group by variante_3
+                    $groupedByVariante3 = $items->groupBy('variante_3');
+                    
+                    // Check if there's only one group and all items have the same variante_3
+                    if ($groupedByVariante3->count() === 1) {
+                        // Ungroup and create separate groups for each item
+                        $items->each(function ($item) use ($mergedVariants) {
+                            $mergedVariants->put($item['nome'], collect([$item]));
+                        });
+                        return; // Skip further processing
+                    }
+                }
+
+                // Otherwise, merge items within each group
+                $groupedByVariante2->each(function ($groupItems, $groupKey) use ($mergedVariants) {
+                    $mergedVariants->put($groupKey, $groupItems->merge($mergedVariants->get($groupKey, collect())));
+                });
+            });
+
+            dd($mergedVariants);
 
             
             
