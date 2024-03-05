@@ -430,12 +430,8 @@ class CustomImport extends BaseController
                 });
             });
             
-            // Now, extract only the common part of the product names
-            $finalVariants = $mergedVariants->map(function ($items, $key) {
-                return preg_replace('/\s+\+\s+\d+,\d+|\d+,\d+\s*$/u', '', $key);
-            });
             
-            dd($finalVariants);
+            dd($mergedVariants);
 
             
             // ->groupBy(function ($item) use ($variant_keys) {
