@@ -401,19 +401,14 @@ class CustomImport extends BaseController
             $products = $products->map(function ($item) {
                 return (array)$item;
             });
-            $productsWithoutVariants= $products->reject(function ($item) {
-                return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
+            $productsWithoutVariants=$products->filter(function ($item) {
+                return !strlen($item['variante_1']);
             });
-            // $variant_keys = $products->map(function ($item) {
-            //     if (!empty($item['variante_1'])) { // Check if 'variante_1' has a value
-            //         $words = explode(' ', $item['nome']);
-            //         return end($words); // Return the last word
-            //     }
-            //     return null; // Return null if 'variante_1' is empty
-            // })->filter()->unique();
+
             $variants = $products->filter(function ($item) {
                 return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
             });
+            dd($variants);
             // ->groupBy(function ($item) use ($variant_keys) {
             //     // Split the product name into words.
             //     $words = explode(' ', $item['nome']);
@@ -483,7 +478,7 @@ class CustomImport extends BaseController
                 }
                 foreach ($variants as $variantItems) {
                     foreach ($variantItems as $item) {
-                        if (!empty($item['variante_2'])) {
+                        if ($item['variante_2']) {
                             $order1 = intval(ProductAttribute::query()->where('attribute_set_id', 1)->max('order'));
                             ProductAttribute::query()->firstOrCreate([
                                 'title' => $item['variante_2'],
@@ -496,7 +491,7 @@ class CustomImport extends BaseController
                                 'order' => $order1 == 0 ? 0 : $order1++,
                             ]);
                         }
-                        if (!empty($item['variante_3'])) {
+                        if ($item['variante_3']) {
                             $order2 = intval(ProductAttribute::query()->where('attribute_set_id', 3)->max('order'));
                             ProductAttribute::query()->firstOrCreate([
                                 'title' => $item['variante_3'],
