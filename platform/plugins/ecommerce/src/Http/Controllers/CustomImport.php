@@ -412,67 +412,18 @@ class CustomImport extends BaseController
                 $variante_1 = $item['variante_1'];
                 return $variante_1;
             });
-            $separateVariants = collect([]);
-
-// Iterate through each product to handle the grouping manually
-$variants->each(function ($item) use ($separateVariants) {
-    // Construct a unique identifier based on the combination of variantes if they exist
-    $identifier = $item['variante_1'] . (isset($item['variante_2']) ? '_' . $item['variante_2'] : '') . (isset($item['variante_3']) ? '_' . $item['variante_3'] : '');
-
-    // Check if the group already exists
-    if ($separateVariants->has($identifier)) {
-        // Add the item to the existing group
-        $separateVariants->get($identifier)->push($item);
-    } else {
-        // Otherwise, create a new group with this item
-        $separateVariants->put($identifier, collect([$item]));
-    }
-});
-
-// Now, for the groups that should not be grouped (matching the specific condition)
-$finalVariants = $separateVariants->flatMap(function ($group, $key) {
-    // If all items in the group have the same 'variante_1', 'variante_2', and 'variante_3', ungroup them
-    if ($group->count() === 1) {
-        return $group->mapWithKeys(function ($item) {
-            // Use the 'nome' as the key for unique items
-            return [$item['nome'] => collect([$item])];
-        });
-    }
-    // Otherwise, keep the group as is
-    return [$key => $group];
-});
-
-dd($finalVariants);
             
-            $mergedVariants = collect([]);
-            $variants->each(function ($items, $key) use ($mergedVariants) {
-                // Group by variante_2
-                $groupedByVariante2 = $items->groupBy('variante_2');
-
-                // Check if there's only one group and all items have the same variante_2
-                if ($groupedByVariante2->count() === 1 && !empty($key)) {
-                    // Group by variante_3
-                    $groupedByVariante3 = $items->groupBy('variante_3');
-                    
-                    // Check if there's only one group and all items have the same variante_3
-                    if ($groupedByVariante3->count() === 1) {
-                        // Ungroup and create separate groups for each item
-                        $items->each(function ($item) use ($mergedVariants) {
-                            $mergedVariants->put($item['nome'], collect([$item]));
-                        });
-                        return; // Skip further processing
-                    }
-                }
-
-                // Otherwise, merge items within each group
-                $groupedByVariante2->each(function ($groupItems, $groupKey) use ($mergedVariants) {
-                    $mergedVariants->put($groupKey, $groupItems->merge($mergedVariants->get($groupKey, collect())));
+            $variants->each(function ($items, $variante_1) use ($productsWithoutVariants) {
+                // Check if any item in the group contains "KIT" or "Kit" in its name
+                $containsKit = $items->contains(function ($item) {
+                    return stripos($item['nome'], 'KIT') !== false || stripos($item['nome'], 'Kit') !== false;
                 });
-            });
-
-            dd($mergedVariants);
-
             
+                // If any item contains "KIT" or "Kit", add them to $productsWithoutVariants
+                if ($containsKit) {
+                    $productsWithoutVariants = $productsWithoutVariants->merge($items);
+                }
+            });
             
             dd($variants['REVIVAL']);
 
