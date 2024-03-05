@@ -412,6 +412,7 @@ class CustomImport extends BaseController
                 $variante_1 = $item['variante_1'];
                 return $variante_1;
             });
+            dd($variants);
             
             $mergedVariants = collect([]);
             $variants->each(function ($items, $key) use ($mergedVariants) {
