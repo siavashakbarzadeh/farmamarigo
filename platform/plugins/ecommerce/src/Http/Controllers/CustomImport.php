@@ -418,7 +418,6 @@ class CustomImport extends BaseController
                 return $numberOfWords . '_' . $variante_1;
             });
             
-            dd($variants);
             // ->groupBy(function ($item) use ($variant_keys) {
             //     // Split the product name into words.
             //     $words = explode(' ', $item['nome']);
