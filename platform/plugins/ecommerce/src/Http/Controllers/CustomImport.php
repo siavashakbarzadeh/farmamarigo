@@ -405,31 +405,29 @@ class CustomImport extends BaseController
                 return !strlen($item['variante_1']);
             });
 
+            $variant_keys = $products->map(function ($item) {
+                if (!empty($item['variante_1'])) { // Check if 'variante_1' has a value
+                    $words = explode(' ', $item['nome']);
+                    return end($words); // Return the last word
+                }
+                return null; // Return null if 'variante_1' is empty
+            })->filter()->unique();
+
             $variants = $products->filter(function ($item) {
                 return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
-            })->groupBy(function ($item) {
-                // Extract 'variante_1' value
-                $variante_1 = $item['variante_1'];
-                return $variante_1;
-            });
-
-            $variants->each(function ($items, $variante_1) use (&$variants, $productsWithoutVariants) {
-                // Check if any item in the group contains "KIT" or "Kit" in its name
-                $containsKit = $items->contains(function ($item) {
-                    return stripos($item['nome'], 'KIT') !== false || stripos($item['nome'], 'Kit') !== false;
-                });
-            
-                // If any item contains "KIT" or "Kit", remove it from the group and add to $productsWithoutVariants
-                if ($containsKit) {
-                    $productsWithoutVariants = $productsWithoutVariants->merge($items);
-                    // Remove items containing "KIT" or "Kit" from the group
-                    $variants->forget($variante_1);
+            })->groupBy(function ($item) use ($variant_keys) {
+            //     // Split the product name into words.
+            $words = explode(' ', $item['nome']);
+                // Remove the last word if it's a variant key.
+                $lastWord = end($words);
+                if ($variant_keys->contains($lastWord)) {
+                    array_pop($words);
                 }
+                // Return the product name without the variant as the group key.
+                return implode(' ', $words);
             });
             
-            dd($variants['REVIVAL']);
 
-            
             // ->groupBy(function ($item) use ($variant_keys) {
             //     // Split the product name into words.
             //     $words = explode(' ', $item['nome']);
