@@ -483,7 +483,7 @@ class CustomImport extends BaseController
                 }
                 foreach ($variants as $variantItems) {
                     foreach ($variantItems as $item) {
-                        if ($item['variante_2']) {
+                        if (!empty($item['variante_2'])) {
                             $order1 = intval(ProductAttribute::query()->where('attribute_set_id', 1)->max('order'));
                             ProductAttribute::query()->firstOrCreate([
                                 'title' => $item['variante_2'],
@@ -496,7 +496,7 @@ class CustomImport extends BaseController
                                 'order' => $order1 == 0 ? 0 : $order1++,
                             ]);
                         }
-                        if ($item['variante_3']) {
+                        if (!empty($item['variante_3'])) {
                             $order2 = intval(ProductAttribute::query()->where('attribute_set_id', 3)->max('order'));
                             ProductAttribute::query()->firstOrCreate([
                                 'title' => $item['variante_3'],
