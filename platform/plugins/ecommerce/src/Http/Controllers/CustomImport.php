@@ -408,14 +408,34 @@ class CustomImport extends BaseController
             $variants = $products->filter(function ($item) {
                 return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
             })->groupBy(function ($item) {
-                // Extract the common part of the names by removing the variant values
-                $commonName = preg_replace('/\s*\+\d+,\d+/', '', $item['nome']);
-            
-                // Group products based on the common part of the names
-                return $commonName;
+                // Extract 'variante_1' value
+                $variante_1 = $item['variante_1'];
+                
+                // Extract the common part of the product name
+                $commonName = preg_replace('/\s+\+\s+\d+,\d+|\d+,\d+\s*$/u', '', $item['nome']);
+                
+                return $commonName . '_' . $variante_1;
             });
-
-            dd($variants);
+            
+            $mergedVariants = collect([]);
+            $variants->each(function ($items, $key) use ($mergedVariants) {
+                // Group items with similar structures in the product names
+                $groups = collect($items)->groupBy(function ($item) {
+                    return preg_replace('/\s+\+\s+\d+,\d+|\d+,\d+\s*$/u', '', $item['nome']); // Replace digits with '%'
+                });
+            
+                // Merge items within each group
+                $groups->each(function ($groupItems, $groupKey) use ($mergedVariants) {
+                    $mergedVariants->put($groupKey, $groupItems->merge($mergedVariants->get($groupKey, collect())));
+                });
+            });
+            
+            // Now, extract only the common part of the product names
+            $finalVariants = $mergedVariants->map(function ($items, $key) {
+                return preg_replace('/\s+\+\s+\d+,\d+|\d+,\d+\s*$/u', '', $key);
+            });
+            
+            dd($finalVariants);
 
             
             // ->groupBy(function ($item) use ($variant_keys) {
