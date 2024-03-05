@@ -413,7 +413,7 @@ class CustomImport extends BaseController
                 return $variante_1;
             });
 
-            $variants->each(function ($items, $variante_1) use ($productsWithoutVariants) {
+            $variants->each(function ($items, $variante_1) use (&$variants, $productsWithoutVariants) {
                 // Check if any item in the group contains "KIT" or "Kit" in its name
                 $containsKit = $items->contains(function ($item) {
                     return stripos($item['nome'], 'KIT') !== false || stripos($item['nome'], 'Kit') !== false;
@@ -423,13 +423,11 @@ class CustomImport extends BaseController
                 if ($containsKit) {
                     $productsWithoutVariants = $productsWithoutVariants->merge($items);
                     // Remove items containing "KIT" or "Kit" from the group
-                    $items = $items->reject(function ($item) {
-                        return stripos($item['nome'], 'KIT') !== false || stripos($item['nome'], 'Kit') !== false;
-                    });
+                    $variants->forget($variante_1);
                 }
             });
             
-            dd($variants['REVIVAL']);
+            dd($variants);
 
             
             // ->groupBy(function ($item) use ($variant_keys) {
