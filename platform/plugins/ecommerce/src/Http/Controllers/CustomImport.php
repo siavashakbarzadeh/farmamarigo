@@ -408,20 +408,7 @@ class CustomImport extends BaseController
             $variants = $products->filter(function ($item) {
                 return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
             })->groupBy(function ($item) {
-                // Extract 'variante_1', 'variante_2', and 'variante_3' values
-                $variante_1 = $item['variante_1'];
-                $variante_2 = $item['variante_2'];
-                $variante_3 = $item['variante_3'];
-                
-
-                
-                // Extract the values of 'variante_2' and 'variante_3' from the product name
-                $words = explode(' ', $item['nome']);
-                $variante_2_value = end($words);
-                $variante_3_value = prev($words);
-            
-                // Return the modified product name for grouping
-                return $variante_1 . ' ' . $variante_2_value . ' ' . $variante_3_value;
+                return $item['variante_1'];
             });
 
             dd($variants);
