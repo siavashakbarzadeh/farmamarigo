@@ -427,7 +427,7 @@ class CustomImport extends BaseController
                 }
             });
             
-            dd($variants);
+            dd($variants['REVIVAL']);
 
             
             // ->groupBy(function ($item) use ($variant_keys) {
