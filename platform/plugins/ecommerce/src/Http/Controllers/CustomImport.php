@@ -412,7 +412,7 @@ class CustomImport extends BaseController
                 return null; // Return null if 'variante_1' is empty
             })->filter()->unique();
             $variants = $products->filter(function ($item) {
-                return $item['variante_1'];
+                return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
             });
             // ->groupBy(function ($item) use ($variant_keys) {
             //     // Split the product name into words.
