@@ -405,37 +405,44 @@ class CustomImport extends BaseController
                 return !strlen($item['variante_1']);
             });
 
+            $variants = $products->filter(function ($item) {
+                return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
+            })->groupBy(function ($item) {
+                // Extract 'variante_1' value
+                $variante_1 = $item['variante_1'];
+                return $variante_1;
+            });
             $separateVariants = collect([]);
 
-            // Iterate through each product to handle the grouping manually
-            $variants->each(function ($item) use ($separateVariants) {
-                // Construct a unique identifier based on the combination of variantes if they exist
-                $identifier = $item['variante_1'] . (isset($item['variante_2']) ? '_' . $item['variante_2'] : '') . (isset($item['variante_3']) ? '_' . $item['variante_3'] : '');
+// Iterate through each product to handle the grouping manually
+$variants->each(function ($item) use ($separateVariants) {
+    // Construct a unique identifier based on the combination of variantes if they exist
+    $identifier = $item['variante_1'] . (isset($item['variante_2']) ? '_' . $item['variante_2'] : '') . (isset($item['variante_3']) ? '_' . $item['variante_3'] : '');
 
-                // Check if the group already exists
-                if ($separateVariants->has($identifier)) {
-                    // Add the item to the existing group
-                    $separateVariants->get($identifier)->push($item);
-                } else {
-                    // Otherwise, create a new group with this item
-                    $separateVariants->put($identifier, collect([$item]));
-                }
-            });
+    // Check if the group already exists
+    if ($separateVariants->has($identifier)) {
+        // Add the item to the existing group
+        $separateVariants->get($identifier)->push($item);
+    } else {
+        // Otherwise, create a new group with this item
+        $separateVariants->put($identifier, collect([$item]));
+    }
+});
 
-            // Now, for the groups that should not be grouped (matching the specific condition)
-            $finalVariants = $separateVariants->flatMap(function ($group, $key) {
-                // If all items in the group have the same 'variante_1', 'variante_2', and 'variante_3', ungroup them
-                if ($group->count() === 1) {
-                    return $group->mapWithKeys(function ($item) {
-                        // Use the 'nome' as the key for unique items
-                        return [$item['nome'] => collect([$item])];
-                    });
-                }
-                // Otherwise, keep the group as is
-                return [$key => $group];
-            });
+// Now, for the groups that should not be grouped (matching the specific condition)
+$finalVariants = $separateVariants->flatMap(function ($group, $key) {
+    // If all items in the group have the same 'variante_1', 'variante_2', and 'variante_3', ungroup them
+    if ($group->count() === 1) {
+        return $group->mapWithKeys(function ($item) {
+            // Use the 'nome' as the key for unique items
+            return [$item['nome'] => collect([$item])];
+        });
+    }
+    // Otherwise, keep the group as is
+    return [$key => $group];
+});
 
-            dd($finalVariants);
+dd($finalVariants);
             
             $mergedVariants = collect([]);
             $variants->each(function ($items, $key) use ($mergedVariants) {
