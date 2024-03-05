@@ -401,16 +401,16 @@ class CustomImport extends BaseController
             $products = $products->map(function ($item) {
                 return (array)$item;
             });
-            $productsWithoutVariants=$products->filter(function ($item) {
-                return !strlen($item['variante_1']);
+            $productsWithoutVariants= $products->reject(function ($item) {
+                return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
             });
-            $variant_keys = $products->map(function ($item) {
-                if (!empty($item['variante_1'])) { // Check if 'variante_1' has a value
-                    $words = explode(' ', $item['nome']);
-                    return end($words); // Return the last word
-                }
-                return null; // Return null if 'variante_1' is empty
-            })->filter()->unique();
+            // $variant_keys = $products->map(function ($item) {
+            //     if (!empty($item['variante_1'])) { // Check if 'variante_1' has a value
+            //         $words = explode(' ', $item['nome']);
+            //         return end($words); // Return the last word
+            //     }
+            //     return null; // Return null if 'variante_1' is empty
+            // })->filter()->unique();
             $variants = $products->filter(function ($item) {
                 return !empty($item['variante_1']) || !empty($item['variante_2']) || !empty($item['variante_3']);
             });
