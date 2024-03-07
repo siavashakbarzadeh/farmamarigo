@@ -26,9 +26,7 @@
 
     <div class="product-cart-wrap mb-30">
         @php
-            if ($product->name = 'Biberon 150 ml COOL AZZURRO') {
-                dd($product->images);
-            }
+
         @endphp
 
         <div class="product-img-action-wrap">
@@ -37,7 +35,7 @@
                     <a href="{{ $product->url }}">
                         @php
                             $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
-                            $productImgUrl = RvMedia::getImageUrl($product->images[0]);
+                            $productImgUrl = '/storage/' . $product->images[0];
 
                             $ch = curl_init($productImgUrl);
                             curl_setopt($ch, CURLOPT_NOBODY, true);
