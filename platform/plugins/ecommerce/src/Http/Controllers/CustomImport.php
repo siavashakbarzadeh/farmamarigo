@@ -428,28 +428,8 @@ class CustomImport extends BaseController
             });
 
 
-            $colors = collect(['BLU', 'ROSSO', 'GIALLO','VERDE']);
 
-            // Merge groups with common keys
-            $mergedVariants = collect([]);
-            $variants->each(function ($group) use ($mergedVariants, $colors) {
-                $groupKey = implode(' ', array_unique($group->pluck('nome')->toArray()));
-                $variantFound = false;
-                foreach ($colors as $color) {
-                    if (strpos($groupKey, $color) !== false) {
-                        $variantFound = true;
-                        break;
-                    }
-                }
-                if ($variantFound) {
-                    $mergedVariants->put($groupKey, $group);
-                } else {
-                    // If no variant key is found, put into its own group
-                    $mergedVariants->put($groupKey, collect([$group]));
-                }
-            });
 
-            dd($mergedVariants);
 
             
 
