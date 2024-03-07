@@ -46,7 +46,7 @@
                             curl_exec($ch);
                             $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
-                            dd($responseCode);
+                            dd($responseCode, $productImgUrl);
                             if ($responseCode == 200) {
                                 $Image = $productImgUrl;
                             } else {
