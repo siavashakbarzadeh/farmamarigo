@@ -35,10 +35,8 @@
                     <a href="{{ $product->url }}">
                         @php
                             $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
-                            $parts = pathinfo($product->images[0]);
 
-                            $productImage = $parts['filename'] . '-800x800.' . $parts['extension'];
-                            $productImgUrl = 'https://marigopharma.it/storage/' . $productImage;
+                            $productImgUrl = 'https://marigopharma.it/storage/' . $product->sku . '.jpg';
 
                             $ch = curl_init($productImgUrl);
                             curl_setopt($ch, CURLOPT_NOBODY, true);
@@ -46,9 +44,7 @@
                             curl_exec($ch);
                             $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
-                            if ($product->name == 'Biberon 150 ml COOL AZZURRO') {
-                                dd($responseCode, $productImgUrl);
-                            }
+
                             if ($responseCode == 200) {
                                 $Image = $productImgUrl;
                             } else {
