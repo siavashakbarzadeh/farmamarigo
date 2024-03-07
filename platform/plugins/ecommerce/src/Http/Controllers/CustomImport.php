@@ -430,6 +430,7 @@ class CustomImport extends BaseController
 
             $colors = collect(['BLU', 'ROSSO', 'GIALLO','VERDE']);
 
+            // Merge groups with common keys
             $mergedVariants = collect([]);
             $variants->each(function ($group) use ($mergedVariants, $colors) {
                 $groupKey = implode(' ', array_unique($group->pluck('nome')->toArray()));
@@ -448,9 +449,8 @@ class CustomImport extends BaseController
                 }
             });
 
-
-            
             dd($mergedVariants);
+
             
 
             // ->groupBy(function ($item) use ($variant_keys) {
