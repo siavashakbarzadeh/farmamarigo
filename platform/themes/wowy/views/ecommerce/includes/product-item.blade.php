@@ -35,7 +35,7 @@
                     <a href="{{ $product->url }}">
                         @php
                             $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
-                            $productImgUrl = '/storage/' . $product->images[0];
+                            $productImgUrl = 'https://marigopharma.it/storage/' . $product->images[0];
 
                             $ch = curl_init($productImgUrl);
                             curl_setopt($ch, CURLOPT_NOBODY, true);
