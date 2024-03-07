@@ -426,6 +426,27 @@ class CustomImport extends BaseController
                 // Return the product name without the variant as the group key.
                 return implode(' ', $words);
             });
+            $mergedVariants = collect([]);
+            $variants->each(function ($group) use ($mergedVariants, $variant_keys) {
+                $groupKey = implode(' ', array_unique($group->pluck('nome')->toArray()));
+                $variantFound = false;
+                foreach ($variant_keys as $variantKey) {
+                    if (strpos($groupKey, $variantKey) !== false) {
+                        $variantFound = true;
+                        break;
+                    }
+                }
+                if ($variantFound) {
+                    $mergedVariants->put($groupKey, $group);
+                } else {
+                    // If no variant key is found, put into its own group
+                    $mergedVariants->put($groupKey, collect([$group]));
+                }
+            });
+
+            
+            
+            dd($mergedVariants);
             
 
             // ->groupBy(function ($item) use ($variant_keys) {
