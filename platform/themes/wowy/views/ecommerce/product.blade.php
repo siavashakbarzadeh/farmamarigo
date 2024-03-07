@@ -5,7 +5,9 @@
 
     if (auth('customer')->user() !== null) {
         $userid = auth('customer')->user()->id;
-        $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+        $pricelist = DB::connection('mysql')->select(
+            "select * from ec_pricelist where product_id=$product->id and customer_id=$userid",
+        );
         if (isset($pricelist[0])) {
             $reserved_price = $pricelist[0]->final_price;
 
@@ -42,6 +44,7 @@
                 <!-- MAIN SLIDES -->
                 <div class="product-image-slider">
                     @php
+
                         $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
                         $productImgUrl = RvMedia::getImageUrl($productImages[0]);
                         $ch = curl_init($productImgUrl);
@@ -133,7 +136,9 @@
                         @php
                             if (auth('customer')->user() !== null) {
                                 $userid = auth('customer')->user()->id;
-                                $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+                                $pricelist = DB::connection('mysql')->select(
+                                    "select * from ec_pricelist where product_id=$product->id and customer_id=$userid",
+                                );
                                 if (isset($pricelist[0])) {
                                     $reserved_price = $pricelist[0]->final_price;
                                 }
@@ -262,7 +267,10 @@
                                     <div class='d-inline' id="wishlistAction">
                                         @if (request()->user('customer'))
                                             @php
-                                                $wishlist = Botble\Ecommerce\Models\Wishlist::where('customer_id', request()->user('customer')->id)->get();
+                                                $wishlist = Botble\Ecommerce\Models\Wishlist::where(
+                                                    'customer_id',
+                                                    request()->user('customer')->id,
+                                                )->get();
                                                 $w_flag = false;
                                                 foreach ($wishlist as $w) {
                                                     if ($w->product_id == $product->id) {
