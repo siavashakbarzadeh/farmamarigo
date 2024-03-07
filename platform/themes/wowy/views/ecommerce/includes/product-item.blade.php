@@ -46,7 +46,7 @@
                             curl_exec($ch);
                             $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                             curl_close($ch);
-                            if ($product->name = 'Biberon 150 ml COOL AZZURRO') {
+                            if ($product->name == 'Biberon 150 ml COOL AZZURRO') {
                                 dd($responseCode, $productImgUrl);
                             }
                             if ($responseCode == 200) {
