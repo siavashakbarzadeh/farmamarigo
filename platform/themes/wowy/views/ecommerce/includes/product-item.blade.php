@@ -3,7 +3,9 @@
     use Botble\Ecommerce\Models\Offers;
     if (auth('customer')->user() !== null) {
         $userid = auth('customer')->user()->id;
-        $pricelist = DB::connection('mysql')->select("select * from ec_pricelist where product_id=$product->id and customer_id=$userid");
+        $pricelist = DB::connection('mysql')->select(
+            "select * from ec_pricelist where product_id=$product->id and customer_id=$userid",
+        );
         if (isset($pricelist[0])) {
             $reserved_price = $pricelist[0]->final_price;
 
@@ -30,6 +32,7 @@
                         @php
                             $defaultImgUrl = RvMedia::getImageUrl(RvMedia::getDefaultImage());
                             $productImgUrl = RvMedia::getImageUrl($product->images[0]);
+                            dd($product->images);
                             $ch = curl_init($productImgUrl);
                             curl_setopt($ch, CURLOPT_NOBODY, true);
                             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -96,7 +99,10 @@
                     <div style="text-align: right;margin-top:5px">
                         @php
                             if (auth('customer')->user() !== null) {
-                                $wishlist = Botble\Ecommerce\Models\Wishlist::where('customer_id', request()->user('customer')->id)
+                                $wishlist = Botble\Ecommerce\Models\Wishlist::where(
+                                    'customer_id',
+                                    request()->user('customer')->id,
+                                )
                                     ->where('product_id', $product->id)
                                     ->exists();
                                 $w_flag = false;
